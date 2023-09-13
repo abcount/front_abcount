@@ -1,0 +1,40 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 70% 30% ;
+    
+  }
+.wrapper2 {
+    display: grid;
+    grid-template-columns: 30% 70%;
+  }  
+.registro{
+
+}
+.datos{
+    border: #EDEDED 2px solid;
+    width: 100%;
+    height: 700px;
+}
+.input {
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    border: #66CDAA 2px solid;
+    border-radius: 10px;
+    outline: none;
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 10px 20px;
+}
+.boton {
+    outline: none;
+    border: 0 !important;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    padding: 4px 20px;
+    margin-left: 72%;
+    background-color: #66CDAA;
+}
