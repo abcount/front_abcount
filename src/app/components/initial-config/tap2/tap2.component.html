@@ -16,19 +16,19 @@
                         <div>
                             <h2>Nombre</h2>
                             <div  style="width: 80%;">
-                                <input class="input" placeholder="Ingresa el nombre de tu sucursal">
+                              <app-my-textfield [placeholder]="placeholderSubsidiary" (textChanged)="onInputText($event)"></app-my-textfield>
                             </div>
                             <br>
                             <h2>Dirección</h2>
                             <div style="width: 80%;">
-                                <input class="input" placeholder="Ingresa la dirección de tu sucursal">
+                              <app-my-textfield [placeholder]="placeholderAddress" (textChanged)="onInputText($event)"></app-my-textfield>
                             </div>
                             <div>
-                                <button class="boton" style="margin-top: 20px;">Agregar</button>
+                                <app-my-button [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
                             </div>
                         </div>
                         <br>
-                        
+
                     </div>
                     <hr style="margin: 0 0px; border-color:#EDEDED;">
                     <div style="margin-top: 25px;" class="wrapper2">
@@ -38,14 +38,14 @@
                         <div>
                             <h2>Nombre</h2>
                             <div  style="width: 80%;">
-                                <input class="input" placeholder="Ingresa el nombre de tu área">
+                              <app-my-textfield [placeholder]="placeholderArea" (textChanged)="onInputText($event)"></app-my-textfield>
                             </div>
                             <div>
-                                <button class="boton" style="margin-top: 20px;">Agregar</button>
+                              <app-my-button  [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
                             </div>
-        
+
                         </div>
-                        
+
                     </div>
                     <br>
                     <hr style="margin: 0 0px; border-color:#EDEDED;">
@@ -54,7 +54,7 @@
 
             </div>
             <div class="datos">
-                
+
                 Los datos iran aca pronto :D
 
             </div>
@@ -67,10 +67,10 @@
                 <h1>Siguiente>></h1>
             </div>
             <br>
-            
+
         </div>
         <!-- <li class="nav-item option"><a class="nav-link" routerLink="/tap2">Atras</a></li> -->
 
     </div>
-    
+
 </div>
