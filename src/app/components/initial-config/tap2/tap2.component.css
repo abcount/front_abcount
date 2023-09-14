@@ -1,11 +1,11 @@
 .wrapper {
     display: grid;
-    grid-template-columns: 70% 30% ;
+    grid-template-columns: 65% 35% ;
 
   }
 .wrapper2 {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 40% 60%;
   }
 .registro{
 
@@ -13,7 +13,7 @@
 .datos{
     border: #EDEDED 2px solid;
     width: 100%;
-    height: 700px;
+    height: 600px;
 }
 .input {
     font-size: 20px;
@@ -38,3 +38,37 @@
     margin-left: 72%;
     background-color: #66CDAA;
 }
+.tap2{
+    background-color: #EEEEEE;
+    border:  #EEEEEE 2px solid;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+.container{
+    background-color: white;
+    border: white solid 2px;
+    margin: 2% 15%;
+    padding: 0;
+    box-sizing: border-box;
+    height: 30%;
+
+}
+h1{
+    font-family: roboto;
+    font-size: 23px;
+    font-weight: 575;
+}
+h2{
+    font-family: 'Anek Telugu', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #757575;
+}
+h3{
+    font-family: 'Anek Telugu', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #757575;
+}
+
