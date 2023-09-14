@@ -10,8 +10,8 @@ export class Tap2Component {
   buttonText: string = 'AGREGAR';
   placeholderSubsidiary: string = 'Ingrese el nombre de tu sucursal';
 
-  placeholderAddress: string = 'Ingrese la direccion de tu sucursal';
-  placeholderArea: string = 'Ingrese el nombre de tu area';
+  placeholderAddress: string = 'Ingrese la dirección de tu sucursal';
+  placeholderArea: string = 'Ingrese el nombre de tu área';
 
   onClick() {
     console.log('Button clicked!');

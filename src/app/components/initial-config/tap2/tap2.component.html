@@ -1,76 +1,70 @@
-<div style="margin: 0 3%;">
-    <div style="margin-top: 20px;">
-        <h1>Configuración de la empresa</h1>
-    </div>
-    <hr style="margin: 0 0px; border-color:#EDEDED;">
-    <div style="margin: 0 3%; margin-top: 20px;">
-        <h1>NavBar Progres en desarrollo :D</h1>
-        <div class="wrapper">
-            <div class="registro" style="margin-right: 5%;">
-                <hr style="margin: 0 0px; border-color:#EDEDED;">
-                <div>
-                    <div style="margin-top: 15px;" class="wrapper2">
-                        <div>
-                            <h1>Sucursal</h1>
-                        </div>
-                        <div>
-                            <h2>Nombre</h2>
-                            <div  style="width: 80%;">
-                              <app-my-textfield [placeholder]="placeholderSubsidiary" (textChanged)="onInputText($event)"></app-my-textfield>
-                            </div>
-                            <br>
-                            <h2>Dirección</h2>
-                            <div style="width: 80%;">
-                              <app-my-textfield [placeholder]="placeholderAddress" (textChanged)="onInputText($event)"></app-my-textfield>
+<div class="tap2">
+    <div class="container">
+        <div style="margin-top: 20px; margin-left: 20px;">
+            <h1>Configuración de la Empresa</h1>
+        </div>
+        <hr style="margin: 0 0px; border-color:#EDEDED;">
+        <div style="margin: 0 3%; margin-top: 20px;">
+            <img style="width: 99%;"src="./assets/icons/Progres2.JPG" />
+            <div class="wrapper">
+                <div class="registro" style="margin-right: 5%; margin-left: 3%;">
+                    <hr style="margin: 0 0px; border-color:#EDEDED;">
+                    <div>
+                        <div style="margin-top: 15px;" class="wrapper2">
+                            <div>
+                                <h2>SUCURSAL</h2>
                             </div>
                             <div>
-                                <app-my-button [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+                                <h3>Nombre</h3>
+                                <div  style="width: 91%;">
+                                    <app-my-textfield [placeholder]="placeholderSubsidiary" (textChanged)="onInputText($event)"></app-my-textfield>
+                                </div>
+                                <h3>Dirección</h3>
+                                <div style="width: 91%;">
+                                    <app-my-textfield [placeholder]="placeholderAddress" (textChanged)="onInputText($event)"></app-my-textfield>
+                                </div>
+                                <div>
+                                    <app-my-button style="margin-left: 72%;" [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <hr style="margin: 0 0px; border-color:#EDEDED;">
+                        <div style="margin-top: 25px;" class="wrapper2">
+                            <div>
+                                <h2>ÁREA</h2>
+                            </div>
+                            <div>
+                                <h3>Nombre</h3>
+                                <div  style="width: 91%;">
+                                    <app-my-textfield [placeholder]="placeholderArea" (textChanged)="onInputText($event)"></app-my-textfield>
+                                </div>
+                                <div>
+                                    <app-my-button style="margin-left: 72%;" [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+                                </div>
                             </div>
                         </div>
                         <br>
-
+                        <hr style="margin: 0 0px; border-color:#EDEDED;">
                     </div>
-                    <hr style="margin: 0 0px; border-color:#EDEDED;">
-                    <div style="margin-top: 25px;" class="wrapper2">
-                        <div>
-                            <h1>Área</h1>
-                        </div>
-                        <div>
-                            <h2>Nombre</h2>
-                            <div  style="width: 80%;">
-                              <app-my-textfield [placeholder]="placeholderArea" (textChanged)="onInputText($event)"></app-my-textfield>
-                            </div>
-                            <div>
-                              <app-my-button  [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <br>
-                    <hr style="margin: 0 0px; border-color:#EDEDED;">
-
                 </div>
-
+                <div class="datos">
+                    Los datos iran aca pronto :D
+                </div>
             </div>
-            <div class="datos">
-
-                Los datos iran aca pronto :D
-
+            <div style="margin-top: 15px;" class="wrapper">
+                <div>
+                    <h1> &lt;&lt;Atras</h1>
+                </div>
+                <div style="margin-left: 330px">
+                    <h1>Siguiente&gt;&gt;</h1>
+                </div>
+                <br>
             </div>
+            <!-- <li class="nav-item option"><a class="nav-link" routerLink="/tap2">Atras</a></li> -->
         </div>
-        <div style="margin-top: 15px;" class="wrapper">
-            <div>
-                <h1> Atras</h1>
-            </div>
-            <div style="margin-left: 400px">
-                <h1>Siguiente>></h1>
-            </div>
-            <br>
-
-        </div>
-        <!-- <li class="nav-item option"><a class="nav-link" routerLink="/tap2">Atras</a></li> -->
-
     </div>
-
-</div>
+</div> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@700&display=swap" rel="stylesheet">
