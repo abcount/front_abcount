@@ -11,6 +11,8 @@ export class Tap4Component {
   placeholderText: string = 'Enter text here...';
 
 
+
+
   onClick() {
     console.log('Button clicked!');
   }

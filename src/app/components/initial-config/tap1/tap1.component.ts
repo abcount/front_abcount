@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class Tap1Component {
 
+  buttonText: string = 'Click me!';
+  onClick() {
+    console.log('Button clicked!');
+  }
+
 }

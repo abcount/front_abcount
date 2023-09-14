@@ -11,6 +11,7 @@ import { Tap4Component } from './components/initial-config/tap4/tap4.component';
 import { MyButtonComponent } from './components/general-components/my-button/my-button.component';
 import { MyTextfieldComponent } from './components/general-components/my-textfield/my-textfield.component';
 import {FormsModule} from "@angular/forms";
+import { MyButtonSquaredComponent } from './components/general-components/my-button-squared/my-button-squared.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {FormsModule} from "@angular/forms";
     Tap4Component,
     MyButtonComponent,
     MyTextfieldComponent,
+    MyButtonSquaredComponent,
   ],
   imports: [
     BrowserModule,
