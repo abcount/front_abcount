@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class Tap2Component {
 
+  buttonText: string = 'AGREGAR';
+  onClick() {
+    console.log('Button clicked!');
+  }
+
 }

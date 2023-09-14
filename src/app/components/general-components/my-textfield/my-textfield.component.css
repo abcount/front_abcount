@@ -1,0 +1,10 @@
+.input {
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  border: #66CDAA 2px solid;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 10px 20px;
+}

@@ -7,4 +7,18 @@ import { Component } from '@angular/core';
 })
 export class Tap4Component {
 
+  buttonText: string = 'Click me!';
+  placeholderText: string = 'Enter text here...';
+
+
+  onClick() {
+    console.log('Button clicked!');
+  }
+
+  onTextChanged(text: string) {
+    console.log('Text changed: ' + text);
+  }
+
+
+
 }
