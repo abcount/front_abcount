@@ -6,14 +6,6 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./tap1.component.css']
 })
 export class Tap1Component {
-
-  placeholderNombre: string = 'Ingrese el nombre de la empresa';
-  placeholderRubro: string = 'Ingrese el rubro de la empresa';
-  placeholderNIT: string = 'Ingrese el NIT de la empresa';
-  placeholderDireccion: string = 'Ingrese la dirección de la empresa';
-  placeholderEmail: string = 'Ingrese el email de contacto';
-  placeholderNumeroContacto: string = 'Ingrese el número de contacto';
-
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
   @ViewChild('fileInput') fileInput!: ElementRef;

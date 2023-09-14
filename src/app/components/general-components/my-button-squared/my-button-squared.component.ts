@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-my-button-squared',
@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-button-squared.component.css']
 })
 export class MyButtonSquaredComponent {
+
+  @Output() clicked = new EventEmitter<void>();
+
+  onClick() {
+    this.clicked.emit();
+  }
+
 
 }

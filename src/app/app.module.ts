@@ -10,6 +10,8 @@ import { Tap3Component } from './components/initial-config/tap3/tap3.component';
 import { Tap4Component } from './components/initial-config/tap4/tap4.component';
 import {FormsModule} from "@angular/forms";
 import {SebastianModule} from "./modules/SebastianModule";
+import {MatTreeModule} from "@angular/material/tree";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,10 @@ import {SebastianModule} from "./modules/SebastianModule";
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    SebastianModule
+    SebastianModule,
+    MatTreeModule,
+    MatIconModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

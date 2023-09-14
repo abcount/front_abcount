@@ -11,11 +11,11 @@
     <!-- Columna 2: Campos de texto -->
     <div>
         <h3>Nombre</h3>
-        <app-my-textfield [placeholder]="placeholderNombre" (textChanged)="onInputText($event)"></app-my-textfield>
+        <app-my-textfield [placeholder]="'Ingrese el nombre de la empresa'" (textChanged)="onInputText($event)"></app-my-textfield>
         <h3>Rubro</h3>
-        <app-my-textfield [placeholder]="placeholderRubro" (textChanged)="onInputText($event)"></app-my-textfield>
+        <app-my-textfield [placeholder]="'Ingrese el rubro de la empresa'" (textChanged)="onInputText($event)"></app-my-textfield>
         <h3>NIT</h3>
-        <app-my-textfield [placeholder]="placeholderNIT" (textChanged)="onInputText($event)"></app-my-textfield>
+        <app-my-textfield [placeholder]="'Ingrese el NIT de la empresa'" (textChanged)="onInputText($event)"></app-my-textfield>
     </div>
     <!-- Columna 3: Cargar Logo -->
     <div>
@@ -31,7 +31,7 @@
                 <img [src]="imageURL" alt="Vista previa del logo" class="preview-image">
                 <button (click)="removeImage()">Eliminar</button>
             </div>
-        </div>  
+        </div>
     </div>
 </div>
 
@@ -42,8 +42,8 @@
     </div>
     <div>
         <h3>Dirección</h3>
-        <app-my-textfield [placeholder]="placeholderDireccion" (textChanged)="onInputText($event)"></app-my-textfield>
-    </div>    
+        <app-my-textfield [placeholder]="'Ingrese la dirección de la empresa'" (textChanged)="onInputText($event)"></app-my-textfield>
+    </div>
 </div>
 <hr class="separator">
 
@@ -53,10 +53,10 @@
     </div>
     <div class="fields">
         <h3>E-mail de contacto: </h3>
-        <app-my-textfield [placeholder]="placeholderEmail" (textChanged)="onInputText($event)"></app-my-textfield>
-        
+        <app-my-textfield [placeholder]="'Ingrese el email de contacto'" (textChanged)="onInputText($event)"></app-my-textfield>
+
         <h3>Número de contacto</h3>
-        <app-my-textfield [placeholder]="placeholderNumeroContacto" (textChanged)="onInputText($event)"></app-my-textfield>
+        <app-my-textfield [placeholder]="'Ingrese el número de contacto'" (textChanged)="onInputText($event)"></app-my-textfield>
     </div>
 </div>
 
