@@ -1,0 +1,90 @@
+.tap1{
+    background-color: #EEEEEE;
+    border:  #EEEEEE 2px solid;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+.container{
+    background-color: white;
+    border: white solid 2px;
+    margin: 2% 15%;
+    padding: 0;
+    box-sizing: border-box;
+    height: 30%;
+
+}
+
+
+
+
+body {
+    font-family: roboto;
+}
+.wrapper > div:nth-child(2) { 
+    max-width: 80%; 
+}
+
+
+.header-title {
+    font-size: 23px;
+    font-weight: 575;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.separator {
+    margin: 0 0px;
+    border-color: #EDEDED;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 25% 45% 30%; /* Aquí está el cambio a 3 columnas */
+    margin: 0 3%;
+    margin-top: 20px;
+}
+ h2, h3 {
+    font-family: 'Anek Telugu', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #757575;
+}
+
+.column h3, .input-section h3 {
+    font-family: 'Anek Telugu', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #757575;
+}
+
+.upload-container {
+    position: relative;
+}
+
+.drag-drop-area {
+    border: #66CDAA 2px dashed;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.drag-drop-area span {
+    color: #66CDAA;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.preview-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.navigation {
+    text-align: right;
+    margin-top: 15px;
+    font-size: 23px;
+    font-weight: 575;
+}

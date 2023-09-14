@@ -1,1 +1,68 @@
-<app-my-button  [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+
+<div class="tap1">
+    <div class="container">
+        <h1 class="header-title">Configuración de la Empresa</h1>
+<hr class="separator">
+<div class="wrapper">
+    <!-- Columna 1: IDENTIFICACIÓN -->
+    <div>
+        <h2>IDENTIFICACIÓN</h2>
+    </div>
+    <!-- Columna 2: Campos de texto -->
+    <div>
+        <h3>Nombre</h3>
+        <app-my-textfield [placeholder]="placeholderNombre" (textChanged)="onInputText($event)"></app-my-textfield>
+        <h3>Rubro</h3>
+        <app-my-textfield [placeholder]="placeholderRubro" (textChanged)="onInputText($event)"></app-my-textfield>
+        <h3>NIT</h3>
+        <app-my-textfield [placeholder]="placeholderNIT" (textChanged)="onInputText($event)"></app-my-textfield>
+    </div>
+    <!-- Columna 3: Cargar Logo -->
+    <div>
+        <h3>Logo</h3>
+        <div class="upload-container">
+            <div *ngIf="!imageURL" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (dragleave)="onDragLeave($event)" [class.dragging]="isDragging">
+                <input type="file" (change)="onFileChanged($event)" accept="image/*" #fileInput style="display: none">
+                <div class="drag-drop-area" (click)="fileInput.click()">
+                    Arrastra y suelta una imagen aquí o <span>selecciona un archivo</span>
+                </div>
+            </div>
+            <div *ngIf="imageURL">
+                <img [src]="imageURL" alt="Vista previa del logo" class="preview-image">
+                <button (click)="removeImage()">Eliminar</button>
+            </div>
+        </div>  
+    </div>
+</div>
+
+<hr class="separator">
+<div class="wrapper">
+    <div>
+        <h2>UBICACIÓN</h2>
+    </div>
+    <div>
+        <h3>Dirección</h3>
+        <app-my-textfield [placeholder]="placeholderDireccion" (textChanged)="onInputText($event)"></app-my-textfield>
+    </div>    
+</div>
+<hr class="separator">
+
+<div class="wrapper">
+    <div>
+        <h2>CONTACTO</h2>
+    </div>
+    <div class="fields">
+        <h3>E-mail de contacto: </h3>
+        <app-my-textfield [placeholder]="placeholderEmail" (textChanged)="onInputText($event)"></app-my-textfield>
+        
+        <h3>Número de contacto</h3>
+        <app-my-textfield [placeholder]="placeholderNumeroContacto" (textChanged)="onInputText($event)"></app-my-textfield>
+    </div>
+</div>
+
+
+<div class="navigation"> Siguiente >></div>
+
+
+    </div>
+</div>
