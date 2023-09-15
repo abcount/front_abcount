@@ -1,16 +1,16 @@
 import {NgModule} from "@angular/core";
 
-const AlanComponents = [
+const AndreComponents = [
 
 ];
 
 @NgModule({
     declarations: [
-        
+
     ],
     imports: [
-        
+
     ],
-    exports: [AlanComponents]
+    exports: [AndreComponents]
 })
-export class AlanModule {}
+export class AndreModule {}

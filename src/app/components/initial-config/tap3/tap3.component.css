@@ -1,0 +1,83 @@
+
+.input {
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  border: #66CDAA 2px solid;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 10px 20px;
+}
+
+/* Estilos para la capa de fondo desenfocada */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  z-index: 100; /* Coloca la capa por encima de todo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para el popup */
+.popup {
+  position: fixed;
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Centra exactamente en el medio */
+  width: 420px; /* Tamaño del popup */
+  background-color: #fff;
+  padding: 20px;
+  z-index: 101; /* Coloca el popup por encima de la capa de fondo */
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+}
+.remove-button {
+  background-color: #CFF4E8;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #66CDAA; /* Color rojo por defecto */
+  transition: background-color 0.3s; /* Transición para el cambio de fondo */
+  margin-left: 10px; /* Espacio entre el nombre de la moneda y el botón */
+}
+.moneda-item {
+  display: inline-block; /* Para que el fondo se ajuste al contenido del nombre */
+}
+/* Estilos para el contenedor de las monedas */
+.monedas-container {
+  display: inline-block;
+  vertical-align: top; /* Alinear al principio del contenedor */
+}
+
+/* Estilos para los botones "x" (remover moneda) */
+.remove-button {
+  background-color: #CFF4E8;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #66CDAA;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.moneda-item {
+  margin-top: 5px;
+  display: inline-block;
+  color: #66CDAA;
+  font-size: 20px;
+  margin-left: 10px;
+}
+.moneda-principal {
+  display: flex;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+
