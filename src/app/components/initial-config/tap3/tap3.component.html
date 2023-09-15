@@ -1,25 +1,26 @@
-<div style="margin: 0 4%;">
+<div class="tap3">
+<div  class="container">
   <div style="margin-top: 20px;">
     <h1>Configuración de la empresa</h1>
     <hr style="margin: 0 0px; border-color:#EDEDED;">
     <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="3"></app-progress>
 
-    <div style="margin-top: 45px;" class="wrapper2">
+    <div style="margin-top: 45px; margin-left: 10px" class="wrapper2">
       <form>
-        <h1>INICIO DE USO</h1>
+        <h2>INICIO DE USO</h2>
         <h2>Fecha de registro de la empresa</h2>
-        <div class="form-group" style="width: 80%;">
+        <div class="form-group" style="width: 70%;">
           <app-my-textfield type="text" id="fechaRegistro" [placeholder]="placeholderDate" (textChanged)="onInputText($event)"></app-my-textfield>
         </div>
         <hr style="margin: 0 0px; border-color:#EDEDED;">
-        <h1>CANTIDAD DE NIVELES EN EL PLAN DE CUENTAS</h1>
+        <h2>CANTIDAD DE NIVELES EN EL PLAN DE CUENTAS</h2>
         <h2>Niveles del plan de cuentas</h2>
-        <div class="form-group" style="width: 80%;">
+        <div class="form-group" style="width: 70%;">
           <app-my-textfield type="text" id="nivelesPlan" [placeholder]="placeholderLevels" (textChanged)="onInputText($event)"></app-my-textfield>
         </div>
         <hr style="margin: 0 0px; border-color:#EDEDED;">
         <div class = "moneda-principal">
-          <h1>MONEDA PRINCIPAL</h1>
+          <h2>MONEDA PRINCIPAL</h2>
           <h2>Bolivianos</h2>
         </div>
         <br>
@@ -41,7 +42,12 @@
 
       <!-- Popup para agregar monedas -->
       <div *ngIf="mostrarPopup" class="popup">
-        <h2>Agregar Moneda</h2>
+        <h2>
+          <span class="icon">
+           <i class="fa-solid fa-coins"></i>
+          </span>
+          Registro de Moneda
+        </h2>
         <label for="popupNombreMoneda">Nombre:</label>
         <!--        <app-my-textfield type="text" id="popupNombreMoneda" [(ngModel)]="nombreMoneda" [placeholder]="placeholderDate" (textChanged)="onInputText($event)"></app-my-textfield>-->
         <input type="text" id="popupNombreMoneda" [(ngModel)]="nombreMoneda">
@@ -56,3 +62,7 @@
     </div>
   </div>
 </div>
+</div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@700&display=swap" rel="stylesheet">
