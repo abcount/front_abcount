@@ -4,59 +4,28 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
 
 
 interface Account {
+  level: number;
   accountNumber: string;
   accountName: string;
   children: Account[];
 
 }
 
+const newAccount: Account = {
+  level: 0,
+  accountNumber: '00000',
+  accountName: 'NUEVOOO',
+  children: []
+}
+
 const TREE_DATA: Account[] = [
   {
-    accountNumber: '1',
-    accountName: 'Main Account',
+    level: 0,
+    accountNumber: '00000',
+    accountName: 'Prueba',
     children: [
-      {
-        accountNumber: '11',
-        accountName: 'Sub Account',
-        children: [
-          {
-            accountNumber: '111',
-            accountName: 'Sub Sub Account',
-            children: []
-          }
-        ]
-      },
-      {
-        accountNumber: '12',
-        accountName: 'Sub Account',
-        children: [
-          {
-            accountNumber: '121',
-            accountName: 'Sub Sub Account',
-            children: []
-          }
-        ]
-      },
-
     ]
-  },
-  {
-    accountNumber: '2',
-    accountName: 'Second Account',
-    children: [
-      {
-        accountNumber: '21',
-        accountName: 'Sub Account',
-        children: [
-          {
-            accountNumber: '222',
-            accountName: 'Sub Sub Account',
-            children: []
-          }
-        ]
-      },
 
-    ]
   }
 ];
 
@@ -77,7 +46,6 @@ interface NodeExample {
 
 
 export class Tap4Component {
-  buttonText: string = 'Click me!';
 
   private _transformer = (node: Account, level: number) => {
     return {
@@ -109,11 +77,14 @@ export class Tap4Component {
   hasChild = (_: number, node: NodeExample) => node.expandable;
 
 
-  onClick() {
-    console.log('Button clicked!');
-  }
-  onTextChanged(text: string) {
-    console.log('Text changed: ' + text);
-  }
+ addNewChildAccount(level: number) {
+   console.log('addNewChildAccount');
+   TREE_DATA[0].children.push(newAccount)
+    this.dataSource.data = TREE_DATA;
+
+ }
+
+
+
 }
 

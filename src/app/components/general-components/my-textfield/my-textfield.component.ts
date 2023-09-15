@@ -9,10 +9,4 @@ export class MyTextfieldComponent {
 
   @Input() placeholder: string = '';
   @Input('formControlName') value: string = '';
-
-
-
-
-
-
 }
