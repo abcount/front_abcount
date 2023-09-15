@@ -1,0 +1,55 @@
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .circle-line-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .step-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .circle-subtitle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    transition: background-color 0.3s;
+  }
+  
+  .line {
+    height: 5px;
+    width: 150px;
+    background-color: #ddd;
+    transition: background-color 0.3s;
+  }
+  
+  .active {
+    background-color: #66CDAA;
+    color: white;
+  }
+  
+  .filled {
+    background-color: #66CDAA;
+  }
+  
+  .subtitle {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+  }
+  
