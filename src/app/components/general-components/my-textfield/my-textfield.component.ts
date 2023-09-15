@@ -8,13 +8,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class MyTextfieldComponent {
 
   @Input() placeholder: string = '';
-  @Output() textChanged = new EventEmitter<string>();
+  @Input('formControlName') value: string = '';
 
 
-
-  onInput(value: string | undefined) {
-    this.textChanged.emit(value || ''); // Use empty string if value is undefined
-  }
 
 
 
