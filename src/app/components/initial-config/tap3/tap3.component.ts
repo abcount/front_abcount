@@ -40,7 +40,7 @@ export class Tap3Component {
     }
   }
   buttonText1: string = 'AGREGAR';
-  buttonText2: string = 'ACEPTAR';
+  buttonText2: string = 'GUARDAR';
   buttonText3: string = 'CANCELAR';
 
   placeholderDate: string = '10/09/2023';

@@ -1,0 +1,23 @@
+<div class="progress-container">
+    <div class="circle-line-container">
+      <div *ngFor="let step of steps; let i = index" class="step-container">
+        
+        <!-- Línea antes del primer círculo -->
+        <div *ngIf="i === 0" class="line" [class.filled]="i < currentStep"></div>
+        
+        <div class="circle-subtitle-container">
+          <!-- Círculo con ícono -->
+          <div [class.active]="i < currentStep" class="circle">
+            <fa-icon [icon]="getIcon(i)"></fa-icon>
+          </div>
+          <!-- Subtítulo -->
+          <div class="subtitle">{{subtitles[i]}}</div>
+        </div>
+        
+        <!-- Línea entre círculos -->
+        <div *ngIf="!isLast(i)" class="line" [class.filled]="i + 1 < currentStep"></div>
+        
+      </div>
+    </div>
+  </div>
+  

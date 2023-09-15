@@ -14,6 +14,16 @@
     border: #EDEDED 2px solid;
     width: 100%;
     height: 600px;
+    background: url(/assets/icons/paisaje-urbano.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position-x: 90%;
+    background-position-y: 95%;
+}
+a{
+    text-decoration: none;
+    color: black;
+    
 }
 .input {
     font-size: 20px;
@@ -21,9 +31,14 @@
     border: #66CDAA 2px solid;
     border-radius: 10px;
     outline: none;
-    width: 100%;
+    width: 91%;
     margin-bottom: 25px;
     padding: 10px 20px;
+}
+.input1{
+    outline: none;
+    width: 91%;
+    margin-top: -13px;
 }
 .boton {
     outline: none;
@@ -37,6 +52,10 @@
     padding: 10px 20px;
     margin-left: 72%;
     background-color: #66CDAA;
+}
+.boton1{
+    margin-left: 72%;
+    width: 80%;
 }
 .tap2{
     background-color: #EEEEEE;
@@ -53,6 +72,10 @@
     box-sizing: border-box;
     height: 30%;
 
+}
+.hr{
+    margin: 0 0px; 
+    border-color:#EDEDED;
 }
 h1{
     font-family: roboto;

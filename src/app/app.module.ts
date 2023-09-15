@@ -16,6 +16,10 @@ import {AleModule} from "./modules/AleModule";
 import {CarlosModule} from "./modules/CarlosModule";
 import {MicaModule} from "./modules/MicaModule";
 import {AndreModule} from "./modules/AndreModule";
+import { ProgressComponent } from './components/general-components/progress/progress.component';
+import { faDatabase, faBuilding, faCogs, faFolder } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import {AndreModule} from "./modules/AndreModule";
     Tap2Component,
     Tap3Component,
     Tap4Component,
+    ProgressComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,8 @@ import {AndreModule} from "./modules/AndreModule";
     AleModule,
     AndreModule,
     CarlosModule,
-    MicaModule
+    MicaModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
