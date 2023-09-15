@@ -14,14 +14,18 @@
     height: 30%;
 
 }
-
+a{
+    text-decoration: none;
+    color: black;
+    
+}
 
 
 
 body {
     font-family: roboto;
 }
-.wrapper > div:nth-child(2) { 
+.row > div:nth-child(2) { 
     max-width: 80%; 
 }
 
@@ -38,9 +42,9 @@ body {
     border-color: #EDEDED;
 }
 
-.wrapper {
+.row {
     display: grid;
-    grid-template-columns: 25% 45% 30%; /* Aquí está el cambio a 3 columnas */
+    grid-template-columns: 20% 43% 35%; /* Aquí está el cambio a 3 columnas */
     margin: 0 3%;
     margin-top: 20px;
 }
