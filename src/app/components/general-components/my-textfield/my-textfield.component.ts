@@ -11,7 +11,6 @@ export class MyTextfieldComponent {
   @Output() textChanged = new EventEmitter<string>();
 
 
-  // TODO need to understand how to update the value of the textfield
 
   onInput(value: string | undefined) {
     this.textChanged.emit(value || ''); // Use empty string if value is undefined

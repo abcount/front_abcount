@@ -1,0 +1,14 @@
+.center-container {
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+.container {
+  margin: 0 3%;
+  margin-top: 5px;
+}
+
+.separator {
+  margin: 0 3%;
+}
