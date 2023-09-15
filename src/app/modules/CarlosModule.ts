@@ -11,6 +11,6 @@ const CarlosComponents = [
     imports: [
         
     ],
-    exports: [CarlosComponents]
+    exports: [] // Poner [CarlosComponents]
 })
 export class CarlosModule {}

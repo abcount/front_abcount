@@ -11,6 +11,6 @@ const AleComponents = [
     imports: [
         
     ],
-    exports: [AleComponents]
+    exports: [] // Poner [AleComponents]
 })
 export class AleModule {}

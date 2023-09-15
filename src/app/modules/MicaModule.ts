@@ -11,6 +11,6 @@ const MicaComponents = [
     imports: [
         
     ],
-    exports: [MicaComponents]
+    exports: [] // Poner [MicaComponents]
 })
 export class MicaModule {}

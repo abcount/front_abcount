@@ -11,6 +11,6 @@ const AndreComponents = [
     imports: [
 
     ],
-    exports: [AndreComponents]
+    exports: [] // Poner [AndreComponents]
 })
 export class AndreModule {}
