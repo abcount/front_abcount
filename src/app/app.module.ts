@@ -12,6 +12,10 @@ import {FormsModule} from "@angular/forms";
 import {SebastianModule} from "./modules/SebastianModule";
 import {MatTreeModule} from "@angular/material/tree";
 import {MatIconModule} from "@angular/material/icon";
+import {AleModule} from "./modules/AleModule";
+import {CarlosModule} from "./modules/CarlosModule";
+import {MicaModule} from "./modules/MicaModule";
+import {AndreModule} from "./modules/AndreModule";
 
 @NgModule({
   declarations: [
@@ -29,7 +33,10 @@ import {MatIconModule} from "@angular/material/icon";
     SebastianModule,
     MatTreeModule,
     MatIconModule,
-
+    AleModule,
+    AndreModule,
+    CarlosModule,
+    MicaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
