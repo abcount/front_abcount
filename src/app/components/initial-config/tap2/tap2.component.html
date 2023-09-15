@@ -3,13 +3,13 @@
         <div style="margin-top: 20px; margin-left: 20px;">
             <h1>Configuración de la Empresa</h1>
         </div>
-        <hr style="margin: 0 0px; border-color:#EDEDED;">
+        <hr>
         <div style="margin: 0 3%; margin-top: 20px;">
             <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="2"></app-progress>
 
             <div class="wrapper">
                 <div class="registro" style="margin-right: 5%; margin-left: 3%;">
-                    <hr style="margin: 0 0px; border-color:#EDEDED;">
+                    <hr>
                     <div>
                         <div style="margin-top: 15px;" class="wrapper2">
                             <div>
@@ -17,11 +17,11 @@
                             </div>
                             <div>
                                 <h3>Nombre</h3>
-                                <div  style="width: 91%;">
+                                <div class="input1">
                                     <app-my-textfield [placeholder]="placeholderSubsidiary" (textChanged)="onInputText($event)"></app-my-textfield>
                                 </div>
                                 <h3>Dirección</h3>
-                                <div style="width: 91%;">
+                                <div class="input1">
                                     <app-my-textfield [placeholder]="placeholderAddress" (textChanged)="onInputText($event)"></app-my-textfield>
                                 </div>
                                 <div>
@@ -30,23 +30,24 @@
                             </div>
                             <br>
                         </div>
-                        <hr style="margin: 0 0px; border-color:#EDEDED;">
+                        <hr>
                         <div style="margin-top: 25px;" class="wrapper2">
                             <div>
                                 <h2>ÁREA</h2>
                             </div>
                             <div>
                                 <h3>Nombre</h3>
-                                <div  style="width: 91%;">
+                                <div class="input1">
                                     <app-my-textfield [placeholder]="placeholderArea" (textChanged)="onInputText($event)"></app-my-textfield>
                                 </div>
-                                <div>
-                                    <app-my-button style="margin-left: 72%;" [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+                                <div class="boton1">
+                                    <app-my-button  [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+                                    <!-- Revisar el ancho del boton -->
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <hr style="margin: 0 0px; border-color:#EDEDED;">
+                        <hr>
                     </div>
                 </div>
                 <div class="datos">
@@ -55,10 +56,10 @@
             </div>
             <div style="margin-top: 15px;" class="wrapper">
                 <div>
-                    <h1> &lt;&lt;Atras</h1>
+                    <a routerLink="/tap1"><h1>&lt;&lt;Atras </h1></a>
                 </div>
                 <div style="margin-left: 330px">
-                    <h1>Siguiente&gt;&gt;</h1>
+                    <a routerLink="/tap3"><h1>Siguiente&gt;&gt;</h1></a>
                 </div>
                 <br>
             </div>
