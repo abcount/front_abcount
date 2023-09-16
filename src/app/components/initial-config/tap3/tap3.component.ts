@@ -7,10 +7,12 @@ import { Component } from '@angular/core';
 })
 export class Tap3Component {
 
-  monedas: { nombre: string, color: string }[] = [];
+  monedas: { nombre: string, codigo: string }[] = [];
   mostrarPopup: boolean = false;
   nombreMoneda: string = '';
   codigoISO: string = '';
+
+  color = '#CFF4E8'
 
   agregarMoneda() {
     this.mostrarPopup = true;
@@ -20,7 +22,8 @@ export class Tap3Component {
 
   guardarMoneda() {
     if (this.nombreMoneda && this.codigoISO) {
-      this.monedas.push({ nombre: this.nombreMoneda, color: '#CFF4E8' });
+      this.monedas.push({ nombre: this.nombreMoneda, codigo:this.codigoISO });
+      console.log(this.monedas);
       this.mostrarPopup = false;
       this.nombreMoneda = '';
       this.codigoISO = '';
@@ -33,7 +36,7 @@ export class Tap3Component {
     this.codigoISO = '';
   }
 
-  removerMoneda(moneda: { nombre: string, color: string }) {
+  removerMoneda(moneda: { nombre: string, codigo: string }) {
     const index = this.monedas.indexOf(moneda);
     if (index !== -1) {
       this.monedas.splice(index, 1);
