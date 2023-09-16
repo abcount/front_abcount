@@ -30,7 +30,7 @@
           <app-my-button [buttonLabel]="buttonText1" (clicked)= "onClick()" (click)="agregarMoneda()"></app-my-button>
         </div>
 
-        <div *ngFor="let moneda of monedas" [style.background-color]="moneda.color" class="moneda-item">
+        <div *ngFor="let moneda of monedas" [style.background-color]="color" class="moneda-item">
           {{ moneda.nombre }} <button (click)="removerMoneda(moneda)" class="remove-button">x</button>
         </div>
 
