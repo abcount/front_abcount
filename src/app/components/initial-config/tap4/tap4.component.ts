@@ -1,32 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FlatTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
 
 
-interface Account {
-  level: number;
-  accountNumber: string;
-  accountName: string;
-  children: Account[];
-
-}
-
-const newAccount: Account = {
-  level: 0,
-  accountNumber: '00000',
-  accountName: 'NUEVOOO',
-  children: []
-}
-
 const TREE_DATA: Account[] = [
-  {
-    level: 0,
-    accountNumber: '00000',
-    accountName: 'Prueba',
-    children: [
-    ]
 
-  }
 ];
 
 interface NodeExample {
@@ -35,6 +13,12 @@ interface NodeExample {
   level: number;
 }
 
+interface Account {
+  level: number;
+  accountNumber: number;
+  accountName: string;
+  children: Account[];
+}
 
 @Component({
   selector: 'app-tap4',
@@ -77,14 +61,50 @@ export class Tap4Component {
   hasChild = (_: number, node: NodeExample) => node.expandable;
 
 
- addNewChildAccount(level: number) {
-   console.log('addNewChildAccount');
-   TREE_DATA[0].children.push(newAccount)
-    this.dataSource.data = TREE_DATA;
+ addNewChildAccount(node : NodeExample | null ) {
+   if(node == null){
+     let parentAccount = {
+       level: 0,
+       accountNumber: TREE_DATA.length + 1,
+       accountName: 'NEW',
+       children: []
+     }
+     TREE_DATA.push(parentAccount);
+   }
+   else{
+     let strAccountName = node.name.split(" ", 1);
+     let accountId = strAccountName[0];
+     // @ts-ignore
+     let newAccountId = accountId * 10 + 1;
+     console.log(accountId);
+     let childrenAccount = {
+       level: node.level + 1,
+       accountNumber: newAccountId,
+       accountName: 'NEW CHILD',
+       children: []
+     }
+
+     this.positioningLeaf(TREE_DATA, Number(accountId), node.level, childrenAccount);
+
+
+   }
+   this.dataSource.data = TREE_DATA;
 
  }
 
+ // @ts-ignore
+  positioningLeaf(listOfAccounts : Account[],  rootAccount : number, level: number, childrenAccount: Account ){
+   if(listOfAccounts.length == 0){
+     listOfAccounts.push(childrenAccount)
+     return listOfAccounts;
+   }
+   console.log("aaa");
+   console.log(rootAccount / Math.pow(10, level))
+    console.log(Math.ceil(rootAccount / Math.pow(10, level)))
+   this.positioningLeaf(listOfAccounts[rootAccount-1].children, Math.ceil(rootAccount / Math.pow(10, level)), level++, childrenAccount)
 
+
+ }
 
 }
 
