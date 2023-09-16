@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {FormStateService} from "../../../services/form-state.service";
 
 @Component({
   selector: 'app-tap3',
@@ -6,6 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./tap3.component.css']
 })
 export class Tap3Component {
+  constructor(public formService: FormStateService) {}
+
 
   monedas: { nombre: string, codigo: string }[] = [];
   mostrarPopup: boolean = false;
@@ -41,6 +45,25 @@ export class Tap3Component {
     if (index !== -1) {
       this.monedas.splice(index, 1);
     }
+  }
+  get formGroup(): FormGroup {
+    return this.formService.formGroup;
+  }
+  get dateControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('fecha') as FormControl;
+  }
+
+  get levelControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('nivel') as FormControl;
+
+  }
+  get nameControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('nombre') as FormControl;
+  }
+
+  get codeControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('codigo') as FormControl;
+
   }
   buttonText1: string = 'AGREGAR';
   buttonText2: string = 'GUARDAR';
