@@ -18,8 +18,11 @@
                             <div>
                                 <h3>Nombre</h3>
                                 <div class="input1">
-                                    <app-my-textfield [placeholder]="placeholderSubsidiary" ></app-my-textfield>
+                                    <app-my-textfield [control]="subsidiaryControl"  [placeholder]="placeholderSubsidiary" ></app-my-textfield>
                                 </div>
+                                <button (click)="printValue()">Imprimir valor</button>
+
+
                                 <h3>Dirección</h3>
                                 <div class="input1">
                                     <app-my-textfield [placeholder]="placeholderAddress" ></app-my-textfield>
@@ -54,6 +57,7 @@
                     Los datos iran aca pronto :D
                 </div>
             </div>
+       
             <div style="margin-top: 15px;" class="wrapper">
                 <div>
                     <a routerLink="/tap1"><h1>&lt;&lt;Atras </h1></a>

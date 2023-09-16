@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { FormStateService } from 'src/app/services/form-state.service';
 
 @Component({
   selector: 'app-tap2',
@@ -20,5 +22,20 @@ export class Tap2Component {
   onInputText(text: string) {
     console.log('Text changed: ' + text);
   }
+
+  constructor(private formStateService: FormStateService) {
+    
+  }
+  printValue() {
+    console.log(JSON.stringify(this.formStateService.getForm().value, null, 2));
+  }
+
+  get formGroup(): FormGroup {
+    return this.formStateService.form;
+  }
+  get subsidiaryControl(): FormControl {
+    return this.formGroup.get('subsidiary') as FormControl;
+  }
+
 
 }

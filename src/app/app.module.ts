@@ -20,6 +20,9 @@ import { ProgressComponent } from './components/general-components/progress/prog
 import { faDatabase, faBuilding, faCogs, faFolder } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
     AndreModule,
     CarlosModule,
     MicaModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
