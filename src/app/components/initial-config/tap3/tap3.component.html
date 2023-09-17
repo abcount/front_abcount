@@ -26,8 +26,7 @@
         <br>
         <div class="monedas-container">
           <h2>Otras monedas que quiera manejar</h2>
-
-          <app-my-button [buttonLabel]="buttonText1" (clicked)= "onClick()" (click)="agregarMoneda()"></app-my-button>
+          <app-my-button [isGreen]="true" (click)="agregarMoneda()">AGREGAR</app-my-button>
         </div>
 
         <div *ngFor="let moneda of monedas" [style.background-color]="color" class="moneda-item">
@@ -59,8 +58,8 @@
           <input type="text" id="popupCodigoISO" [(ngModel)]="codigoISO" class="input-group">
         </div>
         <br>
-        <app-my-button [buttonLabel]="buttonText2" (click)= "guardarMoneda()" ></app-my-button>
-        <button class="cancel" (click)= "cancelar()">CANCELAR</button>
+        <app-my-button [isGreen]="true" (click)="guardarMoneda()">ACEPTAR</app-my-button>
+        <app-my-button [isRed]="true" (click)="cancelar()">CANCELAR</app-my-button>
       </div>
     </div>
     <div style="margin-top: 15px;" class="wrapper">
