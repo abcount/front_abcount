@@ -9,17 +9,6 @@ import { FormStateService } from 'src/app/services/form-state.service';
 })
 export class Tap1Component  {
 
-<<<<<<< HEAD
-  typeforText = 'text';
-  typeforEmail = 'email';
-  typeforFile = 'file';
-  placeholderNombre = 'Ingrese el nombre de tu sucursal';
-  placeholderDireccion = 'Ingrese la dirección de tu sucursal';
-  placeholderRubro = 'Ingrese el rubro de tu sucursal';
-  placeholderNIT = 'Ingrese el NIT de tu sucursal';
-  placeholderEmail = 'Ingrese el email de tu sucursal';
-  placeholderNumeroContacto = 'Ingrese el número de contacto de tu sucursal';
-=======
   labelNombre = 'Nombre de la empresa';
   placeholderNombre = 'Ingrese el nombre de tu empresa';
   iconinputNombre = "fa-regular fa-building";
@@ -38,7 +27,6 @@ export class Tap1Component  {
   labelNumeroContacto = 'Número de contacto';
   placeholderNumeroContacto = 'Ingrese un número de contacto';
   iconinputNumeroContacto = "fa-regular fa-phone";
->>>>>>> 8f07bbabf8528ccf5a34b3ebc38438dc6a6dcd1d
 
   @Input() control: FormControl;
   imageURL: string | ArrayBuffer | null = null;
