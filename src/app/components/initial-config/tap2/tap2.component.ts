@@ -15,6 +15,19 @@ interface Elemento {
 })
 export class Tap2Component {
 
+  iconinputNombre = "fa-solid fa-shop";
+  iconinputArea = "fa-regular fa-building";
+  labelNombre = 'Nombre de la sucursal';
+  labelDireccion = 'Dirección';
+  labelNombreArea = 'Nombre del area';
+  placeholderDireccion = 'Ingrese la dirección de la sucursal';
+  iconinputDireccion = "fa-regular fa-map-marker-alt";
+  buttonText: string = 'AGREGAR';
+  placeholderSubsidiary: string = 'Ingrese el nombre de tu sucursal';
+
+  placeholderAddress: string = 'Ingrese la dirección de tu sucursal';
+  placeholderArea: string = 'Ingrese el nombre de tu área';
+
   arbol: Elemento[] = [
     {
       nombre: 'Empresa textilon',
@@ -53,11 +66,6 @@ export class Tap2Component {
     elemento.mostrarHijos = !elemento.mostrarHijos;
   }
 
-  buttonText: string = 'AGREGAR';
-  placeholderSubsidiary: string = 'Ingrese el nombre de tu sucursal';
-
-  placeholderAddress: string = 'Ingrese la dirección de tu sucursal';
-  placeholderArea: string = 'Ingrese el nombre de tu área';
 
   onClick() {
     console.log('Button clicked!');

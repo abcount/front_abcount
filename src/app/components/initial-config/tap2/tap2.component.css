@@ -20,6 +20,28 @@
     background-position-x: 90%;
     background-position-y: 95%;
 }
+.navigator {
+    display: grid;
+    grid-template-columns: 95% 100%;
+  }
+a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #757575;
+    text-decoration: none;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+  }
+  a:focus {
+    outline: none !important;
+  }
+  a:hover {
+    text-decoration: none;
+    color: #7BC8CA;
+  }
+  
 a{
     text-decoration: none;
     color: black;
@@ -94,10 +116,10 @@ h1{
     font-weight: 575;
 }
 h2{
-    font-family: 'Anek Telugu', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 14px;
     color: #757575;
+    height: 14px;
+    margin: 0px;
 }
 h3{
     font-family: 'Anek Telugu', sans-serif;
