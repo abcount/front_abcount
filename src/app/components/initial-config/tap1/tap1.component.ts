@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormStateService } from 'src/app/services/form-state.service';
 
@@ -9,7 +9,9 @@ import { FormStateService } from 'src/app/services/form-state.service';
 })
 export class Tap1Component  {
 
-  
+  typeforText = 'text';
+  typeforEmail = 'email';
+  typeforFile = 'file';
   placeholderNombre = 'Ingrese el nombre de tu sucursal';
   placeholderDireccion = 'Ingrese la dirección de tu sucursal';
   placeholderRubro = 'Ingrese el rubro de tu sucursal';
@@ -17,6 +19,7 @@ export class Tap1Component  {
   placeholderEmail = 'Ingrese el email de tu sucursal';
   placeholderNumeroContacto = 'Ingrese el número de contacto de tu sucursal';
 
+  @Input() control: FormControl;
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -53,6 +56,8 @@ export class Tap1Component  {
     this.isDragging = false;
   }
 
+  
+/*
   loadPreview(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -62,14 +67,34 @@ export class Tap1Component  {
     };
     reader.readAsDataURL(file);
   }
-
+*/
+loadPreview(file: File) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    if (reader.result) {
+      this.imageURL = reader.result;
+      this.logoControl.setValue(reader.result);  // Añadir esta línea
+    }
+  };
+  reader.readAsDataURL(file);
+}
+/*
   removeImage() {
     this.imageURL = null;
     this.fileInput.nativeElement.value = '';
   }
+*/
+
+removeImage() {
+  this.imageURL = null;
+  this.fileInput.nativeElement.value = '';
+  
+  // Establecer el valor del campo 'logo' del formulario a null o cadena vacía
+  this.logoControl.setValue(null);
+}
 
   get nombreControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('nombre') as FormControl;
+    return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseName') as FormControl;
   }
 
   
@@ -99,7 +124,7 @@ export class Tap1Component  {
   }
   
   get logoControl(): FormControl {
-    return this.formGroup.get('logo') as FormControl;
+    return (this.formGroup.get('enterprise') as FormGroup).get('logo') as FormControl;
   }
   printValue() {
     console.log(JSON.stringify(this.formGroup.value, null, 2));

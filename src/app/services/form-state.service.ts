@@ -12,7 +12,7 @@ export class FormStateService {
     constructor(private fb: FormBuilder) {
       this.formGroup = this.fb.group({
         enterprise: this.fb.group({
-          nombre: [''],
+          enterpriseName: [''],
           direccion: [''],
           rubro: [''],
           nit: [''],
