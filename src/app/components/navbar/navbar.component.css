@@ -1,0 +1,59 @@
+/*Características generales*/
+* {
+    margin-left: 3px;
+    margin-right: 1px;
+    margin-top: 1px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: #ffffff;
+}
+/*Navbar - detalles*/
+h2 {
+    font-family: 'Anek Telugu', sans-serif;
+    font-size: 28px;
+    color: #66CDAA; 
+    margin-bottom: 0px;
+}
+li, .navbar-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #7F7F7F;
+    font-family: 'Anek Telugu', sans-serif;
+
+}
+li a img {
+    margin-right: 5px;
+}
+.option {
+    padding-left: 200px !important;
+}
+.dropdown{
+    padding-left: 200px !important;
+}
+hr {
+    margin: 5px 10px;
+}
+.line {
+    margin: 0 25px;
+}
+.dropdown-item {
+    color: rgba(0,0,0,.5);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    
+    
+}
+.dropdown-item:hover {
+    background-color: #DCF8EF;
+    color: #66CDAA
+}
+.plomo:active {
+    background-color: #66CDAA;
+    color: white;
+}
+.link{
+    font-weight: 800;
+    font-size: 16px;
+}
