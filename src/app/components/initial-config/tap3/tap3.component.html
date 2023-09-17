@@ -9,13 +9,13 @@
       <form>
         <h2>INICIO DE USO</h2>
         <h2>Fecha de registro de la empresa</h2>
-        <div class="form-group" style="width: 70%;">
+        <div style="width: 70%;">
           <app-my-textfield [control]="dateControl" [placeholder]="placeholderDate" ></app-my-textfield>
         </div>
         <hr style="margin: 0 0px; border-color:#EDEDED;">
         <h2>CANTIDAD DE NIVELES EN EL PLAN DE CUENTAS</h2>
         <h2>Niveles del plan de cuentas</h2>
-        <div class="form-group" style="width: 70%;">
+        <div  style="width: 70%;">
           <app-my-textfield [control]="levelControl" [placeholder]="placeholderLevels" ></app-my-textfield>
         </div>
         <hr style="margin: 0 0px; border-color:#EDEDED;">
@@ -48,17 +48,29 @@
           </span>
           Registro de Moneda
         </h2>
-        <h2>Nombre:</h2>
-<!--                <app-my-textfield [control]="nameControl" [placeholder]="placeholderCoin" [(ngModel)]="nombreMoneda"></app-my-textfield>-->
-        <input type="text" id="popupNombreMoneda" [(ngModel)]="nombreMoneda" class="input">
+        <div class="form-group">
+          <a for="popupNombreMoneda" class="label-inline">Nombre:</a>
+          <input type="text" id="popupNombreMoneda" [(ngModel)]="nombreMoneda" class="input-group">
+        </div>
         <br>
-        <h2>Código de Moneda (Código ISO):</h2>
-<!--                <app-my-textfield [control]="codeControl" [placeholder]="placeholderISO" [(ngModel)]="codigoISO" ></app-my-textfield>-->
-        <input type="text" id="popupCodigoISO" [(ngModel)]="codigoISO" class="input">
+        <div class="form-group">
+          <a>Código de Moneda (Código ISO):</a>
+  <!--                <app-my-textfield [control]="codeControl" [placeholder]="placeholderISO" [(ngModel)]="codigoISO" ></app-my-textfield>-->
+          <input type="text" id="popupCodigoISO" [(ngModel)]="codigoISO" class="input-group">
+        </div>
         <br>
         <app-my-button [buttonLabel]="buttonText2" (click)= "guardarMoneda()" ></app-my-button>
-        <app-my-button [buttonLabel]="buttonText3" (clicked)= "cancelar()"></app-my-button>
+        <button class="cancel" (click)= "cancelar()">CANCELAR</button>
       </div>
+    </div>
+    <div style="margin-top: 15px;" class="wrapper">
+      <div>
+        <a routerLink="/tap2"> &lt;&lt;Atras </a>
+      </div>
+      <div>
+        <a routerLink="/tap4">Siguiente>></a>
+      </div>
+      <br>
     </div>
   </div>
 </div>
