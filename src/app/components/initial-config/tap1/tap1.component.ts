@@ -9,13 +9,24 @@ import { FormStateService } from 'src/app/services/form-state.service';
 })
 export class Tap1Component  {
 
-  
-  placeholderNombre = 'Ingrese el nombre de tu sucursal';
-  placeholderDireccion = 'Ingrese la dirección de tu sucursal';
-  placeholderRubro = 'Ingrese el rubro de tu sucursal';
-  placeholderNIT = 'Ingrese el NIT de tu sucursal';
-  placeholderEmail = 'Ingrese el email de tu sucursal';
-  placeholderNumeroContacto = 'Ingrese el número de contacto de tu sucursal';
+  labelNombre = 'Nombre de la empresa';
+  placeholderNombre = 'Ingrese el nombre de tu empresa';
+  iconinputNombre = "fa-regular fa-building";
+  labelDireccion = 'Dirección';
+  placeholderDireccion = 'Ingrese la dirección de la empresa';
+  iconinputDireccion = "fa-regular fa-map-marker-alt";
+  labelRubro = 'Rubro';
+  placeholderRubro = 'Ingrese el rubro al que se dedica';
+  iconinputRubro = "fa-regular fa-store";
+  labelNIT = 'NIT de la empresa';
+  placeholderNIT = 'Ingrese el NIT de la empresa';
+  iconinputNIT = "fa-regular fa-id-card";
+  labelEmail = 'E-mail de contacto';
+  placeholderEmail = 'Ingrese un e-mail de contacto';
+  iconinputEmail = "fa-regular fa-envelope";
+  labelNumeroContacto = 'Número de contacto';
+  placeholderNumeroContacto = 'Ingrese un número de contacto';
+  iconinputNumeroContacto = "fa-regular fa-phone";
 
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
