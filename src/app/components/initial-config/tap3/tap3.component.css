@@ -19,7 +19,20 @@ h2, h3 {
   font-weight: 800;
   color: #757575;
 }
+.input {
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  border: #D9D9D9 2px solid;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 10px 2px;
+}
+input:focus {
+  border:2px solid #66CDAA;
 
+}
 /* Estilos para la capa de fondo desenfocada */
 .overlay {
   position: fixed;
@@ -47,13 +60,14 @@ h2, h3 {
   z-index: 101; /* Coloca el popup por encima de la capa de fondo */
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+
 }
 .remove-button {
   background-color: #CFF4E8;
   border: none;
   cursor: pointer;
   font-size: 20px;
-  color: #66CDAA; /* Color rojo por defecto */
+  color: #66CDAA;
   transition: background-color 0.3s; /* Transición para el cambio de fondo */
   margin-left: 10px; /* Espacio entre el nombre de la moneda y el botón */
 }
@@ -76,7 +90,7 @@ h2, h3 {
 }
 
 .moneda-item {
-  margin-top: 3px;
+  margin-top: 9px;
   display: inline-block;
   color: #66CDAA;
   font-size: 20px;
@@ -87,8 +101,32 @@ h2, h3 {
   margin-right: 135px;
 }
 .icon {
-  margin-right: 5px; /* Espacio entre el icono y el texto */
+  width: 50px; /* Establece el ancho deseado */
+  height: 50px; /* Establece la misma altura que el ancho */
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 30px;
+  color: burlywood;
+  background-color: antiquewhite;
+  border-radius: 50%; /* Esto hará que el contenedor sea un círculo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
+.icon i {
+  vertical-align: middle; /* Alinea el icono verticalmente en el centro del círculo */
+}
+.icon i,
+h2 {
+  display: flex;
+  align-items: center;
+  margin-top: 5px; /* Ajusta el valor según cuánto deseas que se baje el texto */
+}
+
+
+
 
 
 

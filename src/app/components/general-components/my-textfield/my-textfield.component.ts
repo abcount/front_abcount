@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-my-textfield',
@@ -6,7 +7,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   styleUrls: ['./my-textfield.component.css']
 })
 export class MyTextfieldComponent {
-
+  @Input() iconinput: string = '';
+  @Input() label: string = '';
   @Input() placeholder: string = '';
-  @Input('formControlName') value: string = '';
+  @Input() control: FormControl;
 }

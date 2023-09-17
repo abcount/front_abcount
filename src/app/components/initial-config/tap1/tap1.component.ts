@@ -1,23 +1,41 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { FormStateService } from 'src/app/services/form-state.service';
 
 @Component({
   selector: 'app-tap1',
   templateUrl: './tap1.component.html',
   styleUrls: ['./tap1.component.css']
 })
-export class Tap1Component {
+export class Tap1Component  {
 
-  placeholderNombre: string = 'Ingrese el nombre de tu sucursal';
-  placeholderDireccion: string = 'Ingrese la dirección de tu sucursal';
-  placeholderRubro: string = 'Ingrese el rubro de tu sucursal';
-  placeholderNIT: string = 'Ingrese el NIT de tu sucursal';
-  placeholderEmail: string = 'Ingrese el email de tu sucursal';
-  placeholderNumeroContacto: string = 'Ingrese el número de contacto de tu sucursal';
-
+  labelNombre = 'Nombre de la empresa';
+  placeholderNombre = 'Ingrese el nombre de tu empresa';
+  iconinputNombre = "fa-regular fa-building";
+  labelDireccion = 'Dirección';
+  placeholderDireccion = 'Ingrese la dirección de la empresa';
+  iconinputDireccion = "fa-regular fa-map-marker-alt";
+  labelRubro = 'Rubro';
+  placeholderRubro = 'Ingrese el rubro al que se dedica';
+  iconinputRubro = "fa-regular fa-store";
+  labelNIT = 'NIT de la empresa';
+  placeholderNIT = 'Ingrese el NIT de la empresa';
+  iconinputNIT = "fa-regular fa-id-card";
+  labelEmail = 'E-mail de contacto';
+  placeholderEmail = 'Ingrese un e-mail de contacto';
+  iconinputEmail = "fa-regular fa-envelope";
+  labelNumeroContacto = 'Número de contacto';
+  placeholderNumeroContacto = 'Ingrese un número de contacto';
+  iconinputNumeroContacto = "fa-regular fa-phone";
 
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
   @ViewChild('fileInput') fileInput!: ElementRef;
+
+  constructor(public formService: FormStateService) {}
+  get formGroup(): FormGroup {
+    return this.formService.formGroup;
+  }
 
   onFileChanged(event: any) {
     const file = event.target.files[0];
@@ -61,8 +79,45 @@ export class Tap1Component {
     this.fileInput.nativeElement.value = '';
   }
 
-  onInputText(text: string) {
-    console.log('Text changed: ' + text);
+  get nombreControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('nombre') as FormControl;
   }
+
+  
+  get direccionControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('direccion') as FormControl;
+
+  }
+  
+  get rubroControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('rubro') as FormControl;
+
+  }
+  
+  get nitControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('nit') as FormControl;
+
+  }
+  
+  get emailControl(): FormControl { 
+    return (this.formGroup.get('enterprise') as FormGroup).get('email') as FormControl;
+
+  }
+  
+  get numeroContactoControl(): FormControl {  
+    return (this.formGroup.get('enterprise') as FormGroup).get('numeroContacto') as FormControl;
+
+  }
+  
+  get logoControl(): FormControl {
+    return this.formGroup.get('logo') as FormControl;
+  }
+  printValue() {
+    console.log(JSON.stringify(this.formGroup.value, null, 2));
+}
+
+
+
+
 
 }
