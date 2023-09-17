@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <div class="tap2">
     <div class="container">
         <div style="margin-top: 20px; margin-left: 20px;">
@@ -16,19 +17,18 @@
                                 <h2>SUCURSAL</h2>
                             </div>
                             <div>
-                                <h3>Nombre</h3>
-                                <div class="input1">
-                                    <app-my-textfield [control]="subsidiaryControl"  [placeholder]="placeholderSubsidiary" ></app-my-textfield>
+                                <div >
+                                    <!-- <app-my-textfield [control]="subsidiaryControl"  [placeholder]="placeholderSubsidiary" ></app-my-textfield> -->
+                                    <app-my-textfield [iconinput]="iconinputNombre" [label]="labelNombre" [control]="subsidiaryControl" [placeholder]="placeholderSubsidiary"></app-my-textfield>
+
                                 </div>
-                                <button (click)="printValue()">Imprimir valor</button>
-
-
-                                <h3>Dirección</h3>
-                                <div class="input1">
-                                    <app-my-textfield [placeholder]="placeholderAddress" ></app-my-textfield>
+                                <!-- <button (click)="printValue()">Imprimir valor</button> -->
+                                <div >
+                                    <!-- <app-my-textfield [placeholder]="placeholderAddress" ></app-my-textfield> -->
+                                    <app-my-textfield [iconinput]="iconinputDireccion" [label]="labelDireccion" [control]="subsidiaryControl" [placeholder]="placeholderAddress"></app-my-textfield>
                                 </div>
                                 <div>
-                                    <app-my-button style="margin-left: 72%;" (clicked)="onClick()"></app-my-button>
+                                    <app-my-button style="margin-left: 72%;" (clicked)="onClick()">AGREGAR</app-my-button>
                                 </div>
                             </div>
                             <br>
@@ -38,13 +38,13 @@
                             <div>
                                 <h2>ÁREA</h2>
                             </div>
-                            <div>
-                                <h3>Nombre</h3>
-                                <div class="input1">
-                                    <app-my-textfield [placeholder]="placeholderArea"></app-my-textfield>
+                            <div >
+                                <div >
+                                    <!-- <app-my-textfield [placeholder]="placeholderArea"></app-my-textfield> -->
+                                    <app-my-textfield [iconinput]="iconinputArea" [label]="labelNombreArea" [control]="subsidiaryControl" [placeholder]="placeholderArea"></app-my-textfield>
                                 </div>
                                 <div class="boton1">
-                                    <app-my-button (clicked)="onClick()"></app-my-button>
+                                    <app-my-button (clicked)="onClick()">AGREGAR</app-my-button>
                                     <!-- Revisar el ancho del boton -->
                                 </div>
                             </div>
@@ -80,18 +80,19 @@
                     </div>
                 </div>
             </div>
-       
-            <div style="margin-top: 15px;" class="wrapper">
-                <div>
-                    <a routerLink="/tap1"><h1>&lt;&lt;Atras </h1></a>
+            <div style="margin-top: 15px;" class="navigator">
+                <div >
+                    <a routerLink="/tap1">&lt;&lt;Atras </a>
                 </div>
-                <div style="margin-left: 330px">
-                    <a routerLink="/tap3"><h1>Siguiente&gt;&gt;</h1></a>
+                <div >
+                    <a routerLink="/tap3">Siguiente&gt;&gt;</a>
                 </div>
                 <br>
             </div>
+            
             <!-- <li class="nav-item option"><a class="nav-link" routerLink="/tap2">Atras</a></li> -->
         </div>
+        
     </div>
 </div>
 <link rel="preconnect" href="https://fonts.googleapis.com">
