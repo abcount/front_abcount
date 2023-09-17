@@ -1,25 +1,77 @@
-.tap3{
-  background-color: #EEEEEE;
-  border:  #EEEEEE 2px solid;
+/*Quitar los estilos generales*/
+* {
   padding: 0;
-  box-sizing: content-box;
-
-}
-.container{
-  background-color: white;
-  border: white solid 2px;
-  margin: 2% 15%;
-  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: 30%;
 }
+body {
+  font-family: 'Anek Telugu', sans-serif !important;
+}
+/*Background*/
+.tap3 {
+  background-color: #EEEEEE;
+  padding: 5% 20%;
+  min-height: 100%;
+}
+/*Información*/
+.container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 25px;
+  box-sizing: border-box;
+}
+/*Subtítulos*/
 h2, h3 {
-  font-family: 'Anek Telugu', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 14px;
   color: #757575;
+  height: 14px;
+  margin: 0px;
+  margin-bottom: 15px;
 }
-
+h2 {
+  margin-top: 15px !important;
+}
+h3 {
+  font-weight: 500;
+}
+/*Link*/
+a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #757575;
+  text-decoration: none;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+a:focus {
+  outline: none !important;
+}
+a:hover {
+  text-decoration: none;
+  color: #7BC8CA;
+}
+/*Título*/
+.header-title{
+  font-size: 20px;
+  font-weight: 590;
+  margin-bottom: 10px;
+}
+/*Linea*/
+hr {
+  margin: 0 0px; 
+  border-color:#EDEDED;
+}
+/*Estilos de filas*/
+.row-2 {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 /* Estilos para la capa de fondo desenfocada */
 .overlay {
   position: fixed;
@@ -27,69 +79,94 @@ h2, h3 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  background-color: rgba(0, 0, 0, 0.322); /* Fondo semi-transparente */
   backdrop-filter: blur(5px); /* Efecto de desenfoque */
   z-index: 100; /* Coloca la capa por encima de todo */
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 /* Estilos para el popup */
 .popup {
   position: fixed;
   top: 50%; /* Centra verticalmente */
   left: 50%; /* Centra horizontalmente */
   transform: translate(-50%, -50%); /* Centra exactamente en el medio */
-  width: 420px; /* Tamaño del popup */
+  width: 40%; /* Tamaño del popup */
   background-color: #fff;
-  padding: 20px;
+  padding: 25px;
   z-index: 101; /* Coloca el popup por encima de la capa de fondo */
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+  box-shadow: 0 5 15px rgba(0, 0, 0, 0.25); /* Sombra */
+  border-radius: 10px;
 }
-.remove-button {
-  background-color: #CFF4E8;
-  border: none;
-  cursor: pointer;
+.row-2-popup {
+  display: grid;
+  grid-template-columns: 55% 45%;
+}
+.popup-title {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  width: 50px; /* Establece el ancho deseado */
+  height: 50px; /* Establece la misma altura que el ancho */
+  margin: 10px;
+  background-color: antiquewhite;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon i {
+  color: burlywood;
+  font-size: 25px;
+}
+.h2-title {
   font-size: 20px;
-  color: #66CDAA; /* Color rojo por defecto */
-  transition: background-color 0.3s; /* Transición para el cambio de fondo */
-  margin-left: 10px; /* Espacio entre el nombre de la moneda y el botón */
+  font-weight: 600;
+  color:#757575;
+  margin: 0px !important;
+  margin-bottom: 20px !important;
+}
+.popup-buttons {
+  margin-top: 20px;
+  gap: 10px;
+}
+.right {
+  display: flex; 
+  justify-content: end;
+}
+.input-group {
+  font-size: 12px;
+  border: #D9D9D9 1px solid;
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
+  padding: 3px 8px;
+  caret-color: #66CDAA;
+  transition: border 0.5s;
+}
+.input-group:focus {
+  border: 1px solid #66CDAA;
 }
 
-/* Estilos para el contenedor de las monedas */
-.monedas-container {
+/*Lista de monedas*/
+.moneda-item {
+  margin-bottom: 10px;
   display: inline-block;
-  vertical-align: top; /* Alinear al principio del contenedor */
+  color: #66CDAA;
+  font-size: 14px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
-
 /* Estilos para los botones "x" (remover moneda) */
 .remove-button {
   background-color: #CFF4E8;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 12px;
   color: #66CDAA;
   transition: background-color 0.3s;
-  margin-left: 10px;
+  margin-left: 12px;
 }
-
-.moneda-item {
-  margin-top: 3px;
-  display: inline-block;
-  color: #66CDAA;
-  font-size: 20px;
-  margin-left: 15px;
-}
-.moneda-principal h2 {
-  display: inline-block;
-  margin-right: 135px;
-}
-.icon {
-  margin-right: 5px; /* Espacio entre el icono y el texto */
-}
-
-
-
-

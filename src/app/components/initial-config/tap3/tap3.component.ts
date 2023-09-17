@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {FormStateService} from "../../../services/form-state.service";
 
 @Component({
   selector: 'app-tap3',
@@ -6,6 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./tap3.component.css']
 })
 export class Tap3Component {
+
+  //Obtener la fecha actual
+  fechaActual: Date = new Date();
+
+  constructor(public formService: FormStateService) {}
 
   monedas: { nombre: string, codigo: string }[] = [];
   mostrarPopup: boolean = false;
@@ -42,18 +49,28 @@ export class Tap3Component {
       this.monedas.splice(index, 1);
     }
   }
-  buttonText1: string = 'AGREGAR';
-  buttonText2: string = 'GUARDAR';
-  buttonText3: string = 'CANCELAR';
+  get formGroup(): FormGroup {
+    return this.formService.formGroup;
+  }
+  get dateControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('fecha') as FormControl;
+  }
 
-  placeholderDate: string = '10/09/2023';
+  get levelControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('nivel') as FormControl;
 
-  placeholderLevels: string = 'Niveles del plan de cuentas (x.x.x.x)';
+  }
+  get nameControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('nombre') as FormControl;
+  }
+
+  get codeControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('codigo') as FormControl;
+
+  }
 
   placeholderCoin:  string = 'Ejemplo: Dólar';
-
   placeholderISO: string = 'Ejemplo: USD';
-
 
   onClick() {
     console.log('Button clicked!');

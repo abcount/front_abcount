@@ -3,7 +3,8 @@ import {MyTextfieldComponent} from "../components/general-components/my-textfiel
 import {MyButtonSquaredComponent} from "../components/general-components/my-button-squared/my-button-squared.component";
 import {MyButtonComponent} from "../components/general-components/my-button/my-button.component";
 import {MatIconModule} from "@angular/material/icon";
-import { ReactiveFormsModule } from '@angular/forms';  
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; 
 
 
 const SebastianComponents = [
@@ -21,7 +22,8 @@ const SebastianComponents = [
   ],
   imports: [
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   exports: [
     SebastianComponents

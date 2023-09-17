@@ -1,74 +1,63 @@
-
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <div class="tap1">
     <div class="container">
-        
-            <h1 class="header-title">Configuración de la Empresa</h1>
-            <hr class="separator">
-
-                <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="1"></app-progress>
-
-            <div class="row">
-                <!-- Columna 1: IDENTIFICACIÓN -->
-                <div>
-                    <h2>IDENTIFICACIÓN</h2>
-                </div>
-                <!-- Columna 2: Campos de texto -->
-                <div>
-                    <h3>Nombre</h3>
-                    <app-my-textfield [control]="nombreControl" [placeholder]="placeholderNombre" ></app-my-textfield>
-                    <h3>Rubro</h3>
-                    <app-my-textfield [control]="rubroControl" [placeholder]="placeholderRubro" ></app-my-textfield>
-                    <h3>NIT</h3>
-                    <app-my-textfield [control]="nitControl" [placeholder]="placeholderNIT" ></app-my-textfield>
-                    <button (click)="printValue()">Imprimir valor</button>
-
-                </div>
-                <!-- Columna 3: Cargar Logo -->
-                <div>
-                    <h3>Logo</h3>
-                    <div class="upload-container">
-                        <div *ngIf="!imageURL" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (dragleave)="onDragLeave($event)" [class.dragging]="isDragging">
-                            <input type="file" (change)="onFileChanged($event)" accept="image/*" #fileInput style="display: none">
-                            <div class="drag-drop-area" (click)="fileInput.click()">
-                                Arrastra y suelta una imagen aquí o <span>selecciona un archivo</span>
-                            </div>
-                        </div>
-                        <div *ngIf="imageURL">
-                            <img [src]="imageURL" alt="Vista previa del logo" class="preview-image">
-                            <button (click)="removeImage()">Eliminar</button>
+        <h1 class="header-title">Configuración de la Empresa</h1>
+        <hr class="separator">
+        <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="1"></app-progress>
+        <div class="row-3">
+            <!-- Columna 1: IDENTIFICACIÓN -->
+            <div>
+                <h2>IDENTIFICACIÓN</h2>
+            </div>
+            <!-- Columna 2: Campos de texto -->
+            <div>
+                <app-my-textfield [iconinput]="iconinputNombre" [label]="labelNombre" [control]="nombreControl" [placeholder]="placeholderNombre"></app-my-textfield>
+                <app-my-textfield [iconinput]="iconinputRubro" [label]="labelRubro" [control]="rubroControl" [placeholder]="placeholderRubro" ></app-my-textfield>
+                <app-my-textfield [iconinput]="iconinputNIT" [label]="labelNIT" [control]="nitControl" [placeholder]="placeholderNIT" ></app-my-textfield>
+            </div>
+            <!-- Columna 3: Cargar Logo -->
+            <div>
+                <h3>LOGO</h3>
+                <div class="upload-container">
+                    <div *ngIf="!imageURL" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (dragleave)="onDragLeave($event)" [class.dragging]="isDragging">
+                        <input type="file" (change)="onFileChanged($event)" accept="image/*" #fileInput style="display: none">
+                        <div class="drag-drop-area" (click)="fileInput.click()">
+                            Arrastra y suelta una imagen aquí o <span>selecciona un archivo</span>
                         </div>
                     </div>
+                    <div *ngIf="imageURL" class="image-container">
+                        <button class="delete-button" (click)="removeImage()">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <img [src]="imageURL" alt="Vista previa del logo" class="preview-image">
+                    </div>                    
                 </div>
             </div>
-
-            <hr class="separator">
-            <div class="row">
-                <div>
-                    <h2>UBICACIÓN</h2>
-                </div>
-                <div>
-                    <h3>Dirección</h3>
-                    <app-my-textfield [control]="direccionControl" [placeholder]="placeholderDireccion" ></app-my-textfield>
-                </div>
+        </div>
+        <hr class="separator">
+        <div class="row-2">
+            <div>
+                <h2>UBICACIÓN</h2>
             </div>
-            <hr class="separator">
-
-            <div class="row">
-                <div>
-                    <h2>CONTACTO</h2>
-                </div>
-                <div>
-                    <h3>E-mail de contacto: </h3>
-                    <app-my-textfield [control]="emailControl" [placeholder]="placeholderEmail" ></app-my-textfield>
-                </div>
-                <div>
-                    <h3>Número de contacto</h3>
-                    <app-my-textfield [control]="numeroContactoControl" [placeholder]="placeholderNumeroContacto" ></app-my-textfield>
-                </div>
+            <div>
+                <app-my-textfield [iconinput]="iconinputDireccion" [label]="labelDireccion" [control]="direccionControl" [placeholder]="placeholderDireccion" ></app-my-textfield>
             </div>
-
+        </div>
+        <hr class="separator">
+        <div class="row-3">
+            <div>
+                <h2>CONTACTO</h2>
+            </div>
+            <div>
+                <app-my-textfield [iconinput]="iconinputEmail" [label]="labelEmail" [control]="emailControl" [placeholder]="placeholderEmail" ></app-my-textfield>
+            </div>
+            <div>
+                <app-my-textfield [iconinput]="iconinputNumeroContacto" [label]="labelNumeroContacto" [control]="numeroContactoControl" [placeholder]="placeholderNumeroContacto" ></app-my-textfield>
+            </div>
+        </div>
         <div class="navigation">
             <a routerLink="/tap2"> Siguiente >></a>
         </div>
     </div>
+    <button (click)="printValue()">Imprimir valor</button>
 </div>

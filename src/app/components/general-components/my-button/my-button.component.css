@@ -1,17 +1,40 @@
 .button {
-  border: 0 !important;
-  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  font-family: 'Anek Telugu', sans-serif;
+  text-align: center;
+  padding: 5px 20px;
+  z-index: 1;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: capitalize;
+  position: relative;
+  transition: background-color 0.3s ease-in-out;
   color: white;
-  font-size: 20px;
-  padding: 10px 20px;
-  background-color: #66CDAA;
+  background-color: #a1ffdb;
 }
-
-.button-sec {
-  border: 0 !important;
-  border-radius: 7px;
+.button:hover {
+  background-color: #66CDAA;
   color: white;
-  font-size: 20px;
-  padding: 10px 20px;
-  background-color: #FF6347;
+}
+.button:focus {
+  outline: none;
+}
+.green-button {
+  color: white;
+  background-color: #a1ffdb;
+}
+.green-button:hover {
+  background-color: #66CDAA;
+  color: white;
+}
+.red-button {
+  color: white !important;
+  background-color: #ffc2c2 !important;
+}
+.red-button:hover {
+  background-color: #E94848 !important;
+  color: white !important;
 }

@@ -7,7 +7,8 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./my-textfield.component.css']
 })
 export class MyTextfieldComponent {
-
+  @Input() iconinput: string = '';
+  @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() control: FormControl;
 }

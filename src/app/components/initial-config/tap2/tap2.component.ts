@@ -2,12 +2,56 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormStateService } from 'src/app/services/form-state.service';
 
+interface Elemento {
+  nombre: string;
+  children?: Elemento[];
+  mostrarHijos?: boolean;
+}
+
 @Component({
   selector: 'app-tap2',
   templateUrl: './tap2.component.html',
   styleUrls: ['./tap2.component.css']
 })
 export class Tap2Component {
+
+  arbol: Elemento[] = [
+    {
+      nombre: 'Empresa textilon',
+      children: [
+        {
+          nombre: 'Sucursal centro',
+          children: [
+            {
+              nombre: 'Ventas',
+              children: []
+            },
+            {
+              nombre: 'Finanzas',
+              children: []
+            },
+            {
+              nombre: 'Control',
+              children: []
+            }
+          ]
+        },
+        {
+          nombre: 'Sucursal sur',
+          children: [
+            {
+              nombre: 'Ventas',
+              children: []
+            }
+          ]
+        }
+      ]
+    }
+  ];
+
+  toggleChildren(elemento: Elemento): void {
+    elemento.mostrarHijos = !elemento.mostrarHijos;
+  }
 
   buttonText: string = 'AGREGAR';
   placeholderSubsidiary: string = 'Ingrese el nombre de tu sucursal';

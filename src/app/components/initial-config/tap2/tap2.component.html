@@ -28,7 +28,7 @@
                                     <app-my-textfield [placeholder]="placeholderAddress" ></app-my-textfield>
                                 </div>
                                 <div>
-                                    <app-my-button style="margin-left: 72%;" [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+                                    <app-my-button style="margin-left: 72%;" (clicked)="onClick()"></app-my-button>
                                 </div>
                             </div>
                             <br>
@@ -44,7 +44,7 @@
                                     <app-my-textfield [placeholder]="placeholderArea"></app-my-textfield>
                                 </div>
                                 <div class="boton1">
-                                    <app-my-button  [buttonLabel]="buttonText" (clicked)= "onClick()"></app-my-button>
+                                    <app-my-button (clicked)="onClick()"></app-my-button>
                                     <!-- Revisar el ancho del boton -->
                                 </div>
                             </div>
@@ -54,7 +54,30 @@
                     </div>
                 </div>
                 <div class="datos">
-                    Los datos iran aca pronto :D
+                    <div class="tree">
+                        <ul>
+                          <li *ngFor="let elemento1 of arbol">
+                             <button class="toggle" (click)="toggleChildren(elemento1)">{{ elemento1.mostrarHijos ? '-' : '>' }}</button>
+                             <span>{{ elemento1.nombre }}</span>
+                             <hr class="hr-datos">
+                             <ul *ngIf="elemento1.mostrarHijos">
+                               <li *ngFor="let elemento2 of elemento1.children">
+                                 <button class="toggle" (click)="toggleChildren(elemento2)">{{ elemento2.mostrarHijos ? '-' : '>' }}</button>
+                                 <span>{{ elemento2.nombre }}</span>
+                                 <hr class="hr-datos">
+                                 <ul *ngIf="elemento2.mostrarHijos">
+                                    <li *ngFor="let elemento3 of elemento2.children" class="area">
+                                        <div class="area">
+                                            <span>{{ elemento3.nombre }}</span>         
+                                            <button class="circulo">x</button>
+                                        </div>
+                                    </li>
+                                 </ul>
+                               </li>
+                             </ul>
+                           </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
        

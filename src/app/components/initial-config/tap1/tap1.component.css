@@ -1,67 +1,82 @@
-.tap1{
-    background-color: #EEEEEE;
-    border:  #EEEEEE 2px solid;
+/*Quitar los estilos generales*/
+* {
     padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
-
 }
-.container{
-    background-color: white;
-    border: white solid 2px;
-    margin: 2% 15%;
-    padding: 0;
-    box-sizing: border-box;
-    height: 30%;
-
-}
-a{
-    text-decoration: none;
-    color: black;
-    
-}
-
-
-
 body {
-    font-family: roboto;
+    font-family: 'Anek Telugu', sans-serif !important;
 }
-.row > div:nth-child(2) { 
-    max-width: 80%; 
+/*Background*/
+.tap1 {
+    background-color: #EEEEEE;
+    padding: 5% 20%;
+    min-height: 100%;
 }
-
-
+/*Información*/
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+}
+/*Subtitulos*/
+h2, h3 {
+    font-size: 14px;
+    color: #757575;
+    height: 14px;
+    margin: 0px;
+}
+h3 {
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+/*Link*/
+a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #757575;
+    text-decoration: none;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
+a:focus {
+    outline: none !important;
+}
+a:hover {
+    text-decoration: none;
+    color: #7BC8CA;
+}
+/*Título*/
 .header-title {
-    font-size: 23px;
-    font-weight: 575;
-    margin-top: 20px;
-    margin-left: 20px;
+    font-size: 20px;
+    font-weight: 590;
+    margin-bottom: 10px;
 }
-
+/*Linea*/
 .separator {
     margin: 0 0px;
     border-color: #EDEDED;
 }
-
-.row {
+/*Estilos de las filas*/
+.row-3 {
     display: grid;
-    grid-template-columns: 20% 43% 35%; /* Aquí está el cambio a 3 columnas */
-    margin: 0 3%;
+    grid-template-columns: 20% 35% 35%;
+    gap: 5%;
     margin-top: 20px;
 }
- h2, h3 {
-    font-family: 'Anek Telugu', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
-    color: #757575;
+.row-2 {
+    display: grid;
+    grid-template-columns: 20% 75%;
+    gap: 5%;
+    margin-top: 20px;
 }
 
-.column h3, .input-section h3 {
-    font-family: 'Anek Telugu', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: #757575;
-}
-
+/*Estilos para la imagen*/
 .upload-container {
     position: relative;
 }
@@ -83,12 +98,41 @@ body {
 .preview-image {
     max-width: 100%;
     height: auto;
+    max-height: 150px;
     display: block;
 }
 
 .navigation {
     text-align: right;
-    margin-top: 15px;
-    font-size: 23px;
-    font-weight: 575;
+    font-size: 20px;
+}
+
+/*Estilos para el botón eliminar*/
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+.delete-button {
+    position: absolute;
+    top: 0; /* Alineación en la parte superior */
+    right: 0; /* Alineación a la derecha */
+    background-color: #FFDBDB; 
+    border: none;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 3px 6px;
+    color: #FF0000; 
+    cursor: pointer;
+    border-radius: 100%;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
+.delete-button:focus {
+    outline: none;
+}
+.delete-button:hover {
+    background-color: #FF0000;
+    color: white; 
 }

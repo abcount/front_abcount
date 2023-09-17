@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div class="background">
+    <div class="tap1">
+        <h1>Configuración de la Empresa</h1>
+        <hr class="separator">
+        <h3>PLAN DE CUENTAS</h3>
+        <div class="container">
+            <button class="add-button" style="width: 20px;" data-toggle="modal" data-target="#modalLevel1">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+            <div class="account" *ngFor="let account of chartOfAccounts">
+                <div *ngIf="account.level == 2" style="margin-left: 20px;"></div>
+                <div *ngIf="account.level == 3" style="margin-left: 40px;"></div>
+                <div *ngIf="account.level == 4" style="margin-left: 60px;"></div>
+                <h2>{{account.codeAccount}}</h2>
+                <h2>&nbsp;&nbsp;&nbsp;{{account.nameAccount}}</h2>
+                <!-- Button add - modal -->
+                <button *ngIf="account.level != 4" class="add-button right-buttom center btn-unstyled" data-toggle="modal" [attr.data-target]="'#modal'+account.codeAccount">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <!-- Button delete -->
+                <div class="right">
+                    <button class="delete-button center" *ngIf="account.level == 1" (click)="deleteLevel1(account.codeAccount)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <button class="delete-button center" *ngIf="account.level == 2" (click)="deleteLevel2(account.codeAccount)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <button class="delete-button center" *ngIf="account.level == 3" (click)="deleteLevel3(account.codeAccount)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <button class="delete-button center" *ngIf="account.level == 4" (click)="deleteLevel4(account.codeAccount)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <!-- Modal other levels -->
+                <div class="modal fade" [id]="'modal'+account.codeAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Registro de Cuenta</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-type">
+                                    <h3>Cuenta padre: {{account.codeAccount}}</h3>
+                                </div>
+                                <div class="form-type">
+                                    <h3>Nombre de la cuenta hija</h3>
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre de la cuenta">
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="check" name="check" value="check">
+                                    <label for="check">Rubro monetario</label>
+                                </div>
+                                <div style="display: flex;">
+                                    <h3>Reporte</h3>&nbsp;&nbsp;&nbsp;
+                                    <h3 *ngIf="account.report == true">Balance General</h3>
+                                    <h3 *ngIf="account.report == false">Estado de Resultados</h3>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="add-button right-buttom center large" *ngIf="account.level == 1" (click)="addLevel2(account.codeAccount, account.report)" data-dismiss="modal">
+                                    Guardar
+                                </button>
+                                <button class="add-button right-buttom center large" *ngIf="account.level == 2" (click)="addLevel3(account.codeAccount, account.report)" data-dismiss="modal">
+                                    Guardar
+                                </button>
+                                <button class="add-button right-buttom center large" *ngIf="account.level == 3" (click)="addLevel4(account.codeAccount, account.report)" data-dismiss="modal">
+                                    Guardar
+                                </button>
+                                <button class="delete-button large" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+
+            <!-- Modal Level 1 -->
+            <div class="modal fade" id="modalLevel1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Registro de Cuenta Principal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-type">
+                                <h3>Nombre de la Cuenta</h3>
+                                <input #nombreCuentaInput type="text" class="form-control" placeholder="Ingresa el nombre de la cuenta">
+                            </div>
+                            <div>
+                                <input #rubroMonetarioInput type="checkbox" id="check" name="check" value="check">
+                                <label for="check">Rubro monetario</label>
+                            </div>
+                            <div style="display: flex;">
+                                <h3>Reporte</h3>
+                                <input #balanceInput type="radio" id="balance" name="report" value="balance" checked>
+                                <label for="balance">Balance General</label>
+                                <input #resultInput type="radio" id="result" name="report" value="result">
+                                <label for="result">Estado de Resultados</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="add-button large" data-dismiss="modal" (click)="addLevel1()">
+                                Guardar
+                            </button>
+                            <button class="delete-button large" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
