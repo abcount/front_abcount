@@ -1,38 +1,38 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div class="tap3">
-<div  class="container">
-  <div style="margin-top: 20px;">
-    <h1>Configuración de la empresa</h1>
-    <hr style="margin: 0 0px; border-color:#EDEDED;">
+  <div  class="container">
+    <h1 class="header-title">Configuración de la empresa</h1>
+    <hr>
     <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="3"></app-progress>
-
-    <div style="margin-top: 45px; margin-left: 10px" class="wrapper2">
+    <div>
       <form>
         <h2>INICIO DE USO</h2>
-        <h2>Fecha de registro de la empresa</h2>
-        <div style="width: 70%;">
-          <app-my-textfield [control]="dateControl" [placeholder]="placeholderDate" ></app-my-textfield>
+        <div class="row-2">
+          <h3>Fecha de registro de la empresa</h3>
+          <h3 style="color: #B2B2B2;">{{ fechaActual | date: 'dd/MM/yyyy' }}</h3>
         </div>
-        <hr style="margin: 0 0px; border-color:#EDEDED;">
+        <hr>
         <h2>CANTIDAD DE NIVELES EN EL PLAN DE CUENTAS</h2>
-        <h2>Niveles del plan de cuentas</h2>
-        <div  style="width: 70%;">
-          <app-my-textfield [control]="levelControl" [placeholder]="placeholderLevels" ></app-my-textfield>
+        <div class="row-2">
+          <h3>Niveles del plan de cuentas</h3>
+          <h3 style="color: #B2B2B2;">X.XX.XXX.XXXX</h3>
         </div>
-        <hr style="margin: 0 0px; border-color:#EDEDED;">
-        <div class = "moneda-principal">
-          <h2>MONEDA PRINCIPAL</h2>
-          <h2>Bolivianos</h2>
+        <hr>
+        <div style="margin-bottom: 0px;" class = "row-2">
+          <h3>MONEDA PRINCIPAL</h3>
+          <h3 style="color: #B2B2B2;">Bolivianos</h3>
         </div>
-        <br>
-        <div class="monedas-container">
-          <h2>Otras monedas que quiera manejar</h2>
-          <app-my-button [isGreen]="true" (click)="agregarMoneda()">AGREGAR</app-my-button>
+        <div class="row-2">
+          <h3>Otras monedas que quiera manejar</h3>
+          <div class="right">
+            <app-my-button [isGreen]="true" (click)="agregarMoneda()">AGREGAR</app-my-button>
+          </div>
         </div>
-
         <div *ngFor="let moneda of monedas" [style.background-color]="color" class="moneda-item">
-          {{ moneda.nombre }} <button (click)="removerMoneda(moneda)" class="remove-button">x</button>
+          {{ moneda.nombre }} <button (click)="removerMoneda(moneda)" class="remove-button">
+            <i class="fa-solid fa-x"></i>
+          </button>
         </div>
-
       </form>
 
       <!-- Popup para agregar monedas -->
@@ -41,38 +41,34 @@
 
       <!-- Popup para agregar monedas -->
       <div *ngIf="mostrarPopup" class="popup">
-        <h2>
+        <div class="popup-title">
           <span class="icon">
-           <i class="fa-solid fa-coins"></i>
+            <i class="fa-solid fa-coins"></i>
           </span>
-          Registro de Moneda
-        </h2>
-        <div class="form-group">
-          <a for="popupNombreMoneda" class="label-inline">Nombre:</a>
+          <h2 class="h2-title">Registro de Moneda</h2>
+        </div>
+        <div class="row-2-popup">
+          <h3>Nombre de Moneda</h3>
           <input type="text" id="popupNombreMoneda" [(ngModel)]="nombreMoneda" class="input-group">
         </div>
         <br>
-        <div class="form-group">
-          <a>Código de Moneda (Código ISO):</a>
-  <!--                <app-my-textfield [control]="codeControl" [placeholder]="placeholderISO" [(ngModel)]="codigoISO" ></app-my-textfield>-->
+        <div class="row-2-popup">
+          <h3>Código de Moneda (Código ISO)</h3>
           <input type="text" id="popupCodigoISO" [(ngModel)]="codigoISO" class="input-group">
         </div>
-        <br>
-        <app-my-button [isGreen]="true" (click)="guardarMoneda()">ACEPTAR</app-my-button>
-        <app-my-button [isRed]="true" (click)="cancelar()">CANCELAR</app-my-button>
-      </div>
+        <div class="popup-buttons right">
+          <app-my-button [isGreen]="true" (click)="guardarMoneda()">ACEPTAR</app-my-button>
+          <app-my-button [isRed]="true" (click)="cancelar()">CANCELAR</app-my-button>
+        </div>
     </div>
-    <div style="margin-top: 15px;" class="wrapper">
+    </div>
+    <div class="row-2" style="margin-top: 20px;">
       <div>
         <a routerLink="/tap2"> &lt;&lt;Atras </a>
       </div>
-      <div>
+      <div class="right">
         <a routerLink="/tap4">Siguiente>></a>
       </div>
-      <br>
     </div>
   </div>
 </div>
-</div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-

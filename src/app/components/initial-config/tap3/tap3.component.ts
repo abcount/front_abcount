@@ -8,8 +8,11 @@ import {FormStateService} from "../../../services/form-state.service";
   styleUrls: ['./tap3.component.css']
 })
 export class Tap3Component {
-  constructor(public formService: FormStateService) {}
 
+  //Obtener la fecha actual
+  fechaActual: Date = new Date();
+
+  constructor(public formService: FormStateService) {}
 
   monedas: { nombre: string, codigo: string }[] = [];
   mostrarPopup: boolean = false;
@@ -65,18 +68,9 @@ export class Tap3Component {
     return (this.formGroup.get('enterprise') as FormGroup).get('codigo') as FormControl;
 
   }
-  buttonText1: string = 'AGREGAR';
-  buttonText2: string = 'GUARDAR';
-  buttonText3: string = 'CANCELAR';
-
-  placeholderDate: string = '10/09/2023';
-
-  placeholderLevels: string = 'Niveles del plan de cuentas (x.x.x.x)';
 
   placeholderCoin:  string = 'Ejemplo: Dólar';
-
   placeholderISO: string = 'Ejemplo: USD';
-
 
   onClick() {
     console.log('Button clicked!');
