@@ -1,0 +1,64 @@
+/*Quitar los estilos generales*/
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/*Centrear*/
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*Background*/
+.background {
+    background: url(../../../assets/background.jpg) no-repeat center center fixed;
+    height: 100vh;
+    width: 100vw;
+}
+/*Links*/
+a {
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    text-align: center;
+}
+a:focus {
+    outline: none !important;
+}
+a:hover {
+    text-decoration: none;
+    color: rgb(230, 230, 230);
+}
+a:hover .company-logo {
+    background-color: rgb(230, 230, 230);
+}
+/*Lista de compañias*/
+.my-companies {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-gap: 25px;
+}
+/*Logo de la compañia*/
+.company-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    background-color: white;
+    margin-bottom: 10px;
+}
+.company-logo img {
+    width: 92%;
+    height: 92%;
+    border-radius: 100%;
+}
+.center-text {
+    text-align: center;
+}
