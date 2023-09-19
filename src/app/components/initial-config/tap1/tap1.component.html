@@ -11,9 +11,15 @@
             </div>
             <!-- Columna 2: Campos de texto -->
             <div>
-                <app-my-textfield [iconinput]="iconinputNombre" [label]="labelNombre" [control]="nombreControl" [placeholder]="placeholderNombre"></app-my-textfield>
-                <app-my-textfield [iconinput]="iconinputRubro" [label]="labelRubro" [control]="rubroControl" [placeholder]="placeholderRubro" ></app-my-textfield>
-                <app-my-textfield [iconinput]="iconinputNIT" [label]="labelNIT" [control]="nitControl" [placeholder]="placeholderNIT" ></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="nombreControl" [placeholder]="placeholderNombre"></app-my-textfield>
+                <div class="error-message" #errorMessageNombre>Por favor, complete este campo.</div>
+                <div style="height: 20px;"></div>
+                <app-my-textfield type="text" [iconInput]="iconInputRubro" [label]="labelRubro" [control]="rubroControl" [placeholder]="placeholderRubro" ></app-my-textfield>
+                <div class="error-message" #errorMessageRubro>Por favor, complete este campo.</div>
+                <div style="height: 20px;"></div>
+                <app-my-textfield type="text" [iconInput]="iconInputNIT" [label]="labelNIT" [control]="nitControl" [placeholder]="placeholderNIT" ></app-my-textfield>
+                <div class="error-message" #errorMessageNIT>Por favor, complete este campo.</div>
+                <div style="height: 20px;"></div>
             </div>
             <!-- Columna 3: Cargar Logo -->
             <div>
@@ -32,6 +38,7 @@
                         <img [src]="imageURL" alt="Vista previa del logo" class="preview-image">
                     </div>                    
                 </div>
+                <div class="error-message" #errorMessageLogo>Por favor, seleccione su logo.</div>
             </div>
         </div>
         <hr class="separator">
@@ -40,7 +47,9 @@
                 <h2>UBICACIÓN</h2>
             </div>
             <div>
-                <app-my-textfield [iconinput]="iconinputDireccion" [label]="labelDireccion" [control]="direccionControl" [placeholder]="placeholderDireccion" ></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="direccionControl" [placeholder]="placeholderDireccion" ></app-my-textfield>
+                <div class="error-message" #errorMessageDireccion>Por favor, complete este campo.</div>
+                <div style="height: 20px;"></div>
             </div>
         </div>
         <hr class="separator">
@@ -49,15 +58,19 @@
                 <h2>CONTACTO</h2>
             </div>
             <div>
-                <app-my-textfield [iconinput]="iconinputEmail" [label]="labelEmail" [control]="emailControl" [placeholder]="placeholderEmail" ></app-my-textfield>
+                <app-my-textfield type="email" [iconInput]="iconInputEmail" [label]="labelEmail" [control]="emailControl" [placeholder]="placeholderEmail" ></app-my-textfield>
+                <div class="error-message" #errorMessageEmail>Por favor, complete este campo.</div>
+                <div style="height: 20px;"></div>
             </div>
             <div>
-                <app-my-textfield [iconinput]="iconinputNumeroContacto" [label]="labelNumeroContacto" [control]="numeroContactoControl" [placeholder]="placeholderNumeroContacto" ></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="iconInputNumeroContacto" [label]="labelNumeroContacto" [control]="numeroContactoControl" [placeholder]="placeholderNumeroContacto" ></app-my-textfield>
+                <div class="error-message" #errorMessageContacto>Por favor, complete este campo.</div>
+                <div style="height: 20px;"></div>
             </div>
         </div>
         <div class="navigation">
-            <a routerLink="/tap2"> Siguiente >></a>
+            <button class="next-button" (click)="verificarCampos()">Siguiente >></button>
         </div>
     </div>
-    <button (click)="printValue()">Imprimir valor</button>
+    <!--<button (click)="printValue()">Imprimir valor</button>-->
 </div>

@@ -33,22 +33,18 @@ h3 {
     margin-bottom: 15px;
     font-weight: 500;
 }
-/*Link*/
-a {
+/*Boton de siguiente*/
+.next-button {
+    border: none;
+    background-color: white;
     font-size: 14px;
     font-weight: 600;
     color: #757575;
-    text-decoration: none;
-    transition: all 0.4s;
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
 }
-a:focus {
-    outline: none !important;
+.next-button:focus {
+    outline: none;
 }
-a:hover {
-    text-decoration: none;
+.next-button:hover {
     color: #7BC8CA;
 }
 /*Título*/
@@ -135,4 +131,13 @@ a:hover {
 .delete-button:hover {
     background-color: #FF0000;
     color: white; 
+}
+.error-message {
+    color: #ff7e7e;
+    font-size: 12px;
+    font-weight: 500;
+    display: none;
+}
+.error-message.show {
+    display: block;
 }

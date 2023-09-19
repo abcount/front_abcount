@@ -15,13 +15,13 @@ interface Elemento {
 })
 export class Tap2Component {
 
-  iconinputNombre = "fa-solid fa-shop";
-  iconinputArea = "fa-regular fa-building";
+  iconInputNombre = "fa-solid fa-shop";
+  iconInputArea = "fa-regular fa-building";
   labelNombre = 'Nombre de la sucursal';
   labelDireccion = 'Dirección';
   labelNombreArea = 'Nombre del area';
   placeholderDireccion = 'Ingrese la dirección de la sucursal';
-  iconinputDireccion = "fa-regular fa-map-marker-alt";
+  iconInputDireccion = "fa-regular fa-map-marker-alt";
   buttonText: string = 'AGREGAR';
   placeholderSubsidiary: string = 'Ingrese el nombre de tu sucursal';
 

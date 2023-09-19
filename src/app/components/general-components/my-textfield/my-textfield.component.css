@@ -9,7 +9,6 @@
   padding: 3px 8px;
   caret-color: #66CDAA;
   transition: border 0.5s; /* Agregar transición a la propiedad border */
-  margin-bottom: 20px;
 }
 
 .input-group label i {
