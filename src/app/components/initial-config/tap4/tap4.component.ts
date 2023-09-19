@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component, signal, ViewChild, ViewRef} from '@angular/core';
 import {FlatTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
 
@@ -24,9 +24,12 @@ interface NodeExample {
 
 
 interface Account {
-  accountNumber: number;
+  accountCode: number;
+  nameAccount: string;
+  moneyRub: boolean;
+  report: boolean;
+  clasificator: boolean;
   level: number;
-  accountName: string;
   children: Account[];
 }
 
@@ -39,11 +42,20 @@ interface Account {
 
 
 export class Tap4Component {
+  accountReport = false;
+  accountMoneyRub = false;
+  accountClasificator = false;
+  accountId = 0;
+  @ViewChild("accountName") accountName: string = "";
+  modalCalled = false;
+
+  selectedNode: NodeExample | null = null;
+
 
   private _transformer = (node: Account, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
-      name: node.accountNumber + ' ' + node.accountName,
+      name: node.accountCode + ' ' + node.nameAccount,
       level: level,
     };
   };
@@ -71,10 +83,14 @@ export class Tap4Component {
 
  addNewChildAccount(node : NodeExample | null ) {
    if(node == null){
+     this.accountId = TREE_DATA.length + 1;
      let parentAccount = {
        level: 0,
-       accountNumber: TREE_DATA.length + 1,
-       accountName: 'NEW',
+       accountCode: TREE_DATA.length + 1,
+       nameAccount: this.accountName,
+       moneyRub: this.accountMoneyRub,
+       report: this.accountReport,
+       clasificator: this.accountClasificator,
        children: []
      }
      TREE_DATA.push(parentAccount);
@@ -83,25 +99,22 @@ export class Tap4Component {
      let strAccountName = node.name.split(" ", 1);
      let accountId = strAccountName[0];
      this.positioningLeaf(TREE_DATA, Number(accountId), node.level);
-
-
    }
    this.dataSource.data = TREE_DATA;
-   console.log("TREE DATA")
-    console.log(TREE_DATA);
-
-
  }
 
   // @ts-ignore
   positioningLeaf(listOfAccounts : Account[], selectedAccount: number, level: number){
-    console.log(selectedAccount);
      for(let j = 0; j < listOfAccounts.length; j++){
-       if(listOfAccounts[j].accountNumber === selectedAccount){
+       if(listOfAccounts[j].accountCode === selectedAccount){
+         this.accountId = selectedAccount * 10 + listOfAccounts[j].children.length + 1;
          let newAccount : Account = {
            level: level + 1,
-           accountNumber: selectedAccount * 10 + listOfAccounts[j].children.length + 1,
-           accountName: "SEBAS in level " + level + " with parent " + selectedAccount + " and account id " + selectedAccount + " and length " + listOfAccounts.length,
+           accountCode: selectedAccount * 10 + listOfAccounts[j].children.length + 1,
+           nameAccount: this.accountName,
+           moneyRub: this.accountMoneyRub,
+           report: this.accountReport,
+           clasificator: this.accountClasificator,
            children: []
          }
          listOfAccounts[j].children.push(newAccount);
@@ -113,6 +126,29 @@ export class Tap4Component {
      }
 
   }
+
+  // @ts-ignore
+  setName(listOfAccounts : Account[], selectedAccount: number, accountName: string){
+    for(let j = 0; j < listOfAccounts.length; j++){
+      if(listOfAccounts[j].accountCode === selectedAccount){
+        console.log(listOfAccounts[j]);
+
+        listOfAccounts[j].nameAccount = accountName;
+
+        console.log(listOfAccounts[j]);
+        return listOfAccounts[j];
+      }
+      else{
+        this.setName(listOfAccounts[j].children, selectedAccount, accountName);
+      }
+    }
+  }
+
+  setAccount(selectedAccount: number){
+    this.setName(TREE_DATA, selectedAccount, this.accountName);
+  }
+
+
  /*
  // @ts-ignore
   positioningLeaf(listOfAccounts : Account[],  accountId : number, level: number,  parentAccount: number){

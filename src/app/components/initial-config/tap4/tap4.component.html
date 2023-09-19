@@ -7,8 +7,7 @@
     <h1>Progress bar</h1>
   </div>
   <div class="center-container">
-    <app-my-button-squared (clicked)="addNewChildAccount(null)" ></app-my-button-squared>
-
+    <app-my-button-squared (clicked)="addNewChildAccount(null)" data-toggle="modal" data-target="#modal"> </app-my-button-squared>
     <div class="container">
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
@@ -16,7 +15,7 @@
           <div class="separator"></div>
           {{node.name}}
           <div class="separator"></div>
-          <app-my-button-squared (clicked)="addNewChildAccount(node)" ></app-my-button-squared>
+          <app-my-button-squared (clicked)="addNewChildAccount(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
         </mat-tree-node>
 
         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
@@ -29,22 +28,50 @@
           <div class="separator"></div>
           {{node.name}}
           <div class="separator"></div>
-          <app-my-button-squared (clicked)="addNewChildAccount(node)" ></app-my-button-squared>
+          <app-my-button-squared (clicked)="addNewChildAccount(node)" data-toggle="modal" data-target="#modal" ></app-my-button-squared>
 
         </mat-tree-node>
 
       </mat-tree>
     </div>
-
-
   </div>
-
-
-
-
-
-
-
 </div>
 
 
+<!--- MODAL -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registro de Cuenta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-type">
+          <h3>Número de cuenta: {{this.accountId}}</h3>
+        </div>
+        <div class="form-type">
+          <h3>Nombre de la cuenta </h3>
+          <input [(ngModel)]="accountName" type="text" class="form-control" placeholder="Ingresa el nombre de la cuenta">
+        </div>
+        <div>
+          <input type="checkbox" id="check" name="check" value="check">
+          <label for="check">Rubro monetario</label>
+        </div>
+        <div style="display: flex;">
+          <h3>Reporte</h3>&nbsp;&nbsp;&nbsp;
+                        <h3 *ngIf="this.accountReport">Balance General</h3>
+                        <h3 *ngIf="!this.accountReport">Estado de Resultados</h3>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="add-button right-buttom center large" data-dismiss="modal" (click)="setAccount(this.accountId)">
+          Guardar
+        </button>
+        <button class="delete-button large" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
