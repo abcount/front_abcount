@@ -103,8 +103,28 @@ h3 {
 }
 
 .navigation {
-    text-align: right;
     font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Links*/
+a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #757575;
+    text-decoration: none;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
+a:focus {
+    outline: none !important;
+}
+a:hover {
+    text-decoration: none;
+    color: #7BC8CA;
 }
 
 /*Estilos para el botón eliminar*/

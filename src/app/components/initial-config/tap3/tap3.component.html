@@ -28,10 +28,12 @@
             <app-my-button [isGreen]="true" (click)="agregarMoneda()">AGREGAR</app-my-button>
           </div>
         </div>
-        <div *ngFor="let moneda of monedas" [style.background-color]="color" class="moneda-item">
-          {{ moneda.nombre }} <button (click)="removerMoneda(moneda)" class="remove-button">
-            <i class="fa-solid fa-x"></i>
-          </button>
+        <div style="height: 113px;">
+          <div *ngFor="let moneda of monedas" [style.background-color]="color" class="moneda-item">
+            {{ moneda.nombre }} <button (click)="removerMoneda(moneda)" class="remove-button">
+              <i class="fa-solid fa-x"></i>
+            </button>
+          </div>
         </div>
       </form>
 
@@ -64,10 +66,10 @@
     </div>
     <div class="row-2" style="margin-top: 20px;">
       <div>
-        <a routerLink="/tap2"> &lt;&lt;Atras </a>
+        <a routerLink="/tap2">&lt;&lt; Atras</a>
       </div>
       <div class="right">
-        <a routerLink="/tap4">Siguiente>></a>
+        <a routerLink="/tap4">Siguiente &gt;&gt;</a>
       </div>
     </div>
   </div>
