@@ -53,3 +53,19 @@
   transform: translateX(8px);
   transition: transform 0.1s;
 }
+
+.input-group input:invalid {
+  border: 1px solid #ef5350;
+}
+.input-group .invalid-label {
+  color: #ef5350;
+}
+.input-group .invalid-icon {
+  color: #ef5350 !important; 
+}
+.input-group .error-message {
+  color: #383838;
+  font-size: 12px;
+  margin-top: 5px;
+  line-height: 1.2;
+}

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, Input, Renderer2 } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormStateService } from 'src/app/services/form-state.service';
 
@@ -28,12 +28,19 @@ export class Tap1Component  {
   placeholderNumeroContacto = 'Ingrese un número de contacto';
   iconInputNumeroContacto = "fa-regular fa-phone";
 
+  patternAll = '.*';
+  patternAllMessage = 'Ingrese un valor válido';
+  patternNumber = '^[0-9]*$';
+  patternNumberMessage = 'Por favor, ingrese un número de contacto válido.';
+  patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  patternEmailMessage = 'Por favor, ingrese una dirección de correo electrónico válida.';
+
   @Input() control: FormControl;
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(public formService: FormStateService, private renderer: Renderer2) {}
+  constructor(public formService: FormStateService) {}
 
   get formGroup(): FormGroup {
     return this.formService.formGroup;
@@ -142,56 +149,33 @@ export class Tap1Component  {
   }
 
   /*---------------------------------------------------------------------------------------------*/
-  @ViewChild('errorMessageNombre') errorMessageRef: ElementRef;
-  @ViewChild('errorMessageRubro') errorMessageRef1: ElementRef;
-  @ViewChild('errorMessageNIT') errorMessageRef2: ElementRef;
-  @ViewChild('errorMessageDireccion') errorMessageRef3: ElementRef;
-  @ViewChild('errorMessageEmail') errorMessageRef4: ElementRef;
-  @ViewChild('errorMessageContacto') errorMessageRef5: ElementRef;
+  @ViewChild('errorMessage') errorMessage: ElementRef;
+  @ViewChild('errorMessageLogo') errorMessageLogo: ElementRef;
   //Comprobar que los campos estan llenos 
   verificarCampos() {
-    if (this.formGroup.value.enterprise.enterpriseName != "") {
-      if (this.formGroup.value.enterprise.rubro != ""){
-        if (this.formGroup.value.enterprise.nit != ""){
-          if (this.formGroup.value.enterprise.direccion != ""){
-            if (this.formGroup.value.enterprise.email != ""){
-              if (this.formGroup.value.enterprise.numeroContacto != ""){
-              window.location.href = "/tap2";
-              } else {
-                this.errorMessageRef5.nativeElement.classList.add('show');
-                setTimeout(() => {
-                  this.errorMessageRef5.nativeElement.classList.remove('show');
-                }, 2000);
-              }
-            } else {
-              this.errorMessageRef4.nativeElement.classList.add('show');
-              setTimeout(() => {
-                this.errorMessageRef4.nativeElement.classList.remove('show');
-              }, 2000);
-            }
-          } else {
-            this.errorMessageRef3.nativeElement.classList.add('show');
-            setTimeout(() => {
-              this.errorMessageRef3.nativeElement.classList.remove('show');
-            }, 2000);
-          }
+    if (this.nombreControl.valid && this.direccionControl.valid && this.rubroControl.valid && this.nitControl.valid && this.emailControl.valid && this.numeroContactoControl.valid) {
+      if (this.formGroup.value.enterprise.enterpriseName != "" && this.formGroup.value.enterprise.direccion != "" && this.formGroup.value.enterprise.rubro != "" && this.formGroup.value.enterprise.nit != "" && this.formGroup.value.enterprise.email != "" && this.formGroup.value.enterprise.numeroContacto != "") {
+        if (this.formGroup.value.enterprise.logo.length != 0) {
+          window.location.href = '/tap2';
         } else {
-          this.errorMessageRef2.nativeElement.classList.add('show');
+          this.errorMessageLogo.nativeElement.classList.add('show');
           setTimeout(() => {
-            this.errorMessageRef2.nativeElement.classList.remove('show');
+            this.errorMessageLogo.nativeElement.classList.remove('show');
           }, 2000);
         }
       } else {
-        this.errorMessageRef1.nativeElement.classList.add('show');
+        console.log('Vacios');
+        this.errorMessage.nativeElement.classList.add('show');
         setTimeout(() => {
-          this.errorMessageRef1.nativeElement.classList.remove('show');
-        }, 2000);
+          this.errorMessage.nativeElement.classList.remove('show');
+        }, 3000);
       }
     } else {
-      this.errorMessageRef.nativeElement.classList.add('show');
+      console.log('Falla');
+      this.errorMessage.nativeElement.classList.add('show');
       setTimeout(() => {
-        this.errorMessageRef.nativeElement.classList.remove('show');
-      }, 2000);
+        this.errorMessage.nativeElement.classList.remove('show');
+      }, 3000);
     }
   }
 }

@@ -11,14 +11,11 @@
             </div>
             <!-- Columna 2: Campos de texto -->
             <div>
-                <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="nombreControl" [placeholder]="placeholderNombre"></app-my-textfield>
-                <div class="error-message" #errorMessageNombre>Por favor, complete este campo.</div>
+                <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="nombreControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderNombre"></app-my-textfield>
                 <div style="height: 20px;"></div>
-                <app-my-textfield type="text" [iconInput]="iconInputRubro" [label]="labelRubro" [control]="rubroControl" [placeholder]="placeholderRubro" ></app-my-textfield>
-                <div class="error-message" #errorMessageRubro>Por favor, complete este campo.</div>
+                <app-my-textfield type="text" [iconInput]="iconInputRubro" [label]="labelRubro" [control]="rubroControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderRubro" ></app-my-textfield>
                 <div style="height: 20px;"></div>
-                <app-my-textfield type="text" [iconInput]="iconInputNIT" [label]="labelNIT" [control]="nitControl" [placeholder]="placeholderNIT" ></app-my-textfield>
-                <div class="error-message" #errorMessageNIT>Por favor, complete este campo.</div>
+                <app-my-textfield type="text" [iconInput]="iconInputNIT" [label]="labelNIT" [control]="nitControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderNIT" ></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
             <!-- Columna 3: Cargar Logo -->
@@ -47,8 +44,7 @@
                 <h2>UBICACIÓN</h2>
             </div>
             <div>
-                <app-my-textfield type="text" [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="direccionControl" [placeholder]="placeholderDireccion" ></app-my-textfield>
-                <div class="error-message" #errorMessageDireccion>Por favor, complete este campo.</div>
+                <app-my-textfield type="text" [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="direccionControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderDireccion" ></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
         </div>
@@ -58,19 +54,18 @@
                 <h2>CONTACTO</h2>
             </div>
             <div>
-                <app-my-textfield type="email" [iconInput]="iconInputEmail" [label]="labelEmail" [control]="emailControl" [placeholder]="placeholderEmail" ></app-my-textfield>
-                <div class="error-message" #errorMessageEmail>Por favor, complete este campo.</div>
+                <app-my-textfield type="email" [iconInput]="iconInputEmail" [label]="labelEmail" [control]="emailControl" [placeholder]="placeholderEmail" [pattern]="patternEmail" [errorMessage]="patternEmailMessage"></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
             <div>
-                <app-my-textfield type="text" [iconInput]="iconInputNumeroContacto" [label]="labelNumeroContacto" [control]="numeroContactoControl" [placeholder]="placeholderNumeroContacto" ></app-my-textfield>
-                <div class="error-message" #errorMessageContacto>Por favor, complete este campo.</div>
+                <app-my-textfield type="text" [iconInput]="iconInputNumeroContacto" [label]="labelNumeroContacto" [control]="numeroContactoControl" [pattern]="patternNumber" [errorMessage]="patternNumberMessage" [placeholder]="placeholderNumeroContacto" ></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
         </div>
+        <div class="error-message" #errorMessage>Por favor, complete todos los campos de forma correctamente.</div>
         <div class="navigation">
             <button class="next-button" (click)="verificarCampos()">Siguiente >></button>
         </div>
     </div>
-    <!--<button (click)="printValue()">Imprimir valor</button>-->
+    <button (click)="printValue()">Imprimir valor</button>
 </div>

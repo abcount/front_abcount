@@ -24,7 +24,7 @@
 }
 .green-button {
   color: white;
-  background-color: #a1ffdb;
+  background-color: #8ddfbf;
 }
 .green-button:hover {
   background-color: #66CDAA;
@@ -32,9 +32,9 @@
 }
 .red-button {
   color: white !important;
-  background-color: #ffc2c2 !important;
+  background-color: #f59898 !important;
 }
 .red-button:hover {
-  background-color: #E94848 !important;
+  background-color: #ef5350 !important;
   color: white !important;
 }
