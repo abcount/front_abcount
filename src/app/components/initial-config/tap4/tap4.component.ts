@@ -14,15 +14,6 @@ interface NodeExample {
 }
 
 
-/*
-*  0 1 2 3
-*  1
-*  2
-*  3
-*
-* */
-
-
 interface Account {
   accountCode: number;
   nameAccount: string;
@@ -42,15 +33,13 @@ interface Account {
 
 
 export class Tap4Component {
-  accountReport = false;
-  accountMoneyRub = false;
-  accountClasificator = false;
-  accountId = 0;
+
   @ViewChild("accountName") accountName: string = "";
-  modalCalled = false;
-
   selectedNode: NodeExample | null = null;
-
+  accountId: number = 0;
+  accountMoneyRub: boolean = false;
+  accountReport: boolean = false;
+  accountClasificator: boolean = false;
 
   private _transformer = (node: Account, level: number) => {
     return {
@@ -93,7 +82,14 @@ export class Tap4Component {
        clasificator: this.accountClasificator,
        children: []
      }
+     console.log(parentAccount);
+
      TREE_DATA.push(parentAccount);
+     this.accountName = "";
+     this.accountReport = false;
+     this.accountMoneyRub = false;
+     this.accountClasificator = false;
+
    }
    else{
      let strAccountName = node.name.split(" ", 1);
@@ -117,59 +113,27 @@ export class Tap4Component {
            clasificator: this.accountClasificator,
            children: []
          }
+         console.log(newAccount);
          listOfAccounts[j].children.push(newAccount);
+         this.accountName = "";
          return listOfAccounts;
        }
        else{
           this.positioningLeaf(listOfAccounts[j].children, selectedAccount, level);
        }
      }
-
-  }
-
-  // @ts-ignore
-  setName(listOfAccounts : Account[], selectedAccount: number, accountName: string){
-    for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].accountCode === selectedAccount){
-        console.log(listOfAccounts[j]);
-
-        listOfAccounts[j].nameAccount = accountName;
-
-        console.log(listOfAccounts[j]);
-        return listOfAccounts[j];
-      }
-      else{
-        this.setName(listOfAccounts[j].children, selectedAccount, accountName);
-      }
-    }
-  }
-
-  setAccount(selectedAccount: number){
-    this.setName(TREE_DATA, selectedAccount, this.accountName);
   }
 
 
- /*
- // @ts-ignore
-  positioningLeaf(listOfAccounts : Account[],  accountId : number, level: number,  parentAccount: number){
-   if(listOfAccounts.length === 0 || parentAccount == accountId){ //Need to put a condition to create brother accounts
-     console.log(parentAccount === accountId);
-     let newAccount : Account = {
-       level: level,
-       accountNumber: accountId * 10 + listOfAccounts.length + 1,
-       accountName: "SEBAS in level " + level + " with parent " + parentAccount + " and account id " + accountId + " and length " + listOfAccounts.length,
-       children: []
-     }
-     listOfAccounts.push(newAccount);
-     console.log("NEW LIST OF ACCOUNTS")
-      console.log(listOfAccounts);
-     return listOfAccounts;
-   }
-   console.log("NewRootAccount");
-   console.log((accountId % 10) - 1);
-   this.positioningLeaf(listOfAccounts[(accountId % 10) - 1].children, accountId, level, parentAccount);
+  setSelectedNode(node: NodeExample | null){
+    this.selectedNode = node;
   }
-  */
+
+  printTree(){
+    console.log(TREE_DATA);
+  }
+
+
 
 }
 

@@ -12,3 +12,53 @@
 .separator {
   margin: 0 3%;
 }
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.row-2 a {
+  text-decoration: none;
+}
+
+/* Button styling with linear gradient background */
+.row-2 button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #007bff, #66CDAA); /* Linear gradient background */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease; /* Transition background for a smooth effect */
+}
+
+.row-2 button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA); /* Adjusted gradient on hover */
+}
+
+.gray-text {
+  color: #757575;
+  text-decoration: none;
+}
+
+.small-button {
+  padding: 5px 10px; /* Adjust the padding for a smaller button */
+  background: linear-gradient(to right, #007bff, #66CDAA);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+
+.small-button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA);
+}
+
+
+
