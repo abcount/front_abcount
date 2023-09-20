@@ -1,245 +1,189 @@
 /*Quitar los estilos generales*/
 * {
-    padding: 0;
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-.wrapper {
-    display: grid;
-    grid-template-columns: 65% 35% ;
-
-  }
-.wrapper2 {
-    display: grid;
-    grid-template-columns: 40% 60%;
-  }
-.registro{
-    margin: 0;
+/*Background*/
+.tap2 {
+  background-color: #EEEEEE;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.datos{
-    border: #EDEDED 2px solid;
-    width: 100%;
-    height: 500px;
-    background: url(/assets/icons/paisaje-urbano.png);
-    background-size: 80%;
-    background-repeat: no-repeat;
-    background-position-x: 90%;
-    background-position-y: 95%;
+/*Contenedor*/
+.container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  max-width: 65%;
+  height: 548px;
 }
-.navigator {
-    display: grid;
-    grid-template-columns: 95% 100%;
-  }
+/*Título*/
+.header-title {
+  font-size: 20px;
+  font-weight: 590;
+  margin-bottom: 10px;
+}
+/*Subtitulos*/
+h2 {
+  font-size: 14px;
+  color: #757575;
+  height: 14px;
+  margin: 0px;
+}
+/*Linea*/
+.separator {
+  margin: 10px 0px;
+  border-color: #EDEDED;
+}
+/*Links*/
 a {
-    font-size: 14px;
-    font-weight: 600;
-    color: #757575;
-    text-decoration: none;
-    transition: all 0.4s;
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-  }
-  a:focus {
-    outline: none !important;
-  }
-  a:hover {
-    text-decoration: none;
-    color: #7BC8CA;
-  }
-
-.area{
-    width: 100%;
-    height: 100%;
-    display: flex;
-
+  font-size: 14px;
+  font-weight: 600;
+  color: #757575;
+  text-decoration: none;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
 }
-.input {
-    font-size: 20px;
-    font-family: "Roboto", sans-serif;
-    border: #66CDAA 2px solid;
-    border-radius: 10px;
-    outline: none;
-    width: 91%;
-    margin-bottom: 25px;
-    padding: 10px 20px;
+a:focus {
+  outline: none !important;
 }
-.input1{
-    outline: none;
-    width: 91%;
-    margin-top: -13px;
+a:hover {
+  text-decoration: none;
+  color: #7BC8CA;
 }
-.boton {
-    outline: none;
-    border: 0 !important;
-    border-radius: 7px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 20px;
-    padding: 10px 20px;
-    margin-left: 72%;
-    background-color: #66CDAA;
-}
-.boton1{
-    margin-left: 72%;
-    width: 80%;
-}
-.tap2{
-    background-color: #EEEEEE;
-    padding: 3% 18%;
-    min-height: 100%;
-
-}
-.container{
-    background-color: white;
-    border-radius: 10px;
-    padding: 15px 25px;
-    box-sizing: border-box;
-}
-.hr{
-    margin: 0 0px;
-    border-color:#EDEDED;
-}
-.hr-datos{
-    margin: 0 0px;
-    border-color:#EDEDED;
-    margin-top: 0px;
-    margin-right: 25px;
-
+/*Boton de siguiente - atras*/
+.navigation {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
-h1{
-    font-family: roboto;
-    font-size: 23px;
-    font-weight: 575;
+/*Estilo dos columnas principales*/
+.wrapper {
+  display: grid;
+  grid-template-columns: 57% 40%;
+  gap: 3%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  height: 357px;
 }
-h2{
-    font-size: 14px;
-    color: #757575;
-    height: 14px;
-    margin: 0px;
+/*Estilos dos columnas secundarias*/
+.wrapper2 {
+  display: grid;
+  grid-template-columns: 40% 60%;
 }
-h3{
-    font-family: 'Anek Telugu', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: #757575;
-}
-/* Estilos para la barra de progreso */
-.barra-progreso {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
-}
-
-/* Estilos para cada etapa */
-.etapa {
-    text-align: center;
-    position: relative;
-}
-
-/* Estilos para los círculos */
-.circulo {
-    background-color: #FFDBDB;
-    color: #FF0000;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    align-items: center;
-    justify-content: center;
-    font-size: 17px;
-    position: relative;
-    z-index: 1;
-    border: none;
-    margin-right: 15px;
-}
+/*Alinear a la izquierda*/
 .right {
-    width: 80%;
-    display: flex;
-    justify-content: flex-end;
-}
-.right2 {
-    width: 60%;
-    display: flex;
-    justify-content: flex-end;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin-top: 15px;
 }
 
-/* Estilos para el texto debajo de los círculos */
-.etapa p {
-    margin-top: 5px;
-}
-
-/* Estilos para la línea */
-.barra-progreso::before {
-    content: "";
-    width: 100%;
-    height: 5px;
-    background-color: #66CDAA;
-    position: absolute;
-    top: 30%;
-    transform: translateY(-50%);
-    z-index: 0;
+/*Lado derecho*/
+.tree{
+  border: #EDEDED 1px solid;
+  width: 100%;
+  height: 100%;
+  background: url(/assets/buildings.svg);
+  background-size: 65%;
+  background-repeat: no-repeat;
+  background-position-x: 90%;
+  background-position-y: 95%;
+  border-radius: 5px;
+  margin: 10px 0px;
+  padding: 10px 15px 10px 0px;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 /* Para el arbol */
 /* Estilos para el árbol */
 .tree ul {
-    list-style-type: none;
-    padding-left: 20px; /* Sangría para los niveles */
-  }
+  list-style-type: none;
+  padding-left: 15px; /* Sangría para los niveles */
+}
 
-  .tree li {
-    margin: 0;
-    padding: 5px 0;
-    position: relative;
-    top: 2px;
-  }
+.tree li::before {
+  content: "";
+  position: absolute;
+  height: calc(100% - 10px);
+}
 
-  .tree li::before {
-    content: "";
-    position: absolute;
-    /* left: -15px;
-    border-left: 1px solid #ccc; */
-    height: calc(100% - 10px);
-  }
+/* Estilos para los botones de expansión/ocultación */
+.toggle {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.toggle:focus {
+  outline: none;
+}
 
-  /* Estilos para los botones de expansión/ocultación */
-  .toggle {
-    background-color: transparent;
-    border: none;
-    font-size: 18px;
-    padding: 0 5px;
-    cursor: pointer;
-  }
+/* Estilo para los botones de expansión/ocultación cuando están expandidos */
+.toggle.expanded {
+  transform: rotate(90deg); /* Gira el botón para indicar expansión */
+}
+/* Estilos para los elementos del árbol */
+.tree span {
+  padding: 5px 10px;
+  border-radius: 5px;
+  padding-left: 10px; /* Sangría para los niveles */
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #757575;
+  display: inline-block;
+  margin: 0;
+  
+} 
+/* Estilos para el elemento raíz del árbol */
+.tree ul:first-child > li {
+  padding-top: 0;
+}
+.tree hr {
+  margin: 0px;
+}
 
-  /* Estilo para los botones de expansión/ocultación cuando están expandidos */
-  .toggle.expanded {
-    transform: rotate(90deg); /* Gira el botón para indicar expansión */
-  }
+/*Areas*/
+.area {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 8px;
+}
 
-  /* Estilos para los elementos del árbol */
-  .tree span {
-    padding: 5px 10px;
-    border-radius: 5px;
-    padding-left: 10px; /* Sangría para los niveles */
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: #757575;
-    display: inline-block;
-    margin: 0;
-
-  }
-
-
-  /* Estilos para el elemento raíz del árbol */
-  .tree ul:first-child > li {
-    padding-top: 0;
-  }
+/* Estilos para los círculos */
+.circulo {
+  background-color: #f59898;
+  color: white;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  z-index: 1;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.circulo:hover {
+  background-color: #ef5350;
+  color: white;
+}
+.circulo:focus {
+  outline: none;
+}

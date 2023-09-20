@@ -1,107 +1,70 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <div class="tap2">
     <div class="container">
-        <div style="margin-top: 20px; margin-left: 20px;">
-            <h1>Configuración de la Empresa</h1>
-        </div>
-        <hr>
-        <div style="margin: 0 3%; margin-top: 20px;">
-            <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="2"></app-progress>
-
-            <div class="wrapper">
-                <div class="registro" style="margin-right: 5%; margin-left: 3%;">
-                    <hr>
+        <h1 class="header-title">Configuración de la Empresa</h1>
+        <hr class="separator">
+        <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="2"></app-progress>
+        <div class="wrapper">
+            <div>
+                <hr class="separator">
+                <div class="wrapper2">
+                    <div><h2>SUCURSAL</h2></div>
                     <div>
-                        <div style="margin-top: 15px;" class="wrapper2">
-                            <div>
-                                <h2>SUCURSAL</h2>
-                            </div>
-                            <div>
-                                <div >
-                                    <!-- <app-my-textfield [control]="subsidiaryControl"  [placeholder]="placeholderSubsidiary" ></app-my-textfield> -->
-                                    <app-my-textfield [iconInput]="iconInputNombre" [label]="labelNombre" [control]="subsidiaryControl" [placeholder]="placeholderSubsidiary"></app-my-textfield>
-
-                                </div>
-                                <!-- <button (click)="printValue()">Imprimir valor</button> -->
-                                <div >
-                                    <!-- <app-my-textfield [placeholder]="placeholderAddress" ></app-my-textfield> -->
-                                    <app-my-textfield [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="subsidiaryControl" [placeholder]="placeholderAddress"></app-my-textfield>
-                                </div>
-                                <div>
-                                    <app-my-button style="margin-left: 72%;" (click)="agregarSucursal()">AGREGAR</app-my-button>
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                        <hr>
-                        <div style="margin-top: 25px;" class="wrapper2">
-                            <div>
-                                <h2>ÁREA</h2>
-                            </div>
-                            <div >
-                                <div >
-                                    <!-- <app-my-textfield [placeholder]="placeholderArea"></app-my-textfield> -->
-                                    <app-my-textfield [iconInput]="iconInputArea" [label]="labelNombreArea" [control]="subsidiaryControl" [placeholder]="placeholderArea"></app-my-textfield>
-                                </div>
-                                <div class="boton1">
-                                    <app-my-button (clicked)="onClick()">AGREGAR</app-my-button>
-                                    <!-- Revisar el ancho del boton -->
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <hr>
+                        <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="controlSubsidiaryName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderSubsidiary"></app-my-textfield>
+                        <div style="height: 20px;"></div>
+                        <app-my-textfield type="text" [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="controlSubsidiaryAddress" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderAddress"></app-my-textfield>
                     </div>
                 </div>
-                <div class="datos">
-                    <div class="tree">
-                        <ul>
-                          <li *ngFor="let elemento1 of arbol">
-                             <button class="toggle" (click)="toggleChildren(elemento1)">{{ elemento1.mostrarHijos ? '-' : '>' }}</button>
-                             <span>{{ elemento1.nombre }}</span>
-                             <hr class="hr-datos">
-                             <ul *ngIf="elemento1.mostrarHijos">
-                               <li *ngFor="let elemento2 of elemento1.children">
-                                <button class="toggle" (click)="toggleChildren(elemento2)">{{ elemento2.mostrarHijos ? '-' : '>' }}</button>
+                <div class="right">
+                    <app-my-button [isGreen]="true" (click)="agregarSucursal()">AGREGAR</app-my-button>
+                </div>
+                <hr class="separator">
+                <div class="wrapper2">
+                    <div><h2>ÁREA</h2></div>
+                    <div>
+                        <app-my-textfield type="text" [iconInput]="iconInputArea" [label]="labelNombreArea" [control]="controlAreaName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderArea"></app-my-textfield>
+                    </div>
+                </div>
+                <div class="right">
+                    <app-my-button [isGreen]="true" (click)="agregarArea()">AGREGAR</app-my-button>
+                </div>
+                <hr class="separator">
+            </div>
+            <div class="tree">
+                <ul>
+                    <li *ngFor="let sucursal of sucursales">
+                        <div style="display: flex;">
+                            <button class="toggle" (click)="toggleChildren(sucursal)">
+                                <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': sucursal.mostrarHijos, 'fa-caret-down': !sucursal.mostrarHijos}"></i>
+                            </button>                                               
+                            <div class="area" style="margin: 0px;">
+                                <span>{{sucursal.subsidiaryName}}</span>
+                                <button class="circulo" style="margin: 0px;" (click)="eliminarSucursal(sucursal.subsidiaryName)">
+                                    <i class="fa-solid fa-x"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <hr class="separator">
+                        <ul *ngIf="sucursal.mostrarHijos">
+                            <li *ngFor="let area of areas">
                                 <div class="area">    
-                                    <span>{{ elemento2.nombre }}</span>
-                                    <div class="right2">        
-                                        <button class="circulo" >x</button>
-                                    </div>
+                                    <span>{{area}}</span>
+                                    <button class="circulo" (click)="eliminarArea(area)">
+                                        <i class="fa-solid fa-x"></i>
+                                    </button>
                                 </div>
-                                 <hr class="hr-datos">
-                                 <ul *ngIf="elemento2.mostrarHijos">
-                                    <li *ngFor="let elemento3 of elemento2.children" class="area">
-                                        <div class="area">
-                                            <span>{{ elemento3.nombre }}</span>         
-                                            <div class="right">        
-                                                <button class="circulo">x</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                 </ul>
-                               </li>
-                             </ul>
-                           </li>
+                            </li>
                         </ul>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-            <div style="margin-top: 15px;" class="navigator">
-                <div >
-                    <a routerLink="/tap1">&lt;&lt;Atras </a>
-                </div>
-                <div >
-                    <a routerLink="/tap3">Siguiente&gt;&gt;</a>
-                </div>
-                <br>
-            </div>
-            
-            <!-- <li class="nav-item option"><a class="nav-link" routerLink="/tap2">Atras</a></li> -->
         </div>
-        
+        <div class="navigation">
+            <div><a routerLink="/tap1">&lt;&lt; Atras</a></div>
+            <div><a routerLink="/tap3">Siguiente &gt;&gt;</a></div>
+        </div>
+        <!--<button (click)="printValue()">Imprimir valor</button>-->
     </div>
 </div>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@700&display=swap" rel="stylesheet">

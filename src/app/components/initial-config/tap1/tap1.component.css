@@ -12,7 +12,9 @@ body {
 /*Background*/
 .tap1 {
     background-color: #EEEEEE;
-    padding: 5% 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100%;
 }
 /*Información*/
@@ -21,6 +23,8 @@ body {
     border-radius: 10px;
     padding: 15px 25px;
     box-sizing: border-box;
+    max-width: 65%;
+    min-height: 518px;
 }
 /*Subtitulos*/
 h2, h3 {
