@@ -17,6 +17,7 @@
           {{node.name}}
           <div class="separator"></div>
           <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
+          <app-circular-button (clicked)="deleteAccount(node)" ></app-circular-button>
         </mat-tree-node>
 
         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>

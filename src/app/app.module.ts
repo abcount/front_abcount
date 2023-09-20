@@ -21,6 +21,7 @@ import { faDatabase, faBuilding, faCogs, faFolder } from '@fortawesome/free-soli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CircularButtonComponent } from './components/general-components/circular-button/circular-button.component';
 
 
 
@@ -32,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     Tap3Component,
     Tap4Component,
     ProgressComponent,
+    CircularButtonComponent,
   ],
   imports: [
     BrowserModule,

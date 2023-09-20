@@ -7,6 +7,8 @@ const TREE_DATA: Account[] = [
 
 ];
 
+const NEW_TREE_DATA: Account[] = [];
+
 interface NodeExample {
   expandable: boolean;
   name: string;
@@ -21,7 +23,7 @@ interface Account {
   report: boolean;
   clasificator: boolean;
   level: number;
-  children: Account[];
+  childrenAccounts: Account[];
 }
 
 @Component({
@@ -43,7 +45,7 @@ export class Tap4Component {
 
   private _transformer = (node: Account, level: number) => {
     return {
-      expandable: !!node.children && node.children.length > 0,
+      expandable: !!node.childrenAccounts && node.childrenAccounts.length > 0,
       name: node.accountCode + ' ' + node.nameAccount,
       level: level,
     };
@@ -59,7 +61,7 @@ export class Tap4Component {
     this._transformer,
     node => node.level,
     node => node.expandable,
-    node => node.children,
+    node => node.childrenAccounts,
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -69,6 +71,8 @@ export class Tap4Component {
   }
 
   hasChild = (_: number, node: NodeExample) => node.expandable;
+
+  //Method to add a new account
 
  addNewChildAccount(node : NodeExample | null ) {
    if(node == null){
@@ -80,7 +84,7 @@ export class Tap4Component {
        moneyRub: this.accountMoneyRub,
        report: this.accountReport,
        clasificator: this.accountClasificator,
-       children: []
+       childrenAccounts: []
      }
      console.log(parentAccount);
 
@@ -99,30 +103,83 @@ export class Tap4Component {
    this.dataSource.data = TREE_DATA;
  }
 
+ //Method to add a new account leaf its a DFS algorithm
+
   // @ts-ignore
   positioningLeaf(listOfAccounts : Account[], selectedAccount: number, level: number){
-     for(let j = 0; j < listOfAccounts.length; j++){
-       if(listOfAccounts[j].accountCode === selectedAccount){
-         this.accountId = selectedAccount * 10 + listOfAccounts[j].children.length + 1;
-         let newAccount : Account = {
-           level: level + 1,
-           accountCode: selectedAccount * 10 + listOfAccounts[j].children.length + 1,
-           nameAccount: this.accountName,
-           moneyRub: this.accountMoneyRub,
-           report: this.accountReport,
-           clasificator: this.accountClasificator,
-           children: []
-         }
-         console.log(newAccount);
-         listOfAccounts[j].children.push(newAccount);
-         this.accountName = "";
-         return listOfAccounts;
-       }
-       else{
-          this.positioningLeaf(listOfAccounts[j].children, selectedAccount, level);
-       }
-     }
+    for(let j = 0; j < listOfAccounts.length; j++){
+      if(listOfAccounts[j].accountCode === selectedAccount){
+        this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
+        let newAccount : Account = {
+          level: level + 1,
+          accountCode: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
+          nameAccount: this.accountName,
+          moneyRub: this.accountMoneyRub,
+          report: this.accountReport,
+          clasificator: this.accountClasificator,
+          childrenAccounts: []
+        }
+        console.log(newAccount);
+        listOfAccounts[j].childrenAccounts.push(newAccount);
+        this.accountName = "";
+        return listOfAccounts;
+      }
+      else{
+        this.positioningLeaf(listOfAccounts[j].childrenAccounts, selectedAccount, level);
+      }
+    }
   }
+
+
+//Method to delete an account
+
+
+ deleteAccount(node : NodeExample | null){
+    if(node == null){
+      alert("Select an account to delete");
+    }
+    else{
+      let strAccountName = node.name.split(" ", 1);
+      let accountId = strAccountName[0];
+      this.deleteLeaf(TREE_DATA, Number(accountId));
+    }
+    this.dataSource.data = TREE_DATA;
+ }
+
+  // @ts-ignore
+deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
+    for(let j = 0; j < listOfAccounts.length; j++){
+      if(listOfAccounts[j].accountCode === selectedAccount){
+
+        listOfAccounts.splice(j, 1);
+        console.log(listOfAccounts);
+        if(listOfAccounts.length !== 0){
+          this.enumerateAccounts(listOfAccounts);
+        }
+
+        return listOfAccounts;
+      }
+      else{
+        this.deleteLeaf(listOfAccounts[j].childrenAccounts, selectedAccount);
+      }
+    }
+ }
+
+ enumerateAccounts(listOfAccounts : Account[]){
+   let parentAccount = Math.round(listOfAccounts[0].accountCode / 10);
+   console.log("PADRE: " + parentAccount);
+   console.log(listOfAccounts)
+    for(let j = 0; j < listOfAccounts.length; j++){
+      console.log("HIJO: " + (parentAccount * 10 + j + 1));
+      listOfAccounts[j].accountCode = parentAccount * 10 + j + 1;
+    }
+    console.log("LISTA DE CUENTAS");
+    console.log(listOfAccounts);
+
+ }
+
+
+
 
 
   setSelectedNode(node: NodeExample | null){
