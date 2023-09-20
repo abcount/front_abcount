@@ -28,7 +28,7 @@
                                     <app-my-textfield [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="subsidiaryControl" [placeholder]="placeholderAddress"></app-my-textfield>
                                 </div>
                                 <div>
-                                    <app-my-button style="margin-left: 72%;" (clicked)="onClick()">AGREGAR</app-my-button>
+                                    <app-my-button style="margin-left: 72%;" (click)="agregarSucursal()">AGREGAR</app-my-button>
                                 </div>
                             </div>
                             <br>
@@ -62,14 +62,21 @@
                              <hr class="hr-datos">
                              <ul *ngIf="elemento1.mostrarHijos">
                                <li *ngFor="let elemento2 of elemento1.children">
-                                 <button class="toggle" (click)="toggleChildren(elemento2)">{{ elemento2.mostrarHijos ? '-' : '>' }}</button>
-                                 <span>{{ elemento2.nombre }}</span>
+                                <button class="toggle" (click)="toggleChildren(elemento2)">{{ elemento2.mostrarHijos ? '-' : '>' }}</button>
+                                <div class="area">    
+                                    <span>{{ elemento2.nombre }}</span>
+                                    <div class="right2">        
+                                        <button class="circulo" >x</button>
+                                    </div>
+                                </div>
                                  <hr class="hr-datos">
                                  <ul *ngIf="elemento2.mostrarHijos">
                                     <li *ngFor="let elemento3 of elemento2.children" class="area">
                                         <div class="area">
                                             <span>{{ elemento3.nombre }}</span>         
-                                            <button class="circulo">x</button>
+                                            <div class="right">        
+                                                <button class="circulo">x</button>
+                                            </div>
                                         </div>
                                     </li>
                                  </ul>

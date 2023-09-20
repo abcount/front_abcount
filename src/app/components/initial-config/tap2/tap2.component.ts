@@ -27,6 +27,11 @@ export class Tap2Component {
 
   placeholderAddress: string = 'Ingrese la dirección de tu sucursal';
   placeholderArea: string = 'Ingrese el nombre de tu área';
+  
+  // Una de las siguientes estructuras para guardar los datos
+
+  sucursal: { nombre: string, area: [{nombre: string}] }[] = [];
+  empresa:{nombre: string, sucursal: [{nombre: string, area: [{nombre: string}]}]}[] = [];
 
   arbol: Elemento[] = [
     {
@@ -61,7 +66,32 @@ export class Tap2Component {
       ]
     }
   ];
+  // la logica para agregar
+  agregarSucursal() {
+    console.log("agregar sucursal");
+    this.arbol.push({
+      nombre: this.placeholderSubsidiary,
+      children: [
+        {
+          nombre: 'Ventas',
+          children: []
+        },
+        {
+          nombre: 'Finanzas',
+          children: []
+        },
+      ]
 
+      
+    });
+    console.log(this.arbol); 
+  }
+  // la logica para eliminar
+  eliminarSucursal() {
+    console.log("eliminar sucursal");
+    this.arbol.pop();
+    console.log(this.arbol);
+  }
   toggleChildren(elemento: Elemento): void {
     elemento.mostrarHijos = !elemento.mostrarHijos;
   }
