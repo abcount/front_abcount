@@ -1,24 +1,68 @@
-.center-container {
+/*Quitar los estilos generales*/
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/*Background*/
+.tap4 {
+  background-color: #EEEEEE;
+  min-height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+}
+/*Contenedor*/
+.container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  max-width: 65%;
+  height: 548px;
+}
+.center-container {
+  
+  padding: 10px;
+  margin-top: 2vh;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  gap: 1%;
+  
+}
+.data{
+  border: #EDEDED 1px solid;
+  padding: 12px;
+  height: 310px;
+  width: 410px;
+  max-height: 100%;
+  overflow-y: auto;
+
+  
 }
 
-.container {
+/* .container {
   margin: 0 3%;
   margin-top: 5px;
+} */
+.area {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 8px;
 }
-
 .separator {
   margin: 0 3%;
 }
 
 .row-2 {
   display: grid;
-  grid-template-columns: 40% 60%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  align-items: center;
+  grid-template-columns: 40% 50% 10%;
+  margin: 25px;
+
 }
 
 .row-2 a {
@@ -34,6 +78,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s ease; /* Transition background for a smooth effect */
+  width: 100%;
 }
 
 .row-2 button:hover {
@@ -58,6 +103,34 @@
 
 .small-button:hover {
   background: linear-gradient(to right, #0056b3, #66CDAA);
+}
+a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #757575;
+  text-decoration: none;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+a:focus {
+  outline: none !important;
+}
+a:hover {
+  text-decoration: none;
+  color: #7BC8CA;
+}
+h2 {
+  font-size: 14px;
+  color: #757575;
+  height: 14px;
+  margin: 0px;
+}
+.header-title {
+  font-size: 20px;
+  font-weight: 590;
+  margin-bottom: 10px;
 }
 
 
