@@ -5,6 +5,7 @@ import { ConfigNavbarComponent } from "../components/configuration/config-navbar
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
 import { SebastianModule } from "./SebastianModule";
+import { ConfigurationTap2Component } from "../components/configuration/configuration-tap2/configuration-tap2.component";
 
 const CarlosComponents = [
     NavbarComponent,
@@ -16,6 +17,7 @@ const CarlosComponents = [
         NavbarComponent,
         ConfigurationTap1Component,
         ConfigNavbarComponent,
+        ConfigurationTap2Component,
     ],
     exports: [CarlosComponents] // Poner [CarlosComponents]
     ,

@@ -83,6 +83,9 @@ export class Tap2Component {
     console.log("Eliminar sucursal");
     this.sucursales = this.sucursales.filter((sucursal) => sucursal.subsidiaryName !== sucursalName);
     console.log(this.sucursales);
+    if (this.sucursales.length == 0) {
+      this.areas = [];
+    }
   }
 
   @ViewChild('errorMessageArea') errorMessageArea: ElementRef;
