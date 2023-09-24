@@ -6,6 +6,8 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class FormStateService {
    formGroup: FormGroup;
+   fechaActual = new Date();
+
 
   
 
@@ -21,7 +23,9 @@ export class FormStateService {
           logo: [''],
           subsidiaries: this.fb.array([
             this.createSubsidiary()
-          ])
+          ]),
+          openingdate: this.fechaActual,     
+
         })
       });
     }

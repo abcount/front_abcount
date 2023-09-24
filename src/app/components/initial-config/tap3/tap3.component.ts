@@ -99,5 +99,8 @@ export class Tap3Component {
   onInputText(text: string) {
     console.log('Text changed: ' + text);
   }
+  printValue() {
+    console.log(JSON.stringify(this.formGroup.value, null, 2));
+  }
 
 }
