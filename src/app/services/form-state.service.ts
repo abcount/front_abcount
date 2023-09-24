@@ -11,7 +11,7 @@ export class FormStateService {
 
   
 
-    constructor(private fb: FormBuilder) {
+    constructor(public fb: FormBuilder) {
       this.formGroup = this.fb.group({
         enterprise: this.fb.group({
           enterpriseName: [''],
@@ -24,7 +24,12 @@ export class FormStateService {
           subsidiaries: this.fb.array([
             this.createSubsidiary()
           ]),
-          openingdate: this.fechaActual,     
+          openingdate: this.fechaActual,
+          configCurrency: this.fb.group({
+            principal: ['Bolivianos'],
+            monedas: this.fb.array([]),
+          })
+
 
         })
       });

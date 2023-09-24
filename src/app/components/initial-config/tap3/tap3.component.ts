@@ -103,4 +103,25 @@ export class Tap3Component {
     console.log(JSON.stringify(this.formGroup.value, null, 2));
   }
 
+  guardarJSON() {
+    const jsonData = {
+      principal: 'Bolivianos',
+      monedas: this.monedas,
+    };
+  
+    console.log('Datos en JSON:');
+    console.log(jsonData);
+  
+    // Crear FormArray para monedas
+    const monedasFormArray = this.formService.fb?.array(
+      jsonData.monedas.map(moneda => this.formService.fb?.group(moneda))
+    );
+  
+    // Añadir jsonData al formGroup
+    const configCurrencyGroup = this.formGroup?.get('enterprise.configCurrency') as FormGroup;
+    configCurrencyGroup.setControl('monedas', monedasFormArray);
+    configCurrencyGroup.get('principal')?.setValue(jsonData.principal);
+  }
+  
+
 }
