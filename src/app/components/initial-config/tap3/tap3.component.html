@@ -52,12 +52,17 @@
         <div class="row-2-popup">
           <h3>Nombre de Moneda</h3>
           <input type="text" id="popupNombreMoneda" [(ngModel)]="nombreMoneda" class="input-group">
+          <div></div>
+          <div #errorName class="error-message">Nombre de moneda existente</div>
         </div>
         <br>
         <div class="row-2-popup">
           <h3>Código de Moneda (Código ISO)</h3>
           <input type="text" id="popupCodigoISO" [(ngModel)]="codigoISO" class="input-group">
+          <div></div>
+          <div #errorCode class="error-message">Código de moneda existente</div>
         </div>
+        <div #errorEmpty class="error-message" style="margin-top: 10px;">Para continuar debes llenar todos los campos</div>
         <div class="popup-buttons right">
           <app-my-button [isGreen]="true" (click)="guardarMoneda()">ACEPTAR</app-my-button>
           <app-my-button [isRed]="true" (click)="cancelar()">CANCELAR</app-my-button>

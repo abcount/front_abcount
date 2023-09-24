@@ -174,3 +174,14 @@ hr {
   transition: background-color 0.3s;
   margin-left: 12px;
 }
+
+/*Mensaje de error*/
+.error-message {
+  color: #ff7e7e;
+  font-size: 12px;
+  font-weight: 500;
+  display: none;
+}
+.error-message.show {
+  display: block;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {FormStateService} from "../../../services/form-state.service";
 
@@ -27,14 +27,34 @@ export class Tap3Component {
     this.codigoISO = '';
   }
 
+  @ViewChild('errorName') errorName: ElementRef;
+  @ViewChild('errorCode') errorCode: ElementRef;
+  @ViewChild('errorEmpty') errorEmpty: ElementRef;
   guardarMoneda() {
-    if (this.nombreMoneda && this.codigoISO) {
-      this.monedas.push({ nombre: this.nombreMoneda, codigo:this.codigoISO });
-      console.log(this.monedas);
+    const nombresMonedas = this.monedas.map(moneda => moneda.nombre);
+    const codigosISO = this.monedas.map(moneda => moneda.codigo);
+    if (nombresMonedas.includes(this.nombreMoneda)) {
+      this.errorName.nativeElement.classList.add('show');
+      setTimeout(() => {
+        this.errorName.nativeElement.classList.remove('show');
+      }, 2000);
+    } else if (codigosISO.includes(this.codigoISO)) {
+      this.errorCode.nativeElement.classList.add('show');
+      setTimeout(() => {
+        this.errorCode.nativeElement.classList.remove('show');
+      }, 2000);
+    } else if (this.codigoISO.length == 0 || this.nombreMoneda.length == 0) {
+      this.errorEmpty.nativeElement.classList.add('show');
+      setTimeout(() => {
+        this.errorEmpty.nativeElement.classList.remove('show');
+      }, 3000);
+    } else {
+      this.monedas.push({ nombre: this.nombreMoneda, codigo: this.codigoISO });
       this.mostrarPopup = false;
       this.nombreMoneda = '';
       this.codigoISO = '';
     }
+    console.log(this.monedas);
   }
 
   cancelar() {

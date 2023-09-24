@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormStateService } from 'src/app/services/form-state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tap1',
@@ -40,7 +41,7 @@ export class Tap1Component  {
   isDragging = false;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(public formService: FormStateService) {}
+  constructor(public formService: FormStateService, private router: Router) {}
 
   get formGroup(): FormGroup {
     return this.formService.formGroup;
@@ -156,7 +157,7 @@ export class Tap1Component  {
     if (this.nombreControl.valid && this.direccionControl.valid && this.rubroControl.valid && this.nitControl.valid && this.emailControl.valid && this.numeroContactoControl.valid) {
       if (this.formGroup.value.enterprise.enterpriseName != "" && this.formGroup.value.enterprise.direccion != "" && this.formGroup.value.enterprise.rubro != "" && this.formGroup.value.enterprise.nit != "" && this.formGroup.value.enterprise.email != "" && this.formGroup.value.enterprise.numeroContacto != "") {
         if (this.formGroup.value.enterprise.logo.length != 0) {
-          window.location.href = '/tap2';
+          this.router.navigate(['/tap2']);
         } else {
           this.errorMessageLogo.nativeElement.classList.add('show');
           setTimeout(() => {

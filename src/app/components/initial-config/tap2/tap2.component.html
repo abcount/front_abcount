@@ -11,6 +11,7 @@
                     <div><h2>SUCURSAL</h2></div>
                     <div>
                         <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="controlSubsidiaryName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderSubsidiary"></app-my-textfield>
+                        <div class="error-message" #errorMessageSucursal>{{messageSucursal}}</div>
                         <div style="height: 20px;"></div>
                         <app-my-textfield type="text" [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="controlSubsidiaryAddress" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderAddress"></app-my-textfield>
                     </div>
@@ -23,6 +24,7 @@
                     <div><h2>ÁREA</h2></div>
                     <div>
                         <app-my-textfield type="text" [iconInput]="iconInputArea" [label]="labelNombreArea" [control]="controlAreaName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderArea"></app-my-textfield>
+                        <div class="error-message" #errorMessageArea>{{messageArea}}</div>
                     </div>
                 </div>
                 <div class="right">
@@ -61,7 +63,7 @@
         </div>
         <div class="navigation">
             <div><a routerLink="/tap1">&lt;&lt; Atras</a></div>
-            <div><a routerLink="/tap3">Siguiente &gt;&gt;</a></div>
+            <div><a (click)="verificar()">Siguiente &gt;&gt;</a></div>
         </div>
         <!--<button (click)="printValue()">Imprimir valor</button>-->
     </div>

@@ -112,19 +112,20 @@ h3 {
 a {
     font-size: 14px;
     font-weight: 600;
-    color: #757575;
+    color: #757575 !important;
     text-decoration: none;
-    transition: all 0.4s;
+    transition: all 0.4s !important;
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
+    cursor: pointer !important;
 }
 a:focus {
     outline: none !important;
 }
 a:hover {
-    text-decoration: none;
-    color: #7BC8CA;
+    text-decoration: none !important;
+    color: #7BC8CA !important;
 }
 
 /*Estilos para el botón eliminar*/

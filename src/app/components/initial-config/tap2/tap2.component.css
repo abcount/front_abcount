@@ -45,19 +45,20 @@ h2 {
 a {
   font-size: 14px;
   font-weight: 600;
-  color: #757575;
+  color: #757575 !important;
   text-decoration: none;
-  transition: all 0.4s;
+  transition: all 0.4s !important;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  cursor: pointer !important;
 }
 a:focus {
   outline: none !important;
 }
 a:hover {
   text-decoration: none;
-  color: #7BC8CA;
+  color: #7BC8CA !important;
 }
 /*Boton de siguiente - atras*/
 .navigation {
@@ -186,4 +187,15 @@ a:hover {
 }
 .circulo:focus {
   outline: none;
+}
+
+/*Mensajes de error*/
+.error-message {
+  color: #ff7e7e;
+  font-size: 12px;
+  font-weight: 500;
+  display: none;
+}
+.error-message.show {
+  display: block;
 }
