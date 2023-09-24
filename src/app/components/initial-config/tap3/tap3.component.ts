@@ -53,6 +53,7 @@ export class Tap3Component {
       this.mostrarPopup = false;
       this.nombreMoneda = '';
       this.codigoISO = '';
+      this.guardarJSON();
     }
     console.log(this.monedas);
   }
@@ -67,6 +68,7 @@ export class Tap3Component {
     const index = this.monedas.indexOf(moneda);
     if (index !== -1) {
       this.monedas.splice(index, 1);
+      this.guardarJSON();
     }
   }
   get formGroup(): FormGroup {
@@ -108,20 +110,20 @@ export class Tap3Component {
       principal: 'Bolivianos',
       monedas: this.monedas,
     };
-  
+
     console.log('Datos en JSON:');
     console.log(jsonData);
-  
+
     // Crear FormArray para monedas
     const monedasFormArray = this.formService.fb?.array(
       jsonData.monedas.map(moneda => this.formService.fb?.group(moneda))
     );
-  
+
     // Añadir jsonData al formGroup
     const configCurrencyGroup = this.formGroup?.get('enterprise.configCurrency') as FormGroup;
     configCurrencyGroup.setControl('monedas', monedasFormArray);
     configCurrencyGroup.get('principal')?.setValue(jsonData.principal);
   }
-  
+
 
 }

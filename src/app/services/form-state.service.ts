@@ -6,10 +6,13 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class FormStateService {
    formGroup: FormGroup;
-   fechaActual = new Date();
 
 
-  
+
+
+
+
+
 
     constructor(public fb: FormBuilder) {
       this.formGroup = this.fb.group({
@@ -24,7 +27,7 @@ export class FormStateService {
           subsidiaries: this.fb.array([
             this.createSubsidiary()
           ]),
-          openingdate: this.fechaActual,
+          openingdate: this.obtenerFechaActualEnFormato(),
           configCurrency: this.fb.group({
             principal: ['Bolivianos'],
             monedas: this.fb.array([]),
@@ -39,24 +42,24 @@ export class FormStateService {
       return this.fb.group({
         name: [''],
         address: [''],
-        areas: this.fb.array([''])  
+        areas: this.fb.array([''])
       });
     }
 
     getSubsidiaries(): FormArray {
       return this.formGroup.get('enterprise.subsidiaries') as FormArray;
     }
-  
+
     addSubsidiary() {
       this.getSubsidiaries().push(this.createSubsidiary());
     }
-  
+
     removeSubsidiary(index: number) {
       this.getSubsidiaries().removeAt(index);
     }
-  
-  
-  
+
+
+
 
 
   printFormValue() {
@@ -67,5 +70,14 @@ export class FormStateService {
   }
   getForm(): FormGroup {
     return this.formGroup;
+  }
+
+  obtenerFechaActualEnFormato(): string {
+    const fechaActual = new Date();
+    const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+    const dia = fechaActual.getDate().toString().padStart(2, '0');
+    const año = fechaActual.getFullYear().toString();
+
+    return `${mes}/${dia}/${año}`;
   }
 }
