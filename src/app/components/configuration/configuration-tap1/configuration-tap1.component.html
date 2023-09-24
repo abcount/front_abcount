@@ -15,12 +15,12 @@
                     <h4>Nombre</h4>
                     <input #nombreInput class="input" placeholder="Ingresa el nombre de tu empresa">
                 </div>
-                <div style="height: 10px;"></div>
+                <div style="height: 15px;"></div>
                 <div>
                     <h4>Rubro</h4>
                     <input #rubroInput class="input" placeholder="Ingresa el rubro al que se dedica">
                 </div>
-                <div style="height: 10px;"></div>
+                <div style="height: 15px;"></div>
                 <div>
                     <h4>NIT</h4>
                     <input #nitInput class="input" placeholder="Ingresa el NIT de la empresa">
@@ -42,7 +42,7 @@
     <div class="row-2">
         <div class="titulo">
             <i class="fa-solid fa-location-dot icono" style="font-size: 30px;"></i>
-            <h2>UBICACIÓN</h2>
+            <h2 style="padding-top: 8px;">UBICACIÓN</h2>
         </div>
         <div class="campos">
             <h4>Dirección</h4>
@@ -62,7 +62,7 @@
                 <h4>E-mail de contacto:</h4>
                 <input #emailInput class="input" placeholder="Ingresa un e-mail de contacto">
             </div>
-            <div style="height: 10px;"></div>
+            <div style="height: 15px;"></div>
             <div>
                 <h4>Número de contacto</h4>
                 <input #numeroContactoInput class="input" placeholder="Ingresa un número de contacto">
@@ -73,9 +73,9 @@
         <button *ngIf="!modoEdicion" class="edit-button" (click)="editar()">
             <i class="fa-solid fa-pen"></i>
         </button>
-        <app-my-button *ngIf="modoEdicion" [isGreen]="true" (click)="guardar()">GUARDAR CAMBIOS</app-my-button>
+        <app-my-button *ngIf="modoEdicion" [isGreen]="true" (click)="guardar()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
+        <app-my-button *ngIf="modoEdicion" [isRed]="true" (click)="cancelar()">CANCELAR</app-my-button>
     </div>
 </div>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@800&display=swap" rel="stylesheet">

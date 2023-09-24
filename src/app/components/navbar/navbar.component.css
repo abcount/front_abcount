@@ -1,59 +1,63 @@
 /*Características generales*/
 * {
-    margin-left: 3px;
-    margin-right: 1px;
-    margin-top: 1px;
-    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    font-family: 'Anek Telugu', sans-serif;
     font-weight: bold;
-    font-size: 15px;
-    background-color: #ffffff;
+    font-size: 16px;
+}
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /*Navbar - detalles*/
+.navbar {
+    padding: 1% 5%;
+}
+/*Logo*/
+.navbar-brand {
+    margin-right: 65px;
+    padding: 0;
+}
 h2 {
-    font-family: 'Anek Telugu', sans-serif;
-    font-size: 28px;
-    color: #66CDAA; 
-    margin-bottom: 0px;
+    font-size: 20px;
+    font-family: 'Gugi', cursive;
+    background-image: linear-gradient(to right, #66cdab, #489ce9);
+    background-clip: text;
+    -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+    color: transparent;
+    margin: 2px 0 0 8px;
 }
-li, .navbar-brand {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #7F7F7F;
-    font-family: 'Anek Telugu', sans-serif;
-
+.logo {
+    width: 40px;
 }
-li a img {
-    margin-right: 5px;
-}
+/*Opciones izquierda*/
 .option {
-    padding-left: 200px !important;
+    padding: 12px 65px 6px 10px !important;
+    padding-top: 4px;
+    margin: 0;
 }
-.dropdown{
-    padding-left: 200px !important;
+.option:hover {
+    background-color: #DCF8EF;
+    border-radius: 3px;
+    color: #66cdab !important;
 }
+
+/*Opciones de perfil*/
 hr {
     margin: 5px 10px;
 }
-.line {
-    margin: 0 25px;
-}
 .dropdown-item {
-    color: rgba(0,0,0,.5);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    
-    
+    color: #757575 !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 24px 3px 24px;
+    cursor: pointer;
 }
 .dropdown-item:hover {
-    background-color: #DCF8EF;
-    color: #66CDAA
+    color: black !important;
 }
-.plomo:active {
-    background-color: #66CDAA;
-    color: white;
-}
-.link{
-    font-weight: 800;
-    font-size: 16px;
+.dropdown-item:active {
+    background-color: #DCF8EF !important;
+    color: #66cdab !important;
 }

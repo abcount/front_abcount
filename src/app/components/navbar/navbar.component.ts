@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  urlPfp = "../.././../assets/pfp.svg";
+
+  logout() {
+    console.log('Cerrar sesión');
+  }
+
 }

@@ -65,6 +65,18 @@ export class ConfigurationTap1Component {
     this.empresa.numeroContacto = this.numeroContactoInput.nativeElement.value;
   }
 
+  // Cancelar cambios
+  cancelar () {
+    this.modoEdicion = false;
+    this.habilitar();
+    this.nombreInput.nativeElement.value = this.empresa.nombre;
+    this.rubroInput.nativeElement.value = this.empresa.rubro;
+    this.nitInput.nativeElement.value = this.empresa.nit;
+    this.direccionInput.nativeElement.value = this.empresa.direccion;
+    this.emailInput.nativeElement.value = this.empresa.email;
+    this.numeroContactoInput.nativeElement.value = this.empresa.numeroContacto;
+  }
+
   // Habilitar campos inputs
   habilitar () {
     this.nombreInput.nativeElement.disabled = !this.modoEdicion;
