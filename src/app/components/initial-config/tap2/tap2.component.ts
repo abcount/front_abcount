@@ -9,11 +9,23 @@ interface Elemento {
   mostrarHijos?: boolean;
 }
 
+export interface Subsidiary {
+  name: string;
+  address: string;
+  areas: Area[];
+}
+
+export interface Area {
+  name: string;
+}
+
+
 @Component({
   selector: 'app-tap2',
   templateUrl: './tap2.component.html',
   styleUrls: ['./tap2.component.css']
 })
+
 export class Tap2Component {
 
   /*Input nombre se sucursal*/
@@ -38,28 +50,23 @@ export class Tap2Component {
   controlSubsidiaryAddress = new FormControl();
   controlAreaName = new FormControl();
 
+
+
   //Constructor
   constructor(private formStateService: FormStateService, private router: Router) { }
 
-  // Una de las siguientes estructuras para guardar los datos
-  sucursal: { nombre: string, area: [{nombre: string}] }[] = [];
-  empresa:{nombre: string, sucursal: [{nombre: string, area: [{nombre: string}]}]}[] = [];
 
   sucursales: any[] = [
-    /*{
-      subsidiaryName: 'Sucursal centro',
-      subsidiaryDirection: 'Centro La Paz'
-    },
-    {
-      subsidiaryName: 'Sucursal sur',
-      subsidiaryDirection: 'Sur La Paz'
-    }*/
   ];
-  areas: any[] = [/*'Ventas', 'Finanza', 'Contabilidad'*/];
+  areas: any[] = [];
+
+
+
+
+  subsdiaries: any[] = [];
 
   @ViewChild('errorMessageSucursal') errorMessageSucursal: ElementRef;
   messageSucursal: string = 'La sucursal ya existe';
-  //Lógica para agregar
   agregarSucursal() {
     console.log("Agregar sucursal");
     const nombresSucursales = this.sucursales.map((sucursal) => sucursal.subsidiaryName);
@@ -78,7 +85,6 @@ export class Tap2Component {
     }
     console.log(this.sucursales);
   }
-  //Lógica para eliminar
   eliminarSucursal(sucursalName: string) {
     console.log("Eliminar sucursal");
     this.sucursales = this.sucursales.filter((sucursal) => sucursal.subsidiaryName !== sucursalName);
@@ -110,6 +116,7 @@ export class Tap2Component {
       this.limpiarCampos();
     }
     console.log(this.areas);
+    this.sucursales.push(this.areas);
   }
   //Logica para eliminar area
   eliminarArea(areaName: string) {
