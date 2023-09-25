@@ -31,9 +31,8 @@ export class FormStateService {
           configCurrency: this.fb.group({
             principal: ['Bolivianos'],
             monedas: this.fb.array([]),
-          })
-
-
+          }),
+          configAccount: this.fb.array([]),
         })
       });
     }

@@ -200,10 +200,17 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
       TREE_DATA.map(account => this.formService.fb?.group(account))
     );
     // Añadir jsonData al formGroup
-    const configCurrencyGroup = this.formGroup?.get('enterprise.configCurrency') as FormGroup;
+    const configCurrencyGroup = this.formGroup?.get('enterprise.configAccount') as FormGroup;
     configCurrencyGroup.setControl('accountPlan', accountPlanArray);
+    this.printValue()
+
+    // configCurrencyGroup.get()?.setValue(TREE_DATA);
   }
 
+  printValue() {
+   console.log('Datos en el formulario:');
+    console.log(JSON.stringify(this.formGroup.value, null, 2));
+  }
 
 
 
