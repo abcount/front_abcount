@@ -18,19 +18,19 @@ export class FormStateService {
       this.formGroup = this.fb.group({
         enterprise: this.fb.group({
           enterpriseName: [''],
-          direccion: [''],
-          rubro: [''],
+          enterpriseLocation: [''],
+          dicCategory: [''],
           nit: [''],
-          email: [''],
-          numeroContacto: [''],
-          logo: [''],
+          contactMail: [''],
+          contactNumber: [''],
+          logo64b: [''],
           subsidiaries: this.fb.array([
             this.createSubsidiary()
           ]),
           openingdate: this.obtenerFechaActualEnFormato(),
-          configCurrency: this.fb.group({
+          currencyConfig: this.fb.group({
             principal: ['Bolivianos'],
-            monedas: this.fb.array([]),
+            currencyList: this.fb.array([]),
           }),
           configAccount: this.fb.array([]),
         })

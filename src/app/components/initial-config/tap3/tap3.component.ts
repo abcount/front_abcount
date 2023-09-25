@@ -14,7 +14,7 @@ export class Tap3Component {
 
   constructor(public formService: FormStateService) {}
 
-  monedas: { nombre: string, codigo: string }[] = [];
+  monedas: { moneyName: string, abbreviationName: string }[] = [];
   mostrarPopup: boolean = false;
   nombreMoneda: string = '';
   codigoISO: string = '';
@@ -31,8 +31,8 @@ export class Tap3Component {
   @ViewChild('errorCode') errorCode: ElementRef;
   @ViewChild('errorEmpty') errorEmpty: ElementRef;
   guardarMoneda() {
-    const nombresMonedas = this.monedas.map(moneda => moneda.nombre);
-    const codigosISO = this.monedas.map(moneda => moneda.codigo);
+    const nombresMonedas = this.monedas.map(moneda => moneda.moneyName);
+    const codigosISO = this.monedas.map(moneda => moneda.abbreviationName);
     if (nombresMonedas.includes(this.nombreMoneda)) {
       this.errorName.nativeElement.classList.add('show');
       setTimeout(() => {
@@ -49,7 +49,7 @@ export class Tap3Component {
         this.errorEmpty.nativeElement.classList.remove('show');
       }, 3000);
     } else {
-      this.monedas.push({ nombre: this.nombreMoneda, codigo: this.codigoISO });
+      this.monedas.push({ moneyName: this.nombreMoneda, abbreviationName: this.codigoISO });
       this.mostrarPopup = false;
       this.nombreMoneda = '';
       this.codigoISO = '';
@@ -64,7 +64,7 @@ export class Tap3Component {
     this.codigoISO = '';
   }
 
-  removerMoneda(moneda: { nombre: string, codigo: string }) {
+  removerMoneda(moneda: { moneyName: string, abbreviationName: string }) {
     const index = this.monedas.indexOf(moneda);
     if (index !== -1) {
       this.monedas.splice(index, 1);
@@ -120,8 +120,8 @@ export class Tap3Component {
     );
 
     // Añadir jsonData al formGroup
-    const configCurrencyGroup = this.formGroup?.get('enterprise.configCurrency') as FormGroup;
-    configCurrencyGroup.setControl('monedas', monedasFormArray);
+    const configCurrencyGroup = this.formGroup?.get('enterprise.currencyConfig') as FormGroup;
+    configCurrencyGroup.setControl('currencyList', monedasFormArray);
     configCurrencyGroup.get('principal')?.setValue(jsonData.principal);
   }
 

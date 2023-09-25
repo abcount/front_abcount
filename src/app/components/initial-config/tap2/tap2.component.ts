@@ -40,7 +40,7 @@ export class Tap2Component {
 
   //Constructor
   constructor(private formStateService: FormStateService, private router: Router) { }
-  
+
   // Una de las siguientes estructuras para guardar los datos
   sucursal: { nombre: string, area: [{nombre: string}] }[] = [];
   empresa:{nombre: string, sucursal: [{nombre: string, area: [{nombre: string}]}]}[] = [];
@@ -56,7 +56,7 @@ export class Tap2Component {
     }*/
   ];
   areas: any[] = [/*'Ventas', 'Finanza', 'Contabilidad'*/];
-  
+
   @ViewChild('errorMessageSucursal') errorMessageSucursal: ElementRef;
   messageSucursal: string = 'La sucursal ya existe';
   //Lógica para agregar
@@ -146,6 +146,7 @@ export class Tap2Component {
       }, 2000);
     } else {
       this.router.navigate(['/tap3']);
+      this.guardarJSON();
     }
   }
 
@@ -159,4 +160,19 @@ export class Tap2Component {
   get subsidiaryControl(): FormControl {
     return this.formGroup.get('subsidiary') as FormControl;
   }
+
+  guardarJSON() {
+    console.log('Datos en JSON:');
+    console.log(this.sucursales);
+    const accountPlanArray = this.formStateService.fb?.array(
+      this.sucursales.map(sucursal => this.formStateService.fb?.group(sucursal))
+    );
+    // Añadir jsonData al formGroup
+    const configCurrencyGroup = this.formGroup?.get('enterprise.subsidiaries') as FormGroup;
+    configCurrencyGroup.setControl('accountPlan', accountPlanArray);
+    // this.printValue()
+
+  }
+
+
 }

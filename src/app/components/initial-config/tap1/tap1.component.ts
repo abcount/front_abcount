@@ -74,7 +74,7 @@ export class Tap1Component  {
     this.isDragging = false;
   }
 
-  
+
 /*
   loadPreview(file: File) {
     const reader = new FileReader();
@@ -106,7 +106,7 @@ export class Tap1Component  {
   removeImage() {
     this.imageURL = null;
     this.fileInput.nativeElement.value = '';
-    
+
     // Establecer el valor del campo 'logo' del formulario a null o cadena vacía
     this.logoControl.setValue(null);
   }
@@ -115,34 +115,32 @@ export class Tap1Component  {
     return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseName') as FormControl;
   }
 
-  
+
   get direccionControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('direccion') as FormControl;
+    return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseLocation') as FormControl;
 
   }
-  
+
   get rubroControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('rubro') as FormControl;
+    return (this.formGroup.get('enterprise') as FormGroup).get('dicCategory') as FormControl;
 
   }
-  
+
   get nitControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('nit') as FormControl;
 
   }
-  
-  get emailControl(): FormControl { 
-    return (this.formGroup.get('enterprise') as FormGroup).get('email') as FormControl;
+
+  get emailControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('contactMail') as FormControl;
 
   }
-  
-  get numeroContactoControl(): FormControl {  
-    return (this.formGroup.get('enterprise') as FormGroup).get('numeroContacto') as FormControl;
 
+  get numeroContactoControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('contactNumber') as FormControl;
   }
-  
   get logoControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('logo') as FormControl;
+    return (this.formGroup.get('enterprise') as FormGroup).get('logo64b') as FormControl;
   }
 
   printValue() {
@@ -152,11 +150,11 @@ export class Tap1Component  {
   /*---------------------------------------------------------------------------------------------*/
   @ViewChild('errorMessage') errorMessage: ElementRef;
   @ViewChild('errorMessageLogo') errorMessageLogo: ElementRef;
-  //Comprobar que los campos estan llenos 
+  //Comprobar que los campos estan llenos
   verificarCampos() {
     if (this.nombreControl.valid && this.direccionControl.valid && this.rubroControl.valid && this.nitControl.valid && this.emailControl.valid && this.numeroContactoControl.valid) {
       if (this.formGroup.value.enterprise.enterpriseName != "" && this.formGroup.value.enterprise.direccion != "" && this.formGroup.value.enterprise.rubro != "" && this.formGroup.value.enterprise.nit != "" && this.formGroup.value.enterprise.email != "" && this.formGroup.value.enterprise.numeroContacto != "") {
-        if (this.formGroup.value.enterprise.logo.length != 0) {
+        if (this.formGroup.value.enterprise.logo64b.length != 0) {
           this.router.navigate(['/tap2']);
         } else {
           this.errorMessageLogo.nativeElement.classList.add('show');

@@ -30,7 +30,7 @@
         </div>
         <div style="height: 113px;">
           <div *ngFor="let moneda of monedas" [style.background-color]="color" class="moneda-item">
-            {{ moneda.nombre }} <button (click)="removerMoneda(moneda)" class="remove-button">
+            {{ moneda.moneyName }} <button (click)="removerMoneda(moneda)" class="remove-button">
               <i class="fa-solid fa-x"></i>
             </button>
           </div>
