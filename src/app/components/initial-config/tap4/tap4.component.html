@@ -3,7 +3,7 @@
     <div style="margin: 0 0%">
       <h1 class="header-title">Configuración de la empresa</h1>
         <hr>
-      <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="3"></app-progress>
+      <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="4"></app-progress>
       <hr style="margin: 0 0px; border-color:#EDEDED;">
       <div class="center-container">
           <div>
@@ -20,7 +20,7 @@
                   <div class="separator"></div>
                   <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
                     <div class="separator"></div>
-                  
+
                     <app-circular-button (clicked)="deleteAccount(node)" ></app-circular-button>
                     <hr>
                 </mat-tree-node>
@@ -41,7 +41,7 @@
               </mat-tree-node>
             </mat-tree>
           </div>
-          
+
       </div>
     </div>
 
@@ -138,7 +138,7 @@
         <button class="add-button right-buttom center large" data-dismiss="modal" (click)="addNewChildAccount(selectedNode)">
           Guardar
         </button>
-        <button class="delete-button large" data-dismiss="modal">Cancelar</button>
+        <button class="delete-button large" data-dismiss="modal" (click)="guardarJSON()">Cancelar</button>
       </div>
     </div>
   </div>

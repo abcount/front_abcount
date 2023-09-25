@@ -1,6 +1,8 @@
 import {Component, signal, ViewChild, ViewRef} from '@angular/core';
 import {FlatTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
+import {FormGroup} from "@angular/forms";
+import {FormStateService} from "../../../services/form-state.service";
 
 
 const TREE_DATA: Account[] = [
@@ -66,7 +68,7 @@ export class Tap4Component {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor() {
+  constructor(public formService: FormStateService) {
     this.dataSource.data = TREE_DATA;
   }
 
@@ -150,13 +152,11 @@ export class Tap4Component {
 deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     for(let j = 0; j < listOfAccounts.length; j++){
       if(listOfAccounts[j].accountCode === selectedAccount){
-
         listOfAccounts.splice(j, 1);
         console.log(listOfAccounts);
         if(listOfAccounts.length !== 0){
           this.enumerateAccounts(listOfAccounts);
         }
-
         return listOfAccounts;
       }
       else{
@@ -178,10 +178,6 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
 
  }
 
-
-
-
-
   setSelectedNode(node: NodeExample | null){
     this.selectedNode = node;
   }
@@ -189,6 +185,28 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
   printTree(){
     console.log(TREE_DATA);
   }
+
+//   FORM GROUP
+
+  get formGroup(): FormGroup {
+    return this.formService.formGroup;
+  }
+
+
+  guardarJSON() {
+    console.log('Datos en JSON:');
+    console.log(TREE_DATA);
+    const accountPlanArray = this.formService.fb?.array(
+      TREE_DATA.map(account => this.formService.fb?.group(account))
+    );
+    // Añadir jsonData al formGroup
+    const configCurrencyGroup = this.formGroup?.get('enterprise.configCurrency') as FormGroup;
+    configCurrencyGroup.setControl('accountPlan', accountPlanArray);
+  }
+
+
+
+
 
 
 
