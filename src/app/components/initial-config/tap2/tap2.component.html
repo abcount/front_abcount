@@ -40,8 +40,8 @@
                                 <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': sucursal.mostrarHijos, 'fa-caret-down': !sucursal.mostrarHijos}"></i>
                             </button>                                               
                             <div class="area" style="margin: 0px;">
-                                <span>{{sucursal.subsidiaryName}}</span>
-                                <button class="circulo" style="margin: 0px;" (click)="eliminarSucursal(sucursal.subsidiaryName)">
+                                <span>{{sucursal.name}}</span>
+                                <button class="circulo" style="margin: 0px;" (click)="eliminarSucursal(sucursal.name)">
                                     <i class="fa-solid fa-x"></i>
                                 </button>
                             </div>
@@ -65,7 +65,7 @@
             <div><a routerLink="/tap1">&lt;&lt; Atras</a></div>
             <div><a (click)="verificar()">Siguiente &gt;&gt;</a></div>
         </div>
-        <!--<button (click)="printValue()">Imprimir valor</button>-->
+        <!-- <button (click)="printValue()">Imprimir valor</button> -->
     </div>
 </div>
 <link rel="preconnect" href="https://fonts.googleapis.com">

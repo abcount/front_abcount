@@ -10,13 +10,6 @@ export class FormStateService {
    formGroup: FormGroup;
    private url="http://localhost:8081/api/v1/ms-company/company";
 
-
-
-
-
-
-
-
     constructor(public fb: FormBuilder, private http: HttpClient) {
       this.formGroup = this.fb.group({
         enterprise: this.fb.group({
@@ -27,9 +20,7 @@ export class FormStateService {
           contactMail: [''],
           contactNumber: [''],
           logo64b: [''],
-          subsidiaries: this.fb.array([
-            this.createSubsidiary()
-          ]),
+          subsidiaries: this.fb.array([]),
           openingdate: this.obtenerFechaActualEnFormato(),
           currencyConfig: this.fb.group({
             principal: ['Bolivianos'],
@@ -39,31 +30,7 @@ export class FormStateService {
         })
       });
     }
-
-    createSubsidiary(): FormGroup {
-      return this.fb.group({
-        name: [''],
-        address: [''],
-        areas: this.fb.array([''])
-      });
-    }
-
-    getSubsidiaries(): FormArray {
-      return this.formGroup.get('enterprise.subsidiaries') as FormArray;
-    }
-
-    addSubsidiary() {
-      this.getSubsidiaries().push(this.createSubsidiary());
-    }
-
-    removeSubsidiary(index: number) {
-      this.getSubsidiaries().removeAt(index);
-    }
-
-
-
-
-
+  
   printFormValue() {
     console.log(JSON.stringify(this.formGroup.value, null, 2));
   }
@@ -83,12 +50,9 @@ export class FormStateService {
     return `${mes}/${dia}/${año}`;
   }
 
-
   // post de la configuracion de la empresa
   enviarDatos(datos: any): Observable<any> {
     return this.http.post(this.url, datos);
   }
-
-
 
 }

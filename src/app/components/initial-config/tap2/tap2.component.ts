@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormStateService } from 'src/app/services/form-state.service';
 import { Router } from '@angular/router';
+import { SubsidiaryDto } from 'src/app/dto/subsidiary.dto';
 
 interface Elemento {
   nombre: string;
@@ -48,17 +49,18 @@ export class Tap2Component {
   /*Controladores*/
   controlSubsidiaryName = new FormControl();
   controlSubsidiaryAddress = new FormControl();
+  controlArea = new FormControl();
   controlAreaName = new FormControl();
 
 
 
+
   //Constructor
-  constructor(private formStateService: FormStateService, private router: Router) { }
+  constructor(private formStateService: FormStateService, private router: Router,public formService: FormStateService) { }
 
 
-  sucursales: any[] = [
-  ];
-  areas: any[] = [];
+  sucursales: SubsidiaryDto[] = [];
+  areas: string[] = [];
 
 
 
@@ -69,7 +71,7 @@ export class Tap2Component {
   messageSucursal: string = 'La sucursal ya existe';
   agregarSucursal() {
     console.log("Agregar sucursal");
-    const nombresSucursales = this.sucursales.map((sucursal) => sucursal.subsidiaryName);
+    const nombresSucursales = this.sucursales.map((sucursal) => sucursal.name);
     if (nombresSucursales.includes(this.controlSubsidiaryName.value)) {
       this.messageSucursal = 'La sucursal ya existe';
       this.errorMessageSucursal.nativeElement.classList.add('show');
@@ -78,8 +80,9 @@ export class Tap2Component {
       }, 2000);
     } else {
       this.sucursales.push({
-        subsidiaryName: this.controlSubsidiaryName.value,
-        subsidiaryDirection: this.controlSubsidiaryAddress.value
+        name: this.controlSubsidiaryName.value,
+        address: this.controlSubsidiaryAddress.value,
+        areas: this.areas
       });
       this.limpiarCampos();
     }
@@ -87,7 +90,7 @@ export class Tap2Component {
   }
   eliminarSucursal(sucursalName: string) {
     console.log("Eliminar sucursal");
-    this.sucursales = this.sucursales.filter((sucursal) => sucursal.subsidiaryName !== sucursalName);
+    this.sucursales = this.sucursales.filter((sucursal) => sucursal.name !== sucursalName);
     console.log(this.sucursales);
     if (this.sucursales.length == 0) {
       this.areas = [];
@@ -116,7 +119,7 @@ export class Tap2Component {
       this.limpiarCampos();
     }
     console.log(this.areas);
-    this.sucursales.push(this.areas);
+    //this.sucursales.push(this.areas);
   }
   //Logica para eliminar area
   eliminarArea(areaName: string) {
@@ -133,7 +136,7 @@ export class Tap2Component {
   }
 
   //Lógica para mostrar y ocultar hijos
-  toggleChildren(elemento: Elemento): void {
+  toggleChildren(elemento: SubsidiaryDto): void {
     elemento.mostrarHijos = !elemento.mostrarHijos;
   }
 
@@ -164,22 +167,24 @@ export class Tap2Component {
   get formGroup(): FormGroup {
     return this.formStateService.form;
   }
-  get subsidiaryControl(): FormControl {
-    return this.formGroup.get('subsidiary') as FormControl;
+  get subsidiariesControl(): FormControl {
+    return this.formGroup.get('subsidiaries') as FormControl;
   }
 
   guardarJSON() {
     console.log('Datos en JSON:');
     console.log(this.sucursales);
-    const accountPlanArray = this.formStateService.fb?.array(
-      this.sucursales.map(sucursal => this.formStateService.fb?.group(sucursal))
-    );
-    // Añadir jsonData al formGroup
-    const configCurrencyGroup = this.formGroup?.get('enterprise.subsidiaries') as FormGroup;
-    configCurrencyGroup.setControl('accountPlan', accountPlanArray);
-    // this.printValue()
+    console.log(this.areas);
 
-  }
-
-
+    const subsidiariesArray = this.formStateService.fb?.array(
+      this.sucursales.map(sucursal => this.formService.fb?.group({
+        name: sucursal.name,
+        address: sucursal.address,
+        areas: this.formService.fb?.array(this.areas)
+      }))
+     );
+      const subsdiariesGroup = this.formGroup?.get('enterprise.subsidiaries') as FormGroup;
+      subsdiariesGroup.setControl('subsidiaries', subsidiariesArray);
+      this.printValue()
+    }
 }
