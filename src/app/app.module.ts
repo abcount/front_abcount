@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Tap1Component } from './components/initial-config/tap1/tap1.component';
 import { Tap2Component } from './components/initial-config/tap2/tap2.component';
@@ -48,7 +49,8 @@ import { CircularButtonComponent } from './components/general-components/circula
     CarlosModule,
     MicaModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

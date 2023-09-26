@@ -1,11 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormStateService {
    formGroup: FormGroup;
+   private url="http://localhost:8081/api/v1/ms-company/company";
 
 
 
@@ -14,7 +17,7 @@ export class FormStateService {
 
 
 
-    constructor(public fb: FormBuilder) {
+    constructor(public fb: FormBuilder, private http: HttpClient) {
       this.formGroup = this.fb.group({
         enterprise: this.fb.group({
           enterpriseName: [''],
@@ -79,4 +82,13 @@ export class FormStateService {
 
     return `${mes}/${dia}/${año}`;
   }
+
+
+  // post de la configuracion de la empresa
+  enviarDatos(datos: any): Observable<any> {
+    return this.http.post(this.url, datos);
+  }
+
+
+
 }

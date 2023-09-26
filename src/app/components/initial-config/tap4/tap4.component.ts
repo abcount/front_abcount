@@ -211,6 +211,14 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
    console.log('Datos en el formulario:');
     console.log(JSON.stringify(this.formGroup.value, null, 2));
   }
+  
+  enviarDatos() {
+    this.formService.enviarDatos(this.formGroup.value).subscribe(response => {
+      console.log('Respuesta del servidor:', response);
+    }, error => {
+      console.error('Error enviando datos:', error);
+    });
+  }
 
 
 
