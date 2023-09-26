@@ -11,13 +11,18 @@ export class Tap3Component {
 
   //Obtener la fecha actual
   fechaActual: Date = new Date();
+  primeraMoneda =  { moneyName: 'Bolivianos', abbreviationName: 'BOB', currency: 0 };
+  constructor(public formService: FormStateService) {
+    this.monedas.push({ ...this.primeraMoneda });
+    this.guardarJSON();
+  }
 
-  constructor(public formService: FormStateService) {}
-
-  monedas: { moneyName: string, abbreviationName: string }[] = [];
+  monedas: { moneyName: string, abbreviationName: string, currency:number}[] = [];
   mostrarPopup: boolean = false;
   nombreMoneda: string = '';
   codigoISO: string = '';
+
+  valorCurrency:number =0;
 
   color = '#CFF4E8'
 
@@ -49,7 +54,7 @@ export class Tap3Component {
         this.errorEmpty.nativeElement.classList.remove('show');
       }, 3000);
     } else {
-      this.monedas.push({ moneyName: this.nombreMoneda, abbreviationName: this.codigoISO });
+      this.monedas.push({ moneyName: this.nombreMoneda, abbreviationName: this.codigoISO, currency:this.valorCurrency});
       this.mostrarPopup = false;
       this.nombreMoneda = '';
       this.codigoISO = '';
@@ -64,8 +69,13 @@ export class Tap3Component {
     this.codigoISO = '';
   }
 
-  removerMoneda(moneda: { moneyName: string, abbreviationName: string }) {
-    const index = this.monedas.indexOf(moneda);
+  removerMoneda(moneda: { moneyName: string, abbreviationName: string, currency:number }) {
+    if (moneda.moneyName === this.primeraMoneda.moneyName && moneda.abbreviationName === this.primeraMoneda.abbreviationName) {
+      console.log("No puedes eliminar la primera moneda.");
+      return;
+    }
+
+    const index = this.monedas.findIndex(m => m.moneyName === moneda.moneyName && m.abbreviationName === moneda.abbreviationName);
     if (index !== -1) {
       this.monedas.splice(index, 1);
       this.guardarJSON();
@@ -74,22 +84,7 @@ export class Tap3Component {
   get formGroup(): FormGroup {
     return this.formService.formGroup;
   }
-  get dateControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('fecha') as FormControl;
-  }
 
-  get levelControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('nivel') as FormControl;
-
-  }
-  get nameControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('nombre') as FormControl;
-  }
-
-  get codeControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('codigo') as FormControl;
-
-  }
 
   placeholderCoin:  string = 'Ejemplo: Dólar';
   placeholderISO: string = 'Ejemplo: USD';
