@@ -1,5 +1,4 @@
 export const environment = {
     production: false,
-    GATEWAY_URL: '', 
-    KEYCLOAK_URL: '',
+    BACKEND_URL: 'http://localhost:8080',
   };

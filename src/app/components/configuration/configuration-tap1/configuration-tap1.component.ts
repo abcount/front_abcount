@@ -1,4 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { EnterpriseDto } from 'src/app/dto/enterprise.dto';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-configuration-tap1',
@@ -7,83 +10,109 @@ import { Component, ViewChild } from '@angular/core';
 })
 export class ConfigurationTap1Component {
 
-  placeholderNombre: string  = 'Ingrese el nombre de tu sucursal';
-  placeholderDireccion: string = 'Ingrese la dirección de tu sucursal';
-  placeholderRubro: string = 'Ingrese el rubro de tu sucursal';
-  placeholderNIT: string = 'Ingrese el NIT de tu sucursal';
-  placeholderEmail: string = 'Ingrese el email de tu sucursal';
-  placeholderNumeroContacto: string = 'Ingrese el número de contacto de tu sucursal';
+  // Controladores para los inputs
+  controlName: FormControl = new FormControl('', Validators.required);
+  controlRubro: FormControl = new FormControl('', Validators.required);
+  controlNit: FormControl = new FormControl('', Validators.required);
+  controlAddress: FormControl = new FormControl('', Validators.required);
+  controlContactEmail: FormControl = new FormControl('', Validators.required);
+  controlContactName: FormControl = new FormControl('', Validators.required);
+  patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
-  empresa = {
-    nombre: 'Empresa textil',
-    direccion: 'Av. 6 de Agosto',	
-    rubro: 'Textil',
-    nit: '123456789',
-    email: 'emp.textil@gmail.com',
-    numeroContacto: '12345678',
-    logo: '../../../../assets/imagen.svg',
+  // Variable para almacenar los datos de la empresa
+  enterpriseData: EnterpriseDto;
+  logoUuid: string;
+
+  // Constructor
+  constructor(private ConfigurationService: ConfigurationService) {}
+
+  // Funcion al iniciar la pantalla
+  ngOnInit() {
+    /*this.ConfigurationService.getEnterprise().subscribe({
+      next: (data: EnterpriseDto) => {
+        this.controlName.value(data.companyName);
+        this.controlNit.value(data.nit);
+        this.controlAddress.value(data.address);
+        this.controlContactEmail.value(data.contactEmail);
+        this.controlContactName.value(data.contactName);
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });*/
+    this.enterpriseData = this.ConfigurationService.getEnterprise();
+    this.controlName.setValue(this.enterpriseData.companyName);
+    this.controlRubro.setValue(this.enterpriseData.diccCategory);
+    this.controlNit.setValue(this.enterpriseData.nit);
+    this.controlAddress.setValue(this.enterpriseData.address);
+    this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
+    this.controlContactName.setValue(this.enterpriseData.contactName);
+    this.logoUuid = this.enterpriseData.logoUuid;
+    this.disable();
   }
 
-  @ViewChild('nombreInput') nombreInput: any;
-  @ViewChild('rubroInput') rubroInput: any;
-  @ViewChild('nitInput') nitInput: any;
-  srcLogo: string = '../../../../assets/imagen.svg';
-  @ViewChild('direccionInput') direccionInput: any;
-  @ViewChild('emailInput') emailInput: any;
-  @ViewChild('numeroContactoInput') numeroContactoInput: any;
+  // Variable para controlar que los campos esten llenos
+  @ViewChild('errorMessage') errorMessage: ElementRef;
 
-  modoEdicion: boolean = false;
-
-  // Cargar los datos a los inputs al iniciar la pantalla
-  ngAfterViewInit (){
-    this.nombreInput.nativeElement.value = this.empresa.nombre;
-    this.rubroInput.nativeElement.value = this.empresa.rubro;
-    this.nitInput.nativeElement.value = this.empresa.nit;
-    this.srcLogo = this.empresa.logo;
-    this.direccionInput.nativeElement.value = this.empresa.direccion;
-    this.emailInput.nativeElement.value = this.empresa.email;
-    this.numeroContactoInput.nativeElement.value = this.empresa.numeroContacto;
-    //Deshabilitar los inputs
-    this.habilitar();
+  // Función para guardar cambios realizados
+  save() {
+    if (this.controlName.value == '' || this.controlRubro.value == '' || this.controlNit.value == '' || this.controlAddress.value == '' || this.controlContactEmail.value == '' || this.controlContactName.value == '') {
+      this.errorMessage.nativeElement.classList.add('show');
+      setTimeout(() => {
+        this.errorMessage.nativeElement.classList.remove('show');
+      }, 3000);
+    } else {
+      if (this.controlName.valid && this.controlRubro.valid && this.controlNit.valid && this.controlAddress.valid && this.controlContactEmail.valid && this.controlContactName.valid) {
+        this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid, this.controlContactEmail.value, this.controlContactName.value);
+        this.enterpriseData.companyName = this.controlName.value;
+        this.enterpriseData.diccCategory = this.controlRubro.value;
+        this.enterpriseData.nit = this.controlNit.value;
+        this.enterpriseData.address = this.controlAddress.value;
+        this.enterpriseData.contactEmail = this.controlContactEmail.value;
+        this.enterpriseData.contactName = this.controlContactName.value;
+        this.disable();
+      } else {
+        this.errorMessage.nativeElement.classList.add('show');
+        setTimeout(() => {
+          this.errorMessage.nativeElement.classList.remove('show');
+        }, 3000);
+      }
+    }
   }
 
-  // Habilitar los inputs para editar
-  editar () {
-    this.modoEdicion = true;
-    this.habilitar();
+  // Función para cancelar los cambios
+  cancel() {
+    this.controlName.setValue(this.enterpriseData.companyName);
+    this.controlRubro.setValue(this.enterpriseData.diccCategory);
+    this.controlNit.setValue(this.enterpriseData.nit);
+    this.controlAddress.setValue(this.enterpriseData.address);
+    this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
+    this.controlContactName.setValue(this.enterpriseData.contactName);
+    this.logoUuid = this.enterpriseData.logoUuid;
+    this.disable();
   }
 
-  // Guardar cambios
-  guardar () {
-    this.modoEdicion = false;
-    this.habilitar();
-    this.empresa.nombre = this.nombreInput.nativeElement.value;
-    this.empresa.rubro = this.rubroInput.nativeElement.value;
-    this.empresa.nit = this.nitInput.nativeElement.value;
-    this.empresa.direccion = this.direccionInput.nativeElement.value;
-    this.empresa.email = this.emailInput.nativeElement.value;
-    this.empresa.numeroContacto = this.numeroContactoInput.nativeElement.value;
-  }
+  // Variable para controlar el modo de edición
+  modeEdit: boolean = false;
 
-  // Cancelar cambios
-  cancelar () {
-    this.modoEdicion = false;
-    this.habilitar();
-    this.nombreInput.nativeElement.value = this.empresa.nombre;
-    this.rubroInput.nativeElement.value = this.empresa.rubro;
-    this.nitInput.nativeElement.value = this.empresa.nit;
-    this.direccionInput.nativeElement.value = this.empresa.direccion;
-    this.emailInput.nativeElement.value = this.empresa.email;
-    this.numeroContactoInput.nativeElement.value = this.empresa.numeroContacto;
+  // Función para habilitar los inputs
+  enable() {
+    this.modeEdit = true;
+    this.controlName.enable();
+    this.controlRubro.enable();
+    this.controlNit.enable();
+    this.controlAddress.enable();
+    this.controlContactEmail.enable();
+    this.controlContactName.enable();
   }
-
-  // Habilitar campos inputs
-  habilitar () {
-    this.nombreInput.nativeElement.disabled = !this.modoEdicion;
-    this.rubroInput.nativeElement.disabled = !this.modoEdicion;
-    this.nitInput.nativeElement.disabled = !this.modoEdicion;
-    this.direccionInput.nativeElement.disabled = !this.modoEdicion;
-    this.emailInput.nativeElement.disabled = !this.modoEdicion;
-    this.numeroContactoInput.nativeElement.disabled = !this.modoEdicion;
+  // Función para deshabilitar los inputs
+  disable() {
+    this.modeEdit = false;
+    this.controlName.disable();
+    this.controlRubro.disable();
+    this.controlNit.disable();
+    this.controlAddress.disable();
+    this.controlContactEmail.disable();
+    this.controlContactName.disable();
   }
 }

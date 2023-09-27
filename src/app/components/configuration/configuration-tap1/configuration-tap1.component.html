@@ -11,29 +11,20 @@
         </div>
         <div class="identificacion-datos">
             <div class="identificacion-campos">
-                <div>
-                    <h4>Nombre</h4>
-                    <input #nombreInput class="input" placeholder="Ingresa el nombre de tu empresa">
-                </div>
+                <app-my-textfield type="text" iconInput="fa-regular fa-building" label="Nombre" [control]="controlName" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese el nombre de tu empresa"></app-my-textfield>
                 <div style="height: 15px;"></div>
-                <div>
-                    <h4>Rubro</h4>
-                    <input #rubroInput class="input" placeholder="Ingresa el rubro al que se dedica">
-                </div>
+                <app-my-textfield type="text" iconInput="fa-regular fa-store" label="Rubro" [control]="controlRubro" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese el rubro al que se dedica"></app-my-textfield>
                 <div style="height: 15px;"></div>
-                <div>
-                    <h4>NIT</h4>
-                    <input #nitInput class="input" placeholder="Ingresa el NIT de la empresa">
-                </div>
+                <app-my-textfield type="text" iconInput="fa-regular fa-id-card" label="NIT" [control]="controlNit" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese el NIT de la empresa"></app-my-textfield>
             </div>
             <div class="identificacion-imagen">
                 <h4>LOGO</h4>
                 <div class="logo">
-                    <button *ngIf="modoEdicion">
+                    <button *ngIf="modeEdit">
                         <i class="fa-solid fa-camera"></i>
                     </button>
-                    <div *ngIf="!modoEdicion"></div>
-                    <img src="{{srcLogo}}" alt="Descripción de la imagen">
+                    <div *ngIf="!modeEdit"></div>
+                    <img src="{{logoUuid}}" alt="Descripción de la imagen">
                 </div>
             </div>
         </div>
@@ -45,8 +36,7 @@
             <h2 style="padding-top: 8px;">UBICACIÓN</h2>
         </div>
         <div class="campos">
-            <h4>Dirección</h4>
-            <input #direccionInput class="input" placeholder="Ingresa la dirección de la empresa">
+            <app-my-textfield type="text" iconInput="fa-regular fa-map-marker-alt" label="Dirección" [control]="controlAddress" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese la dirección de la empresa"></app-my-textfield>
         </div>
     </div>
     <div style="height: 15px;"></div>
@@ -59,22 +49,21 @@
         </div>
         <div class="campos">
             <div>
-                <h4>E-mail de contacto:</h4>
-                <input #emailInput class="input" placeholder="Ingresa un e-mail de contacto">
+                <app-my-textfield type="email" iconInput="fa-regular fa-envelope" label="E-mail de contacto" [control]="controlContactEmail" placeholder="Ingrese un e-mail de contacto" [pattern]='patternEmail' errorMessage="Por favor, ingrese una dirección de correo electrónico válida."></app-my-textfield>    
             </div>
             <div style="height: 15px;"></div>
             <div>
-                <h4>Número de contacto</h4>
-                <input #numeroContactoInput class="input" placeholder="Ingresa un número de contacto">
+                <app-my-textfield type="text" iconInput="fa-regular fa-phone" label="Número de contacto" [control]="controlContactName"  placeholder="Ingrese un número de contacto"  pattern="^[0-9]*$" errorMessage="Por favor, ingrese un número de contacto válido."></app-my-textfield>
             </div>
         </div>
     </div>
+    <div class="error-message" #errorMessage>Por favor, complete todos los campos de forma correctamente.</div>
     <div class="right">
-        <button *ngIf="!modoEdicion" class="edit-button" (click)="editar()">
+        <button *ngIf="!modeEdit" class="edit-button" (click)="enable()">
             <i class="fa-solid fa-pen"></i>
         </button>
-        <app-my-button *ngIf="modoEdicion" [isGreen]="true" (click)="guardar()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
-        <app-my-button *ngIf="modoEdicion" [isRed]="true" (click)="cancelar()">CANCELAR</app-my-button>
+        <app-my-button *ngIf="modeEdit" [isGreen]="true" (click)="save()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
+        <app-my-button *ngIf="modeEdit" [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
     </div>
 </div>
 <link rel="preconnect" href="https://fonts.googleapis.com">

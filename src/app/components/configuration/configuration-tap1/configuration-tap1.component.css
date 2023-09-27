@@ -32,21 +32,6 @@ h4 {
     font-family: 'Anek Telugu', sans-serif;
     line-height: 16px;
 }
-/*Inputs*/
-.input {
-    font-size: 16px;
-    border: #D9D9D9 1px solid;
-    border-radius: 4px;
-    outline: none;
-    width: 100%;
-    padding: 6px 8px 0px 8px;
-    caret-color: #BCE6FA;
-    transition: border 0.5s;
-    font-family: 'Anek Telugu', sans-serif;
-}
-.input:focus {
-    border: 1px solid #BCE6FA;
-}
 /*Iconos de los titulos*/
 .icono {
     font-size: 50px;
@@ -142,4 +127,15 @@ h4 {
 .edit-button i {
     font-size: 15px;
     color: #757575;
+}
+/*Mensaje de error inferior*/
+.error-message {
+    color: #ff7e7e;
+    font-size: 15px;
+    font-weight: 500;
+    display: none;
+    margin-top: 15px;
+}
+.error-message.show {
+    display: block;
 }
