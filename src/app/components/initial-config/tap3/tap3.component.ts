@@ -13,8 +13,16 @@ export class Tap3Component {
   fechaActual: Date = new Date();
   primeraMoneda =  { moneyName: 'Bolivianos', abbreviationName: 'BOB', currency: 0 };
   constructor(public formService: FormStateService) {
-    this.monedas.push({ ...this.primeraMoneda });
+    const monedasGuardadas = localStorage.getItem('monedas');
+    if (monedasGuardadas) {
+      this.monedas = JSON.parse(monedasGuardadas);
+    } else {
+      this.monedas.push({ ...this.primeraMoneda });
+    }
     this.guardarJSON();
+  }
+  guardarEnLocalStorage() {
+    localStorage.setItem('monedas', JSON.stringify(this.monedas));
   }
 
   monedas: { moneyName: string, abbreviationName: string, currency:number}[] = [];
@@ -60,6 +68,7 @@ export class Tap3Component {
       this.codigoISO = '';
       this.guardarJSON();
     }
+    this.guardarEnLocalStorage();
     console.log(this.monedas);
   }
 
@@ -80,6 +89,7 @@ export class Tap3Component {
       this.monedas.splice(index, 1);
       this.guardarJSON();
     }
+    this.guardarEnLocalStorage();
   }
   get formGroup(): FormGroup {
     return this.formService.formGroup;

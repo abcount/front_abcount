@@ -42,7 +42,18 @@ export class Tap1Component  {
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(public formService: FormStateService, private router: Router) {}
+  ngOnInit() {
+    const storedImagen = localStorage.getItem('imagen');
 
+    if (storedImagen) {
+      this.imageURL = storedImagen;
+    }
+    this.formService.loadFormDataFromLocalStorage();
+  }
+  guardarImagen(imagenBase64: string) {
+    this.imageURL = imagenBase64;
+    localStorage.setItem('imagen', imagenBase64);
+  }
   get formGroup(): FormGroup {
     return this.formService.formGroup;
   }
@@ -89,9 +100,10 @@ export class Tap1Component  {
   loadPreview(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      if (reader.result) {
-        this.imageURL = reader.result;
-        this.logoControl.setValue(reader.result);  // Añadir esta línea
+      this.imageURL = reader.result;
+      if (typeof this.imageURL === 'string') {  // Añadir esta línea
+        this.logoControl.setValue(this.imageURL);
+        this.guardarImagen(this.imageURL);
       }
     };
     reader.readAsDataURL(file);
@@ -157,7 +169,7 @@ export class Tap1Component  {
         if (true) {
           this.router.navigate(['/tap2']);
         } else {
- 
+
         }
       } else {
         console.log('Vacios');
@@ -173,5 +185,6 @@ export class Tap1Component  {
         this.errorMessage.nativeElement.classList.remove('show');
       }, 3000);
     }
+    this.formService.saveFormDataToLocalStorage();
   }
 }

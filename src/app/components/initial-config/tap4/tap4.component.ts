@@ -200,11 +200,11 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
       TREE_DATA.map(account => this.formService.fb.group(account))
     );
     // Añadir jsonData al formGroup
-  
+
         this.formGroup.setControl('accountablePlan', accountPlanArray);
         this.printValue();
-      
-    
+
+
   }
 
 
@@ -212,12 +212,13 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
    console.log('Datos en el formulario:');
     console.log(JSON.stringify(this.formGroup.value, null, 2));
   }
-  
+
   enviarDatos() {
     console.log('Datos en el formulario:');
     console.log(JSON.stringify(this.formGroup.value, null, 2));
     this.formService.enviarDatos(this.formGroup.value).subscribe(response => {
       console.log('Respuesta del servidor:', response);
+      this.formService.clearFormDataFromLocalStorage();
     }, error => {
       console.error('Error enviando datos:', error);
     });

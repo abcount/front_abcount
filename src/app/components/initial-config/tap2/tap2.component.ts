@@ -58,7 +58,18 @@ export class Tap2Component {
   //Constructor
   constructor(private formStateService: FormStateService, private router: Router,public formService: FormStateService) { }
 
+  ngOnInit() {
+    const storedSucursales = localStorage.getItem('sucursales');
+    const storedAreas = localStorage.getItem('areas');
 
+    if (storedSucursales) {
+      this.sucursales = JSON.parse(storedSucursales);
+    }
+
+    if (storedAreas) {
+      this.areas = JSON.parse(storedAreas);
+    }
+  }
   sucursales: SubsidiaryDto[] = [];
   areas: string[] = [];
 
@@ -86,6 +97,7 @@ export class Tap2Component {
       });
       this.limpiarCampos();
     }
+    localStorage.setItem('sucursales', JSON.stringify(this.sucursales));
     console.log(this.sucursales);
   }
   eliminarSucursal(sucursalName: string) {
@@ -95,6 +107,7 @@ export class Tap2Component {
     if (this.sucursales.length == 0) {
       this.areas = [];
     }
+    localStorage.setItem('sucursales', JSON.stringify(this.sucursales));
   }
 
   @ViewChild('errorMessageArea') errorMessageArea: ElementRef;
@@ -118,6 +131,7 @@ export class Tap2Component {
       this.areas.push(this.controlAreaName.value);
       this.limpiarCampos();
     }
+    localStorage.setItem('areas', JSON.stringify(this.areas));
     console.log(this.areas);
     //this.sucursales.push(this.areas);
   }
@@ -125,6 +139,7 @@ export class Tap2Component {
   eliminarArea(areaName: string) {
     console.log('Eliminar área');
     this.areas = this.areas.filter((area) => area !== areaName);
+    localStorage.setItem('areas', JSON.stringify(this.areas));
     console.log(this.areas);
   }
 
@@ -167,7 +182,7 @@ export class Tap2Component {
   get formGroup(): FormGroup {
     return this.formStateService.form;
   }
-  
+
   get subsidiariesControl(): FormControl {
     return this.formGroup.get('subsidiaries') as FormControl;
   }

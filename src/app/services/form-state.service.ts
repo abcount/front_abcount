@@ -28,10 +28,10 @@ export class FormStateService {
             currencyList: this.fb.array([]),
           }),
           accountablePlan: this.fb.array([]),
-        
+
       });
     }
-  
+
   printFormValue() {
     console.log(JSON.stringify(this.formGroup.value, null, 2));
   }
@@ -54,6 +54,22 @@ export class FormStateService {
   // post de la configuracion de la empresa
   enviarDatos(datos: any): Observable<any> {
     return this.http.post(this.url, datos);
+  }
+  saveFormDataToLocalStorage() {
+    const formData = JSON.stringify(this.formGroup.value);
+    localStorage.setItem('formData', formData);
+  }
+
+  loadFormDataFromLocalStorage() {
+    const storedFormData = localStorage.getItem('formData');
+    if (storedFormData) {
+      const parsedData = JSON.parse(storedFormData);
+      this.formGroup.patchValue(parsedData);
+    }
+  }
+
+  clearFormDataFromLocalStorage() {
+    localStorage.removeItem('formData');
   }
 
 }
