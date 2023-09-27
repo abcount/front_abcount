@@ -1,0 +1,148 @@
+/*Quitar los estilos generales*/
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/*Background*/
+.configuration-tap5 {
+    background-color: #F8F8F8;
+    padding: 5px 15% 4% 15%;
+}
+/*Centrear*/
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*Texto*/
+h1{
+    font-size: 20px;
+    font-weight: 600;
+    color: #787878;
+    margin: 0px;
+    font-family: 'Anek Telugu', sans-serif;
+}
+h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #757575;
+    margin: 0px;
+    font-family: 'Anek Telugu', sans-serif;
+}
+h4 {
+    font-size: 14px;
+    font-weight: 400;
+    color: #757575;
+    margin: 0px;
+    font-family: 'Anek Telugu', sans-serif;
+}
+/*Iconos de los titulos*/
+.icono {
+    font-size: 50px;
+    color: #ffffff;
+    padding-right: 8px;
+}
+/*Imagen de usuario*/
+img {
+    width: 45%;
+    height: 80%;
+    border-radius: 50%;
+}
+/*Seccion identificacion*/
+.row-2 {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    
+}
+.titulo {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+.invitar{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 5px;
+}
+/*Seccion datos*/
+.datos{
+    padding-top: 10px;
+}
+.usuario{
+    display: grid;
+    background-color: #ffffff;
+    grid-template-columns: 10% 60% 30%;
+    border-radius: 5%;
+    margin-top: 7px;
+}
+.imagen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.informacion{
+    justify-content: center;
+    align-items: center;
+    padding: 5px
+}
+.botones{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+}
+/*Botones*/
+.button {
+    font-size: 12px;
+    font-weight: 500;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 5px 20px;
+    z-index: 1;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: capitalize;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+    color: #2CD447;
+    background-color: #a1ffdb;
+    margin: 10px;
+  }
+  .button:hover {
+    background-color: #66CDAA;
+    color: white;
+  }
+  .button:focus {
+    outline: none;
+  }
+  .button-red {
+    font-size: 12px;
+    font-weight: 500;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 5px 20px;
+    z-index: 1;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: capitalize;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+    color: #FF0000;
+    background-color: #FFDBDB;
+    margin: 10px;
+  }
+  .button-red:hover {
+    background-color: #ef5350 !important;
+    color: white !important;
+  }
+  .button-red:focus {
+     outline: none;
+  }
