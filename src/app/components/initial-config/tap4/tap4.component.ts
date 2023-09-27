@@ -23,7 +23,7 @@ interface Account {
   nameAccount: string;
   moneyRub: boolean;
   report: boolean;
-  clasificator: boolean;
+  classificator: boolean;
   level: number;
   childrenAccounts: Account[];
 }
@@ -43,7 +43,7 @@ export class Tap4Component {
   accountId: number = 0;
   accountMoneyRub: boolean = false;
   accountReport: boolean = false;
-  accountClasificator: boolean = false;
+  accountClassificator: boolean = false;
 
   private _transformer = (node: Account, level: number) => {
     return {
@@ -85,7 +85,7 @@ export class Tap4Component {
        nameAccount: this.accountName,
        moneyRub: this.accountMoneyRub,
        report: this.accountReport,
-       clasificator: this.accountClasificator,
+       classificator: this.accountClassificator,
        childrenAccounts: []
      }
      console.log(parentAccount);
@@ -94,7 +94,7 @@ export class Tap4Component {
      this.accountName = "";
      this.accountReport = false;
      this.accountMoneyRub = false;
-     this.accountClasificator = false;
+     this.accountClassificator = false;
 
    }
    else{
@@ -118,7 +118,7 @@ export class Tap4Component {
           nameAccount: this.accountName,
           moneyRub: this.accountMoneyRub,
           report: this.accountReport,
-          clasificator: this.accountClasificator,
+          classificator: this.accountClassificator,
           childrenAccounts: []
         }
         console.log(newAccount);
@@ -196,16 +196,17 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
   guardarJSON() {
     console.log('Datos en JSON:');
     console.log(TREE_DATA);
-    const accountPlanArray = this.formService.fb?.array(
-      TREE_DATA.map(account => this.formService.fb?.group(account))
+    const accountPlanArray = this.formService.fb.array(
+      TREE_DATA.map(account => this.formService.fb.group(account))
     );
     // Añadir jsonData al formGroup
-    const configCurrencyGroup = this.formGroup?.get('enterprise.configAccount') as FormGroup;
-    configCurrencyGroup.setControl('accountPlan', accountPlanArray);
-    this.printValue()
-
-    // configCurrencyGroup.get()?.setValue(TREE_DATA);
+  
+        this.formGroup.setControl('accountablePlan', accountPlanArray);
+        this.printValue();
+      
+    
   }
+
 
   printValue() {
    console.log('Datos en el formulario:');
@@ -213,6 +214,8 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
   }
   
   enviarDatos() {
+    console.log('Datos en el formulario:');
+    console.log(JSON.stringify(this.formGroup.value, null, 2));
     this.formService.enviarDatos(this.formGroup.value).subscribe(response => {
       console.log('Respuesta del servidor:', response);
     }, error => {

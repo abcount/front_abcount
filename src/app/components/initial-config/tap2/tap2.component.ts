@@ -167,6 +167,7 @@ export class Tap2Component {
   get formGroup(): FormGroup {
     return this.formStateService.form;
   }
+  
   get subsidiariesControl(): FormControl {
     return this.formGroup.get('subsidiaries') as FormControl;
   }
@@ -184,7 +185,14 @@ export class Tap2Component {
       }))
      );
       const subsdiariesGroup = this.formGroup?.get('enterprise.subsidiaries') as FormGroup;
-      subsdiariesGroup.setControl('subsidiaries', subsidiariesArray);
+
+      if (this.formGroup) {
+        const enterpriseControl = this.formGroup.get('enterprise');
+        if (enterpriseControl instanceof FormGroup) {
+          enterpriseControl.setControl('subsidiaries', subsidiariesArray);
+          this.printValue();
+        }
+      }
       this.printValue()
     }
 }

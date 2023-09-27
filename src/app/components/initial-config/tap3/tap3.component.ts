@@ -102,7 +102,7 @@ export class Tap3Component {
 
   guardarJSON() {
     const jsonData = {
-      principal: 'Bolivianos',
+      principalCurrency: 0,
       monedas: this.monedas,
     };
 
@@ -115,9 +115,9 @@ export class Tap3Component {
     );
 
     // Añadir jsonData al formGroup
-    const configCurrencyGroup = this.formGroup?.get('enterprise.currencyConfig') as FormGroup;
+    const configCurrencyGroup = this.formGroup?.get('currencyConfig') as FormGroup;
     configCurrencyGroup.setControl('currencyList', monedasFormArray);
-    configCurrencyGroup.get('principal')?.setValue(jsonData.principal);
+    configCurrencyGroup.get('principal')?.setValue(jsonData.principalCurrency);
   }
 
 

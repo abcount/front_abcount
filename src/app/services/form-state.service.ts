@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class FormStateService {
    formGroup: FormGroup;
-   private url="http://localhost:8081/api/v1/ms-company/company";
+   private url="http://localhost:8080/api/v1/ms-company/company";
 
     constructor(public fb: FormBuilder, private http: HttpClient) {
       this.formGroup = this.fb.group({
@@ -18,16 +18,17 @@ export class FormStateService {
           dicCategory: [''],
           nit: [''],
           contactMail: [''],
-          contactNumber: [''],
+          contactName: [''],
           logo64b: [''],
           subsidiaries: this.fb.array([]),
-          openingdate: this.obtenerFechaActualEnFormato(),
+          openingDate: this.obtenerFechaActualEnFormato(),
+          }),
           currencyConfig: this.fb.group({
-            principal: ['Bolivianos'],
+            principalCurrency: 0,
             currencyList: this.fb.array([]),
           }),
-          configAccount: this.fb.array([]),
-        })
+          accountablePlan: this.fb.array([]),
+        
       });
     }
   
@@ -47,7 +48,7 @@ export class FormStateService {
     const dia = fechaActual.getDate().toString().padStart(2, '0');
     const año = fechaActual.getFullYear().toString();
 
-    return `${mes}/${dia}/${año}`;
+    return `${mes}-${dia}-${año}`;
   }
 
   // post de la configuracion de la empresa
