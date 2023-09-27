@@ -102,7 +102,6 @@ export class Tap1Component  {
     reader.onload = (e) => {
       this.imageURL = reader.result;
       if (typeof this.imageURL === 'string') {  // Añadir esta línea
-        this.logoControl.setValue(this.imageURL);
         this.guardarImagen(this.imageURL);
       }
     };
@@ -120,7 +119,6 @@ export class Tap1Component  {
     this.fileInput.nativeElement.value = '';
 
     // Establecer el valor del campo 'logo' del formulario a null o cadena vacía
-    this.logoControl.setValue(null);
   }
 
   get nombreControl(): FormControl {
@@ -150,9 +148,6 @@ export class Tap1Component  {
 
   get numeroContactoControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('contactName') as FormControl;
-  }
-  get logoControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('logo64b') as FormControl;
   }
 
   printValue() {

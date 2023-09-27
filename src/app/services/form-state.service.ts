@@ -14,15 +14,18 @@ export class FormStateService {
       this.formGroup = this.fb.group({
         enterprise: this.fb.group({
           enterpriseName: [''],
-          enterpriseLocation: [''],
           dicCategory: [''],
           nit: [''],
+          enterpriseLocation: [''],
           contactMail: [''],
           contactName: [''],
-          logo64b: [''],
           subsidiaries: this.fb.array([]),
+          
           openingDate: this.obtenerFechaActualEnFormato(),
+
           }),
+
+
           currencyConfig: this.fb.group({
             principalCurrency: 0,
             currencyList: this.fb.array([]),

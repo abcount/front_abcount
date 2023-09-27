@@ -38,6 +38,9 @@ interface Account {
 
 export class Tap4Component {
 
+  // imagen sacada del localstorage
+
+
   @ViewChild("accountName") accountName: string = "";
   selectedNode: NodeExample | null = null;
   accountId: number = 0;
@@ -80,12 +83,12 @@ export class Tap4Component {
    if(node == null){
      this.accountId = TREE_DATA.length + 1;
      let parentAccount = {
-       level: 0,
        accountCode: TREE_DATA.length + 1,
        nameAccount: this.accountName,
        moneyRub: this.accountMoneyRub,
-       report: this.accountReport,
+       report: this.accountReport, 
        classificator: this.accountClassificator,
+       level: 0,
        childrenAccounts: []
      }
      console.log(parentAccount);
@@ -214,13 +217,31 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
   }
 
   enviarDatos() {
+    const storedImagen = localStorage.getItem('imagen');
+    const formData = new FormData();
+
+
+    formData.append('datos', JSON.stringify(this.formGroup.value));
+    
+
+    formData.append('archivo', storedImagen || '');
+    
+
     console.log('Datos en el formulario:');
+    console.log(formData);
+    console.log('Datos en el asklfmk;lsdklafnk;lsdnk;lno:');
+    console.log(storedImagen);
+    console.log('Datos en ojioapwjiopfjiaopj:');
+    //mostrar en formato json
     console.log(JSON.stringify(this.formGroup.value, null, 2));
-    this.formService.enviarDatos(this.formGroup.value).subscribe(response => {
-      console.log('Respuesta del servidor:', response);
-      this.formService.clearFormDataFromLocalStorage();
-    }, error => {
-      console.error('Error enviando datos:', error);
+    this.formService.enviarDatos(formData).subscribe({
+      next: response => {
+        console.log('Respuesta del servidor:', response);
+        this.formService.clearFormDataFromLocalStorage();
+      },
+      error: error => {
+        console.error('Error enviando datos:', error);
+      }
     });
   }
 
