@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { EnterpriseDto } from 'src/app/dto/enterprise.dto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
@@ -11,13 +11,15 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 export class ConfigurationTap1Component {
 
   // Controladores para los inputs
-  controlName: FormControl = new FormControl('', Validators.required);
-  controlRubro: FormControl = new FormControl('', Validators.required);
-  controlNit: FormControl = new FormControl('', Validators.required);
-  controlAddress: FormControl = new FormControl('', Validators.required);
-  controlContactEmail: FormControl = new FormControl('', Validators.required);
-  controlContactName: FormControl = new FormControl('', Validators.required);
+  controlName: FormControl = new FormControl('', []);
+  controlRubro: FormControl = new FormControl('', []);
+  controlNit: FormControl = new FormControl('', []);
+  controlAddress: FormControl = new FormControl('', []);
+  controlContactEmail: FormControl = new FormControl('', []);
+  controlContactName: FormControl = new FormControl('', []);
+  patternAll = '.*';
   patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  patternNumber = '^[0-9]*$';
 
   // Variable para almacenar los datos de la empresa
   enterpriseData: EnterpriseDto;
@@ -28,26 +30,18 @@ export class ConfigurationTap1Component {
 
   // Funcion al iniciar la pantalla
   ngOnInit() {
-    /*this.ConfigurationService.getEnterprise().subscribe({
-      next: (data: EnterpriseDto) => {
-        this.controlName.value(data.companyName);
-        this.controlNit.value(data.nit);
-        this.controlAddress.value(data.address);
-        this.controlContactEmail.value(data.contactEmail);
-        this.controlContactName.value(data.contactName);
-      },
-      error: (error: any) => {
-        console.log(error);
+    this.ConfigurationService.getEnterprise().subscribe(
+      (data: any) => {
+        this.enterpriseData = data;
+        this.controlName.setValue(this.enterpriseData.companyName);
+        this.controlRubro.setValue(this.enterpriseData.diccCategory);
+        this.controlNit.setValue(this.enterpriseData.nit);
+        this.controlAddress.setValue(this.enterpriseData.address);
+        this.logoUuid = this.enterpriseData.logoUuid;
+        this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
+        this.controlContactName.setValue(this.enterpriseData.contactName);
       }
-    });*/
-    this.enterpriseData = this.ConfigurationService.getEnterprise();
-    this.controlName.setValue(this.enterpriseData.companyName);
-    this.controlRubro.setValue(this.enterpriseData.diccCategory);
-    this.controlNit.setValue(this.enterpriseData.nit);
-    this.controlAddress.setValue(this.enterpriseData.address);
-    this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
-    this.controlContactName.setValue(this.enterpriseData.contactName);
-    this.logoUuid = this.enterpriseData.logoUuid;
+    );
     this.disable();
   }
 
@@ -63,7 +57,12 @@ export class ConfigurationTap1Component {
       }, 3000);
     } else {
       if (this.controlName.valid && this.controlRubro.valid && this.controlNit.valid && this.controlAddress.valid && this.controlContactEmail.valid && this.controlContactName.valid) {
-        this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid, this.controlContactEmail.value, this.controlContactName.value);
+        this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid, 
+          this.controlContactEmail.value, this.controlContactName.value).subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          );
         this.enterpriseData.companyName = this.controlName.value;
         this.enterpriseData.diccCategory = this.controlRubro.value;
         this.enterpriseData.nit = this.controlNit.value;

@@ -1,5 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 interface Elemento {
   nombre: string;
@@ -14,88 +16,82 @@ interface Elemento {
 })
 export class ConfigurationTap2Component {
 
-  //Variables
-  modoEdicion: boolean = false;
-  
-  //Listas de sucursales y areas
-  sucursales: any[] = [
-    {
-      subsidiaryName: 'Sucursal centro',
-      subsidiaryDirection: 'Centro La Paz'
-    },
-    {
-      subsidiaryName: 'Sucursal sur',
-      subsidiaryDirection: 'Sur La Paz'
-    }
-  ];
-  areas: any[] = ['Ventas', 'Finanza', 'Contabilidad'];
-  //Listas auxiliares
-  auxSucursales = this.sucursales;
-  auxAreas = this.areas;
+  // Controladores para los inputs
+  controlSubsidiaryName: FormControl = new FormControl('', []);
+  controlSubsidiaryAddress: FormControl = new FormControl('', []);
+  controlAreaName: FormControl = new FormControl('', []);
+  patternAll = '.*';
 
-  //Constructor
-  constructor(private router: Router) { }
+  // Variable para controlar el modo edición
+  modeEdit: boolean = false;
 
-  @ViewChild('nombreSucursalInput') nombreSucursalInput: ElementRef;
-  @ViewChild('direccionSucursalInput') direccionSucursalInput: ElementRef;
+  // Variables para mensajes de error
   @ViewChild('errorMessageSucursal') errorMessageSucursal: ElementRef;
   messageSucursal: string = 'La sucursal ya existe';
-  //Lógica para agregar
-  agregarSucursal() {
-    console.log('Agregar sucursal');
-    const nombresSucursales = this.sucursales.map(sucursal => sucursal.subsidiaryName);
-    if (nombresSucursales.includes(this.nombreSucursalInput.nativeElement.value)) {
+  @ViewChild('errorMessageArea') errorMessageArea: ElementRef;
+  messageArea: string = 'El área ya existe';
+  
+  //Listas de sucursales y areas
+  subsidiaries: any[] = [];
+  areas: any[] = [];
+
+  //Constructor
+  constructor(private router: Router, private ConfigurationService: ConfigurationService) { }
+
+  ngOnInit() {
+    // Obtener las sucursales y areas
+    this.ConfigurationService.getSubsidiaries().subscribe(
+      (data: any) => {
+        this.subsidiaries = data.subsidiaries;
+        this.areas = data.areas;
+      }
+    );
+  }
+
+  // Lógica para agregar una sucursal
+  addSubsidiary() {
+    const subsidiariesNames = this.subsidiaries.map((subsidiary: any) => subsidiary.subsidiaryName);
+    if (subsidiariesNames.includes(this.controlSubsidiaryName.value)) {
       this.errorMessageSucursal.nativeElement.classList.add('show');
       setTimeout(() => {
         this.errorMessageSucursal.nativeElement.classList.remove('show');
       }, 2000);
     } else {
-      this.sucursales.push({
-        subsidiaryName: this.nombreSucursalInput.nativeElement.value,
-        subsidiaryDirection: this.direccionSucursalInput.nativeElement.value
+      this.subsidiaries.push({
+        subsidiaryName: this.controlSubsidiaryName.value,
+        address: this.controlSubsidiaryAddress.value,
+        editable: true
       });
-      this.limpiarCampos();
+      this.controlSubsidiaryName.reset();
+      this.controlSubsidiaryAddress.reset();
     }
-    console.log(this.sucursales);
   }
   //Lógica para eliminar
-  eliminarSucursal(sucursalName: string) {
-    console.log('Eliminar sucursal');
-    this.sucursales = this.sucursales.filter(sucursal => sucursal.subsidiaryName !== sucursalName);
-    console.log(this.sucursales);
-    if (this.sucursales.length == 0) {
+  deleteSubsidiary(sucursalName: string) {
+    this.subsidiaries = this.subsidiaries.filter((subsidiary: any) => subsidiary.subsidiaryName !== sucursalName);
+    if (this.subsidiaries.length == 0) {
       this.areas = [];
     }
   }
 
-  @ViewChild('nombreAreaInput') nombreAreaInput: ElementRef;
-  @ViewChild('errorMessageArea') errorMessageArea: ElementRef;
-  messageArea: string = 'El área ya existe';
-  //Logica para agregar area
-  agregarArea() {
-    console.log('Agregar área');
-    if (this.areas.includes(this.nombreAreaInput.nativeElement.value)) {
+  // Logica para agregar area
+  addArea() {
+    if (this.areas.includes(this.controlAreaName.value)){
       this.errorMessageArea.nativeElement.classList.add('show');
       setTimeout(() => {
         this.errorMessageArea.nativeElement.classList.remove('show');
       }, 2000);
     } else {
-      this.areas.push(this.nombreAreaInput.nativeElement.value);
-      this.nombreAreaInput.nativeElement.value = '';
+      this.areas.push({
+        areaName: this.controlAreaName.value,
+        editable: true
+      });
+      this.controlAreaName.reset();
     }
-    console.log(this.areas);
   }
   //Logica para eliminar area
-  eliminarArea(areaName: string) {
-    console.log('Eliminar área');
-    this.areas = this.areas.filter(area => area !== areaName);
-    console.log(this.areas);
-  }
-
-  //Limpiar campos
-  limpiarCampos() {
-    this.nombreSucursalInput.nativeElement.value = '';
-    this.direccionSucursalInput.nativeElement.value = '';
+  deleteArea(areaName: string) {
+    this.areas = this.areas.filter((area: string) => area !== areaName);
   }
 
   //Lógica para mostrar y ocultar hijos
@@ -104,35 +100,28 @@ export class ConfigurationTap2Component {
   }
 
   //Verificar si existe alguna sucursal y area
-  guardar(){
-    if (this.sucursales.length == 0) {
-      this.messageSucursal = 'Debe agregar al menos una sucursal antes';
-      this.errorMessageSucursal.nativeElement.classList.add('show');
-      setTimeout(() => {
-        this.errorMessageSucursal.nativeElement.classList.remove('show');
-      }, 2000);
-    } else if (this.areas.length == 0) {
-      this.messageArea = 'Debe agregar al menos un área antes';
-      this.errorMessageArea.nativeElement.classList.add('show');
-      setTimeout(() => {
-        this.errorMessageArea.nativeElement.classList.remove('show');
-      }, 2000);
-    } else {
-      this.auxSucursales = this.sucursales;
-      this.auxAreas = this.areas;
-      this.modoEdicion = false;
-    }
+  save(){
+    this.ConfigurationService.updateSubsidiaryArea(this.subsidiaries, this.areas).subscribe(
+      (data: any) => {
+        console.log(data);
+      }
+    );
+    this.modeEdit = false;
   }
 
   //Cancelar la edición
-  cancelar(){
-    this.sucursales = this.auxSucursales;
-    this.areas = this.auxAreas;
-    this.modoEdicion = false;
+  cancel(){
+    this.ConfigurationService.getSubsidiaries().subscribe(
+      (data: any) => {
+        this.subsidiaries = data.subsidiaries;
+        this.areas = data.areas;
+      }
+    );
+    this.modeEdit = false;
   }
 
   //Editar
-  editar() {
-    this.modoEdicion = true;
+  edit() {
+    this.modeEdit = true;
   }
 }

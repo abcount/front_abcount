@@ -29,22 +29,11 @@ export class ConfigurationService {
   }
 
   // Para la configuración de la empresa
-  configurationUrl = `${environment.BACKEND_URL}/api/v1/enterprise`;
+  configurationUrl = `${environment.BACKEND_URL}/config/enterprise`;
   
   // Función para obtener los datos de la empresa
   getEnterprise() {
-    //return this.http.get(`${this.configurationUrl}`);
-    const entreprise = {
-      companyId: 1,
-      companyName: 'Empresa textil',
-      diccCategory: 'Textil',
-      nit: '123456789',
-      address: 'Av. 6 de Agosto',
-      logoUuid: '../../../../assets/imagen.svg',
-      contactEmail: 'emp.textil@gmail.com',
-      contactName: '75896421'
-    }
-    return entreprise;
+    return this.http.get(`${this.configurationUrl}`);
   }
 
   // Función para guardar los cambios en los datos de la empresa
@@ -63,6 +52,26 @@ export class ConfigurationService {
       'contactEmail': contactEmail,
       'contactName': contactName
     }
-    //return this.http.post(`${this.configurationUrl}`, body, { headers: header });
+    return this.http.post(`${this.configurationUrl}`, body, { headers: header });
+  }
+
+  // Función para obtener las sucursales y areas
+  getSubsidiaries() {
+    return this.http.get(`${this.configurationUrl}/subsidiary`);
+  }
+  
+  // Funcion para guardar los cambios en areas y sucursales
+  updateSubsidiaryArea(subsidiaries: any[], areas: string[]){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      //'Authorization': 'Bearer $token',
+    }
+    const body = {
+      'subsidiaries': subsidiaries,
+      'areas': areas
+    }
+    console.log(body);
+    return this.http.post(`${this.configurationUrl}/subsidiary`, body, { headers: header });
   }
 }
