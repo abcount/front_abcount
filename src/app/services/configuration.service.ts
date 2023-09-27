@@ -52,7 +52,7 @@ export class ConfigurationService {
       'contactEmail': contactEmail,
       'contactName': contactName
     }
-    return this.http.post(`${this.configurationUrl}`, body, { headers: header });
+    return this.http.put(`${this.configurationUrl}`, body, { headers: header });
   }
 
   // Función para obtener las sucursales y areas
@@ -72,6 +72,25 @@ export class ConfigurationService {
       'areas': areas
     }
     console.log(body);
-    return this.http.post(`${this.configurationUrl}/subsidiary`, body, { headers: header });
+    return this.http.put(`${this.configurationUrl}/subsidiary`, body, { headers: header });
+  }
+
+  // Función para obtener las monedas
+  getCurrencies() {
+    return this.http.get(`${this.configurationUrl}/currency`);
+  }
+
+  // Función para agregar moneda
+  addCurrency(moneyName: string, abbreviationName: string) {
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      //'Authorization': 'Bearer $token',
+    }
+    const body = {
+      'moneyName': moneyName,
+      'abbreviationName': abbreviationName
+    }
+    return this.http.post(`${this.configurationUrl}/currency`, body, { headers: header });
   }
 }

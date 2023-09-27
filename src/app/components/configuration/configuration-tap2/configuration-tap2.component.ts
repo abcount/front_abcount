@@ -101,6 +101,7 @@ export class ConfigurationTap2Component {
 
   //Verificar si existe alguna sucursal y area
   save(){
+    this.subsidiaries.forEach((subsidiary: any) => {delete subsidiary.mostrarHijos;});
     this.ConfigurationService.updateSubsidiaryArea(this.subsidiaries, this.areas).subscribe(
       (data: any) => {
         console.log(data);

@@ -1,5 +1,4 @@
 export interface EnterpriseDto {
-    companyId: number;
     companyName: string;
     diccCategory: string;
     nit: string;
