@@ -6,7 +6,51 @@ import {FormStateService} from "../../../services/form-state.service";
 
 
 const TREE_DATA: Account[] = [
-
+  {
+    accountCode: 1,
+    nameAccount: 'Activo',
+    moneyRub: true,
+    report: false,
+    classificator: false,
+    level: 0,
+    childrenAccounts: []
+  },
+  {
+    accountCode: 2,
+    nameAccount: 'Pasivo',
+    moneyRub: true,
+    report: false,
+    classificator: false,
+    level: 0,
+    childrenAccounts: []
+  },
+  {
+    accountCode: 3,
+    nameAccount: 'Patrimoinio',
+    moneyRub: true,
+    report: false,
+    classificator: false,
+    level: 0,
+    childrenAccounts: []
+  },
+  {
+    accountCode: 4,
+    nameAccount: 'Ingresos',
+    moneyRub: true,
+    report: false,
+    classificator: false,
+    level: 0,
+    childrenAccounts: []
+  },
+  {
+    accountCode: 5,
+    nameAccount: 'Egresos',
+    moneyRub: true,
+    report: false,
+    classificator: false,
+    level: 0,
+    childrenAccounts: []
+  }
 ];
 
 const NEW_TREE_DATA: Account[] = [];
@@ -86,7 +130,7 @@ export class Tap4Component {
        accountCode: TREE_DATA.length + 1,
        nameAccount: this.accountName,
        moneyRub: this.accountMoneyRub,
-       report: this.accountReport, 
+       report: this.accountReport,
        classificator: this.accountClassificator,
        level: 0,
        childrenAccounts: []
@@ -139,7 +183,7 @@ export class Tap4Component {
         }
     }
 }
-  
+
 
 
 
@@ -207,20 +251,20 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     console.log('Datos en JSON:');
     console.log(JSON.stringify(TREE_DATA, null, 2));
     console.log('*********************************************');
-  
+
     const accountPlanArray = this.formService.fb.array(
-      TREE_DATA.map(account => 
+      TREE_DATA.map(account =>
         this.formService.fb.group({
           ...account, // spread para agregar todas las propiedades de la cuenta
           childrenAccounts: this.formService.fb.array(account.childrenAccounts) // childrenAccounts como FormArray
         })
       )
     );
-  
+
     this.formGroup.setControl('accountablePlan', accountPlanArray);
     this.printValue();
   }
-  
+
 
 
   printValue() {
@@ -234,7 +278,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     const image= this.formService.getImage();
     if (image) {
       // se obtuvo una imagen
-      //imprimir la imagen 
+      //imprimir la imagen
       console.log('Imagen en el componente:');
       console.log(image);
       formData.append('image', image);
@@ -242,9 +286,9 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
 
 
     formData.append('datos', JSON.stringify(this.formGroup.value));
-    
 
-    
+
+
 
     console.log('Datos en el formulario:');
     console.log(formData);

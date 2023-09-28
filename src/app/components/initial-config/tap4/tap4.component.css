@@ -221,5 +221,9 @@
   padding: 5px 10px; /* Adjust the padding for a smaller button */
 }
 
+.separator {
+  margin-right: 20px; /* Add margin between the buttons if needed */
+}
+
 
 
