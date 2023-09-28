@@ -111,29 +111,36 @@ export class Tap4Component {
  //Method to add a new account leaf its a DFS algorithm
 
   // @ts-ignore
-  positioningLeaf(listOfAccounts : Account[], selectedAccount: number, level: number){
+  positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].accountCode === selectedAccount){
-        this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
-        let newAccount : Account = {
-          level: level + 1,
-          accountCode: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
-          nameAccount: this.accountName,
-          moneyRub: this.accountMoneyRub,
-          report: this.accountReport,
-          classificator: this.accountClassificator,
-          childrenAccounts: []
+        if(listOfAccounts[j].accountCode === selectedAccount){
+            this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
+            let newAccount: Account = {
+                level: level + 1,
+                accountCode: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
+                nameAccount: this.accountName,
+                moneyRub: this.accountMoneyRub,
+                report: this.accountReport,
+                classificator: this.accountClassificator,
+                childrenAccounts: []
+            }
+            console.log(newAccount);
+
+            // Asegurarse de que childrenAccounts es un array
+            if (!Array.isArray(listOfAccounts[j].childrenAccounts)) {
+                listOfAccounts[j].childrenAccounts = [];
+            }
+
+            listOfAccounts[j].childrenAccounts.push(newAccount);
+            this.accountName = "";
+            return listOfAccounts;
+        } else {
+            this.positioningLeaf(listOfAccounts[j].childrenAccounts, selectedAccount, level);
         }
-        console.log(newAccount);
-        listOfAccounts[j].childrenAccounts.push(newAccount);
-        this.accountName = "";
-        return listOfAccounts;
-      }
-      else{
-        this.positioningLeaf(listOfAccounts[j].childrenAccounts, selectedAccount, level);
-      }
     }
-  }
+}
+  
+
 
 
 //Method to delete an account
@@ -198,17 +205,22 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
 
   guardarJSON() {
     console.log('Datos en JSON:');
-    console.log(TREE_DATA);
+    console.log(JSON.stringify(TREE_DATA, null, 2));
+    console.log('*********************************************');
+  
     const accountPlanArray = this.formService.fb.array(
-      TREE_DATA.map(account => this.formService.fb.group(account))
+      TREE_DATA.map(account => 
+        this.formService.fb.group({
+          ...account, // spread para agregar todas las propiedades de la cuenta
+          childrenAccounts: this.formService.fb.array(account.childrenAccounts) // childrenAccounts como FormArray
+        })
+      )
     );
-    // Añadir jsonData al formGroup
-
-        this.formGroup.setControl('accountablePlan', accountPlanArray);
-        this.printValue();
-
-
+  
+    this.formGroup.setControl('accountablePlan', accountPlanArray);
+    this.printValue();
   }
+  
 
 
   printValue() {
