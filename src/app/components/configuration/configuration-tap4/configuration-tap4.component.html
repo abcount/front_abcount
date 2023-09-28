@@ -1,4 +1,19 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <app-navbar></app-navbar>
 <app-config-navbar [numberOption]="4"></app-config-navbar>
-<p>configuration-tap4 works!</p>
+<div class="configuration-tap4" *ngIf="!modeEdit">
+    <div class="account-plan">
+        <app-account [accounts]="accountPlan"></app-account>
+    </div>
+    <div class="right">
+        <button class="edit-button" (click)="edit()">
+            <i class="fa-solid fa-pen"></i>
+        </button>
+    </div>
+</div>
+<div class="configuration-tap4" *ngIf="modeEdit">
+    <div class="right">
+        <app-my-button [isGreen]="true" (click)="save()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
+        <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
+    </div>
+</div>

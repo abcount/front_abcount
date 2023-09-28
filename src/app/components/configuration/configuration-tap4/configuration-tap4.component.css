@@ -1,0 +1,51 @@
+/*Quitar los estilos generales*/
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/*Background*/
+.configuration-tap4 {
+    background-color: #F8F8F8;
+    padding: 5px 30% 3% 30%;
+}
+.account-plan {
+    background-color: white;
+    border-radius: 5px;
+    padding: 18px 23px 8px 0px;
+    height: 60vh;
+    overflow-y: auto;
+}
+/*Boton editar*/
+.right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+.edit-button {
+    background-color: #eeeeee;
+    border: solid 1px #bebebe;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.5s;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.edit-button:hover {
+    background-color: #aaaaaa;
+}
+.edit-button:hover i {
+    color: #ffffff;
+}
+.edit-button:focus {
+    outline: none;
+}
+.edit-button i {
+    font-size: 15px;
+    color: #757575;
+}

@@ -93,4 +93,9 @@ export class ConfigurationService {
     }
     return this.http.post(`${this.configurationUrl}/currency`, body, { headers: header });
   }
+
+  // Función para obtener el plan de cuentas
+  getAccountsPlan() {
+    return this.http.get(`${this.configurationUrl}/accountsPlan`);
+  }
 }

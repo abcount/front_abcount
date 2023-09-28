@@ -13,6 +13,7 @@ import { AddUsersAndPermissionsComponent } from '../components/configuration/add
 import { UsersAndPermissionsComponent } from '../components/configuration/users-and-permissions/users-and-permissions.component';
 
 import { FormsModule } from '@angular/forms';
+import { AccountComponent } from "../components/configuration/account/account.component";
 
 const CarlosComponents = [
     NavbarComponent,
@@ -29,7 +30,8 @@ const CarlosComponents = [
         ConfigurationTap4Component,
         ConfigurationTap5Component,
         AddUsersAndPermissionsComponent,
-        UsersAndPermissionsComponent
+        UsersAndPermissionsComponent,
+        AccountComponent
     ],
     exports: [CarlosComponents] // Poner [CarlosComponents]
     ,

@@ -1,8 +1,10 @@
 export interface AccountDto {
-    codeAccount: string;
+    isHidden: any;
+    codeAccount: number;
     nameAccount: string;
     clasificator: boolean;
     level: number;
     report: boolean;
     moneyRub: boolean;
+    childrenAccounts: AccountDto[];
 }
