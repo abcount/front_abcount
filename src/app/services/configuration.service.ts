@@ -72,7 +72,7 @@ export class ConfigurationService {
       'areas': areas
     }
     console.log(body);
-    return this.http.put(`${this.configurationUrl}/subsidiary`, body, { headers: header });
+    return this.http.post(`${this.configurationUrl}/subsidiary`, body, { headers: header });
   }
 
   // Función para obtener las monedas

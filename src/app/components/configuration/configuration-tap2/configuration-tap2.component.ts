@@ -42,8 +42,8 @@ export class ConfigurationTap2Component {
     // Obtener las sucursales y areas
     this.ConfigurationService.getSubsidiaries().subscribe(
       (data: any) => {
-        this.subsidiaries = data.subsidiaries;
-        this.areas = data.areas;
+        this.subsidiaries = data.data.subsidiaries;
+        this.areas = data.data.areas;
       }
     );
   }
@@ -76,7 +76,8 @@ export class ConfigurationTap2Component {
 
   // Logica para agregar area
   addArea() {
-    if (this.areas.includes(this.controlAreaName.value)){
+    const areasNames = this.areas.map((area: any) => area.areaName);
+    if (areasNames.includes(this.controlAreaName.value)){
       this.errorMessageArea.nativeElement.classList.add('show');
       setTimeout(() => {
         this.errorMessageArea.nativeElement.classList.remove('show');
@@ -101,10 +102,14 @@ export class ConfigurationTap2Component {
 
   //Verificar si existe alguna sucursal y area
   save(){
-    this.subsidiaries.forEach((subsidiary: any) => {delete subsidiary.mostrarHijos;});
+    //this.subsidiaries.forEach((subsidiary: any) => {delete subsidiary.mostrarHijos;});
+    this.subsidiaries.forEach((subsidiary: any) => {delete subsidiary.editable; delete subsidiary.mostrarHijos;});
+    this.areas.forEach((area: any) => {delete area.editable;});
     this.ConfigurationService.updateSubsidiaryArea(this.subsidiaries, this.areas).subscribe(
       (data: any) => {
         console.log(data);
+        this.subsidiaries = data.data.subsidiaries;
+        this.areas = data.data.areas;
       }
     );
     this.modeEdit = false;

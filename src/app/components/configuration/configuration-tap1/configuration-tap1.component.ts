@@ -32,7 +32,7 @@ export class ConfigurationTap1Component {
   ngOnInit() {
     this.ConfigurationService.getEnterprise().subscribe(
       (data: any) => {
-        this.enterpriseData = data;
+        this.enterpriseData = data.data;
         this.controlName.setValue(this.enterpriseData.companyName);
         this.controlRubro.setValue(this.enterpriseData.diccCategory);
         this.controlNit.setValue(this.enterpriseData.nit);
@@ -61,14 +61,16 @@ export class ConfigurationTap1Component {
           this.controlContactEmail.value, this.controlContactName.value).subscribe(
             (data: any) => {
               console.log(data);
+              this.enterpriseData = data.data;
+              this.controlName.setValue(this.enterpriseData.companyName);
+              this.controlRubro.setValue(this.enterpriseData.diccCategory);
+              this.controlNit.setValue(this.enterpriseData.nit);
+              this.controlAddress.setValue(this.enterpriseData.address);
+              this.logoUuid = this.enterpriseData.logoUuid;
+              this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
+              this.controlContactName.setValue(this.enterpriseData.contactName);
             }
           );
-        this.enterpriseData.companyName = this.controlName.value;
-        this.enterpriseData.diccCategory = this.controlRubro.value;
-        this.enterpriseData.nit = this.controlNit.value;
-        this.enterpriseData.address = this.controlAddress.value;
-        this.enterpriseData.contactEmail = this.controlContactEmail.value;
-        this.enterpriseData.contactName = this.controlContactName.value;
         this.disable();
       } else {
         this.errorMessage.nativeElement.classList.add('show');

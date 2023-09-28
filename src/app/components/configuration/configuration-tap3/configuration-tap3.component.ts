@@ -22,8 +22,8 @@ export class ConfigurationTap3Component {
   ngOnInit() {
     this.ConfigurationService.getCurrencies().subscribe((data: any) => {
       console.log(data);
-      this.currencies = data.currencyConfig.currencyList;
-      this.registerDate = data.currencyConfig.openingDate;
+      this.currencies = data.data.currencyConfig;
+      this.registerDate = data.data.openingDate;
     });
   }
 
@@ -61,7 +61,7 @@ export class ConfigurationTap3Component {
     } else {
       this.ConfigurationService.addCurrency(this.currencyName, this.currencyCode).subscribe((data: any) => {
         console.log(data);
-        this.currencies = data.currencyConfig.currencyList;
+        this.currencies = data.data;
         this.showPopup = false;
       });
     }
