@@ -1,14 +1,18 @@
-import { Component, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormStateService } from 'src/app/services/form-state.service';
 import { Router } from '@angular/router';
+import { EnterpriseStore } from 'src/app/stores/EnterpriseStore';
+import { selectAllEntities } from '@ngneat/elf-entities';
+import { switchMap, take } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tap1',
   templateUrl: './tap1.component.html',
   styleUrls: ['./tap1.component.css']
 })
-export class Tap1Component  {
+export class Tap1Component implements OnInit  {
 
   labelNombre = 'Nombre de la empresa';
   placeholderNombre = 'Ingrese el nombre de tu empresa';
@@ -40,15 +44,27 @@ export class Tap1Component  {
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
   @ViewChild('fileInput') fileInput!: ElementRef;
+  sub: Subscription | null = null;
 
-  constructor(public formService: FormStateService, private router: Router) {}
+  constructor(
+    public formService: FormStateService,
+    private router: Router,
+    public repository:EnterpriseStore
+  ) {}
   ngOnInit() {
-    const storedImagen = localStorage.getItem('imagen');
+   // const storedImagen = localStorage.getItem('imagen');
 
-    if (storedImagen) {
-      this.imageURL = storedImagen;
-    }
+    //if (storedImagen) {
+    //  this.imageURL = storedImagen;
+    //}
+    /*
     this.formService.loadFormDataFromLocalStorage();
+    this.repository.enterprise$.pipe(selectAllEntities()).subscribe(data => {
+      if (data.length > 0) {
+        this.formGroup.patchValue(data[0]);
+      }
+    });
+    */
   }
   guardarImagen(imagenBase64: string) {
     this.imageURL = imagenBase64;
