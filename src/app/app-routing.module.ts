@@ -8,6 +8,9 @@ import {Tap1OptionalComponent} from "./components/initial-config/tap1-optional/t
 import {ConfigurationTap1Component} from "./components/configuration/configuration-tap1/configuration-tap1.component";
 import { MyCompaniesComponent } from './components/my-companies/my-companies.component';
 import { ConfigurationTap2Component } from './components/configuration/configuration-tap2/configuration-tap2.component';
+import { ConfigurationTap3Component } from './components/configuration/configuration-tap3/configuration-tap3.component';
+import { ConfigurationTap5Component } from './components/configuration/configuration-tap5/configuration-tap5.component';
+
 
 const routes: Routes = [
   { path: 'my-companies', component: MyCompaniesComponent},
@@ -18,6 +21,8 @@ const routes: Routes = [
   { path: 'tap1-optional', component: Tap1OptionalComponent },
   { path: 'configuration-tap1', component: ConfigurationTap1Component },
   { path: 'configuration-tap2', component: ConfigurationTap2Component },
+  { path: 'configuration-tap3', component: ConfigurationTap3Component },
+  { path: 'configuration-tap5', component: ConfigurationTap5Component },
 
 ];
 

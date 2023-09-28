@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
 import { SebastianModule } from "./SebastianModule";
 import { ConfigurationTap2Component } from "../components/configuration/configuration-tap2/configuration-tap2.component";
+import { ConfigurationTap3Component } from "../components/configuration/configuration-tap3/configuration-tap3.component";
+import { ConfigurationTap5Component } from "../components/configuration/configuration-tap5/configuration-tap5.component";
+
+import { FormsModule } from '@angular/forms';
 
 const CarlosComponents = [
     NavbarComponent,
@@ -18,13 +22,16 @@ const CarlosComponents = [
         ConfigurationTap1Component,
         ConfigNavbarComponent,
         ConfigurationTap2Component,
+        ConfigurationTap3Component,
+        ConfigurationTap5Component
     ],
     exports: [CarlosComponents] // Poner [CarlosComponents]
     ,
     imports: [
         CommonModule,
         AppRoutingModule,
-        SebastianModule
+        SebastianModule,
+        FormsModule
     ]
 })
 export class CarlosModule {}

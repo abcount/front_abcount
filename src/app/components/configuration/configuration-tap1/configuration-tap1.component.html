@@ -11,11 +11,11 @@
         </div>
         <div class="identificacion-datos">
             <div class="identificacion-campos">
-                <app-my-textfield type="text" iconInput="fa-regular fa-building" label="Nombre" [control]="controlName" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese el nombre de tu empresa"></app-my-textfield>
+                <app-my-textfield type="text" iconInput="fa-regular fa-building" label="Nombre" [control]="controlName" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el nombre de tu empresa"></app-my-textfield>
                 <div style="height: 15px;"></div>
-                <app-my-textfield type="text" iconInput="fa-regular fa-store" label="Rubro" [control]="controlRubro" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese el rubro al que se dedica"></app-my-textfield>
+                <app-my-textfield type="text" iconInput="fa-regular fa-store" label="Rubro" [control]="controlRubro" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el rubro al que se dedica"></app-my-textfield>
                 <div style="height: 15px;"></div>
-                <app-my-textfield type="text" iconInput="fa-regular fa-id-card" label="NIT" [control]="controlNit" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese el NIT de la empresa"></app-my-textfield>
+                <app-my-textfield type="text" iconInput="fa-regular fa-id-card" label="NIT" [control]="controlNit" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el NIT de la empresa"></app-my-textfield>
             </div>
             <div class="identificacion-imagen">
                 <h4>LOGO</h4>
@@ -36,7 +36,7 @@
             <h2 style="padding-top: 8px;">UBICACIÓN</h2>
         </div>
         <div class="campos">
-            <app-my-textfield type="text" iconInput="fa-regular fa-map-marker-alt" label="Dirección" [control]="controlAddress" pattern=".*" errorMessage="Ingrese un valor válido" placeholder="Ingrese la dirección de la empresa"></app-my-textfield>
+            <app-my-textfield type="text" iconInput="fa-regular fa-map-marker-alt" label="Dirección" [control]="controlAddress" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese la dirección de la empresa"></app-my-textfield>
         </div>
     </div>
     <div style="height: 15px;"></div>
@@ -53,7 +53,7 @@
             </div>
             <div style="height: 15px;"></div>
             <div>
-                <app-my-textfield type="text" iconInput="fa-regular fa-phone" label="Número de contacto" [control]="controlContactName"  placeholder="Ingrese un número de contacto"  pattern="^[0-9]*$" errorMessage="Por favor, ingrese un número de contacto válido."></app-my-textfield>
+                <app-my-textfield type="text" iconInput="fa-regular fa-phone" label="Número de contacto" [control]="controlContactName"  placeholder="Ingrese un número de contacto"  [pattern]="patternNumber" errorMessage="Por favor, ingrese un número de contacto válido."></app-my-textfield>
             </div>
         </div>
     </div>

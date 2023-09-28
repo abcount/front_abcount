@@ -1,73 +1,6 @@
-/*Quitar los estilos generales*/
-* {
-  padding: 0;
-  margin: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-/*Background*/
-.tap4 {
-  background-color: #EEEEEE;
-  min-height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/*Contenedor*/
-.container {
-  background-color: white;
-  border-radius: 10px;
-  padding: 15px 25px;
-  box-sizing: border-box;
-  max-width: 65%;
-  height: 548px;
-}
-.center-container {
-  
-  padding: 10px;
-  margin-top: 2vh;
-  display: grid;
-  grid-template-columns: 30% 70%;
-  gap: 1%;
-  
-}
-.data{
-  border: #EDEDED 1px solid;
-  padding: 12px;
-  height: 310px;
-  width: 410px;
-  max-height: 100%;
-  overflow-y: auto;
 
-  
-}
 
-/* .container {
-  margin: 0 3%;
-  margin-top: 5px;
-} */
-.area {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 8px;
-}
-.separator {
-  margin: 0 3%;
-}
 
-.row-2 {
-  display: grid;
-  grid-template-columns: 40% 50% 10%;
-  margin: 25px;
-
-}
-
-.row-2 a {
-  text-decoration: none;
-}
 
 /* Button styling with linear gradient background */
 .row-2 button {
@@ -104,33 +37,188 @@
 .small-button:hover {
   background: linear-gradient(to right, #0056b3, #66CDAA);
 }
-a {
-  font-size: 14px;
-  font-weight: 600;
+
+/* Button styling with linear gradient background */
+.button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #007bff, #66CDAA);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA);
+}
+
+.gray-text {
   color: #757575;
   text-decoration: none;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
 }
-a:focus {
-  outline: none !important;
+
+/* Adjusted styles for smaller buttons */
+.small-button {
+  padding: 5px 10px;
+  background: linear-gradient(to right, #007bff, #66CDAA);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
-a:hover {
-  text-decoration: none;
-  color: #7BC8CA;
+
+.small-button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA);
 }
-h2 {
-  font-size: 14px;
-  color: #757575;
-  height: 14px;
-  margin: 0px;
+
+/* Modal Styles */
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
 }
-.header-title {
+
+.modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.modal-title {
   font-size: 20px;
-  font-weight: 590;
-  margin-bottom: 10px;
+}
+
+.modal-body {
+  padding: 20px 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form-check-input {
+  margin-right: 5px;
+}
+
+.modal-footer {
+  text-align: right;
+}
+
+.button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #007bff, #66CDAA);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA);
+}
+
+.small-button {
+  padding: 5px 10px;
+  background: linear-gradient(to right, #007bff, #66CDAA);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.small-button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA);
+}
+
+
+
+
+
+
+/* Modal Buttons */
+.modal-footer .add-button,
+.modal-footer .delete-button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #007bff, #66CDAA);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-right: 10px;
+}
+
+.modal-footer .add-button:hover,
+.modal-footer .delete-button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA);
+}
+
+/* Button sizes */
+.large {
+  padding: 10px 20px;
+}
+
+.small {
+  padding: 5px 10px;
+}
+
+/* Radio Buttons */
+.modal-body input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Combo Box */
+.modal-body select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Style for the focused state of the combo box */
+.modal-body select:focus {
+  border-color: #007bff;
+}
+
+.row-2 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* You can adjust the background color as needed */
+  padding: 10px 0; /* Add padding for spacing */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.back-link {
+  flex: 1;
+  margin-left: 10px; /* Add margin between the back link and button */
+}
+
+.button.small-button {
+  flex: 0;
+  margin-right: 10px; /* Add margin between the buttons if needed */
+  padding: 5px 10px; /* Adjust the padding for a smaller button */
 }
 
 
