@@ -257,6 +257,9 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
       next: response => {
         console.log('Respuesta del servidor:', response);
         this.formService.clearFormDataFromLocalStorage();
+        if(response.success){
+          localStorage.clear();
+        }
       },
       error: error => {
         console.error('Error enviando datos:', error);
