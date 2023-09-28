@@ -119,8 +119,8 @@ export class ConfigurationTap2Component {
   cancel(){
     this.ConfigurationService.getSubsidiaries().subscribe(
       (data: any) => {
-        this.subsidiaries = data.subsidiaries;
-        this.areas = data.areas;
+        this.subsidiaries = data.data.subsidiaries;
+        this.areas = data.data.areas;
       }
     );
     this.modeEdit = false;
