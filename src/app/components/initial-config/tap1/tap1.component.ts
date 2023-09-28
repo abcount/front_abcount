@@ -28,6 +28,7 @@ export class Tap1Component  {
 
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
+  imageFile: File | null = null;
  
 
   constructor(public formService: FormStateService, private router: Router) {}
@@ -82,13 +83,13 @@ export class Tap1Component  {
 
 
   loadPreview(file: File) {
+    this.imageFile = file;
+    // Aquí podrías aún querer cargar una vista previa de la imagen como base64
     const reader = new FileReader();
     reader.onload = (e) => {
       this.imageURL = reader.result;
-      if (typeof this.imageURL === 'string') {  // Añadir esta línea
-        this.guardarImagen(this.imageURL);
-      }
     };
+    this.formService.setImage(file);
     reader.readAsDataURL(file);
   }
 

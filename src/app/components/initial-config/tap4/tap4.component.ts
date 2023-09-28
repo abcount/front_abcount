@@ -231,12 +231,19 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
   enviarDatos() {
     const storedImagen = localStorage.getItem('imagen');
     const formData = new FormData();
+    const image= this.formService.getImage();
+    if (image) {
+      // se obtuvo una imagen
+      //imprimir la imagen 
+      console.log('Imagen en el componente:');
+      console.log(image);
+      formData.append('image', image);
+    }
 
 
     formData.append('datos', JSON.stringify(this.formGroup.value));
     
 
-    formData.append('image', storedImagen || '');
     
 
     console.log('Datos en el formulario:');

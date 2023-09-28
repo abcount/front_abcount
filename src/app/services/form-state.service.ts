@@ -10,6 +10,8 @@ export class FormStateService {
    
    formGroup: FormGroup;
    private url="http://localhost:8080/api/v1/ms-company/company";
+   private imageFile: File | null = null;
+
 
     constructor(public fb: FormBuilder, private http: HttpClient) {
 
@@ -54,7 +56,7 @@ export class FormStateService {
     const dia = fechaActual.getDate().toString().padStart(2, '0');
     const año = fechaActual.getFullYear().toString();
 
-    return `${mes}-${dia}-${año}`;
+    return `${dia}-${mes}-${año}`;
   }
 
   // post de la configuracion de la empresa
@@ -77,6 +79,14 @@ export class FormStateService {
     
   clearFormDataFromLocalStorage() {
     localStorage.removeItem('formData');
+  }
+
+  setImage(imageFile: File) {
+    this.imageFile = imageFile;
+  }
+
+  getImage(): File | null {
+    return this.imageFile;
   }
 
 }
