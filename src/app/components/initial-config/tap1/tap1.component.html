@@ -11,11 +11,11 @@
             </div>
             <!-- Columna 2: Campos de texto -->
             <div>
-                <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="nombreControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderNombre"></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="Nombre.iconInputNombre" [label]="Nombre.labelNombre" [control]="nombreControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="Nombre.placeholderNombre"></app-my-textfield>
                 <div style="height: 20px;"></div>
-                <app-my-textfield type="text" [iconInput]="iconInputRubro" [label]="labelRubro" [control]="rubroControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderRubro" ></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="Rubro.iconInputRubro" [label]="Rubro.labelRubro" [control]="rubroControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="Rubro.placeholderRubro" ></app-my-textfield>
                 <div style="height: 20px;"></div>
-                <app-my-textfield type="text" [iconInput]="iconInputNIT" [label]="labelNIT" [control]="nitControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderNIT" ></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="NIT.iconInputNIT" [label]="NIT.labelNIT" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="NIT.placeholderNIT" ></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
             <!-- Columna 3: Cargar Logo -->
@@ -44,7 +44,7 @@
                 <h2>UBICACIÓN</h2>
             </div>
             <div>
-                <app-my-textfield type="text" [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="direccionControl" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderDireccion" ></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="Direccion.iconInputDireccion" [label]="Direccion.labelDireccion" [control]="direccionControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="Direccion.placeholderDireccion" ></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
         </div>
@@ -54,11 +54,11 @@
                 <h2>CONTACTO</h2>
             </div>
             <div>
-                <app-my-textfield type="email" [iconInput]="iconInputEmail" [label]="labelEmail" [control]="emailControl" [placeholder]="placeholderEmail" [pattern]="patternEmail" [errorMessage]="patternEmailMessage"></app-my-textfield>
+                <app-my-textfield type="email" [iconInput]="Email.iconInputEmail" [label]="Email.labelEmail" [control]="emailControl" [placeholder]="Email.placeholderEmail" [pattern]="pattern.patternEmail" [errorMessage]="pattern.patternEmailMessage"></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
             <div>
-                <app-my-textfield type="text" [iconInput]="iconInputNumeroContacto" [label]="labelNumeroContacto" [control]="numeroContactoControl" [pattern]="patternNumber" [errorMessage]="patternNumberMessage" [placeholder]="placeholderNumeroContacto" ></app-my-textfield>
+                <app-my-textfield type="text" [iconInput]="NumeroContacto.iconInputNumeroContacto" [label]="NumeroContacto.labelNumeroContacto" [control]="numeroContactoControl" [pattern]="pattern.patternNumber" [errorMessage]="pattern.patternNumberMessage" [placeholder]="NumeroContacto.placeholderNumeroContacto" ></app-my-textfield>
                 <div style="height: 20px;"></div>
             </div>
         </div>
@@ -68,5 +68,5 @@
             <div><a (click)="verificarCampos()">Siguiente &gt;&gt;</a></div>
         </div>
     </div>
-    <!--<button (click)="printValue()">Imprimir valor</button>-->
+    <button (click)="printValue()">Imprimir valor</button>
 </div>

@@ -7,11 +7,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FormStateService {
+   
    formGroup: FormGroup;
    private url="http://localhost:8080/api/v1/ms-company/company";
 
     constructor(public fb: FormBuilder, private http: HttpClient) {
+
       this.formGroup = this.fb.group({
+
         enterprise: this.fb.group({
           enterpriseName: [''],
           dicCategory: [''],
@@ -24,8 +27,6 @@ export class FormStateService {
           openingDate: this.obtenerFechaActualEnFormato(),
 
           }),
-
-
           currencyConfig: this.fb.group({
             principalCurrency: 0,
             currencyList: this.fb.array([]),
@@ -33,6 +34,7 @@ export class FormStateService {
           accountablePlan: this.fb.array([]),
 
       });
+
     }
 
   printFormValue() {
@@ -41,6 +43,7 @@ export class FormStateService {
   get form(): FormGroup {
     return this.formGroup;
   }
+
   getForm(): FormGroup {
     return this.formGroup;
   }
@@ -58,6 +61,7 @@ export class FormStateService {
   enviarDatos(datos: any): Observable<any> {
     return this.http.post(this.url, datos);
   }
+
   saveFormDataToLocalStorage() {
     const formData = JSON.stringify(this.formGroup.value);
     localStorage.setItem('formData', formData);
@@ -70,7 +74,7 @@ export class FormStateService {
       this.formGroup.patchValue(parsedData);
     }
   }
-
+    
   clearFormDataFromLocalStorage() {
     localStorage.removeItem('formData');
   }

@@ -8,38 +8,27 @@ import { Router } from '@angular/router';
   templateUrl: './tap1.component.html',
   styleUrls: ['./tap1.component.css']
 })
+
 export class Tap1Component  {
+  
 
-  labelNombre = 'Nombre de la empresa';
-  placeholderNombre = 'Ingrese el nombre de tu empresa';
-  iconInputNombre = "fa-regular fa-building";
-  labelDireccion = 'Dirección';
-  placeholderDireccion = 'Ingrese la dirección de la empresa';
-  iconInputDireccion = "fa-regular fa-map-marker-alt";
-  labelRubro = 'Rubro';
-  placeholderRubro = 'Ingrese el rubro al que se dedica';
-  iconInputRubro = "fa-regular fa-store";
-  labelNIT = 'NIT de la empresa';
-  placeholderNIT = 'Ingrese el NIT de la empresa';
-  iconInputNIT = "fa-regular fa-id-card";
-  labelEmail = 'E-mail de contacto';
-  placeholderEmail = 'Ingrese un e-mail de contacto';
-  iconInputEmail = "fa-regular fa-envelope";
-  labelNumeroContacto = 'Número de contacto';
-  placeholderNumeroContacto = 'Ingrese un número de contacto';
-  iconInputNumeroContacto = "fa-regular fa-phone";
+  // Etiqueteas de los inputs
+  Nombre={labelNombre: 'Nombre de la empresa', placeholderNombre: 'Ingrese el nombre de tu empresa', iconInputNombre: "fa-regular fa-building"};
+  Direccion={labelDireccion: 'Dirección', placeholderDireccion: 'Ingrese la dirección de la empresa', iconInputDireccion: "fa-regular fa-map-marker-alt"};
+  Rubro={labelRubro: 'Rubro', placeholderRubro: 'Ingrese el rubro al que se dedica', iconInputRubro: "fa-regular fa-store"};
+  NIT={labelNIT: 'NIT de la empresa', placeholderNIT: 'Ingrese el NIT de la empresa', iconInputNIT: "fa-regular fa-id-card"};
+  Email={labelEmail: 'E-mail de contacto', placeholderEmail: 'Ingrese un e-mail de contacto', iconInputEmail: "fa-regular fa-envelope"};
+  NumeroContacto={labelNumeroContacto: 'Número de contacto', placeholderNumeroContacto: 'Ingrese un número de contacto', iconInputNumeroContacto: "fa-regular fa-phone"};
 
-  patternAll = '.*';
-  patternAllMessage = 'Ingrese un valor válido';
-  patternNumber = '^[0-9]*$';
-  patternNumberMessage = 'Por favor, ingrese un número de contacto válido.';
-  patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-  patternEmailMessage = 'Por favor, ingrese una dirección de correo electrónico válida.';
+  // Patrones de validación
+  pattern={patternAll: '.*', patternAllMessage: 'Ingrese un valor válido', patternNumber: '^[0-9]*$', patternNumberMessage: 'Por favor, ingrese un número de contacto válido.', patternEmail: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$', patternEmailMessage: 'Por favor, ingrese una dirección de correo electrónico válida.'};
 
   @Input() control: FormControl;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   imageURL: string | ArrayBuffer | null = null;
   isDragging = false;
-  @ViewChild('fileInput') fileInput!: ElementRef;
+ 
 
   constructor(public formService: FormStateService, private router: Router) {}
   ngOnInit() {
@@ -50,13 +39,19 @@ export class Tap1Component  {
     }
     this.formService.loadFormDataFromLocalStorage();
   }
+
+
+  get formGroup(): FormGroup {
+    return this.formService.formGroup;
+  }
+
+
+  // Métodos para el logo-------------------------------------------------------------------------//
   guardarImagen(imagenBase64: string) {
     this.imageURL = imagenBase64;
     localStorage.setItem('imagen', imagenBase64);
   }
-  get formGroup(): FormGroup {
-    return this.formService.formGroup;
-  }
+ 
 
   onFileChanged(event: any) {
     const file = event.target.files[0];
@@ -86,17 +81,6 @@ export class Tap1Component  {
   }
 
 
-/*
-  loadPreview(file: File) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (reader.result) {
-        this.imageURL = reader.result;
-      }
-    };
-    reader.readAsDataURL(file);
-  }
-*/
   loadPreview(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -107,19 +91,15 @@ export class Tap1Component  {
     };
     reader.readAsDataURL(file);
   }
-/*
-  removeImage() {
-    this.imageURL = null;
-    this.fileInput.nativeElement.value = '';
-  }
-*/
+
 
   removeImage() {
     this.imageURL = null;
     this.fileInput.nativeElement.value = '';
-
-    // Establecer el valor del campo 'logo' del formulario a null o cadena vacía
   }
+
+  //---------------------------------------------------------------------------------------------//
+
 
   get nombreControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseName') as FormControl;
@@ -154,7 +134,7 @@ export class Tap1Component  {
     console.log(JSON.stringify(this.formGroup.value, null, 2));
   }
 
-  /*---------------------------------------------------------------------------------------------*/
+  /*Verificaciones---------------------------------------------------------------------------------------------*/
   @ViewChild('errorMessage') errorMessage: ElementRef;
   @ViewChild('errorMessageLogo') errorMessageLogo: ElementRef;
   //Comprobar que los campos estan llenos

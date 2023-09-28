@@ -224,7 +224,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     formData.append('datos', JSON.stringify(this.formGroup.value));
     
 
-    formData.append('archivo', storedImagen || '');
+    formData.append('image', storedImagen || '');
     
 
     console.log('Datos en el formulario:');
