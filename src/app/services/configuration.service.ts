@@ -96,6 +96,6 @@ export class ConfigurationService {
 
   // Función para obtener el plan de cuentas
   getAccountsPlan() {
-    return this.http.get(`${this.configurationUrl}/accountsPlan`);
+    return this.http.get(`${this.configurationUrl}/accountable-plan`);
   }
 }
