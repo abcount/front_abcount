@@ -47,7 +47,7 @@
                         </button>                                               
                         <div class="area" style="margin: 0px;">
                             <span>{{sucursal.subsidiaryName}}</span>
-                            <button *ngIf="sucursal.editable" class="circulo" style="margin: 0px;" (click)="deleteSubsidiary(sucursal.subsidiaryId)">
+                            <button *ngIf="sucursal.editable" class="circulo" style="margin: 0px;" (click)="deleteSubsidiary(sucursal.subsidiaryName)">
                                 <i class="fa-solid fa-x"></i>
                             </button>
                         </div>

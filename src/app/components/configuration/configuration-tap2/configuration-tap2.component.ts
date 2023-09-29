@@ -72,9 +72,8 @@ export class ConfigurationTap2Component {
     }
   }
   //Lógica para eliminar una sucursal
-  deleteSubsidiary(subsidiaryId: number) {
-    let subsidiary = this.subsidiaries.find((subsidiary: any) => subsidiary.subsidiaryId === subsidiaryId);
-    this.subsidiaries = this.subsidiaries.filter((subsidiary: any) => subsidiary.subsidiaryId !== subsidiaryId);
+  deleteSubsidiary(subsidiaryName: string) {
+    this.subsidiaries = this.subsidiaries.filter((subsidiary: any) => subsidiary.subsidiaryName !== subsidiaryName);
     if (this.subsidiaries.length == 0) {
       this.areas = [];
     }
@@ -144,6 +143,7 @@ export class ConfigurationTap2Component {
         }
       );
     }
+    console.log('Agregar');
   }
 
   // Lógica para eliminar las sucursales y areas
@@ -152,7 +152,9 @@ export class ConfigurationTap2Component {
     if (this.subsidiaries.length > 0) {
       this.subsidiariesBackup.forEach((subsidiary: any) => {
         if (!this.subsidiaries.includes(subsidiary)) {
-          subsidiaryDelete.push(subsidiary.subsidiaryId);
+          if(subsidiary.subsidiaryId!=undefined) {
+            subsidiaryDelete.push(subsidiary.subsidiaryId);
+          }
         }
       });
     }
@@ -160,7 +162,9 @@ export class ConfigurationTap2Component {
     if (this.areas.length > 0) {
       this.areasBackup.forEach((area: any) => {
         if (!this.areas.includes(area)) {
-          areaDelete.push(area.areaId);
+          if(area.areaId!=undefined) {
+            areaDelete.push(area.areaId);
+          }
         }
       });
     }
@@ -174,6 +178,7 @@ export class ConfigurationTap2Component {
         }
       );
     }
+    console.log('Eliminar');
   }
 
   //Cancelar la edición
