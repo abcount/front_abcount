@@ -71,6 +71,8 @@ export class ConfigurationTap1Component {
       }, 3000);
     } else {
       if (this.controlName.valid && this.controlRubro.valid && this.controlNit.valid && this.controlAddress.valid && this.controlContactEmail.valid && this.controlContactName.valid) {
+        // Eliminar el "data:image/jpeg;base64," del logoUuid
+        this.logoUuid = this.logoUuid.slice(23);
         this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid, 
           this.controlContactEmail.value, this.controlContactName.value).subscribe(
             (data: any) => {

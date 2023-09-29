@@ -60,8 +60,8 @@ export class ConfigurationService {
     return this.http.get(`${this.configurationUrl}/subsidiary`);
   }
   
-  // Funcion para guardar los cambios en areas y sucursales
-  updateSubsidiaryArea(subsidiaries: any[], areas: string[]){
+  // Funcion para agregar las nuevas areas y sucursales
+  addSubsidiaryArea(subsidiaries: any[], areas: string[]){
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -73,6 +73,21 @@ export class ConfigurationService {
     }
     console.log(body);
     return this.http.post(`${this.configurationUrl}/subsidiary`, body, { headers: header });
+  }
+
+  // Función para eliminar las sucursales y areas
+  deleteSubsidiaryArea(subsidiaries: any[], areas: string[]){
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      //'Authorization': 'Bearer $token',
+    }
+    const body = {
+      'subsidiaries': subsidiaries,
+      'areas': areas
+    }
+    console.log(body);
+    return this.http.put(`${this.configurationUrl}/subsidiary`, body, { headers: header });
   }
 
   // Función para obtener las monedas

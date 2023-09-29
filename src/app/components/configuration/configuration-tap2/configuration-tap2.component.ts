@@ -34,6 +34,8 @@ export class ConfigurationTap2Component {
   //Listas de sucursales y areas
   subsidiaries: any[] = [];
   areas: any[] = [];
+  subsidiariesBackup: any[] = [];
+  areasBackup: any[] = [];
 
   //Constructor
   constructor(private router: Router, private ConfigurationService: ConfigurationService) { }
@@ -44,6 +46,8 @@ export class ConfigurationTap2Component {
       (data: any) => {
         this.subsidiaries = data.data.subsidiaries;
         this.areas = data.data.areas;
+        this.subsidiariesBackup = data.data.subsidiaries;
+        this.areasBackup = data.data.areas;
       }
     );
   }
@@ -57,18 +61,20 @@ export class ConfigurationTap2Component {
         this.errorMessageSucursal.nativeElement.classList.remove('show');
       }, 2000);
     } else {
-      this.subsidiaries.push({
+      let newSubsidiary = {
         subsidiaryName: this.controlSubsidiaryName.value,
         address: this.controlSubsidiaryAddress.value,
         editable: true
-      });
+      }
+      this.subsidiaries.push(newSubsidiary);
       this.controlSubsidiaryName.reset();
       this.controlSubsidiaryAddress.reset();
     }
   }
-  //Lógica para eliminar
-  deleteSubsidiary(sucursalName: string) {
-    this.subsidiaries = this.subsidiaries.filter((subsidiary: any) => subsidiary.subsidiaryName !== sucursalName);
+  //Lógica para eliminar una sucursal
+  deleteSubsidiary(subsidiaryId: number) {
+    let subsidiary = this.subsidiaries.find((subsidiary: any) => subsidiary.subsidiaryId === subsidiaryId);
+    this.subsidiaries = this.subsidiaries.filter((subsidiary: any) => subsidiary.subsidiaryId !== subsidiaryId);
     if (this.subsidiaries.length == 0) {
       this.areas = [];
     }
@@ -102,17 +108,72 @@ export class ConfigurationTap2Component {
 
   //Verificar si existe alguna sucursal y area
   save(){
-    //this.subsidiaries.forEach((subsidiary: any) => {delete subsidiary.mostrarHijos;});
-    this.subsidiaries.forEach((subsidiary: any) => {delete subsidiary.editable; delete subsidiary.mostrarHijos;});
-    this.areas.forEach((area: any) => {delete area.editable;});
-    this.ConfigurationService.updateSubsidiaryArea(this.subsidiaries, this.areas).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.subsidiaries = data.data.subsidiaries;
-        this.areas = data.data.areas;
-      }
-    );
-    this.modeEdit = false;
+    this.deleteSubsidiaryArea();
+    this.saveNew();
+    //this.modeEdit = false;
+  }
+
+  // Lógica para guardar las nuevas sucursales y areas
+  saveNew(){
+    let subsidiaryNew: any = [];
+    if (this.subsidiaries.length > 0) {
+      this.subsidiaries.forEach((subsidiary: any) => {
+        if (subsidiary.subsidiaryId == undefined) {
+          subsidiaryNew.push({
+            subsidiaryName: subsidiary.subsidiaryName,
+            address: subsidiary.address
+          });
+        }
+      });
+    }
+    let areaNew: any = [];
+    if (this.areas.length > 0) {
+      this.areas.forEach((area: any) => {
+        if (area.areaId == undefined) {
+          areaNew.push(area.areaName);
+        }
+      });
+    }
+    if (subsidiaryNew.length>0 || areaNew.length>0){
+      this.ConfigurationService.addSubsidiaryArea(subsidiaryNew, areaNew).subscribe(
+        (data: any) => {
+          this.subsidiaries = data.data.subsidiaries;
+          this.areas = data.data.areas;
+          this.subsidiariesBackup = data.data.subsidiaries;
+          this.areasBackup = data.data.areas;
+        }
+      );
+    }
+  }
+
+  // Lógica para eliminar las sucursales y areas
+  deleteSubsidiaryArea(){
+    let subsidiaryDelete: any = [];
+    if (this.subsidiaries.length > 0) {
+      this.subsidiariesBackup.forEach((subsidiary: any) => {
+        if (!this.subsidiaries.includes(subsidiary)) {
+          subsidiaryDelete.push(subsidiary.subsidiaryId);
+        }
+      });
+    }
+    let areaDelete: any = [];
+    if (this.areas.length > 0) {
+      this.areasBackup.forEach((area: any) => {
+        if (!this.areas.includes(area)) {
+          areaDelete.push(area.areaId);
+        }
+      });
+    }
+    if(subsidiaryDelete.length>0 || areaDelete.length>0){
+      this.ConfigurationService.deleteSubsidiaryArea(subsidiaryDelete, areaDelete).subscribe(
+        (data: any) => {
+          this.subsidiaries = data.data.subsidiaries;
+          this.areas = data.data.areas;
+          this.subsidiariesBackup = data.data.subsidiaries;
+          this.areasBackup = data.data.areas;
+        }
+      );
+    }
   }
 
   //Cancelar la edición
@@ -121,6 +182,8 @@ export class ConfigurationTap2Component {
       (data: any) => {
         this.subsidiaries = data.data.subsidiaries;
         this.areas = data.data.areas;
+        this.subsidiariesBackup = data.data.subsidiaries;
+        this.areasBackup = data.data.areas;
       }
     );
     this.modeEdit = false;
