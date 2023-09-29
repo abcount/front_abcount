@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CircularButtonComponent } from './components/general-components/circular-button/circular-button.component';
+import { initializeKeycloak } from '../app/config/keycloak.init'
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 
 
@@ -51,8 +53,16 @@ import { CircularButtonComponent } from './components/general-components/circula
     FontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,
+    KeycloakAngularModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

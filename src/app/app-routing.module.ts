@@ -15,6 +15,7 @@ import { UsersAndPermissionsComponent } from './components/configuration/users-a
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/my-companies', pathMatch: 'full'},
   { path: 'my-companies', component: MyCompaniesComponent },
   { path: 'tap1', component: Tap1Component }, // {4}
   { path: 'tap2', component: Tap2Component },
