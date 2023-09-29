@@ -263,6 +263,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
 
     this.formGroup.setControl('accountablePlan', accountPlanArray);
     this.printValue();
+    this.enviarDatos();
   }
 
 
