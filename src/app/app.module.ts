@@ -53,7 +53,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
     FontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,
-    KeycloakAngularModule
+    /*KeycloakAngularModule
   ],
   providers: [
     {
@@ -61,7 +61,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService]
-    }
+    }*/
   ],
   bootstrap: [AppComponent]
 })

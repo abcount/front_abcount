@@ -20,9 +20,10 @@
             <div class="identificacion-imagen">
                 <h4>LOGO</h4>
                 <div class="logo">
-                    <button *ngIf="modeEdit">
+                    <button *ngIf="modeEdit" (click)="imgLogo.click()">
                         <i class="fa-solid fa-camera"></i>
                     </button>
+                    <input type="file" accept="image/*" #imgLogo style="display:none" (change)="onFileSelectedLogo($event)">
                     <div *ngIf="!modeEdit"></div>
                     <img src="{{logoUuid}}" alt="Descripción de la imagen">
                 </div>

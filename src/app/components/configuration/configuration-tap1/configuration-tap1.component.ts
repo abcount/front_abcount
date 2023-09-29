@@ -37,12 +37,26 @@ export class ConfigurationTap1Component {
         this.controlRubro.setValue(this.enterpriseData.diccCategory);
         this.controlNit.setValue(this.enterpriseData.nit);
         this.controlAddress.setValue(this.enterpriseData.address);
-        this.logoUuid = this.enterpriseData.logoUuid;
+        this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
         this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
         this.controlContactName.setValue(this.enterpriseData.contactName);
       }
     );
     this.disable();
+  }
+
+  // Campos para las fotos
+  selectedLogo: File;
+  onFileSelectedLogo(event: any) {
+    this.selectedLogo = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result != null){
+        this.logoUuid = reader.result?.toString();
+        console.log(this.logoUuid);
+      }
+    };
+    reader.readAsDataURL(this.selectedLogo);
   }
 
   // Variable para controlar que los campos esten llenos
@@ -66,7 +80,7 @@ export class ConfigurationTap1Component {
               this.controlRubro.setValue(this.enterpriseData.diccCategory);
               this.controlNit.setValue(this.enterpriseData.nit);
               this.controlAddress.setValue(this.enterpriseData.address);
-              this.logoUuid = this.enterpriseData.logoUuid;
+              this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
               this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
               this.controlContactName.setValue(this.enterpriseData.contactName);
             }
@@ -89,7 +103,7 @@ export class ConfigurationTap1Component {
     this.controlAddress.setValue(this.enterpriseData.address);
     this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
     this.controlContactName.setValue(this.enterpriseData.contactName);
-    this.logoUuid = this.enterpriseData.logoUuid;
+    this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
     this.disable();
   }
 
