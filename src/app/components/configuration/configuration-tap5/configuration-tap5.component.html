@@ -20,7 +20,7 @@
                 <h4>{{user.email}}</h4>
             </div>
             <div class="botones">
-                <button class="button-red">Eliminar</button><a routerLink="/users-and-permissions"><button class="button">Ver más</button></a>
+                <button class="button-red" (click)="Eliminar(user.userId)">Eliminar</button><a routerLink="/users-and-permissions"><button class="button">Ver más</button></a>
             </div>
         </div>
     </div>

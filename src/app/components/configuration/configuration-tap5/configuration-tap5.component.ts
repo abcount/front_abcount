@@ -19,4 +19,13 @@ export class ConfigurationTap5Component {
        }
      );
   }
+  // Lógica para eliminar un usuario
+  Eliminar(id: any){
+    console.log("Usuario eliminado",id)
+    this.UserServices.deleteUser(id).subscribe(
+      (data: any) => {
+        console.log(data)
+      }
+    );
+  }
 }
