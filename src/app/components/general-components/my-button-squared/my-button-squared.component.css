@@ -1,16 +1,18 @@
 .add-button {
-  width: 21px;
-  height: 21px;
-  background-color: #66CDAA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #8ddfbf;
   color: white;
   border: none;
   border-radius: 4px;
-  font-size: 17px;
   cursor: pointer;
-  
-  text-align: center;
 }
-
 .add-button:hover {
   background-color: #66CDAA;
+}
+.add-button:focus {
+  outline: none;
 }

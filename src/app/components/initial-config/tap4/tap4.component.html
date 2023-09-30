@@ -1,127 +1,107 @@
 <div class="tap4">
   <div class="container">
-    <div>
-      <h1 class="header-title">Configuración de la empresa</h1>
-      <hr>
-      <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="4"></app-progress>
-      <hr>
-      <div class="center-container">
-        <div>
-          <h2>PLAN DE CUENTAS</h2>
-        </div>
-        <div class="data">
-          <app-my-button-squared (clicked)="setSelectedNode(null)" data-toggle="modal" data-target="#modal"> </app-my-button-squared>
-          <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-              <button mat-icon-button disabled></button>
-              <div class="separator"></div>
-              {{node.name}}
-              <div class="separator"></div>
-              <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
-              <div class="separator"></div>
-              <app-circular-button (clicked)="deleteAccount(node)"></app-circular-button>
-              <hr>
-            </mat-tree-node>
-            <hr>
-            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-                <mat-icon class="mat-icon-rtl-mirror">
-                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                </mat-icon>
-              </button>
-              <div class="separator"></div>
-              {{node.name}}
-              <div class="separator"></div>
-              <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
-            </mat-tree-node>
-          </mat-tree>
-        </div>
-      </div>
+    <h1 class="header-title">Configuración de la empresa</h1>
+    <hr>
+    <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="4"></app-progress>
+    <hr class="linea">
+    <h2>PLAN DE CUENTAS</h2>
+    <div class="data">
+      <app-my-button-squared (clicked)="setSelectedNode(null)"></app-my-button-squared>
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <button style="margin-left: 8px;" mat-icon-button disabled></button>
+          <div class="separator"></div>
+          {{node.name}}
+          <div class="separator"></div>
+          <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
+          <div class="right">
+            <app-circular-button (clicked)="deleteAccount(node)"></app-circular-button>
+          </div>
+        </mat-tree-node>
+        <hr>
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button class="expand-button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+            <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': treeControl.isExpanded(node), 'fa-caret-down': !treeControl.isExpanded(node)}"></i>
+          </button>
+          <div class="separator"></div>
+          {{node.name}}
+          <div class="separator"></div>
+          <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
+        </mat-tree-node>
+      </mat-tree>
     </div>
     <div class="row-2">
-      <div class="back-link">
+      <div class="left">
         <a routerLink="/tap3">&lt;&lt; Atras</a>
       </div>
-      <div></div>
-      <button class="button small-button" (click)="guardarJSON()">Guardar</button>
+      <div class="right">
+        <button class="button" (click)="guardarJSON()">Guardar</button>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- Capa de fondo desenfocada -->
+<div class="overlay" *ngIf="mostrarPopup"></div>
+<div class="overlay" *ngIf="mostrarPopupSon"></div>
 <!--- MODAL PARENT -->
-<div class="modal fade" id="modalParent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabelParent">Registro de Cuenta</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-type">
-          <h3>Nombre de la cuenta </h3>
-          <input [(ngModel)]="accountName" type="text" class="form-control" placeholder="Ingresa el nombre de la cuenta">
-        </div>
-        <div>
-          <input type="checkbox" id="checkParent" name="check" value="check">
-          <label for="check">Rubro monetario</label>
-        </div>
-        <div style="display: flex;">
-          <h3>Reporte</h3>
-          <label>
-            <input type="radio" [(ngModel)]="accountReport" value=true> Balance General
-          </label>
-          <label>
-            <input type="radio" [(ngModel)]="accountReport" value=false> Estado de Resultados
-          </label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="add-button right-buttom center large" data-dismiss="modal" (click)="addNewChildAccount(null)">
-          Guardar
-        </button>
-        <button class="delete-button large" data-dismiss="modal">Cancelar</button>
-      </div>
-    </div>
+<div *ngIf="mostrarPopup" class="popup">
+  <div class="popup-title">
+    <span class="icon">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </span>
+    <h2 class="h2-title">Registro de Cuenta</h2>
+  </div>
+  <div class="row-2-popup">
+    <h3>Nombre de la cuenta </h3>
+    <input [(ngModel)]="accountName" type="text" placeholder="Ingresa el nombre de la cuenta">
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="checkParent" name="check" value="check">
+    <label for="check">Rubro monetario</label>
+  </div>
+  <div class="alinear">
+    <h3>Reporte</h3>
+    <label class="label-report alinear" for="balanceGeneral">
+      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
+    </label>
+    <label class="label-report alinear" for="estadoResultados">
+      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
+    </label>
+  </div>
+  <div class="popup-buttons right">
+    <app-my-button [isGreen]="true" (click)="addNewChildAccount(null)">GUARDAR</app-my-button>
+    <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
   </div>
 </div>
 
-<!--- MODAL -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Registro de Cuenta</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-type">
-          <h3>Nombre de la cuenta </h3>
-          <input [(ngModel)]="accountName" type="text" class="form-control" placeholder="Ingresa el nombre de la cuenta">
-        </div>
-        <div>
-          <input type="checkbox" id="check" name="check" value="check" [(ngModel)]="accountMoneyRub">
-          <label for="check">Rubro monetario</label>
-        </div>
-        <div style="display: flex;">
-          <h3>Reporte</h3>
-          <label>
-            <input type="radio" [(ngModel)]="accountReport" value=true> Balance General
-          </label>
-          <label>
-            <input type="radio" [(ngModel)]="accountReport" value=false> Estado de Resultados
-          </label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="add-button right-buttom center large" data-dismiss="modal" (click)="addNewChildAccount(selectedNode)">
-          Guardar
-        </button>
-        <button class="delete-button large" data-dismiss="modal" (click)="guardarJSON()">Cancelar</button>
-      </div>
-    </div>
+<!--- MODAL SON -->
+<div *ngIf="mostrarPopupSon" class="popup">
+  <div class="popup-title">
+    <span class="icon">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </span>
+    <h2 class="h2-title">Registro de Cuenta</h2>
+  </div>
+  <div class="row-2-popup">
+    <h3>Nombre de la cuenta </h3>
+    <input [(ngModel)]="accountName" type="text" placeholder="Ingresa el nombre de la cuenta">
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="check" name="check" value="check" [(ngModel)]="accountMoneyRub">
+    <label for="check">Rubro monetario</label>
+  </div>
+  <div class="alinear">
+    <h3>Reporte</h3>
+    <label class="label-report alinear" for="balanceGeneral">
+      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
+    </label>
+    <label class="label-report alinear" for="estadoResultados">
+      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
+    </label>
+  </div>
+  <div class="popup-buttons right">
+    <app-my-button [isGreen]="true" (click)="addNewChildAccount(selectedNode)">GUARDAR</app-my-button>
+    <app-my-button [isRed]="true" (click)="guardarJSON()">CANCELAR</app-my-button>
   </div>
 </div>

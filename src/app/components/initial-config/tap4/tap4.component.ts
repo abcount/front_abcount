@@ -82,6 +82,9 @@ interface Account {
 
 export class Tap4Component {
 
+  mostrarPopup = false;
+  mostrarPopupSon = false;
+
   // imagen sacada del localstorage
 
 
@@ -142,12 +145,13 @@ export class Tap4Component {
      this.accountReport = false;
      this.accountMoneyRub = false;
      this.accountClassificator = false;
-
+     this.mostrarPopup = false;
    }
    else{
      let strAccountName = node.name.split(" ", 1);
      let accountId = strAccountName[0];
      this.positioningLeaf(TREE_DATA, Number(accountId), node.level);
+     this.mostrarPopupSon = false;
    }
    this.dataSource.data = TREE_DATA;
  }
@@ -234,6 +238,11 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
 
   setSelectedNode(node: NodeExample | null){
     this.selectedNode = node;
+    if (node==null){
+      this.mostrarPopup = true;
+    } else {
+      this.mostrarPopupSon = true;
+    }
   }
 
   printTree(){
@@ -264,6 +273,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     this.formGroup.setControl('accountablePlan', accountPlanArray);
     this.printValue();
     this.enviarDatos();
+    this.mostrarPopupSon = false;
   }
 
 
@@ -312,10 +322,9 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     });
   }
 
-
-
-
-
+  cancel(){
+    this.mostrarPopup = false;
+  }
 
 }
 

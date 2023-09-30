@@ -1,229 +1,241 @@
-
-
-
-
-/* Button styling with linear gradient background */
-.row-2 button {
-  padding: 10px 20px;
-  background: linear-gradient(to right, #007bff, #66CDAA); /* Linear gradient background */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease; /* Transition background for a smooth effect */
-  width: 100%;
+/*Quitar los estilos generales*/
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-
-.row-2 button:hover {
-  background: linear-gradient(to right, #0056b3, #66CDAA); /* Adjusted gradient on hover */
+/*Background*/
+.tap4 {
+  background-color: #EEEEEE;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.gray-text {
-  color: #757575;
-  text-decoration: none;
-}
-
-.small-button {
-  padding: 5px 10px; /* Adjust the padding for a smaller button */
-  background: linear-gradient(to right, #007bff, #66CDAA);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-
-.small-button:hover {
-  background: linear-gradient(to right, #0056b3, #66CDAA);
-}
-
-/* Button styling with linear gradient background */
-.button {
-  padding: 10px 20px;
-  background: linear-gradient(to right, #007bff, #66CDAA);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  width: 100%;
-}
-
-.button:hover {
-  background: linear-gradient(to right, #0056b3, #66CDAA);
-}
-
-.gray-text {
-  color: #757575;
-  text-decoration: none;
-}
-
-/* Adjusted styles for smaller buttons */
-.small-button {
-  padding: 5px 10px;
-  background: linear-gradient(to right, #007bff, #66CDAA);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.small-button:hover {
-  background: linear-gradient(to right, #0056b3, #66CDAA);
-}
-
-/* Modal Styles */
-.modal-content {
-  background-color: #fff;
+/*Información*/
+.container {
+  background-color: white;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  max-width: 65%;
+  height: 548px;
 }
-
-.modal-header {
-  background-color: #007bff;
-  color: #fff;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.modal-title {
+/*Título*/
+.header-title{
   font-size: 20px;
+  font-weight: 590;
+  margin-bottom: 10px;
 }
-
-.modal-body {
-  padding: 20px 0;
+/*Linea*/
+hr {
+  margin: 0 0px; 
+  border-color:#EDEDED;
 }
-
-.form-group {
-  margin-bottom: 20px;
+.linea {
+  margin-top: 10px;
 }
-
-.form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
+/*Subtitulo*/
+h2 {
+  font-size: 14px;
+  color: #757575;
+  margin: 8px 0px 0px 0px;
 }
-
-.form-check-input {
-  margin-right: 5px;
-}
-
-.modal-footer {
-  text-align: right;
-}
-
-.button {
-  padding: 10px 20px;
-  background: linear-gradient(to right, #007bff, #66CDAA);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.button:hover {
-  background: linear-gradient(to right, #0056b3, #66CDAA);
-}
-
-.small-button {
-  padding: 5px 10px;
-  background: linear-gradient(to right, #007bff, #66CDAA);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.small-button:hover {
-  background: linear-gradient(to right, #0056b3, #66CDAA);
-}
-
-
-
-
-
-
-/* Modal Buttons */
-.modal-footer .add-button,
-.modal-footer .delete-button {
-  padding: 10px 20px;
-  background: linear-gradient(to right, #007bff, #66CDAA);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-right: 10px;
-}
-
-.modal-footer .add-button:hover,
-.modal-footer .delete-button:hover {
-  background: linear-gradient(to right, #0056b3, #66CDAA);
-}
-
-/* Button sizes */
-.large {
-  padding: 10px 20px;
-}
-
-.small {
-  padding: 5px 10px;
-}
-
-/* Radio Buttons */
-.modal-body input[type="radio"] {
-  margin-right: 5px;
-}
-
-/* Combo Box */
-.modal-body select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-/* Style for the focused state of the combo box */
-.modal-body select:focus {
-  border-color: #007bff;
-}
-
+/*--------------------------------------------------------------*/
+/*Parte inferior*/
+/*Estilos de filas*/
 .row-2 {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.left {
+  display: flex;
+  align-items: center;
+}
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+/*Link*/
+a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #757575;
+  text-decoration: none;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+a:focus {
+  outline: none !important;
+}
+a:hover {
+  text-decoration: none;
+  color: #7BC8CA;
+}
+/*Boton guardar*/
+.row-2 button {
+  padding: 5px 30px 3px 30px;
+  background: linear-gradient(to right, #007bff, #66CDAA);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.row-2 button:hover {
+  background: linear-gradient(to right, #0056b3, #66CDAA);
+}
+.row-2 button:focus {
+  outline: none !important;
+}
+/*--------------------------------------------------------------*/
+/*Plan de cuentas*/
+.data {
+  margin: 0px 20%;
+  border: 1px solid #EDEDED;
+  border-radius: 5px;
+  padding: 15px 20px;
+  height: 325px;
+  max-height: 325px;
+  overflow-y: auto;
+}
+/*Boton para expandir*/
+.expand-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #fff;
+  margin-left: 8px;
+}
+.expand-button:focus {
+  outline: none !important;
+}
+/*Cuenta*/
+mat-tree-node {
+  min-height: 32px;
+}
+mat-tree-node .right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+/*Separador*/
+.separator {
+  margin-right: 20px; 
+}
+/*--------------------------------------------------------------*/
+/*Modal*/
+/* Estilos para la capa de fondo desenfocada */
+.overlay {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
-  background-color: #fff; /* You can adjust the background color as needed */
-  padding: 10px 0; /* Add padding for spacing */
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.322); /* Fondo semi-transparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  z-index: 100; /* Coloca la capa por encima de todo */
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's above other content */
 }
-
-.back-link {
-  flex: 1;
-  margin-left: 10px; /* Add margin between the back link and button */
+/* Estilos para el popup */
+.popup {
+  position: fixed;
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Centra exactamente en el medio */
+  width: 45%; /* Tamaño del popup */
+  background-color: #fff;
+  padding: 25px 35px;
+  z-index: 101; /* Coloca el popup por encima de la capa de fondo */
+  box-shadow: 0 5 15px rgba(0, 0, 0, 0.25); /* Sombra */
+  border-radius: 10px;
 }
-
-.button.small-button {
-  flex: 0;
-  margin-right: 10px; /* Add margin between the buttons if needed */
-  padding: 5px 10px; /* Adjust the padding for a smaller button */
+.row-2-popup {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  margin-top: 10px;
 }
-
-.separator {
-  margin-right: 20px; /* Add margin between the buttons if needed */
+.popup-title {
+  display: flex;
+  align-items: center;
 }
-
-
-
+.icon {
+  width: 50px; /* Establece el ancho deseado */
+  height: 50px; /* Establece la misma altura que el ancho */
+  margin-right: 10px;
+  background-color: #E9F8FB;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon i {
+  color: #6ACAD8;
+  font-size: 25px;
+}
+.h2-title {
+  font-size: 20px;
+  font-weight: 600;
+  color:#757575;
+  margin: 0px !important;
+}
+h3 {
+  font-size: 14px;
+  color: #757575;
+  margin: 0px;
+  font-weight: 500;
+}
+input {
+  font-size: 14px;
+  border: #D9D9D9 1px solid;
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
+  padding: 3px 8px;
+  caret-color: #66CDAA;
+  transition: border 0.5s;
+}
+input:focus {
+  border: 1px solid #66CDAA;
+}
+.checkbox {
+  display: flex;
+  color: #757575;
+  margin-top: 10px;
+  align-items: center;
+  gap: 10px;
+}
+.checkbox input {
+  width: 15px;
+  height: 15px;
+}
+.label-report {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #757575;
+  margin: 10px 0px;
+}
+input[type="radio"] {
+  width: 15px;
+  height: 15px;
+  margin: 0px 5px 0px 20px;
+}
+.alinear {
+  display: flex; 
+  align-items: center;
+}
+.popup-buttons {
+  margin-top: 5px;
+  gap: 10px;
+}
