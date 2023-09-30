@@ -56,7 +56,7 @@ export class FormStateService {
     const dia = fechaActual.getDate().toString().padStart(2, '0');
     const año = fechaActual.getFullYear().toString();
 
-    return `${dia}-${mes}-${año}`;
+    return `${mes}-${dia}-${año}`;
   }
 
   // post de la configuracion de la empresa
