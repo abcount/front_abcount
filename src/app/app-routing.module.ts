@@ -12,12 +12,10 @@ import { ConfigurationTap4Component } from './components/configuration/configura
 import { ConfigurationTap5Component } from './components/configuration/configuration-tap5/configuration-tap5.component';
 import { AddUsersAndPermissionsComponent } from './components/configuration/add-users-and-permissions/add-users-and-permissions.component';
 import { UsersAndPermissionsComponent } from './components/configuration/users-and-permissions/users-and-permissions.component';
-import {
-  AccountingVoucherViewComponent
-} from "./components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component";
-import {
-  AccountingVoucherAddComponent
-} from "./components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component";
+import { AccountingVoucherViewComponent } from "./components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component";
+import { AccountingVoucherAddComponent } from "./components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component";
+import { ReportsComponent } from './components/reports/reports/reports.component';
+
 
 
 const routes: Routes = [
@@ -34,8 +32,9 @@ const routes: Routes = [
   { path: 'configuration-tap5', component: ConfigurationTap5Component },
   { path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent },
   { path: 'users-and-permissions', component: UsersAndPermissionsComponent },
-  {path: 'accounting-voucher-view', component: AccountingVoucherViewComponent},
-  {path: 'accounting-voucher-add', component: AccountingVoucherAddComponent}
+  { path: 'accounting-voucher-view', component: AccountingVoucherViewComponent},
+  { path: 'accounting-voucher-add', component: AccountingVoucherAddComponent},
+  { path: 'reports', component: ReportsComponent}
 
 ];
 
