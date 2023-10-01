@@ -48,7 +48,6 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
     MatIconModule,
     AleModule,
     AndreModule,
-    CarlosModule,
     MicaModule,
     FontAwesomeModule,
     ReactiveFormsModule,
@@ -62,6 +61,9 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
       multi: true,
       deps: [KeycloakService]
     }*/
+  ],
+  exports: [
+    CircularButtonComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -14,6 +14,8 @@ import { UsersAndPermissionsComponent } from '../components/configuration/users-
 
 import { FormsModule } from '@angular/forms';
 import { AccountComponent } from "../components/configuration/account/account.component";
+import {MatTreeModule} from "@angular/material/tree";
+import {AppModule} from "../app.module";
 
 const CarlosComponents = [
     NavbarComponent,
@@ -35,11 +37,13 @@ const CarlosComponents = [
     ],
     exports: [CarlosComponents] // Poner [CarlosComponents]
     ,
-    imports: [
-        CommonModule,
-        AppRoutingModule,
-        SebastianModule,
-        FormsModule
-    ]
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    SebastianModule,
+    FormsModule,
+    MatTreeModule,
+    AppModule
+  ]
 })
 export class CarlosModule {}
