@@ -25,6 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CircularButtonComponent } from './components/general-components/circular-button/circular-button.component';
 import { initializeKeycloak } from '../app/config/keycloak.init'
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { AccountingVoucherViewComponent } from './components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component';
+import { AccountingVoucherAddComponent } from './components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component';
 
 
 
@@ -37,6 +39,8 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
     Tap4Component,
     ProgressComponent,
     CircularButtonComponent,
+    AccountingVoucherViewComponent,
+    AccountingVoucherAddComponent,
   ],
   imports: [
     BrowserModule,
