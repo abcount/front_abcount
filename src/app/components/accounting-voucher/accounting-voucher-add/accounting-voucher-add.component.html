@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<app-navbar></app-navbar>
+<div class="contenedor">
+  <h2>Registrar Nuevo Comprobante Contable</h2>
+  <div class="header">
+    <div class="column">
+      Empresa: <input type="text" [(ngModel)]="hoja.empresa">
+      Sucursal: <select [(ngModel)]="hoja.sucursal"> <!-- Opciones de sucursal aquí --> </select>
+      Fechas: <input type="date" [(ngModel)]="hoja.fecha">
+    </div>
+    <div class="column">
+      Área: <select [(ngModel)]="hoja.area"> <!-- Opciones de área aquí --> </select>
+      Número de comprobante: <input type="text" [(ngModel)]="hoja.numComprobante">
+    </div>
+    <div class="column">
+      Documento: <select [(ngModel)]="hoja.documento"> <!-- Opciones de documento aquí --> </select>
+      Moneda: <select [(ngModel)]="hoja.moneda"> <!-- Opciones de moneda aquí --> </select>
+    </div>
+  </div>
+  <hr style="height:3px;border-width:0;color:#c4c2c2;background-color:#c4c2c2">
+  <div class="body">
+    Glosa: <textarea [(ngModel)]="hoja.glosa"></textarea>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Número de cuenta</th>
+        <th>Nombre de la cuenta</th>
+        <th>Auxiliar</th>
+        <th>Entidad</th>
+        <th>Debe</th>
+        <th>Haber</th>
+        <th>Glosa</th>
+        <th>Cheque</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tbody>
+      <tr *ngFor="let entrada of hoja.entradas; let i = index">
+        <td><input name="numeroCuenta" [(ngModel)]="entrada.numeroCuenta"  (keydown)="navegarInputs($event, i, 'numeroCuenta')"></td>
+        <td><input name="nombreCuenta" [(ngModel)]="entrada.nombreCuenta"  (keydown)="navegarInputs($event, i, 'nombreCuenta')"></td>
+        <td><input name="auxiliar" [(ngModel)]="entrada.auxiliar"  (keydown)="navegarInputs($event, i, 'auxiliar')"></td>
+        <td><input name="entidad" [(ngModel)]="entrada.entidad"  (keydown)="navegarInputs($event, i, 'entidad')"></td>
+        <td><input name="debe" [(ngModel)]="entrada.debe" type="number" (input)="calcularTotales()" (keydown)="navegarInputs($event, i, 'debe')"></td>
+        <td><input name="haber" [(ngModel)]="entrada.haber" type="number" (input)="calcularTotales()" (keydown)="navegarInputs($event, i, 'haber')"></td>
+        <td><input name="glosa" [(ngModel)]="entrada.glosa"  (keydown)="navegarInputs($event, i, 'glosa')"></td>
+        <td><input name="cheque" [(ngModel)]="entrada.cheque"  (keydown)="navegarInputs($event, i, 'cheque')"></td>
+      </tr>
+      </tbody>
+
+    </table>
+
+    <div class="footer-buttons">
+      <div>
+        <button class="navegation" (click)="navegar('izquierda')"><i class="fa fa-angle-left"></i></button>
+        <button class="navegation" (click)="navegar('derecha')"><i class="fa fa-angle-right"></i></button>
+      </div>
+
+      <div>
+        Debe: <input class="result" type="text" [(ngModel)]="totalDebe"  readonly>
+      </div>
+      <div>
+        Haber: <input  class="result" type="text" [(ngModel)]="totalHaber" readonly>
+      </div>
+      <div [ngClass]="{'text-green': diferencia === 0, 'text-red': diferencia !== 0}">
+        Diferencia: {{ diferencia }}
+      </div>
+
+      <div>
+        <button [disabled]="diferencia!==0" class="option1"><i class="fa fa-save"></i>Guardar</button>
+        <button class="option2" routerLink="/accounting-voucher-view"><i class="fa fa-cancel"></i>Cancelar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
