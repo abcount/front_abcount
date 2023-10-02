@@ -147,8 +147,6 @@ export class ConfigurationTap4Component {
     }
   }
 
-
-
   //LOGICA PARA ANADIR UNA NUEVA CUENTA AL PLAN DE CUENTA
   addNewChildAccount(node : NodeExample | null ) {
     if(node == null){
@@ -162,8 +160,6 @@ export class ConfigurationTap4Component {
         level: 0,
         childrenAccounts: []
       }
-      console.log(parentAccount);
-
       TREE_DATA.push(parentAccount);
       this.accountName = "";
       this.accountReport = false;
@@ -195,8 +191,6 @@ export class ConfigurationTap4Component {
           classificator: this.accountClassificator,
           childrenAccounts: []
         }
-        console.log(newAccount);
-
         // Asegurarse de que childrenAccounts es un array
         if (!Array.isArray(listOfAccounts[j].childrenAccounts)) {
           listOfAccounts[j].childrenAccounts = [];
@@ -231,7 +225,6 @@ export class ConfigurationTap4Component {
     for(let j = 0; j < listOfAccounts.length; j++){
       if(listOfAccounts[j].accountCode === selectedAccount){
         listOfAccounts.splice(j, 1);
-        console.log(listOfAccounts);
         if(listOfAccounts.length !== 0){
           this.enumerateAccounts(listOfAccounts);
         }
@@ -245,15 +238,9 @@ export class ConfigurationTap4Component {
 
   enumerateAccounts(listOfAccounts : Account[]){
     let parentAccount = Math.round(listOfAccounts[0].accountCode / 10);
-    console.log("PADRE: " + parentAccount);
-    console.log(listOfAccounts)
     for(let j = 0; j < listOfAccounts.length; j++){
-      console.log("HIJO: " + (parentAccount * 10 + j + 1));
       listOfAccounts[j].accountCode = parentAccount * 10 + j + 1;
     }
-    console.log("LISTA DE CUENTAS");
-    console.log(listOfAccounts);
-
   }
 
 

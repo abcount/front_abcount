@@ -37,11 +37,74 @@
     </div>
 </div>
 <div class="configuration-tap4" *ngIf="modeEdit">
-
-
-
     <div class="right">
         <app-my-button [isGreen]="true" (click)="save()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
         <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
     </div>
+</div>
+
+
+
+<div class="overlay" *ngIf="mostrarPopup"></div>
+<div class="overlay" *ngIf="mostrarPopupSon"></div>
+
+<div *ngIf="mostrarPopup" class="popup">
+  <div class="popup-title">
+    <span class="icon">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </span>
+    <h2 class="h2-title">Registro de Cuenta</h2>
+  </div>
+  <div class="row-2-popup">
+    <h3>Nombre de la cuenta </h3>
+    <input [(ngModel)]="accountName" type="text" placeholder="Ingresa el nombre de la cuenta">
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="checkParent" name="check" value="check">
+    <label for="check">Rubro monetario</label>
+  </div>
+  <div class="alinear">
+    <h3>Reporte</h3>
+    <label class="label-report alinear" for="balanceGeneral">
+      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
+    </label>
+    <label class="label-report alinear" for="estadoResultados">
+      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
+    </label>
+  </div>
+  <div class="popup-buttons right">
+    <app-my-button [isGreen]="true" (click)="addNewChildAccount(null)">GUARDAR</app-my-button>
+    <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
+  </div>
+</div>
+
+<!--- MODAL SON -->
+<div *ngIf="mostrarPopupSon" class="popup">
+  <div class="popup-title">
+    <span class="icon">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </span>
+    <h2 class="h2-title">Registro de Cuenta</h2>
+  </div>
+  <div class="row-2-popup">
+    <h3>Nombre de la cuenta </h3>
+    <input [(ngModel)]="accountName" type="text" placeholder="Ingresa el nombre de la cuenta">
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="check" name="check" value="check" [(ngModel)]="accountMoneyRub">
+    <label for="check">Rubro monetario</label>
+  </div>
+  <div class="alinear">
+    <h3>Reporte</h3>
+    <label class="label-report alinear" for="balanceGeneral">
+      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
+    </label>
+    <label class="label-report alinear" for="estadoResultados">
+      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
+    </label>
+  </div>
+  <div class="popup-buttons right">
+    <app-my-button [isGreen]="true" (click)="addNewChildAccount(selectedNode)">GUARDAR</app-my-button>
+    <app-my-button [isRed]="true"  (click)="cancel()">CANCELAR</app-my-button>
+  </div>
 </div>
