@@ -30,7 +30,7 @@ export class ConfigurationService {
 
   // Para la configuración de la empresa
   configurationUrl = `${environment.BACKEND_URL}/config/enterprise`;
-  
+
   // Función para obtener los datos de la empresa
   getEnterprise() {
     return this.http.get(`${this.configurationUrl}`);
@@ -59,7 +59,7 @@ export class ConfigurationService {
   getSubsidiaries() {
     return this.http.get(`${this.configurationUrl}/subsidiary`);
   }
-  
+
   // Funcion para agregar las nuevas areas y sucursales
   addSubsidiaryArea(subsidiaries: any[], areas: string[]){
     const header = {
@@ -111,6 +111,7 @@ export class ConfigurationService {
 
   // Función para obtener el plan de cuentas
   getAccountsPlan() {
+    console.log("getAccountsPlan")
     return this.http.get(`${this.configurationUrl}/accountable-plan`);
   }
 }

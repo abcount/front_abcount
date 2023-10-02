@@ -4,52 +4,52 @@ import {FlatTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
 import {FormStateService} from "../../../services/form-state.service";
 
-const TREE_DATA: Account[] = [
-  {
-    accountCode: 1,
-    nameAccount: 'Activo',
-    moneyRub: true,
-    report: false,
-    classificator: false,
-    level: 0,
-    childrenAccounts: []
-  },
-  {
-    accountCode: 2,
-    nameAccount: 'Pasivo',
-    moneyRub: true,
-    report: false,
-    classificator: false,
-    level: 0,
-    childrenAccounts: []
-  },
-  {
-    accountCode: 3,
-    nameAccount: 'Patrimoinio',
-    moneyRub: true,
-    report: false,
-    classificator: false,
-    level: 0,
-    childrenAccounts: []
-  },
-  {
-    accountCode: 4,
-    nameAccount: 'Ingresos',
-    moneyRub: true,
-    report: false,
-    classificator: false,
-    level: 0,
-    childrenAccounts: []
-  },
-  {
-    accountCode: 5,
-    nameAccount: 'Egresos',
-    moneyRub: true,
-    report: false,
-    classificator: false,
-    level: 0,
-    childrenAccounts: []
-  }
+let TREE_DATA: Account[] = [
+  // {
+  //   accountCode: 1,
+  //   nameAccount: 'Activo',
+  //   moneyRub: true,
+  //   report: false,
+  //   classificator: false,
+  //   level: 0,
+  //   childrenAccounts: []
+  // },
+  // {
+  //   accountCode: 2,
+  //   nameAccount: 'Pasivo',
+  //   moneyRub: true,
+  //   report: false,
+  //   classificator: false,
+  //   level: 0,
+  //   childrenAccounts: []
+  // },
+  // {
+  //   accountCode: 3,
+  //   nameAccount: 'Patrimoinio',
+  //   moneyRub: true,
+  //   report: false,
+  //   classificator: false,
+  //   level: 0,
+  //   childrenAccounts: []
+  // },
+  // {
+  //   accountCode: 4,
+  //   nameAccount: 'Ingresos',
+  //   moneyRub: true,
+  //   report: false,
+  //   classificator: false,
+  //   level: 0,
+  //   childrenAccounts: []
+  // },
+  // {
+  //   accountCode: 5,
+  //   nameAccount: 'Egresos',
+  //   moneyRub: true,
+  //   report: false,
+  //   classificator: false,
+  //   level: 0,
+  //   childrenAccounts: []
+  // }
 ];
 
 interface NodeExample {
@@ -63,6 +63,7 @@ interface Account {
   nameAccount: string;
   moneyRub: boolean;
   report: boolean;
+  editable: boolean;
   classificator: boolean;
   level: number;
   childrenAccounts: Account[];
@@ -123,22 +124,26 @@ export class ConfigurationTap4Component {
   modeEdit: boolean = false; // Modo edición
 
   constructor(private ConfigurationService: ConfigurationService) {
-    this.dataSource.data = TREE_DATA;
+    this.ConfigurationService.getAccountsPlan().subscribe(
+      (data: any) => {
+        this.dataSource.data = data.data;
+      }
+    );
+    TREE_DATA = this.dataSource.data;
   }
 
 
 
   // Función al inicializar la pantalla
   ngOnInit() {
-    // this.ConfigurationService.getAccountsPlan().subscribe(
-    //   (data: any) => {
-    //     this.accountPlan = data.data;
-    //   }
-    // );
+
   }
 
   //METODO PARA DEFINIR LA CUENTA SELEECIONADA
   setSelectedNode(node: NodeExample | null){
+    TREE_DATA = this.dataSource.data;
+    console.log("TREE_DATA");
+    console.log(TREE_DATA);
     this.selectedNode = node;
     if (node==null){
       this.mostrarPopup = true;
@@ -156,6 +161,7 @@ export class ConfigurationTap4Component {
         nameAccount: this.accountName,
         moneyRub: this.accountMoneyRub,
         report: this.accountReport,
+        editable: true,
         classificator: this.accountClassificator,
         level: 0,
         childrenAccounts: []
@@ -188,6 +194,7 @@ export class ConfigurationTap4Component {
           nameAccount: this.accountName,
           moneyRub: this.accountMoneyRub,
           report: this.accountReport,
+          editable: true,
           classificator: this.accountClassificator,
           childrenAccounts: []
         }
@@ -247,6 +254,8 @@ export class ConfigurationTap4Component {
 
   // Función para activar el modo edición
   edit() {
+    console.log('Activando modo edición...');
+    console.log(this.dataSource.data);
     this.modeEdit = true;
   }
 
