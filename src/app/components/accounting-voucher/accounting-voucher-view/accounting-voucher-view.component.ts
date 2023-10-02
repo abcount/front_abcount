@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-accounting-voucher-view',
@@ -8,6 +9,8 @@ import { Component } from '@angular/core';
 export class AccountingVoucherViewComponent {
   hojas: any[] = [this.nuevaHoja()];
   hojaActual: number = 0;
+
+
 
 
   nuevaHoja() {
@@ -29,13 +32,47 @@ export class AccountingVoucherViewComponent {
     return this.hojas[this.hojaActual];
   }
 
-  constructor() {
-   //GET para obtener la cabecera
+  constructor(private http: HttpClient) {
+    this.cargarTransaccion();
   }
 
   agregar() {
 
   }
+  cargarTransaccion() {
+    const apiUrl = 'http://localhost:8080/voucher';
+
+    this.http.get<any>(apiUrl).subscribe(
+      data => {
+        console.log("Respuesta del servidor:", data);
+        const mappedData = {
+          empresa: '',
+          sucursal: '',
+          fecha: data.date,
+          area: '',
+          numComprobante: data.transaction_number,
+          documento: '',
+          moneda: '',
+          glosa: data.glosa_general,
+          entradas: data.entradas.map((entrada: any) => ({
+            numeroCuenta: '',
+            nombreCuenta: '',
+            auxiliar: entrada.auxiliary_account_id,
+            entidad: entrada.entity_id,
+            debe: 0,
+            haber: 0,
+            glosa: entrada.glosa_detail,
+            cheque: entrada.check
+          }))
+        };
+        this.hojas = [mappedData];
+      },
+      error => {
+        console.error('Hubo un error al obtener la transacción:', error);
+      }
+    );
+  }
+
 
   navegar(direccion: string) {
     if (direccion === 'derecha') {

@@ -1,0 +1,90 @@
+/*Quitar los estilos generales*/
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/*Background*/
+.reports {
+    background-color: #F8F8F8;
+    padding: 5px 5% 4% 5%;
+}
+.header{
+    margin-top: 30px;
+}
+hr{
+    margin-top: 10px;
+}
+.container{
+    margin-top: 50px;
+    margin-left: 15%;
+    display: grid;
+    grid-template-columns: 48% 48%;
+    gap: 4%;
+}
+/*reportes*/
+.libro-diario{
+    background-color: #BCE6FA;
+    width: 100%;
+    height: 200px;
+    cursor: pointer;
+    border-radius: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.libro-mayor{
+    background-color: #D7B8FD;
+    width: 100%;
+    height: 200px;
+    cursor: pointer;
+    border-radius: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Balance-general{
+    background-color: #F9DE9B;
+    width: 100%;
+    height: 200px;
+    cursor: pointer;
+    border-radius: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Estado-resultado{
+    background-color: #FED4DE;
+    width: 100%;
+    height: 200px;
+    cursor: pointer;
+    border-radius: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Texto*/
+h1 {
+    font-size: 35px;
+    color: black;
+    margin: 0px;
+    font-family: 'Anek Telugu', sans-serif;
+}
+h2 {
+    font-size: 22px;
+    font-weight: 500;
+    color: black;
+    margin: 0px;
+    font-family: 'Anek Telugu', sans-serif;
+}
+h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 0px;
+    font-family: 'Anek Telugu', sans-serif;
+    line-height: 16px;
+}

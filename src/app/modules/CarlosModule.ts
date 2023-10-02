@@ -11,6 +11,8 @@ import { ConfigurationTap4Component } from '../components/configuration/configur
 import { ConfigurationTap5Component } from "../components/configuration/configuration-tap5/configuration-tap5.component";
 import { AddUsersAndPermissionsComponent } from '../components/configuration/add-users-and-permissions/add-users-and-permissions.component';
 import { UsersAndPermissionsComponent } from '../components/configuration/users-and-permissions/users-and-permissions.component';
+import { ReportsComponent } from '../components/reports/reports/reports.component';
+
 
 import { FormsModule } from '@angular/forms';
 import { AccountComponent } from "../components/configuration/account/account.component";
@@ -33,7 +35,8 @@ const CarlosComponents = [
         ConfigurationTap5Component,
         AddUsersAndPermissionsComponent,
         UsersAndPermissionsComponent,
-        AccountComponent
+        AccountComponent,
+        ReportsComponent
     ],
     exports: [CarlosComponents] // Poner [CarlosComponents]
     ,
