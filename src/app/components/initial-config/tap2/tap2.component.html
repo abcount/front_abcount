@@ -2,14 +2,14 @@
 <div class="tap2">
     <div class="container">
         <h1 class="header-title">Configuración de la Empresa</h1>
-        <hr class="separator">
+        <hr class="line">
         <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="2"></app-progress>
         <div class="wrapper">
             <div>
                 <hr class="separator">
                 <div class="wrapper2">
                     <div><h2>SUCURSAL</h2></div>
-                    <div>
+                    <div style="margin-top: 6px;">
                         <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="controlSubsidiaryName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderSubsidiary"></app-my-textfield>
                         <div class="error-message" #errorMessageSucursal>{{messageSucursal}}</div>
                         <div style="height: 20px;"></div>
@@ -22,7 +22,7 @@
                 <hr class="separator">
                 <div class="wrapper2">
                     <div><h2>ÁREA</h2></div>
-                    <div>
+                    <div style="margin-top: 6px;">
                         <app-my-textfield type="text" [iconInput]="iconInputArea" [label]="labelNombreArea" [control]="controlAreaName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderArea"></app-my-textfield>
                         <div class="error-message" #errorMessageArea>{{messageArea}}</div>
                     </div>
