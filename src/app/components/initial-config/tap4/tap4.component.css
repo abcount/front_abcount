@@ -240,3 +240,28 @@ input[type="radio"] {
   margin-top: 5px;
   gap: 10px;
 }
+
+/*Modal de confirmación*/
+.confirm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.gradient {
+  font-size: 70px;
+  background-image: linear-gradient(to bottom, #66cdaa, #489ce9);
+  background-clip: text;
+  -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+  color: transparent;
+}
+.confirm h2 {
+  font-size: 24px;
+  color: #939393;
+}
+.confirm h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #939393;
+  margin-bottom: 15px;
+}

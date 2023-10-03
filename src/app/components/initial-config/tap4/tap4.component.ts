@@ -3,6 +3,7 @@ import {FlatTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
 import {FormGroup} from "@angular/forms";
 import {FormStateService} from "../../../services/form-state.service";
+import { Router } from '@angular/router';
 
 
 const TREE_DATA: Account[] = [
@@ -84,6 +85,7 @@ export class Tap4Component {
 
   mostrarPopup = false;
   mostrarPopupSon = false;
+  mostrarPopupConfirm = false;
 
   // imagen sacada del localstorage
 
@@ -118,7 +120,7 @@ export class Tap4Component {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(public formService: FormStateService) {
+  constructor(public formService: FormStateService, private router: Router) {
     this.dataSource.data = TREE_DATA;
   }
 
@@ -273,7 +275,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     this.formGroup.setControl('accountablePlan', accountPlanArray);
     this.printValue();
     this.enviarDatos();
-    this.mostrarPopupSon = false;
+    this.mostrarPopupConfirm = true;
   }
 
 
@@ -327,5 +329,8 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     this.mostrarPopupSon = false;
   }
 
+  confirm(){
+    this.router.navigate(['/my-companies']);
+  }
 }
 
