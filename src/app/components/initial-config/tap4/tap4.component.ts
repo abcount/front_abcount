@@ -324,6 +324,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
 
   cancel(){
     this.mostrarPopup = false;
+    this.mostrarPopupSon = false;
   }
 
 }

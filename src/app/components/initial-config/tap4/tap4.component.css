@@ -1,32 +1,31 @@
-/*Quitar los estilos generales*/
-* {
-  padding: 0;
-  margin: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 /*Background*/
 .tap4 {
   background-color: #EEEEEE;
-  min-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 /*Información*/
 .container {
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border-radius: 10px;
-  padding: 15px 25px;
+  padding: 20px 30px;
   box-sizing: border-box;
-  max-width: 65%;
-  height: 548px;
+  width: 60%;
+  height: 571px;
+}
+@media screen and (max-width: 1290px) {
+  .container {
+    width: 80%;
+  }
 }
 /*Título*/
 .header-title{
   font-size: 20px;
-  font-weight: 590;
+  font-weight: 700;
   margin-bottom: 10px;
 }
 /*Linea*/
@@ -39,31 +38,22 @@ hr {
 }
 /*Subtitulo*/
 h2 {
-  font-size: 14px;
+  font-size: 16px;
   color: #757575;
-  margin: 8px 0px 0px 0px;
+  margin: 15px 0px 10px 0px;
+  font-weight: 500;
 }
 /*--------------------------------------------------------------*/
 /*Parte inferior*/
 /*Estilos de filas*/
-.row-2 {
-  display: grid;
-  grid-template-columns: 40% 60%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.left {
+.navigation {
+  font-size: 20px;
   display: flex;
-  align-items: center;
-}
-.right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 /*Link*/
 a {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #757575;
   text-decoration: none;
@@ -71,6 +61,7 @@ a {
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  cursor: pointer;
 }
 a:focus {
   outline: none !important;
@@ -80,8 +71,10 @@ a:hover {
   color: #7BC8CA;
 }
 /*Boton guardar*/
-.row-2 button {
-  padding: 5px 30px 3px 30px;
+.navigation button {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 30px 3px;
   background: linear-gradient(to right, #007bff, #66CDAA);
   color: #fff;
   border: none;
@@ -89,10 +82,10 @@ a:hover {
   cursor: pointer;
   transition: 0.3s ease;
 }
-.row-2 button:hover {
+.navigation button:hover {
   background: linear-gradient(to right, #0056b3, #66CDAA);
 }
-.row-2 button:focus {
+.navigation button:focus {
   outline: none !important;
 }
 /*--------------------------------------------------------------*/
@@ -102,9 +95,8 @@ a:hover {
   border: 1px solid #EDEDED;
   border-radius: 5px;
   padding: 15px 20px;
-  height: 325px;
-  max-height: 325px;
   overflow-y: auto;
+  flex-grow: 1;
 }
 /*Boton para expandir*/
 .expand-button {
@@ -121,6 +113,8 @@ a:hover {
 /*Cuenta*/
 mat-tree-node {
   min-height: 32px;
+  font-size: 16px;
+  color: #757575;
 }
 mat-tree-node .right {
   display: flex;
@@ -165,6 +159,7 @@ mat-tree-node .right {
   display: grid;
   grid-template-columns: 40% 60%;
   margin-top: 10px;
+  align-items: center;
 }
 .popup-title {
   display: flex;
@@ -191,13 +186,13 @@ mat-tree-node .right {
   margin: 0px !important;
 }
 h3 {
-  font-size: 14px;
+  font-size: 16px;
   color: #757575;
   margin: 0px;
   font-weight: 500;
 }
 input {
-  font-size: 14px;
+  font-size: 16px;
   border: #D9D9D9 1px solid;
   border-radius: 4px;
   outline: none;
@@ -220,9 +215,12 @@ input:focus {
   width: 15px;
   height: 15px;
 }
+.checkbox label {
+  margin: 0;
+}
 .label-report {
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 16px;
   color: #757575;
   margin: 10px 0px;
 }
@@ -236,6 +234,9 @@ input[type="radio"] {
   align-items: center;
 }
 .popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   margin-top: 5px;
   gap: 10px;
 }
