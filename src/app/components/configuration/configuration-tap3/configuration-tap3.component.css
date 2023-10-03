@@ -45,7 +45,7 @@ hr {
 /*Alinear boton a la izquierda*/
 .right {
     display: flex; 
-    justify-content: end;
+    justify-content: flex-end;
 }
 /*Lista de monedas*/
 .moneda-item {
