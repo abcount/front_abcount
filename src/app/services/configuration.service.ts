@@ -31,9 +31,12 @@ export class ConfigurationService {
   // Para la configuración de la empresa
   configurationUrl = `${environment.BACKEND_URL}/config/enterprise`;
 
+  // Id de la compañia
+  companyId = localStorage.getItem('companyId');
+
   // Función para obtener los datos de la empresa
-  getEnterprise(companyId: string) {
-    return this.http.get(`${this.configurationUrl}/${companyId}`);
+  getEnterprise() {
+    return this.http.get(`${this.configurationUrl}/${this.companyId}`);
   }
 
   // Función para guardar los cambios en los datos de la empresa
@@ -52,12 +55,12 @@ export class ConfigurationService {
       'contactEmail': contactEmail,
       'contactName': contactName
     }
-    return this.http.put(`${this.configurationUrl}`, body, { headers: header });
+    return this.http.put(`${this.configurationUrl}/${this.companyId}`, body, { headers: header });
   }
 
   // Función para obtener las sucursales y areas
   getSubsidiaries() {
-    return this.http.get(`${this.configurationUrl}/subsidiary`);
+    return this.http.get(`${this.configurationUrl}/subsidiary/${this.companyId}`);
   }
 
   // Funcion para agregar las nuevas areas y sucursales
@@ -72,7 +75,7 @@ export class ConfigurationService {
       'areas': areas
     }
     console.log(body);
-    return this.http.post(`${this.configurationUrl}/subsidiary`, body, { headers: header });
+    return this.http.post(`${this.configurationUrl}/subsidiary/${this.companyId}`, body, { headers: header });
   }
 
   // Función para eliminar las sucursales y areas
@@ -87,12 +90,12 @@ export class ConfigurationService {
       'areas': areas
     }
     console.log(body);
-    return this.http.put(`${this.configurationUrl}/subsidiary`, body, { headers: header });
+    return this.http.put(`${this.configurationUrl}/subsidiary/${this.companyId}`, body, { headers: header });
   }
 
   // Función para obtener las monedas
   getCurrencies() {
-    return this.http.get(`${this.configurationUrl}/currency`);
+    return this.http.get(`${this.configurationUrl}/currency/${this.companyId}`);
   }
 
   // Función para agregar moneda
@@ -106,12 +109,12 @@ export class ConfigurationService {
       'moneyName': moneyName,
       'abbreviationName': abbreviationName
     }
-    return this.http.post(`${this.configurationUrl}/currency`, body, { headers: header });
+    return this.http.post(`${this.configurationUrl}/currency/${this.companyId}`, body, { headers: header });
   }
 
   // Función para obtener el plan de cuentas
   getAccountsPlan() {
     console.log("getAccountsPlan")
-    return this.http.get(`${this.configurationUrl}/accountable-plan`);
+    return this.http.get(`${this.configurationUrl}/accountable-plan/${this.companyId}`);
   }
 }

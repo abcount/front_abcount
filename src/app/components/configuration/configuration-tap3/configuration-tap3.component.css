@@ -1,34 +1,31 @@
-/*Quitar los estilos generales*/
-* {
-    padding: 0;
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+/*Body*/
+.container-tap3 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 /*Background*/
 .configuration-tap3 {
     background-color: #F8F8F8;
-    padding: 5px 15% 4% 15%;
+    padding: 0 23%;
+    flex-grow: 1;
 }
 .card-info {
     background-color: white;
-    padding: 5px 25px 15px 25px;
+    padding: 10px 25px;
     border-radius: 5px;
 }
 /*Estilos de texto*/
 h2, h3 {
-    font-size: 14px;
+    font-size: 16px;
     color: #757575;
-    height: 14px;
+    height: 16px;
     margin: 0px;
     margin-bottom: 15px;
+    font-weight: 500;
 }
 h2 {
-    margin-top: 10px !important;
-}
-h3 {
-    font-weight: 500;
+    margin-top: 15px !important;
 }
 /*Linea*/
 hr {
@@ -52,7 +49,6 @@ hr {
     margin-bottom: 10px;
     display: inline-block;
     color: #f9de9b;
-    font-size: 14px;
     margin-right: 5px;
     padding: 5px 10px;
     border-radius: 5px;
@@ -80,7 +76,7 @@ hr {
     transform: translate(-50%, -50%); /* Centra exactamente en el medio */
     width: 40%; /* Tamaño del popup */
     background-color: #fff;
-    padding: 25px;
+    padding: 25px 35px;
     z-index: 101; /* Coloca el popup por encima de la capa de fondo */
     box-shadow: 0 5 15px rgba(0, 0, 0, 0.25); /* Sombra */
     border-radius: 10px;
@@ -88,15 +84,17 @@ hr {
 .row-2-popup {
     display: grid;
     grid-template-columns: 55% 45%;
+    align-items: center;
 }
 .popup-title {
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
 }
 .icon {
     width: 50px; /* Establece el ancho deseado */
     height: 50px; /* Establece la misma altura que el ancho */
-    margin: 10px;
+    margin-right: 10px;
     background-color: antiquewhite;
     border-radius: 100%;
     display: flex;
@@ -112,15 +110,14 @@ hr {
     font-weight: 600;
     color:#757575;
     margin: 0px !important;
-    margin-bottom: 20px !important;
 }
 .popup-buttons {
-    margin-top: 20px;
+    margin-top: 15px;
     gap: 10px;
 }
 /*Inputs*/
 .input-group {
-    font-size: 12px;
+    font-size: 16px;
     border: #D9D9D9 1px solid;
     border-radius: 4px;
     outline: none;
@@ -135,7 +132,7 @@ hr {
 /*Mensaje de error*/
 .error-message {
     color: #ff7e7e;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     display: none;
 }

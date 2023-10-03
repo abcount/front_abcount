@@ -31,7 +31,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'configuration-tap/:companyId',
+    path: 'configuration-tap',
     children: [
       { path: '1', component: ConfigurationTap1Component },
       { path: '2', component: ConfigurationTap2Component },

@@ -109,7 +109,7 @@ export class ConfigurationTap2Component {
   save(){
     this.deleteSubsidiaryArea();
     this.saveNew();
-    //this.modeEdit = false;
+    this.modeEdit = false;
   }
 
   // Lógica para guardar las nuevas sucursales y areas

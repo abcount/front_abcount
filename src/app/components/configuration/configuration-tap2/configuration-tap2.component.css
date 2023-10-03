@@ -1,22 +1,26 @@
-/*Quitar los estilos generales*/
-* {
-    padding: 0;
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+/*Body*/
+.container-tap2 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 /*Background*/
 .configuration-tap2 {
     background-color: #F8F8F8;
-    padding: 5px 30% 4% 30%;
+    padding: 0 30%;
+    flex-grow: 1;
+}
+.tap2 {
     display: grid;
     grid-template-columns: 33% 63%;
     gap: 4%;
 }
 .configuration-tap2-edit {
     background-color: #F8F8F8;
-    padding: 5px 15% 4% 15%;
+    padding: 0 20%;
+    flex-grow: 1;
+}
+.tap2-edit {
     display: grid;
     grid-template-columns: 63% 35%;
     gap: 2%;
@@ -31,6 +35,7 @@ h2 {
     font-size: 16px;
     color: white;
     margin: 0px;
+    margin-top: 8px;
     font-family: 'Anek Telugu', sans-serif;
 }
 h4 {
@@ -40,21 +45,6 @@ h4 {
     margin-bottom: 0px;
     font-family: 'Anek Telugu', sans-serif;
     line-height: 16px;
-}
-/*Inputs*/
-.input {
-    font-size: 16px;
-    border: #D9D9D9 1px solid;
-    border-radius: 4px;
-    outline: none;
-    width: 100%;
-    padding: 6px 8px 0px 8px;
-    caret-color: #BCE6FA;
-    transition: border 0.5s;
-    font-family: 'Anek Telugu', sans-serif;
-}
-.input:focus {
-    border: 1px solid #BCE6FA;
 }
 /*Primera seccion*/
 .titulo {
@@ -82,18 +72,18 @@ h4 {
 .tree-background {
     background-color: #ffffff;
     border-radius: 5px;
+    height: 344px;
 }
 .tree{
     width: 100%;
-    height: 100%;
     background: url(/assets/buildings.svg);
-    background-size: 65%;
+    background-size: 50%;
     background-repeat: no-repeat;
     background-position-x: 90%;
     background-position-y: 95%;
     border-radius: 5px;
     padding: 10px 15px 10px 0px;
-    max-height: 344px;
+    height: 344px;
     overflow-y: auto;
 }
 /* Para el arbol */
@@ -127,8 +117,7 @@ h4 {
     padding: 5px 10px;
     border-radius: 5px;
     padding-left: 10px; /* Sangría para los niveles */
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
     color: #757575;
     display: inline-block;

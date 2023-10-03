@@ -3,7 +3,7 @@
     margin: 0;
     font-family: 'Anek Telugu', sans-serif;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
 .center {
     display: flex;
@@ -20,7 +20,7 @@
     padding: 0;
 }
 h2 {
-    font-size: 20px;
+    font-size: 24px;
     font-family: 'Gugi', cursive;
     background-image: linear-gradient(to right, #66cdab, #489ce9);
     background-clip: text;

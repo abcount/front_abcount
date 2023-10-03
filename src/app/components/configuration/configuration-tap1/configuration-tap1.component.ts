@@ -26,19 +26,12 @@ export class ConfigurationTap1Component {
   enterpriseData: EnterpriseDto;
   logoUuid: string;
 
-  // Id de la compañia
-  companyId: string;
-
   // Constructor
-  constructor(private ConfigurationService: ConfigurationService, private route: ActivatedRoute) { 
-    this.route.params.subscribe(params => {
-      this.companyId = params['companyId'];
-    });
-  }
+  constructor(private ConfigurationService: ConfigurationService, private route: ActivatedRoute) { }
 
   // Funcion al iniciar la pantalla
   ngOnInit() {
-    this.ConfigurationService.getEnterprise(this.companyId).subscribe(
+    this.ConfigurationService.getEnterprise().subscribe(
       (data: any) => {
         this.enterpriseData = data.data;
         this.controlName.setValue(this.enterpriseData.companyName);

@@ -9,7 +9,7 @@
 /*Background*/
 .margen {
     background-color: #F8F8F8;
-    padding: 2.5% 5% 2% 5%;
+    padding: 2.5% 8% 2% 8%;
     font-family: 'Roboto', sans-serif;
 }
 /*Titulo principal*/
@@ -29,7 +29,7 @@ h1 {
     padding-left: 10px;
 }
 .title p {
-    font-size: 14px;
+    font-size: 15px;
     color: #787878; 
     margin: 10px 0px 20px 0px;
 }
@@ -49,5 +49,19 @@ h1 {
 }
 .active-subtitle {
     color: #383838 !important;
-    border-bottom: #66dcaa solid 2px;
+}
+.first {
+    border-bottom: #BCE6FA solid 2.5px;
+}
+.second {
+    border-bottom: #d6b8fe solid 2.5px;
+}
+.thrid {
+    border-bottom: #F9DE9B solid 2.5px;
+}
+.fourth {
+    border-bottom: #FED4DE solid 2.5px;
+}
+.fifth {
+    border-bottom: #a4fcd7 solid 2.5px;
 }

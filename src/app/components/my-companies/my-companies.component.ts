@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-companies',
@@ -31,9 +32,14 @@ export class MyCompaniesComponent {
     }
   ]
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  saveCompanyId(companyId: number){
+    localStorage.clear();
+    localStorage.setItem('companyId', companyId.toString());
+    this.router.navigate(['/configuration-tap/1']);
+  }
 }

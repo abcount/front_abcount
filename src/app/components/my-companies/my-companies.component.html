@@ -6,7 +6,7 @@
             </a>
         </div>
         <div *ngFor="let company of companies" class="company">
-            <a routerLink="/configuration-tap/{{company.companyId}}/1">
+            <a (click)="saveCompanyId(company.companyId)" >
                 <div class="company-logo center">
                     <img src={{company.companyLogo}} alt="company-{{company.companyId}}-logo">
                 </div>
