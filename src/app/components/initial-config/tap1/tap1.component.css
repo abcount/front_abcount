@@ -1,60 +1,34 @@
-/*Quitar los estilos generales*/
-* {
-    padding: 0;
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Anek Telugu', sans-serif !important;
-}
 /*Background*/
 .tap1 {
     background-color: #EEEEEE;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100%;
+    height: 100vh;
 }
 /*Información*/
 .container {
     background-color: white;
     border-radius: 10px;
-    padding: 15px 25px;
+    padding: 20px 30px;
     box-sizing: border-box;
-    max-width: 65%;
-    min-height: 518px;
+    width: 55%;
 }
 /*Subtitulos*/
 h2, h3 {
-    font-size: 14px;
+    font-size: 16px;
     color: #757575;
-    height: 14px;
+    height: 16px;
     margin: 0px;
+    font-weight: 500;
 }
 h3 {
     margin-bottom: 15px;
-    font-weight: 500;
-}
-/*Boton de siguiente*/
-.next-button {
-    border: none;
-    background-color: white;
-    font-size: 14px;
-    font-weight: 600;
-    color: #757575;
-}
-.next-button:focus {
-    outline: none;
-}
-.next-button:hover {
-    color: #7BC8CA;
 }
 /*Título*/
 .header-title {
     font-size: 20px;
-    font-weight: 590;
+    font-weight: 700;
     margin-bottom: 10px;
 }
 /*Linea*/
@@ -65,13 +39,13 @@ h3 {
 /*Estilos de las filas*/
 .row-3 {
     display: grid;
-    grid-template-columns: 20% 35% 35%;
+    grid-template-columns: 15% 40% 35%;
     gap: 5%;
     margin-top: 20px;
 }
 .row-2 {
     display: grid;
-    grid-template-columns: 20% 75%;
+    grid-template-columns: 15% 80%;
     gap: 5%;
     margin-top: 20px;
 }
@@ -82,6 +56,8 @@ h3 {
 }
 
 .drag-drop-area {
+    font-size: 14px;
+    color: #757575;
     border: #66CDAA 2px dashed;
     border-radius: 10px;
     padding: 20px;
@@ -110,7 +86,7 @@ h3 {
 
 /*Links*/
 a {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #757575 !important;
     text-decoration: none;
@@ -141,7 +117,7 @@ a:hover {
     border: none;
     margin-right: 10px;
     margin-top: 10px;
-    padding: 3px 6px;
+    padding: 3px 7px;
     color: #FF0000; 
     cursor: pointer;
     border-radius: 100%;
@@ -159,7 +135,7 @@ a:hover {
 }
 .error-message {
     color: #ff7e7e;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     display: none;
 }

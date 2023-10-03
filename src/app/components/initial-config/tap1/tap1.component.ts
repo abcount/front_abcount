@@ -143,7 +143,7 @@ export class Tap1Component  {
     if (this.nombreControl.valid && this.direccionControl.valid && this.rubroControl.valid && this.nitControl.valid && this.emailControl.valid && this.numeroContactoControl.valid) {
       if (this.formGroup.value.enterprise.enterpriseName != "" && this.formGroup.value.enterprise.direccion != "" && this.formGroup.value.enterprise.rubro != "" && this.formGroup.value.enterprise.nit != "" && this.formGroup.value.enterprise.email != "" && this.formGroup.value.enterprise.numeroContacto != "") {
         if (true) {
-          this.router.navigate(['/tap2']);
+          this.router.navigate(['/initial-config/tap2']);
         } else {
 
         }

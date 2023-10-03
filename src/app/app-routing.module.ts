@@ -21,21 +21,35 @@ import { ReportsComponent } from './components/reports/reports/reports.component
 const routes: Routes = [
   { path: '', redirectTo: '/my-companies', pathMatch: 'full'},
   { path: 'my-companies', component: MyCompaniesComponent },
-  { path: 'tap1', component: Tap1Component }, // {4}
-  { path: 'tap2', component: Tap2Component },
-  { path: 'tap3', component: Tap3Component },
-  { path: 'tap4', component: Tap4Component },
-  { path: 'configuration-tap1', component: ConfigurationTap1Component },
-  { path: 'configuration-tap2', component: ConfigurationTap2Component },
-  { path: 'configuration-tap3', component: ConfigurationTap3Component },
-  { path: 'configuration-tap4', component: ConfigurationTap4Component },
-  { path: 'configuration-tap5', component: ConfigurationTap5Component },
+  {
+    path: 'initial-config',
+    children: [
+      { path: 'tap1', component: Tap1Component },
+      { path: 'tap2', component: Tap2Component },
+      { path: 'tap3', component: Tap3Component },
+      { path: 'tap4', component: Tap4Component }
+    ],
+  },
+  {
+    path: 'configuration-tap/:companyId',
+    children: [
+      { path: '1', component: ConfigurationTap1Component },
+      { path: '2', component: ConfigurationTap2Component },
+      { path: '3', component: ConfigurationTap3Component },
+      { path: '4', component: ConfigurationTap4Component },
+      { path: '5', component: ConfigurationTap5Component },
+    ],
+  },
   { path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent },
   { path: 'users-and-permissions', component: UsersAndPermissionsComponent },
-  { path: 'accounting-voucher-view', component: AccountingVoucherViewComponent},
-  { path: 'accounting-voucher-add', component: AccountingVoucherAddComponent},
-  { path: 'reports', component: ReportsComponent}
-
+  {
+    path: 'accounting-voucher',
+    children: [
+      { path: 'view', component: AccountingVoucherViewComponent },
+      { path: 'add', component: AccountingVoucherAddComponent },
+    ],
+  },
+  { path: 'reports', component: ReportsComponent},
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 .progress-container {
   display: block;
   width: 100%;
-  margin-top: 15px;
+  margin: 18px 0px 5px 0px;
 }
 /*Centrear verticalmente y horizontalmente*/
 .center {
@@ -17,22 +17,21 @@
 /*Linea*/
 .line {
   height: 4px;
-  width: 100%;
+  width: calc(100% - 30px);
   background-color: #ddd;
   transition: background-color 0.3s;
 }
 /*Circulo*/
 .circle {
-  width: 28px;
-  height: 25px;
-  padding-top: 2px;
+  width: 30px;
+  height: 30px;
   border-radius: 100%;
   background-color: #ddd;
   transition: background-color 0.3s;
 }
 /*Subtitulos*/
 .subtitle {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-align: right;
   margin-top: 5px;

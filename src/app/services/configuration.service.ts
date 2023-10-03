@@ -32,8 +32,8 @@ export class ConfigurationService {
   configurationUrl = `${environment.BACKEND_URL}/config/enterprise`;
 
   // Función para obtener los datos de la empresa
-  getEnterprise() {
-    return this.http.get(`${this.configurationUrl}`);
+  getEnterprise(companyId: string) {
+    return this.http.get(`${this.configurationUrl}/${companyId}`);
   }
 
   // Función para guardar los cambios en los datos de la empresa

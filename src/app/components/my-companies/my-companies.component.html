@@ -1,12 +1,12 @@
 <div class="background center">
     <div class="my-companies">
         <div class="add-company">
-            <a routerLink="/tap1">
-                <img src="../../../assets/add-company.svg" alt="add-company" width="100px">
+            <a routerLink="/initial-config/tap1">
+                <img src="../../../assets/add-company.svg" alt="add-company" width="120px">
             </a>
         </div>
         <div *ngFor="let company of companies" class="company">
-            <a routerLink="#">
+            <a routerLink="/configuration-tap/{{company.companyId}}/1">
                 <div class="company-logo center">
                     <img src={{company.companyLogo}} alt="company-{{company.companyId}}-logo">
                 </div>

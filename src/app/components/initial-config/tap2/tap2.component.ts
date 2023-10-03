@@ -170,7 +170,7 @@ export class Tap2Component {
         this.errorMessageArea.nativeElement.classList.remove('show');
       }, 2000);
     } else {
-      this.router.navigate(['/tap3']);
+      this.router.navigate(['/initial-config/tap3']);
       this.guardarJSON();
     }
   }

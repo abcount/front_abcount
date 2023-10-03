@@ -20,8 +20,8 @@
 }
 /*Links*/
 a {
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 400;
     color: white;
     text-decoration: none;
     transition: all 0.4s;
@@ -43,13 +43,13 @@ a:hover .company-logo {
 /*Lista de compañias*/
 .my-companies {
     display: grid;
-    grid-template-columns: repeat(5, 100px);
+    grid-template-columns: repeat(5, 120px);
     grid-gap: 25px;
 }
 /*Logo de la compañia*/
 .company-logo {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 100%;
     background-color: white;
     margin-bottom: 10px;

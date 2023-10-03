@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import { NgModule } from "@angular/core";
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { ConfigurationTap1Component } from '../components/configuration/configuration-tap1/configuration-tap1.component';
 import { ConfigNavbarComponent } from "../components/configuration/config-navbar/config-navbar.component";
@@ -16,30 +16,28 @@ import { ReportsComponent } from '../components/reports/reports/reports.componen
 
 import { FormsModule } from '@angular/forms';
 import { AccountComponent } from "../components/configuration/account/account.component";
-import {MatTreeModule} from "@angular/material/tree";
-import {AppModule} from "../app.module";
+import { MatTreeModule } from "@angular/material/tree";
+import { AppModule } from "../app.module";
 
 const CarlosComponents = [
-    NavbarComponent,
-    ConfigurationTap1Component
+  NavbarComponent,
+  ConfigurationTap1Component
 ]
 
 @NgModule({
-    declarations: [
-        NavbarComponent,
-        ConfigurationTap1Component,
-        ConfigNavbarComponent,
-        ConfigurationTap2Component,
-        ConfigurationTap3Component,
-        ConfigurationTap4Component,
-        ConfigurationTap5Component,
-        AddUsersAndPermissionsComponent,
-        UsersAndPermissionsComponent,
-        AccountComponent,
-        ReportsComponent
-    ],
-    exports: [CarlosComponents] // Poner [CarlosComponents]
-    ,
+  declarations: [
+    NavbarComponent,
+    ConfigurationTap1Component,
+    ConfigNavbarComponent,
+    ConfigurationTap2Component,
+    ConfigurationTap3Component,
+    ConfigurationTap4Component,
+    ConfigurationTap5Component,
+    AddUsersAndPermissionsComponent,
+    UsersAndPermissionsComponent,
+    AccountComponent,
+    ReportsComponent
+  ],
   imports: [
     CommonModule,
     AppRoutingModule,
@@ -47,6 +45,7 @@ const CarlosComponents = [
     FormsModule,
     MatTreeModule,
     AppModule
-  ]
+  ],
+  exports: [CarlosComponents] // Poner [CarlosComponents]
 })
 export class CarlosModule {}

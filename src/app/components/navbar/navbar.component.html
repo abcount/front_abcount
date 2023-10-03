@@ -1,4 +1,3 @@
-<link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand center">
         <img class="logo" src="../../../favicon.ico"/>
@@ -11,7 +10,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link option" routerLink="#">Inicio</a></li>
             <li class="nav-item"><a class="nav-link option" routerLink="#">Datos</a></li>
-            <li class="nav-item"><a class="nav-link option" routerLink="#">Reportes</a></li>
+            <li class="nav-item"><a class="nav-link option" routerLink="/reports">Reportes</a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
@@ -23,7 +22,7 @@
                     <a class="dropdown-item" routerLink="#">Notificaciones</a>
                     <hr>
                     <a class="dropdown-item" href="#">Ayuda</a>
-                    <a class="dropdown-item" href="#">Configuración</a>
+                    <a class="dropdown-item" href="/configuration-tap/1">Configuración</a>
                     <hr>
                     <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
                 </div>

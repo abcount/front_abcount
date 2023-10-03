@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { EnterpriseDto } from 'src/app/dto/enterprise.dto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
@@ -25,12 +26,19 @@ export class ConfigurationTap1Component {
   enterpriseData: EnterpriseDto;
   logoUuid: string;
 
+  // Id de la compañia
+  companyId: string;
+
   // Constructor
-  constructor(private ConfigurationService: ConfigurationService) {}
+  constructor(private ConfigurationService: ConfigurationService, private route: ActivatedRoute) { 
+    this.route.params.subscribe(params => {
+      this.companyId = params['companyId'];
+    });
+  }
 
   // Funcion al iniciar la pantalla
   ngOnInit() {
-    this.ConfigurationService.getEnterprise().subscribe(
+    this.ConfigurationService.getEnterprise(this.companyId).subscribe(
       (data: any) => {
         this.enterpriseData = data.data;
         this.controlName.setValue(this.enterpriseData.companyName);
