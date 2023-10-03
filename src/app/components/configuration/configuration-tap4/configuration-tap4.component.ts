@@ -1,56 +1,10 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration.service';
-import {FlatTreeControl} from "@angular/cdk/tree";
-import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
-import {FormStateService} from "../../../services/form-state.service";
+import { FlatTreeControl } from "@angular/cdk/tree";
+import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
+import { FormStateService } from "../../../services/form-state.service";
 
-let TREE_DATA: Account[] = [
-  // {
-  //   accountCode: 1,
-  //   nameAccount: 'Activo',
-  //   moneyRub: true,
-  //   report: false,
-  //   classificator: false,
-  //   level: 0,
-  //   childrenAccounts: []
-  // },
-  // {
-  //   accountCode: 2,
-  //   nameAccount: 'Pasivo',
-  //   moneyRub: true,
-  //   report: false,
-  //   classificator: false,
-  //   level: 0,
-  //   childrenAccounts: []
-  // },
-  // {
-  //   accountCode: 3,
-  //   nameAccount: 'Patrimoinio',
-  //   moneyRub: true,
-  //   report: false,
-  //   classificator: false,
-  //   level: 0,
-  //   childrenAccounts: []
-  // },
-  // {
-  //   accountCode: 4,
-  //   nameAccount: 'Ingresos',
-  //   moneyRub: true,
-  //   report: false,
-  //   classificator: false,
-  //   level: 0,
-  //   childrenAccounts: []
-  // },
-  // {
-  //   accountCode: 5,
-  //   nameAccount: 'Egresos',
-  //   moneyRub: true,
-  //   report: false,
-  //   classificator: false,
-  //   level: 0,
-  //   childrenAccounts: []
-  // }
-];
+let TREE_DATA: Account[] = [];
 
 interface NodeExample {
   expandable: boolean;
@@ -59,7 +13,7 @@ interface NodeExample {
 }
 
 interface Account {
-  accountCode: number;
+  codeAccount: number;
   nameAccount: string;
   moneyRub: boolean;
   report: boolean;
@@ -76,13 +30,9 @@ interface Account {
 })
 export class ConfigurationTap4Component {
 
-
-
+  // Controladores para los popups
   mostrarPopup = false;
   mostrarPopupSon = false;
-
-  // imagen sacada del localstorage
-
 
   @ViewChild("accountName") accountName: string = "";
   selectedNode: NodeExample | null = null;
@@ -91,15 +41,13 @@ export class ConfigurationTap4Component {
   accountReport: boolean = false;
   accountClassificator: boolean = false;
 
-
   private _transformer = (node: Account, level: number) => {
     return {
       expandable: !!node.childrenAccounts && node.childrenAccounts.length > 0,
-      name: node.accountCode + ' ' + node.nameAccount,
+      name: node.codeAccount + ' ' + node.nameAccount,
       level: level,
     };
   };
-
 
   treeControl = new FlatTreeControl<NodeExample>(
     node => node.level,
@@ -127,17 +75,14 @@ export class ConfigurationTap4Component {
     this.ConfigurationService.getAccountsPlan().subscribe(
       (data: any) => {
         this.dataSource.data = data.data;
+        this.accountPlan = data.data;
       }
     );
     TREE_DATA = this.dataSource.data;
   }
 
-
-
   // Función al inicializar la pantalla
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   //METODO PARA DEFINIR LA CUENTA SELEECIONADA
   setSelectedNode(node: NodeExample | null){
@@ -157,7 +102,7 @@ export class ConfigurationTap4Component {
     if(node == null){
       this.accountId = TREE_DATA.length + 1;
       let parentAccount = {
-        accountCode: TREE_DATA.length + 1,
+        codeAccount: TREE_DATA.length + 1,
         nameAccount: this.accountName,
         moneyRub: this.accountMoneyRub,
         report: this.accountReport,
@@ -186,11 +131,11 @@ export class ConfigurationTap4Component {
   // @ts-ignore
   positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].accountCode === selectedAccount){
+      if(listOfAccounts[j].codeAccount === selectedAccount){
         this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
         let newAccount: Account = {
           level: level + 1,
-          accountCode: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
+          codeAccount: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
           nameAccount: this.accountName,
           moneyRub: this.accountMoneyRub,
           report: this.accountReport,
@@ -230,7 +175,7 @@ export class ConfigurationTap4Component {
   // @ts-ignore
   deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].accountCode === selectedAccount){
+      if(listOfAccounts[j].codeAccount === selectedAccount){
         listOfAccounts.splice(j, 1);
         if(listOfAccounts.length !== 0){
           this.enumerateAccounts(listOfAccounts);
@@ -244,13 +189,11 @@ export class ConfigurationTap4Component {
   }
 
   enumerateAccounts(listOfAccounts : Account[]){
-    let parentAccount = Math.round(listOfAccounts[0].accountCode / 10);
+    let parentAccount = Math.round(listOfAccounts[0].codeAccount / 10);
     for(let j = 0; j < listOfAccounts.length; j++){
-      listOfAccounts[j].accountCode = parentAccount * 10 + j + 1;
+      listOfAccounts[j].codeAccount = parentAccount * 10 + j + 1;
     }
   }
-
-
 
   // Función para activar el modo edición
   edit() {
@@ -261,6 +204,13 @@ export class ConfigurationTap4Component {
 
   // Función para desactivar el modo edición
   cancel() {
+    this.ConfigurationService.getAccountsPlan().subscribe(
+      (data: any) => {
+        this.dataSource.data = data.data;
+        this.accountPlan = data.data;
+      }
+    );
+    TREE_DATA = this.dataSource.data;
     this.modeEdit = false;
   }
 
@@ -268,5 +218,11 @@ export class ConfigurationTap4Component {
   save() {
     console.log('Guardando cambios...');
     this.modeEdit = false;
+  }
+
+  // Función para ocultar los popups
+  cancelPopup(){
+    this.mostrarPopup = false;
+    this.mostrarPopupSon = false;
   }
 }
