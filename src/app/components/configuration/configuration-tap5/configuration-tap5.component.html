@@ -1,28 +1,25 @@
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
-<app-navbar></app-navbar>
-<app-config-navbar [numberOption]="5"></app-config-navbar>
-<div class="configuration-tap5">
-    <div class="row-2">
-        <div class="titulo">
-            <h1>Empleados de la empresa</h1>
-        </div>
-        <div class="invitar">
-            <a routerLink="/add-users-and-permissions"><app-my-button  [isGreen]="true"  style="margin-right: 10px; font-size: 20px;">INVITAR NUEVO</app-my-button></a>
-        </div>
-    </div>
-    <div class="datos">
-        <div class="usuario" *ngFor="let user of users">
-            <div class="imagen">
-                <img src="../../../assets/pfp.svg" alt="Foto de perfil">
+<div class="container-tap5">
+    <app-navbar></app-navbar>
+    <app-config-navbar [numberOption]="5"></app-config-navbar>
+    <div class="configuration-tap5">
+        <div class="row-2">
+            <div>
+                <h1>Empleados de la empresa</h1>
             </div>
-            <div class="informacion">
+            <div>
+                <a routerLink="/add-users-and-permissions"><app-my-button  [isGreen]="true"  style="margin-right: 10px; font-size: 20px;">INVITAR NUEVO</app-my-button></a>
+            </div>
+        </div>
+        <div class="datos">
+            <div class="usuario" *ngFor="let user of users">
+                <img src="../../../assets/pfp.svg" alt="Foto de perfil">
                 <h2>{{user.firstName}} {{user.lastName}}</h2>
                 <h4>{{user.email}}</h4>
-            </div>
-            <div class="botones">
-                <button class="button-red" (click)="Eliminar(user.userId)">Eliminar</button><a routerLink="/users-and-permissions"><button class="button">Ver más</button></a>
+                <div class="botones">
+                    <a routerLink="/users-and-permissions"><button class="button">Ver más</button></a>
+                    <button class="button-red" (click)="Eliminar(user.userId)">Eliminar</button>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
