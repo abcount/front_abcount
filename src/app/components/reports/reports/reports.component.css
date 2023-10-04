@@ -17,9 +17,9 @@
 hr{
     margin-top: 10px;
 }
-.container{
-    margin-top: 50px;
-    margin-left: 15%;
+.container-1{
+    margin: 4% 4%;
+
     display: grid;
     grid-template-columns: 48% 48%;
     gap: 4%;

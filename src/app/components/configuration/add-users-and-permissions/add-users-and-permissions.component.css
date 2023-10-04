@@ -98,6 +98,21 @@ input::placeholder {
   background-position-x: 90%;
   background-position-y: 95%;
 }
+.sucursal {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.area {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-left: 7%;
+}
+hr{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 /*Lado derecho*/
 .role{
   background: url(/assets/roles.svg);
