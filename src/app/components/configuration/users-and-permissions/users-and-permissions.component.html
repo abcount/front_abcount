@@ -1,32 +1,43 @@
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
-<div class="tap2">
-    <div class="container">
+<div class="container-add-user">
+    <div class="container-add">
         <div class="header">
             <div class="imagen">
-                <img src="../../../assets/maleta-negra.png" alt="Foto de perfil">
+                <i class="fa-solid fa-briefcase" style="color: #F3B8B1;"></i>
             </div>
-            <h1 class="header-title">Administracion de permisos</h1>
+            <h1 class="header-title">Administración de permisos</h1>
         </div>
-        <div class="buscar-usuario">
-            
-                <img src="../../../assets/usuario.png" alt="Foto de perfil" class="imagen-usuario">
-           
-            <h2>Nombre del usuario</h2>
+        <div class="data-user">
+            <img src="../../../assets/pfp.svg" alt="Foto de perfil">
+            <h3>{{user.firstName}} {{user.lastName}}</h3>
+            <h4>{{user.email}}</h4>
         </div>
         <div class="wrapper">
-            <div class="tree">
-                s
+            <div class="card user">
+                Lista sucursales y areas
             </div>
-            <div class="role">
-                s
+            <div class="card role">
+                <h2>Permisos</h2>
+                <div class="alinear">
+                    <input class="check-role" type="checkbox" id="checkbox1" name="opciones" value="opcion1">
+                    <label for="checkbox1">Agregar comprobantes</label>
+                </div>
+                <div class="alinear">
+                    <input class="check-role" type="checkbox" id="checkbox2" name="opciones" value="opcion1">
+                    <label for="checkbox2">Editar comprobantes</label>
+                </div>
+                <div class="alinear">
+                    <input class="check-role" type="checkbox" id="checkbox3" name="opciones" value="opcion1">
+                    <label for="checkbox3">Generar reportes</label>
+                </div>
+                <div class="alinear">
+                    <input class="check-role" type="checkbox" id="checkbox4" name="opciones" value="opcion1">
+                    <label for="checkbox4">Agregar tasa de cambio</label>
+                </div>
             </div>
         </div>
         <div class="invitar">
-            <app-my-button  [isGreen]="true"  style="margin-right: 10px; font-size: 20px;">ENVIAR INVITACION</app-my-button>
-            <a routerLink="/configuration-tap5"><app-my-button [isRed]="true" >CANCELAR</app-my-button></a>
+            <app-my-button  [isGreen]="true"  style="margin-right: 10px;">ENVIAR INVITACION</app-my-button>
+            <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
         </div>
-        <!-- <button (click)="printValue()">Imprimir valor</button> -->
     </div>
 </div>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
