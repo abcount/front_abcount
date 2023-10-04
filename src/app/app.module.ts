@@ -33,6 +33,7 @@ import { CircularButtonComponent } from './components/general-components/circula
 // Comprobantes contables
 import { AccountingVoucherViewComponent } from './components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component';
 import { AccountingVoucherAddComponent } from './components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component';
+import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AccountingVoucherAddComponent } from './components/accounting-voucher/a
     CircularButtonComponent,
     AccountingVoucherViewComponent,
     AccountingVoucherAddComponent,
+    DiaryBookFormComponent,
   ],
   imports: [
     BrowserModule,

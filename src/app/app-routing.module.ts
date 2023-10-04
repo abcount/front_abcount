@@ -15,6 +15,7 @@ import { UsersAndPermissionsComponent } from './components/configuration/users-a
 import { AccountingVoucherViewComponent } from "./components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component";
 import { AccountingVoucherAddComponent } from "./components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component";
 import { ReportsComponent } from './components/reports/reports/reports.component';
+import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
 
 
 
@@ -50,6 +51,7 @@ const routes: Routes = [
     ],
   },
   { path: 'reports', component: ReportsComponent},
+  { path: 'diary-book', component: DiaryBookFormComponent}
 ];
 
 @NgModule({
