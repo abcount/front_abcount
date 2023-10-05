@@ -13,12 +13,16 @@ export class Tap1Component  {
   
 
   // Etiqueteas de los inputs
-  Nombre={labelNombre: 'Nombre de la empresa', placeholderNombre: 'Ingrese el nombre de tu empresa', iconInputNombre: "fa-regular fa-building"};
-  Direccion={labelDireccion: 'Dirección', placeholderDireccion: 'Ingrese la dirección de la empresa', iconInputDireccion: "fa-regular fa-map-marker-alt"};
-  Rubro={labelRubro: 'Rubro', placeholderRubro: 'Ingrese el rubro al que se dedica', iconInputRubro: "fa-regular fa-store"};
-  NIT={labelNIT: 'NIT de la empresa', placeholderNIT: 'Ingrese el NIT de la empresa', iconInputNIT: "fa-regular fa-id-card"};
-  Email={labelEmail: 'E-mail de contacto', placeholderEmail: 'Ingrese un e-mail de contacto', iconInputEmail: "fa-regular fa-envelope"};
-  NumeroContacto={labelNumeroContacto: 'Número de contacto', placeholderNumeroContacto: 'Ingrese un número de contacto', iconInputNumeroContacto: "fa-regular fa-phone"};
+  name = {labelName: 'Razón social', placeholderName: 'Ingrese la razón social de tu empresa', iconInputName: "fa-regular fa-building"};
+  rubro = {labelRubro: 'Rubro', placeholderRubro: 'Ingrese el rubro al que se dedica', iconInputRubro: "fa-regular fa-store"};
+  nit = {labelNIT: 'NIT de la empresa', placeholderNIT: 'Ingrese el NIT de la empresa', iconInputNIT: "fa-regular fa-credit-card"};
+  legalRepresentative = {labelLegalRepresentative: 'Representante legal', placeholderLegalRepresentative: 'Ingrese el nombre del representante legal', iconInputLegalRepresentative: "fa-regular fa-user"};
+  ciRepresentative = {labelCIRepresentative: 'C.I. del representante legal', placeholderCIRepresentative: 'Ingrese la C.I. del representante legal', iconInputCIRepresentative: "fa-regular fa-address-card"};
+  address = {labelAddress: 'Dirección', placeholderAddress: 'Ingrese la dirección de la empresa', iconInputAddress: "fa-regular fa-map-marker-alt"};
+  email = {labelEmail: 'E-mail de contacto', placeholderEmail: 'Ingrese un e-mail de contacto', iconInputEmail: "fa-regular fa-envelope"};
+  numberRepresentative = {labelNumberRepresentative: 'Número de contacto', placeholderNumberRepresentative: 'Ingrese un número de contacto', iconInputNumberRepresentative: "fa-regular fa-phone"};
+  numberRegistration = {labelNumberRegistration: 'Número de registro de comercio', placeholderNumberRegistration: 'Ingrese el número de registro de comercio', iconInputNumberRegistration: "fa-regular fa-credit-card"};
+  numberEmployee = {labelNumberEmployee: 'Número de registro de empleador', placeholderNumberEmployee: 'Ingrese el número de registro de empleador', iconInputNumberEmployee: "fa-regular fa-user"};
 
   // Patrones de validación
   pattern={patternAll: '.*', patternAllMessage: 'Ingrese un valor válido', patternNumber: '^[0-9]*$', patternNumberMessage: 'Por favor, ingrese un número de contacto válido.', patternEmail: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$', patternEmailMessage: 'Por favor, ingrese una dirección de correo electrónico válida.'};
@@ -101,30 +105,24 @@ export class Tap1Component  {
 
   //---------------------------------------------------------------------------------------------//
 
-
   get nombreControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseName') as FormControl;
   }
 
-
-  get direccionControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseLocation') as FormControl;
-
-  }
-
   get rubroControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('dicCategory') as FormControl;
-
   }
 
   get nitControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('nit') as FormControl;
-
+  }
+  
+  get direccionControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseLocation') as FormControl;
   }
 
   get emailControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('contactMail') as FormControl;
-
   }
 
   get numeroContactoControl(): FormControl {
@@ -142,11 +140,7 @@ export class Tap1Component  {
   verificarCampos() {
     if (this.nombreControl.valid && this.direccionControl.valid && this.rubroControl.valid && this.nitControl.valid && this.emailControl.valid && this.numeroContactoControl.valid) {
       if (this.formGroup.value.enterprise.enterpriseName != "" && this.formGroup.value.enterprise.direccion != "" && this.formGroup.value.enterprise.rubro != "" && this.formGroup.value.enterprise.nit != "" && this.formGroup.value.enterprise.email != "" && this.formGroup.value.enterprise.numeroContacto != "") {
-        if (true) {
-          this.router.navigate(['/initial-config/tap2']);
-        } else {
-
-        }
+        this.router.navigate(['/initial-config/tap2']);
       } else {
         console.log('Vacios');
         this.errorMessage.nativeElement.classList.add('show');

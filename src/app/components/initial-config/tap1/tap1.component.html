@@ -2,30 +2,31 @@
 <div class="tap1">
     <div class="container">
         <h1 class="header-title">Configuración de la Empresa</h1>
-        <hr class="separator">
+        <hr class="line">
         <app-progress [steps]="[1, 2, 3, 4]" [currentStep]="1"></app-progress>
-        <div class="row-3">
-            <!-- Columna 1: IDENTIFICACIÓN -->
+        <div style="height: 10px;"></div>
+        <div class="detail-company">
             <div>
-                <h2>IDENTIFICACIÓN</h2>
+                <h2>DETALLES DE LA EMPRESA</h2>
+                <div>
+                    <app-my-textfield type="text" [iconInput]="name.iconInputName" [label]="name.labelName" [control]="nombreControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="name.placeholderName"></app-my-textfield>
+                </div>
+                <div class="row-2">
+                    <app-my-textfield type="text" [iconInput]="rubro.iconInputRubro" [label]="rubro.labelRubro" [control]="rubroControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="rubro.placeholderRubro" ></app-my-textfield>
+                    <app-my-textfield type="text" [iconInput]="nit.iconInputNIT" [label]="nit.labelNIT" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="nit.placeholderNIT" ></app-my-textfield>
+                </div>
+                <div class="row-2">
+                    <app-my-textfield type="text" [iconInput]="legalRepresentative.iconInputLegalRepresentative" [label]="legalRepresentative.labelLegalRepresentative" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="legalRepresentative.placeholderLegalRepresentative" ></app-my-textfield>
+                    <app-my-textfield type="text" [iconInput]="ciRepresentative.iconInputCIRepresentative" [label]="ciRepresentative.labelCIRepresentative" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="ciRepresentative.placeholderCIRepresentative" ></app-my-textfield>
+                </div>
             </div>
-            <!-- Columna 2: Campos de texto -->
-            <div>
-                <app-my-textfield type="text" [iconInput]="Nombre.iconInputNombre" [label]="Nombre.labelNombre" [control]="nombreControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="Nombre.placeholderNombre"></app-my-textfield>
-                <div style="height: 20px;"></div>
-                <app-my-textfield type="text" [iconInput]="Rubro.iconInputRubro" [label]="Rubro.labelRubro" [control]="rubroControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="Rubro.placeholderRubro" ></app-my-textfield>
-                <div style="height: 20px;"></div>
-                <app-my-textfield type="text" [iconInput]="NIT.iconInputNIT" [label]="NIT.labelNIT" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="NIT.placeholderNIT" ></app-my-textfield>
-                <div style="height: 20px;"></div>
-            </div>
-            <!-- Columna 3: Cargar Logo -->
             <div>
                 <h3>LOGO</h3>
                 <div class="upload-container">
                     <div *ngIf="!imageURL" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (dragleave)="onDragLeave($event)" [class.dragging]="isDragging">
                         <input type="file" (change)="onFileChanged($event)" accept="image/*" #fileInput style="display: none">
                         <div class="drag-drop-area" (click)="fileInput.click()">
-                            Arrastra y suelta una imagen aquí o <span>selecciona un archivo</span>
+                            <div>Arrastra y suelta una imagen aquí o <span>selecciona un archivo</span></div>
                         </div>
                     </div>
                     <div *ngIf="imageURL" class="image-container">
@@ -39,27 +40,34 @@
             </div>
         </div>
         <hr class="separator">
-        <div class="row-2">
+        <div>
             <div>
-                <h2>UBICACIÓN</h2>
+                <h2>INFORMACIÓN DE CONTACTO</h2>
             </div>
             <div>
-                <app-my-textfield type="text" [iconInput]="Direccion.iconInputDireccion" [label]="Direccion.labelDireccion" [control]="direccionControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="Direccion.placeholderDireccion" ></app-my-textfield>
-                <div style="height: 20px;"></div>
+                <app-my-textfield type="text" [iconInput]="address.iconInputAddress" [label]="address.labelAddress" [control]="direccionControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="address.placeholderAddress" ></app-my-textfield>
+            </div>
+            <div class="row-2">
+                <div>
+                    <app-my-textfield type="email" [iconInput]="email.iconInputEmail" [label]="email.labelEmail" [control]="emailControl" [placeholder]="email.placeholderEmail" [pattern]="pattern.patternEmail" [errorMessage]="pattern.patternEmailMessage"></app-my-textfield>
+                </div>
+                <div>
+                    <app-my-textfield type="text" [iconInput]="numberRepresentative.iconInputNumberRepresentative" [label]="numberRepresentative.labelNumberRepresentative" [control]="numeroContactoControl" [pattern]="pattern.patternNumber" [errorMessage]="pattern.patternNumberMessage" [placeholder]="numberRepresentative.placeholderNumberRepresentative" ></app-my-textfield>
+                </div>
             </div>
         </div>
         <hr class="separator">
-        <div class="row-3">
+        <div>
             <div>
-                <h2>CONTACTO</h2>
+                <h2>DOCUMENTACIÓN Y REGISTROS</h2>
             </div>
-            <div>
-                <app-my-textfield type="email" [iconInput]="Email.iconInputEmail" [label]="Email.labelEmail" [control]="emailControl" [placeholder]="Email.placeholderEmail" [pattern]="pattern.patternEmail" [errorMessage]="pattern.patternEmailMessage"></app-my-textfield>
-                <div style="height: 20px;"></div>
-            </div>
-            <div>
-                <app-my-textfield type="text" [iconInput]="NumeroContacto.iconInputNumeroContacto" [label]="NumeroContacto.labelNumeroContacto" [control]="numeroContactoControl" [pattern]="pattern.patternNumber" [errorMessage]="pattern.patternNumberMessage" [placeholder]="NumeroContacto.placeholderNumeroContacto" ></app-my-textfield>
-                <div style="height: 20px;"></div>
+            <div class="row-2">
+                <div>
+                    <app-my-textfield type="text" [iconInput]="numberRegistration.iconInputNumberRegistration" [label]="numberRegistration.labelNumberRegistration" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="numberRegistration.placeholderNumberRegistration" ></app-my-textfield>
+                </div>
+                <div>
+                    <app-my-textfield type="text" [iconInput]="numberEmployee.iconInputNumberEmployee" [label]="numberEmployee.labelNumberEmployee" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="numberEmployee.placeholderNumberEmployee" ></app-my-textfield>
+                </div>
             </div>
         </div>
         <div class="error-message" #errorMessage>Por favor, complete todos los campos de forma correctamente.</div>
