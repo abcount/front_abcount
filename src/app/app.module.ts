@@ -34,6 +34,7 @@ import { CircularButtonComponent } from './components/general-components/circula
 import { AccountingVoucherViewComponent } from './components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component';
 import { AccountingVoucherAddComponent } from './components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component';
 import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
+import { BalanceSheetComponent } from './components/reports/balance-sheet/balance-sheet-form/balance-sheet.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { DiaryBookFormComponent } from './components/reports/diary-book/diary-bo
     AccountingVoucherViewComponent,
     AccountingVoucherAddComponent,
     DiaryBookFormComponent,
+    BalanceSheetComponent,
   ],
   imports: [
     BrowserModule,

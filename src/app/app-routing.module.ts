@@ -16,6 +16,8 @@ import { AccountingVoucherViewComponent } from "./components/accounting-voucher/
 import { AccountingVoucherAddComponent } from "./components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component";
 import { ReportsComponent } from './components/reports/reports/reports.component';
 import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
+import { BalanceSheetComponent } from './components/reports/balance-sheet/balance-sheet-form/balance-sheet.component';
+
 
 
 
@@ -51,7 +53,8 @@ const routes: Routes = [
     ],
   },
   { path: 'reports', component: ReportsComponent},
-  { path: 'diary-book', component: DiaryBookFormComponent}
+  { path: 'diary-book', component: DiaryBookFormComponent},
+  { path: 'balance-sheet', component: BalanceSheetComponent}
 ];
 
 @NgModule({
