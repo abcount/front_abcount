@@ -16,8 +16,8 @@
                     <app-my-textfield type="text" [iconInput]="nit.iconInputNIT" [label]="nit.labelNIT" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="nit.placeholderNIT" ></app-my-textfield>
                 </div>
                 <div class="row-2">
-                    <app-my-textfield type="text" [iconInput]="legalRepresentative.iconInputLegalRepresentative" [label]="legalRepresentative.labelLegalRepresentative" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="legalRepresentative.placeholderLegalRepresentative" ></app-my-textfield>
-                    <app-my-textfield type="text" [iconInput]="ciRepresentative.iconInputCIRepresentative" [label]="ciRepresentative.labelCIRepresentative" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="ciRepresentative.placeholderCIRepresentative" ></app-my-textfield>
+                    <app-my-textfield type="text" [iconInput]="legalRepresentative.iconInputLegalRepresentative" [label]="legalRepresentative.labelLegalRepresentative" [control]="nameRepresentativeControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="legalRepresentative.placeholderLegalRepresentative" ></app-my-textfield>
+                    <app-my-textfield type="text" [iconInput]="ciRepresentative.iconInputCIRepresentative" [label]="ciRepresentative.labelCIRepresentative" [control]="ciRepresentativeControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="ciRepresentative.placeholderCIRepresentative" ></app-my-textfield>
                 </div>
             </div>
             <div>
@@ -52,7 +52,7 @@
                     <app-my-textfield type="email" [iconInput]="email.iconInputEmail" [label]="email.labelEmail" [control]="emailControl" [placeholder]="email.placeholderEmail" [pattern]="pattern.patternEmail" [errorMessage]="pattern.patternEmailMessage"></app-my-textfield>
                 </div>
                 <div>
-                    <app-my-textfield type="text" [iconInput]="numberRepresentative.iconInputNumberRepresentative" [label]="numberRepresentative.labelNumberRepresentative" [control]="numeroContactoControl" [pattern]="pattern.patternNumber" [errorMessage]="pattern.patternNumberMessage" [placeholder]="numberRepresentative.placeholderNumberRepresentative" ></app-my-textfield>
+                    <app-my-textfield type="text" [iconInput]="numberRepresentative.iconInputNumberRepresentative" [label]="numberRepresentative.labelNumberRepresentative" [control]="numberRepresentativeControl" [pattern]="pattern.patternNumber" [errorMessage]="pattern.patternNumberMessage" [placeholder]="numberRepresentative.placeholderNumberRepresentative" ></app-my-textfield>
                 </div>
             </div>
         </div>
@@ -63,10 +63,10 @@
             </div>
             <div class="row-2">
                 <div>
-                    <app-my-textfield type="text" [iconInput]="numberRegistration.iconInputNumberRegistration" [label]="numberRegistration.labelNumberRegistration" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="numberRegistration.placeholderNumberRegistration" ></app-my-textfield>
+                    <app-my-textfield type="text" [iconInput]="numberRegistration.iconInputNumberRegistration" [label]="numberRegistration.labelNumberRegistration" [control]="numberRegistrationControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="numberRegistration.placeholderNumberRegistration" ></app-my-textfield>
                 </div>
                 <div>
-                    <app-my-textfield type="text" [iconInput]="numberEmployee.iconInputNumberEmployee" [label]="numberEmployee.labelNumberEmployee" [control]="nitControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="numberEmployee.placeholderNumberEmployee" ></app-my-textfield>
+                    <app-my-textfield type="text" [iconInput]="numberEmployee.iconInputNumberEmployee" [label]="numberEmployee.labelNumberEmployee" [control]="numberEmployeeControl" [pattern]="pattern.patternAll" [errorMessage]="pattern.patternAllMessage" [placeholder]="numberEmployee.placeholderNumberEmployee" ></app-my-textfield>
                 </div>
             </div>
         </div>

@@ -108,11 +108,11 @@ export class Tap1Component  {
   get nombreControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('enterpriseName') as FormControl;
   }
-
-  get rubroControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('dicCategory') as FormControl;
-  }
-
+  /*
+  get diccCategoryControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('diccCategory') as FormControl;
+  }  
+  */
   get nitControl(): FormControl {
     return (this.formGroup.get('enterprise') as FormGroup).get('nit') as FormControl;
   }
@@ -122,12 +122,33 @@ export class Tap1Component  {
   }
 
   get emailControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('contactMail') as FormControl;
+    return (this.formGroup.get('enterprise') as FormGroup).get('emailRepresentative') as FormControl;
   }
 
-  get numeroContactoControl(): FormControl {
-    return (this.formGroup.get('enterprise') as FormGroup).get('contactName') as FormControl;
+  get numberRepresentativeControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('numberRepresentative') as FormControl;
   }
+
+  get numberRegistrationControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('numberRegistration') as FormControl;
+  }
+
+  get numberEmployeeControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('numberEmployee') as FormControl;
+  }
+
+  get ciRepresentativeControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('ciRepresentative') as FormControl;
+  }
+
+  get nameRepresentativeControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('nameRepresentative') as FormControl;
+  }
+
+  get rubroControl(): FormControl {
+    return (this.formGroup.get('enterprise') as FormGroup).get('rubro') as FormControl;
+  }
+
 
   printValue() {
     console.log(JSON.stringify(this.formGroup.value, null, 2));
@@ -138,7 +159,7 @@ export class Tap1Component  {
   @ViewChild('errorMessageLogo') errorMessageLogo: ElementRef;
   //Comprobar que los campos estan llenos
   verificarCampos() {
-    if (this.nombreControl.valid && this.direccionControl.valid && this.rubroControl.valid && this.nitControl.valid && this.emailControl.valid && this.numeroContactoControl.valid) {
+    if (this.nombreControl.valid && this.direccionControl.valid && this.rubroControl.valid && this.nitControl.valid && this.emailControl.valid && this.numberRepresentativeControl.valid) {
       if (this.formGroup.value.enterprise.enterpriseName != "" && this.formGroup.value.enterprise.direccion != "" && this.formGroup.value.enterprise.rubro != "" && this.formGroup.value.enterprise.nit != "" && this.formGroup.value.enterprise.email != "" && this.formGroup.value.enterprise.numeroContacto != "") {
         this.router.navigate(['/initial-config/tap2']);
       } else {
