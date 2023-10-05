@@ -91,6 +91,7 @@ export class Tap4Component {
 
 
   @ViewChild("accountName") accountName: string = "";
+  @ViewChild("digitsLevel") digitsLevel: string = "";
   selectedNode: NodeExample | null = null;
   accountId: number = 0;
   accountMoneyRub: boolean = false;
@@ -143,19 +144,20 @@ export class Tap4Component {
      console.log(parentAccount);
 
      TREE_DATA.push(parentAccount);
-     this.accountName = "";
-     this.accountReport = false;
-     this.accountMoneyRub = false;
-     this.accountClassificator = false;
-     this.mostrarPopup = false;
    }
    else{
      let strAccountName = node.name.split(" ", 1);
      let accountId = strAccountName[0];
      this.positioningLeaf(TREE_DATA, Number(accountId), node.level);
-     this.mostrarPopupSon = false;
    }
    this.dataSource.data = TREE_DATA;
+   this.accountName = "";
+   this.digitsLevel = "";
+   this.accountReport = false;
+   this.accountMoneyRub = false;
+   this.accountClassificator = false;
+   this.mostrarPopup = false;
+   this.mostrarPopupSon = false;
    // Hacer que se expandan los nodos :3
    let ten = node?.level;
    if (ten != null && ten >= 0) {
@@ -342,6 +344,11 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
   cancel(){
     this.mostrarPopup = false;
     this.mostrarPopupSon = false;
+    this.accountName = "";
+    this.digitsLevel = "";
+    this.accountReport = false;
+    this.accountMoneyRub = false;
+    this.accountClassificator = false;
   }
 
   confirm(){

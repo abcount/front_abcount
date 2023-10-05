@@ -160,7 +160,7 @@ mat-tree-node .right {
 .row-2-popup {
   display: grid;
   grid-template-columns: 40% 60%;
-  margin-top: 10px;
+  margin-top: 15px;
   align-items: center;
 }
 .popup-title {
@@ -209,7 +209,7 @@ input:focus {
 .checkbox {
   display: flex;
   color: #757575;
-  margin-top: 10px;
+  margin: 15px 0px 10px 0px;
   align-items: center;
   gap: 10px;
 }
@@ -266,4 +266,12 @@ input[type="radio"] {
   font-weight: 400;
   color: #939393;
   margin-bottom: 15px;
+}
+
+/*Colores de los textos*/
+.text-orange {
+  color: #fb9c7e;
+}
+.text-blue {
+  color: #489CE9;
 }
