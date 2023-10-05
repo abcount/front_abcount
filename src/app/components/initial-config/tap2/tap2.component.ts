@@ -29,20 +29,11 @@ export interface Area {
 
 export class Tap2Component {
 
-  /*Input nombre se sucursal*/
-  iconInputNombre = "fa-solid fa-shop";
-  labelNombre = 'Nombre de la sucursal';
-  placeholderSubsidiary: string = 'Ingrese el nombre de tu sucursal';
-  /*Input dirección sucursal*/
-  iconInputDireccion = "fa-regular fa-map-marker-alt";
-  labelDireccion = 'Dirección de la sucursal';
-  placeholderAddress: string = 'Ingrese la dirección de tu sucursal';
-  /*Input area*/
-  iconInputArea = "fa-regular fa-building";
-  labelNombreArea = 'Nombre del area';
-  placeholderArea: string = 'Ingrese el nombre de tu área';
-
-  /*Patrones generales*/
+  // Etiqueteas de los inputs
+  subsidiaryName = {iconInputSubsidiaryName: "fa-solid fa-shop", labelSubsidiaryName: 'Nombre de la sucursal', placeholderSubsidiaryName: 'Ingrese el nombre de tu sucursal'};
+  address = {iconInputAddress: "fa-regular fa-map-marker-alt", labelAddress: 'Dirección de la sucursal', placeholderAddress: 'Ingrese la dirección de tu sucursal'};
+  area = {iconInputArea: "fa-regular fa-building", labelArea: 'Nombre del área', placeholderArea: 'Ingrese el nombre de tu área'};
+  // Patrones generales
   patternAll = '.*';
   patternAllMessage = 'Ingrese un valor válido';
 
@@ -52,8 +43,12 @@ export class Tap2Component {
   controlArea = new FormControl();
   controlAreaName = new FormControl();
 
+  // Arreglos
+  sucursales: SubsidiaryDto[] = [];
+  areas: string[] = [];
 
-
+  // Nombre de la empresa
+  enterpriseName: string = '';
 
   //Constructor
   constructor(private formStateService: FormStateService, private router: Router,public formService: FormStateService) { }
@@ -61,6 +56,12 @@ export class Tap2Component {
   ngOnInit() {
     const storedSucursales = localStorage.getItem('sucursales');
     const storedAreas = localStorage.getItem('areas');
+
+    // Obtener el nombre de la empresa
+    const storedFormData = localStorage.getItem('formData');
+    if (storedFormData) {
+      this.enterpriseName = JSON.parse(storedFormData).enterprise.enterpriseName;
+    }
 
     if (storedSucursales) {
       this.sucursales = JSON.parse(storedSucursales);
@@ -70,13 +71,6 @@ export class Tap2Component {
       this.areas = JSON.parse(storedAreas);
     }
   }
-  sucursales: SubsidiaryDto[] = [];
-  areas: string[] = [];
-
-
-
-
-  subsdiaries: any[] = [];
 
   @ViewChild('errorMessageSucursal') errorMessageSucursal: ElementRef;
   messageSucursal: string = 'La sucursal ya existe';

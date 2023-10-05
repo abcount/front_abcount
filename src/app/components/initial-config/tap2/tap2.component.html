@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
 <div class="tap2">
     <div class="container">
         <h1 class="header-title">Configuración de la Empresa</h1>
@@ -9,11 +8,11 @@
                 <hr class="separator">
                 <div class="wrapper2">
                     <div><h2>SUCURSAL</h2></div>
-                    <div style="margin-top: 6px;">
-                        <app-my-textfield type="text" [iconInput]="iconInputNombre" [label]="labelNombre" [control]="controlSubsidiaryName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderSubsidiary"></app-my-textfield>
+                    <div>
+                        <app-my-textfield type="text" [iconInput]="subsidiaryName.iconInputSubsidiaryName" [label]="subsidiaryName.labelSubsidiaryName" [control]="controlSubsidiaryName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="subsidiaryName.placeholderSubsidiaryName"></app-my-textfield>
                         <div class="error-message" #errorMessageSucursal>{{messageSucursal}}</div>
-                        <div style="height: 20px;"></div>
-                        <app-my-textfield type="text" [iconInput]="iconInputDireccion" [label]="labelDireccion" [control]="controlSubsidiaryAddress" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderAddress"></app-my-textfield>
+                        <div style="height: 15px;"></div>
+                        <app-my-textfield type="text" [iconInput]="address.iconInputAddress" [label]="address.labelAddress" [control]="controlSubsidiaryAddress" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="address.placeholderAddress"></app-my-textfield>
                     </div>
                 </div>
                 <div class="right">
@@ -22,8 +21,8 @@
                 <hr class="separator">
                 <div class="wrapper2">
                     <div><h2>ÁREA</h2></div>
-                    <div style="margin-top: 6px;">
-                        <app-my-textfield type="text" [iconInput]="iconInputArea" [label]="labelNombreArea" [control]="controlAreaName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="placeholderArea"></app-my-textfield>
+                    <div>
+                        <app-my-textfield type="text" [iconInput]="area.iconInputArea" [label]="area.labelArea" [control]="controlAreaName" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="area.placeholderArea"></app-my-textfield>
                         <div class="error-message" #errorMessageArea>{{messageArea}}</div>
                     </div>
                 </div>
@@ -33,9 +32,11 @@
                 <hr class="separator">
             </div>
             <div class="tree">
+                <h2 class="enterprise-name">{{enterpriseName}}</h2>
                 <ul>
                     <li *ngFor="let sucursal of sucursales">
-                        <div style="display: flex;">
+                        <hr class="separator">
+                        <div class="subsidiary">
                             <button class="toggle" (click)="toggleChildren(sucursal)">
                                 <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': sucursal.mostrarHijos, 'fa-caret-down': !sucursal.mostrarHijos}"></i>
                             </button>                                               
@@ -65,8 +66,5 @@
             <div><a routerLink="/initial-config/tap1">&lt;&lt; Atras</a></div>
             <div><a (click)="verificar()">Siguiente &gt;&gt;</a></div>
         </div>
-        <!-- <button (click)="printValue()">Imprimir valor</button> -->
     </div>
 </div>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
