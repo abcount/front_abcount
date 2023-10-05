@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {FormStateService} from "../../../services/form-state.service";
 
 @Component({
@@ -8,127 +8,100 @@ import {FormStateService} from "../../../services/form-state.service";
   styleUrls: ['./tap3.component.css']
 })
 export class Tap3Component {
-
-  //Obtener la fecha actual
   fechaActual: Date = new Date();
-  primeraMoneda =  { moneyName: 'Bolivianos', abbreviationName: 'BOB', currency: 0 };
+  monedasSugeridas: any[] = [];
+  monedasSeleccionadas: any[] = [];
+
+  monedasLocalStorage: any []=[];
+  moneyName: string = '';
+
+  color: string = '#CFF4E8';
+
   constructor(public formService: FormStateService) {
-    const monedasGuardadas = localStorage.getItem('monedas');
-    if (monedasGuardadas) {
-      this.monedas = JSON.parse(monedasGuardadas);
-    } else {
-      this.monedas.push({ ...this.primeraMoneda });
-    }
+    // this.cargarNombresMonedasDesdeLocalStorage();
     this.guardarJSON();
   }
-  guardarEnLocalStorage() {
-    localStorage.setItem('monedas', JSON.stringify(this.monedas));
+
+  buscarSugerencias() {
+    this.formService.searchCurrency(this.moneyName).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.monedasSugeridas = response.data;
+        } else {
+          console.error(response.message);
+        }
+      },
+      (error) => {
+        console.error('Error al buscar monedas:', error);
+      }
+    );
   }
 
-  monedas: { moneyName: string, abbreviationName: string, currency:number}[] = [];
-  mostrarPopup: boolean = false;
-  nombreMoneda: string = '';
-  codigoISO: string = '';
-
-  valorCurrency:number =0;
-
-  color = '#CFF4E8'
-
-  agregarMoneda() {
-    this.mostrarPopup = true;
-    this.nombreMoneda = '';
-    this.codigoISO = '';
-  }
-
-  @ViewChild('errorName') errorName: ElementRef;
-  @ViewChild('errorCode') errorCode: ElementRef;
-  @ViewChild('errorEmpty') errorEmpty: ElementRef;
-  guardarMoneda() {
-    const nombresMonedas = this.monedas.map(moneda => moneda.moneyName);
-    const codigosISO = this.monedas.map(moneda => moneda.abbreviationName);
-    if (nombresMonedas.includes(this.nombreMoneda)) {
-      this.errorName.nativeElement.classList.add('show');
-      setTimeout(() => {
-        this.errorName.nativeElement.classList.remove('show');
-      }, 2000);
-    } else if (codigosISO.includes(this.codigoISO)) {
-      this.errorCode.nativeElement.classList.add('show');
-      setTimeout(() => {
-        this.errorCode.nativeElement.classList.remove('show');
-      }, 2000);
-    } else if (this.codigoISO.length == 0 || this.nombreMoneda.length == 0) {
-      this.errorEmpty.nativeElement.classList.add('show');
-      setTimeout(() => {
-        this.errorEmpty.nativeElement.classList.remove('show');
-      }, 3000);
-    } else {
-      this.monedas.push({ moneyName: this.nombreMoneda, abbreviationName: this.codigoISO, currency:this.valorCurrency});
-      this.mostrarPopup = false;
-      this.nombreMoneda = '';
-      this.codigoISO = '';
-      this.guardarJSON();
+  seleccionarMoneda(moneda: any) {
+    if (!this.monedasSeleccionadas.some(m => m.exchangeId === moneda.exchangeId)) {
+      this.monedasSeleccionadas = [...this.monedasSeleccionadas, moneda];
+      this.agregarMonedaId(moneda.exchangeId);
+       // this.guardarNombresMonedasEnLocalStorage();
     }
-    this.guardarEnLocalStorage();
-    console.log(this.monedas);
+    this.moneyName = '';
+    this.monedasSugeridas = [];
+
+
+  }
+  // guardarNombresMonedasEnLocalStorage() {
+  //   const monedasNombres = this.monedasSeleccionadas.map(m => m.moneyName);
+  //   localStorage.setItem('nombresMonedasSeleccionadas', JSON.stringify(monedasNombres));
+  // }
+  // cargarNombresMonedasDesdeLocalStorage() {
+  //   const nombresGuardados = localStorage.getItem('nombresMonedasSeleccionadas');
+  //   if (nombresGuardados) {
+  //     const monedasNombres: string[] = JSON.parse(nombresGuardados);
+  //     this.monedasSeleccionadas = monedasNombres.map((nombre: string) => ({ moneyName: nombre }));
+  //   }
+  // }
+
+  removerMoneda(exchangeId: number) {
+    const index = this.monedasSeleccionadas.findIndex(m => m.exchangeId === exchangeId);
+    this.removerMonedaId(index);
+    this.monedasSeleccionadas = this.monedasSeleccionadas.filter(m => m.exchangeId !== exchangeId);
+    // this.guardarEnLocalStorage();
   }
 
-  cancelar() {
-    this.mostrarPopup = false;
-    this.nombreMoneda = '';
-    this.codigoISO = '';
+  agregarMonedaId(id: number) {
+    const currencyList = this.formGroup.get('currencyConfig.currencyList') as FormArray;
+    currencyList.push(this.formService.fb.control(id));
+    // this.guardarEnLocalStorage();
   }
 
-  removerMoneda(moneda: { moneyName: string, abbreviationName: string, currency:number }) {
-    if (moneda.moneyName === this.primeraMoneda.moneyName && moneda.abbreviationName === this.primeraMoneda.abbreviationName) {
-      console.log("No puedes eliminar la primera moneda.");
-      return;
-    }
-
-    const index = this.monedas.findIndex(m => m.moneyName === moneda.moneyName && m.abbreviationName === moneda.abbreviationName);
-    if (index !== -1) {
-      this.monedas.splice(index, 1);
-      this.guardarJSON();
-    }
-    this.guardarEnLocalStorage();
+  removerMonedaId(index: number) {
+    const currencyList = this.formGroup.get('currencyConfig.currencyList') as FormArray;
+    currencyList.removeAt(index);
+    // this.guardarEnLocalStorage();
   }
+
+  // guardarEnLocalStorage() {
+  //   const monedasIds = this.monedasSeleccionadas.map(moneda => moneda.exchangeId);
+  //   localStorage.setItem('monedasSeleccionadas', JSON.stringify(monedasIds));
+  // }
+
+
   get formGroup(): FormGroup {
     return this.formService.formGroup;
   }
 
-
-  placeholderCoin:  string = 'Ejemplo: Dólar';
-  placeholderISO: string = 'Ejemplo: USD';
-
-  onClick() {
-    console.log('Button clicked!');
-  }
-
-  onInputText(text: string) {
-    console.log('Text changed: ' + text);
-  }
-  printValue() {
-    console.log(JSON.stringify(this.formGroup.value, null, 2));
-  }
-
   guardarJSON() {
+    const monedasIds = this.monedasSeleccionadas.map(moneda => moneda.exchangeId);
     const jsonData = {
       principalCurrency: 0,
-      monedas: this.monedas,
+      monedasIds: monedasIds,
     };
 
     console.log('Datos en JSON:');
     console.log(jsonData);
 
-    // Crear FormArray para monedas
-    const monedasFormArray = this.formService.fb?.array(
-      jsonData.monedas.map(moneda => this.formService.fb?.group(moneda))
-    );
-
-    // Añadir jsonData al formGroup
-    const configCurrencyGroup = this.formGroup?.get('currencyConfig') as FormGroup;
+    const monedasFormArray = this.formService.fb.array(monedasIds);
+    const configCurrencyGroup = this.formGroup.get('currencyConfig') as FormGroup;
     configCurrencyGroup.setControl('currencyList', monedasFormArray);
     configCurrencyGroup.get('principal')?.setValue(jsonData.principalCurrency);
   }
-
-
 }

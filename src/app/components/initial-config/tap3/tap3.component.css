@@ -60,7 +60,7 @@ a:hover {
 }
 /*Linea*/
 hr {
-  margin: 0 0px; 
+  margin: 0 0px;
   border-color:#EDEDED;
 }
 /*Estilos de filas*/
@@ -79,87 +79,20 @@ hr {
   display: flex;
   justify-content: space-between;
 }
-/* Estilos para la capa de fondo desenfocada */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.322); /* Fondo semi-transparente */
-  backdrop-filter: blur(5px); /* Efecto de desenfoque */
-  z-index: 100; /* Coloca la capa por encima de todo */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* Estilos para el popup */
-.popup {
-  position: fixed;
-  top: 50%; /* Centra verticalmente */
-  left: 50%; /* Centra horizontalmente */
-  transform: translate(-50%, -50%); /* Centra exactamente en el medio */
-  width: 40%; /* Tamaño del popup */
-  background-color: #fff;
-  padding: 25px 35px;
-  z-index: 101; /* Coloca el popup por encima de la capa de fondo */
-  box-shadow: 0 5 15px rgba(0, 0, 0, 0.25); /* Sombra */
-  border-radius: 10px;
-}
-.row-2-popup {
-  display: grid;
-  grid-template-columns: 55% 45%;
-  align-items: center;
-}
-.row-2-popup h3 {
-  margin-bottom: 0;
-}
-.popup-title {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-.icon {
-  width: 50px; /* Establece el ancho deseado */
-  height: 50px; /* Establece la misma altura que el ancho */
-  margin-right:10px;
-  background-color: antiquewhite;
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.icon i {
-  color: burlywood;
-  font-size: 25px;
-}
+
+
 .h2-title {
   font-size: 20px;
   font-weight: 600;
   color:#757575;
   margin: 0px !important;
 }
-.popup-buttons {
-  margin-top: 15px;
-  gap: 10px;
-}
+
 .right {
-  display: flex; 
+  display: flex;
   justify-content: flex-end;
 }
-.input-group {
-  font-size: 16px;
-  border: #D9D9D9 1px solid;
-  border-radius: 4px;
-  outline: none;
-  width: 100%;
-  padding: 3px 8px;
-  caret-color: #66CDAA;
-  transition: border 0.5s;
-}
-.input-group:focus {
-  border: 1px solid #66CDAA;
-}
+
 
 /*Lista de monedas*/
 .moneda-item {
@@ -194,4 +127,60 @@ hr {
 }
 .error-message.show {
   display: block;
+}
+.input-icon-container {
+  position: relative;
+  display: block; /* Cambia de inline-block a block */
+  width: 100%; /* Asegúrate de que ocupe todo el ancho disponible */
+}
+
+.input-group {
+  font-size: 16px;
+  border: #D9D9D9 1px solid;
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
+  padding: 3px 8px;
+  caret-color: #66CDAA;
+  transition: border 0.5s;
+  padding-left: 30px; /* Espacio para el ícono */
+}
+
+.input-group:focus {
+  border: 1px solid #66CDAA;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #66CDAA;
+  pointer-events: none;
+}
+
+
+.sugerencias-container {
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.sugerencia-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.sugerencia-item:hover {
+  background-color: #f5f5f5;
+}
+
+.sugerencia-item:last-child {
+  border-bottom: none;
 }
