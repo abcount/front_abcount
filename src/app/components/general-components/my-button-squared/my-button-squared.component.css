@@ -1,18 +1,8 @@
-.add-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  background-color: #8ddfbf;
-  color: white;
-  border: none;
-  border-radius: 4px;
+i {
+  color: #8ddfbf;
+  font-size: 25px;
   cursor: pointer;
 }
-.add-button:hover {
-  background-color: #66CDAA;
-}
-.add-button:focus {
-  outline: none;
+i:hover {
+  color: #66CDAA;
 }

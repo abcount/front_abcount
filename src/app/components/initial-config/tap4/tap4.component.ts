@@ -156,7 +156,22 @@ export class Tap4Component {
      this.mostrarPopupSon = false;
    }
    this.dataSource.data = TREE_DATA;
+   // Hacer que se expandan los nodos :3
+   let ten = node?.level;
+   if (ten != null && ten >= 0) {
+    const firstDigit = Math.floor(this.accountId / Math.pow(10, ten+1));
+    this.expandNodesByFirstDigit(firstDigit);
+   }
  }
+
+  expandNodesByFirstDigit(firstDigit: number) {
+    const nodesToExpand = this.treeControl.dataNodes.filter(
+      (node) => node.name.startsWith(`${firstDigit}`)
+    );
+    nodesToExpand.forEach((node) => {
+      this.treeControl.expand(node);
+    });
+  }
 
  //Method to add a new account leaf its a DFS algorithm
 
