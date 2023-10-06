@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {FormStateService} from "../../../services/form-state.service";
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-tap3',
@@ -13,7 +14,7 @@ export class Tap3Component {
   monedasSeleccionadas: any[] = [];
 
   monedasLocalStorage: any []=[];
-  moneyName: string = '';
+  moneyName = new FormControl();
 
   color: string = '#CFF4E8';
 
@@ -22,19 +23,28 @@ export class Tap3Component {
     this.guardarJSON();
   }
 
+  ngOnInit() {
+    this.buscarSugerencias();
+  }
+
   buscarSugerencias() {
-    this.formService.searchCurrency(this.moneyName).subscribe(
-      (response: any) => {
-        if (response.success) {
-          this.monedasSugeridas = response.data;
-        } else {
-          console.error(response.message);
+    this.moneyName.valueChanges.pipe(debounceTime(300)).subscribe((
+      data: any) => {
+        if (data.length > 0) {
+          this.formService.searchCurrency(this.moneyName.value).subscribe(
+            (response: any) => {
+              if (response.success) {
+                this.monedasSugeridas = response.data;
+              } else {
+                console.error(response.message);
+              }
+            },
+            (error) => {
+              console.error('Error al buscar monedas:', error);
+            }
+          );
         }
-      },
-      (error) => {
-        console.error('Error al buscar monedas:', error);
-      }
-    );
+      });
   }
 
   seleccionarMoneda(moneda: any) {
@@ -43,7 +53,7 @@ export class Tap3Component {
       this.agregarMonedaId(moneda.exchangeId);
        // this.guardarNombresMonedasEnLocalStorage();
     }
-    this.moneyName = '';
+    this.moneyName.setValue('');
     this.monedasSugeridas = [];
 
 

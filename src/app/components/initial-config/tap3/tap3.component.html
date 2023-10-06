@@ -10,23 +10,18 @@
         <h3 style="color: #B2B2B2;">{{ fechaActual | date: 'dd/MM/yyyy' }}</h3>
       </div>
     </div>
-
-    <br>
-    <br>
     <hr>
     <div style="margin-bottom: 0px;" class = "row-2">
       <h3>MONEDA PRINCIPAL</h3>
       <h3 style="color: #B2B2B2;">Bolivianos</h3>
     </div>
     <hr>
-
-    <br>
-    <div>
+    <div class="row-2">
       <h3>Otras monedas que quiera manejar</h3>
       <div class="right">
         <div class="input-icon-container">
           <i class="fa fa-search input-icon"></i>
-          <input type="text" id="searchMoneda" [(ngModel)]="moneyName" (input)="buscarSugerencias()" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
+          <input type="text" id="searchMoneda" [formControl]="moneyName" (input)="buscarSugerencias()" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
           <div class="sugerencias-container" *ngIf="monedasSugeridas.length > 0">
             <div *ngFor="let moneda of monedasSugeridas" (click)="seleccionarMoneda(moneda)" class="sugerencia-item">
               {{ moneda.moneyName }} ({{ moneda.moneyIso }})
@@ -35,7 +30,6 @@
         </div>
       </div>
     </div>
-
     <div class="currencies-list">
       <div *ngFor="let moneda of monedasSeleccionadas" [style.background-color]="color" class="moneda-item">
         {{ moneda.moneyName }} <button (click)="removerMoneda(moneda.exchangeId)" class="remove-button">
@@ -43,7 +37,6 @@
       </button>
       </div>
     </div>
-
     <div class="navigation">
       <div>
         <a routerLink="/initial-config/tap2">&lt;&lt; Atras</a>

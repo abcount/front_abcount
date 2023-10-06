@@ -14,8 +14,8 @@
   border-radius: 10px;
   padding: 20px 30px;
   box-sizing: border-box;
-  width: 60%;
-  height: 571px;
+  width: 70%;
+  height: 646px;
 }
 @media screen and (max-width: 1290px) {
   .container {
@@ -60,8 +60,9 @@ a:hover {
 }
 /*Linea*/
 hr {
-  margin: 0 0px;
-  border-color:#EDEDED;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #EDEDED;
 }
 /*Estilos de filas*/
 .row-2 {
@@ -128,26 +129,30 @@ hr {
 .error-message.show {
   display: block;
 }
+
+/*Buscador de monedas*/
 .input-icon-container {
   position: relative;
   display: block; /* Cambia de inline-block a block */
-  width: 100%; /* Asegúrate de que ocupe todo el ancho disponible */
+  width: 80%; /* Asegúrate de que ocupe todo el ancho disponible */
 }
 
 .input-group {
-  font-size: 16px;
   border: #D9D9D9 1px solid;
   border-radius: 4px;
-  outline: none;
   width: 100%;
-  padding: 3px 8px;
+  padding: 5px 15px 5px 35px;
   caret-color: #66CDAA;
   transition: border 0.5s;
-  padding-left: 30px; /* Espacio para el ícono */
+  font-size: 15px;
+  outline: none;
 }
 
 .input-group:focus {
   border: 1px solid #66CDAA;
+}
+.input-group:focus + .input-icon-container i {
+  color: #66CDAA !important;
 }
 
 .input-icon {
@@ -155,7 +160,9 @@ hr {
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: #66CDAA;
+  color: #b2b2b2;
+  font-size: 16px;
+  font-weight: 500;
   pointer-events: none;
 }
 
@@ -178,7 +185,8 @@ hr {
 }
 
 .sugerencia-item:hover {
-  background-color: #f5f5f5;
+  background-color: #e8fff7;
+  color: #66CDAA;
 }
 
 .sugerencia-item:last-child {
