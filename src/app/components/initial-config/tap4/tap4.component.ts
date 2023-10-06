@@ -91,7 +91,7 @@ export class Tap4Component {
 
 
   @ViewChild("accountName") accountName: string = "";
-  @ViewChild("digitsLevel") digitsLevel: string = "";
+  @ViewChild("digitsLevel") digitsLevel: number = 0;
   selectedNode: NodeExample | null = null;
   accountId: number = 0;
   accountMoneyRub: boolean = false;
@@ -152,7 +152,7 @@ export class Tap4Component {
    }
    this.dataSource.data = TREE_DATA;
    this.accountName = "";
-   this.digitsLevel = "";
+   this.digitsLevel = 0;
    this.accountReport = false;
    this.accountMoneyRub = false;
    this.accountClassificator = false;
@@ -161,7 +161,7 @@ export class Tap4Component {
    // Hacer que se expandan los nodos :3
    let ten = node?.level;
    if (ten != null && ten >= 0) {
-    const firstDigit = Math.floor(this.accountId / Math.pow(10, ten+1));
+    const firstDigit = Math.floor(this.accountId / Math.pow(Math.pow(10,this.digitsLevel), ten+1));
     this.expandNodesByFirstDigit(firstDigit);
    }
  }
@@ -181,10 +181,10 @@ export class Tap4Component {
   positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
     for(let j = 0; j < listOfAccounts.length; j++){
         if(listOfAccounts[j].accountCode === selectedAccount){
-            this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
+            this.accountId = selectedAccount * Math.pow(10,this.digitsLevel) + listOfAccounts[j].childrenAccounts.length + 1;
             let newAccount: Account = {
                 level: level + 1,
-                accountCode: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
+                accountCode: selectedAccount * Math.pow(10,this.digitsLevel) + listOfAccounts[j].childrenAccounts.length + 1,
                 nameAccount: this.accountName,
                 moneyRub: this.accountMoneyRub,
                 report: this.accountReport,
@@ -247,7 +247,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
    console.log(listOfAccounts)
     for(let j = 0; j < listOfAccounts.length; j++){
       console.log("HIJO: " + (parentAccount * 10 + j + 1));
-      listOfAccounts[j].accountCode = parentAccount * 10 + j + 1;
+      listOfAccounts[j].accountCode = parentAccount * Math.pow(10,this.digitsLevel) + j + 1;
     }
     console.log("LISTA DE CUENTAS");
     console.log(listOfAccounts);
@@ -344,7 +344,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     this.mostrarPopup = false;
     this.mostrarPopupSon = false;
     this.accountName = "";
-    this.digitsLevel = "";
+    this.digitsLevel = 0;
     this.accountReport = false;
     this.accountMoneyRub = false;
     this.accountClassificator = false;

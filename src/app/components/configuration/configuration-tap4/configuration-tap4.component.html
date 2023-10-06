@@ -2,7 +2,7 @@
   <app-navbar></app-navbar>
   <app-config-navbar [numberOption]="4"></app-config-navbar>
   <div class="configuration-tap4" *ngIf="!modeEdit">
-      <div class="account-plan">       
+      <div class="account-plan">
         <app-account [accounts]="accountPlan"></app-account>
       </div>
       <div class="right">
@@ -36,7 +36,7 @@
           <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
         </mat-tree-node>
       </mat-tree>
-    </div>  
+    </div>
     <div class="right">
         <app-my-button [isGreen]="true" (click)="save()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
         <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
