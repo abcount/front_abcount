@@ -23,28 +23,16 @@ export class Tap3Component {
     this.guardarJSON();
   }
 
-  ngOnInit() {
-    this.buscarSugerencias();
-  }
-
   buscarSugerencias() {
-    this.moneyName.valueChanges.pipe(debounceTime(300)).subscribe((
-      data: any) => {
-        if (data.length > 0) {
-          this.formService.searchCurrency(this.moneyName.value).subscribe(
-            (response: any) => {
-              if (response.success) {
-                this.monedasSugeridas = response.data;
-              } else {
-                console.error(response.message);
-              }
-            },
-            (error) => {
-              console.error('Error al buscar monedas:', error);
-            }
-          );
+    this.formService.searchCurrency(this.moneyName.value).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.monedasSugeridas = response.data;
+        } else {
+          console.error(response.message); 
         }
-      });
+      }
+    );
   }
 
   seleccionarMoneda(moneda: any) {
