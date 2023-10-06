@@ -188,10 +188,7 @@ a:hover {
   border-radius: 100%;
   width: 20px;
   height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
+  font-size: 14px;
   z-index: 1;
   border: none;
   cursor: pointer;

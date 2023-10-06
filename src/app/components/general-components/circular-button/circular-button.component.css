@@ -1,19 +1,8 @@
-.delete-circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f59898;
-  color: white;
-  border-radius: 100%;
-  width: 22px;
-  height: 22px;
-  border: none;
+i {
+  color: #f59898;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 25px;
 }
-.delete-circle:hover {
-  background-color: #ef5350;
-}
-.delete-circle:focus {
-  outline: none;
+i:hover {
+  color: #ef5350;
 }

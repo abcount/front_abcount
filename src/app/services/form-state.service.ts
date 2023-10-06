@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FormStateService {
-   
+
    formGroup: FormGroup;
    private url="http://localhost:8080/api/v1/ms-company/company";
    private imageFile: File | null = null;
@@ -30,12 +30,12 @@ export class FormStateService {
           numberEmployee: [''],
           rubro: [''],
           subsidiaries: this.fb.array([]),
-          
+
           openingDate: this.obtenerFechaActualEnFormato(),
 
           }),
           currencyConfig: this.fb.group({
-            principalCurrency: 0,
+
             currencyList: this.fb.array([]),
           }),
           accountablePlan: this.fb.array([]),
@@ -81,7 +81,7 @@ export class FormStateService {
       this.formGroup.patchValue(parsedData);
     }
   }
-    
+
   clearFormDataFromLocalStorage() {
     localStorage.removeItem('formData');
   }
@@ -93,5 +93,10 @@ export class FormStateService {
   getImage(): File | null {
     return this.imageFile;
   }
+
+  searchCurrency(moneyName: string): Observable<any> {
+    return this.http.get(`http://localhost:8080/currency?name=${moneyName}`);
+  }
+
 
 }
