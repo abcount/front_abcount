@@ -175,7 +175,6 @@ export class Tap4Component {
                 childrenAccounts: []
             }
             console.log(newAccount);
-
             // Asegurarse de que childrenAccounts es un array
             if (!Array.isArray(listOfAccounts[j].childrenAccounts)) {
                 listOfAccounts[j].childrenAccounts = [];

@@ -60,7 +60,7 @@ export class ConfigurationService {
 
   // Función para obtener las sucursales y areas
   getSubsidiaries() {
-    return this.http.get(`${this.configurationUrl}/subsidiary/${this.companyId}`);
+    return this.http.get(`${this.configurationUrl}/${this.companyId}/subsidiary`);
   }
 
   // Funcion para agregar las nuevas areas y sucursales
