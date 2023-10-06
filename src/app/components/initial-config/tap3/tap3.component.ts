@@ -19,7 +19,8 @@ export class Tap3Component {
   color: string = '#CFF4E8';
 
   constructor(public formService: FormStateService) {
-    // this.cargarNombresMonedasDesdeLocalStorage();
+    this.cargarMonedasDesdeLocalStorage();
+    this.formService.loadFormDataFromLocalStorage();
     this.guardarJSON();
   }
 
@@ -29,8 +30,11 @@ export class Tap3Component {
         if (response.success) {
           this.monedasSugeridas = response.data;
         } else {
-          console.error(response.message); 
+          console.error(response.message);
         }
+      },
+      (error) => {
+        console.error('Error al buscar monedas:', error);
       }
     );
   }
@@ -39,48 +43,44 @@ export class Tap3Component {
     if (!this.monedasSeleccionadas.some(m => m.exchangeId === moneda.exchangeId)) {
       this.monedasSeleccionadas = [...this.monedasSeleccionadas, moneda];
       this.agregarMonedaId(moneda.exchangeId);
-       // this.guardarNombresMonedasEnLocalStorage();
+      this.guardarMonedasEnLocalStorage();
     }
-    this.moneyName.setValue('');
+    this.moneyName;
     this.monedasSugeridas = [];
-
-
   }
-  // guardarNombresMonedasEnLocalStorage() {
-  //   const monedasNombres = this.monedasSeleccionadas.map(m => m.moneyName);
-  //   localStorage.setItem('nombresMonedasSeleccionadas', JSON.stringify(monedasNombres));
-  // }
-  // cargarNombresMonedasDesdeLocalStorage() {
-  //   const nombresGuardados = localStorage.getItem('nombresMonedasSeleccionadas');
-  //   if (nombresGuardados) {
-  //     const monedasNombres: string[] = JSON.parse(nombresGuardados);
-  //     this.monedasSeleccionadas = monedasNombres.map((nombre: string) => ({ moneyName: nombre }));
-  //   }
-  // }
+
 
   removerMoneda(exchangeId: number) {
-    const index = this.monedasSeleccionadas.findIndex(m => m.exchangeId === exchangeId);
-    this.removerMonedaId(index);
     this.monedasSeleccionadas = this.monedasSeleccionadas.filter(m => m.exchangeId !== exchangeId);
-    // this.guardarEnLocalStorage();
+
+    const currencyList = this.formGroup.get('currencyConfig.currencyList') as FormArray;
+    const indexToRemove = currencyList.value.findIndex((id: number) => id === exchangeId);
+
+    if (indexToRemove !== -1) {
+      this.removerMonedaId(indexToRemove);
+    }
+    this.guardarMonedasEnLocalStorage();
   }
 
   agregarMonedaId(id: number) {
-    const currencyList = this.formGroup.get('currencyConfig.currencyList') as FormArray;
+    let currencyList = this.formGroup.get('currencyConfig.currencyList') as FormArray;
+    if (!currencyList) {
+      currencyList = this.formService.fb.array([]);
+      (this.formGroup.get('currencyConfig') as FormGroup).setControl('currencyList', currencyList);
+    }
     currencyList.push(this.formService.fb.control(id));
-    // this.guardarEnLocalStorage();
+    this.guardarMonedasEnLocalStorage();
   }
 
   removerMonedaId(index: number) {
     const currencyList = this.formGroup.get('currencyConfig.currencyList') as FormArray;
-    currencyList.removeAt(index);
-    // this.guardarEnLocalStorage();
+    if (currencyList) {
+      currencyList.removeAt(index);
+      this.guardarMonedasEnLocalStorage();
+    } else {
+      console.error('currencyList no existe o es null');
+    }
   }
-
-  // guardarEnLocalStorage() {
-  //   const monedasIds = this.monedasSeleccionadas.map(moneda => moneda.exchangeId);
-  //   localStorage.setItem('monedasSeleccionadas', JSON.stringify(monedasIds));
-  // }
 
 
   get formGroup(): FormGroup {
@@ -90,7 +90,6 @@ export class Tap3Component {
   guardarJSON() {
     const monedasIds = this.monedasSeleccionadas.map(moneda => moneda.exchangeId);
     const jsonData = {
-      principalCurrency: 0,
       monedasIds: monedasIds,
     };
 
@@ -100,6 +99,16 @@ export class Tap3Component {
     const monedasFormArray = this.formService.fb.array(monedasIds);
     const configCurrencyGroup = this.formGroup.get('currencyConfig') as FormGroup;
     configCurrencyGroup.setControl('currencyList', monedasFormArray);
-    configCurrencyGroup.get('principal')?.setValue(jsonData.principalCurrency);
+    this.formService.saveFormDataToLocalStorage();
   }
+  guardarMonedasEnLocalStorage() {
+    localStorage.setItem('monedasSeleccionadas', JSON.stringify(this.monedasSeleccionadas));
+  }
+  cargarMonedasDesdeLocalStorage() {
+    const storedMonedas = localStorage.getItem('monedasSeleccionadas');
+    if (storedMonedas) {
+      this.monedasSeleccionadas = JSON.parse(storedMonedas);
+    }
+  }
+
 }
