@@ -95,7 +95,9 @@ export class FormStateService {
   }
 
   searchCurrency(moneyName: string): Observable<any> {
-    return this.http.get(`http://localhost:8080/currency?name=${moneyName}`);
+      console.log(moneyName);
+    return this.http.get(`http://localhost:8080/config/enterprise/currency?name=${moneyName}`);
+
   }
 
 
