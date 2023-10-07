@@ -64,7 +64,7 @@ import { BalanceSheetComponent } from './components/reports/balance-sheet/balanc
     AndreModule,
     MicaModule,
     SebastianModule,
-    /*KeycloakAngularModule
+    KeycloakAngularModule
   ],
   providers: [
     {
@@ -72,7 +72,7 @@ import { BalanceSheetComponent } from './components/reports/balance-sheet/balanc
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService]
-    }*/
+    }
   ],
   exports: [
     CircularButtonComponent
