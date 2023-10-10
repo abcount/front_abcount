@@ -92,15 +92,23 @@ label {
 input[type="date"], select {
     color: #757575;
     font-size: 16px;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #F9DE9B;
     border-radius: 5px;
     width: 100%;
     padding: 3px 10px;
     outline: none;
 }
+input[type="checkbox"] {
+    border: 3px solid #F9DE9B;
+    outline: none;
+    background-color: #F9DE9B;
+}
+
 .title h2 {
     margin-right: 15px;
 }
+
+
 /*Monedas*/
 .money {
     display: grid;
@@ -126,16 +134,19 @@ select {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 5px;
     background-color: #D9D9D9;
-    border-radius: 2%;
+    border-radius: 10px;
     margin-top: 10px;
 }
 .Nombre{
     margin: 10px 10px;
-    border-radius: 2%;
+    border-radius: 10px;
     border: none;
     height: 60px;
     padding: 5px;
 }
+input::placeholder {
+    transition: opacity 0.25s;
+}  
 /*Botones*/
 .buttons {
     display: flex;
