@@ -13,7 +13,12 @@
 /*Navbar - detalles*/
 .navbar {
     padding: 1% 5%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
+/*-----------------------------------------------------------------------------------------------------------------------*/
 /*Logo*/
 .navbar-brand {
     margin-right: 65px;
@@ -31,33 +36,68 @@ h2 {
 .logo {
     width: 40px;
 }
+/*-----------------------------------------------------------------------------------------------------------------------*/
 /*Opciones izquierda*/
+.nav-link {
+    color: #7F7F7F;
+    cursor: pointer;
+    text-decoration: none;
+}
 .option {
-    padding: 12px 65px 6px 10px !important;
-    padding-top: 4px;
-    margin: 0;
+    padding: 12px 65px 6px 10px;
 }
 .option:hover {
     background-color: #DCF8EF;
     border-radius: 3px;
     color: #66cdab !important;
 }
-
+/*-----------------------------------------------------------------------------------------------------------------------*/
+/*Opciones derecha*/
+.dropdown-toggle {
+    flex-grow: 1;
+    justify-content: flex-end;
+    position: relative;
+}
+.img-profile {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%; 
+    margin-right: 10px;
+}
+.dropdown-toggle i {
+    margin-right: 10px;
+}
 /*Opciones de perfil*/
+.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 5px 0;
+    border: 1px solid #E8E8E8;
+    z-index: 1;
+    margin-top: 5px;
+}
 hr {
-    margin: 5px 10px;
+    margin: 5px 0;
+    border: none;
+    border-top: 1px solid #E8E8E8;
 }
 .dropdown-item {
-    color: #757575 !important;
+    color: #757575;
     font-size: 16px;
     font-weight: 600;
     padding: 8px 24px 3px 24px;
     cursor: pointer;
+    text-decoration: none;
 }
 .dropdown-item:hover {
-    color: black !important;
+    color: black;
+    background-color: #f8f8f8;
 }
 .dropdown-item:active {
-    background-color: #DCF8EF !important;
-    color: #66cdab !important;
+    background-color: #DCF8EF;
+    color: #66cdab;
 }

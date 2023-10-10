@@ -14,7 +14,7 @@ import { UsersAndPermissionsComponent } from '../components/configuration/users-
 import { ReportsComponent } from '../components/reports/reports/reports.component';
 
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountComponent } from "../components/configuration/account/account.component";
 import { MatTreeModule } from "@angular/material/tree";
 import { AppModule } from "../app.module";
@@ -44,7 +44,8 @@ const CarlosComponents = [
     SebastianModule,
     FormsModule,
     MatTreeModule,
-    AppModule
+    AppModule,
+    ReactiveFormsModule
   ],
   exports: [CarlosComponents] // Poner [CarlosComponents]
 })

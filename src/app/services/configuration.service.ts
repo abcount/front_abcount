@@ -40,7 +40,8 @@ export class ConfigurationService {
   }
 
   // Función para guardar los cambios en los datos de la empresa
-  updateEnterprise(companyName: string, diccCategory: string, nit: string, address: string, logoUuid: string, contactEmail: string, contactName: string) {
+  updateEnterprise(companyName: string, diccCategory: string, nit: string, address: string, logoUuid: string, contactEmail: string, contactName: string,
+    nameRepresentative: string, ciRepresentative: string, numberRegistration: string, numberEmployee: string) {
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -53,8 +54,12 @@ export class ConfigurationService {
       'address': address,
       'logoUuid': logoUuid,
       'contactEmail': contactEmail,
-      'contactName': contactName
-    }
+      'contactName': contactName,
+      'nameRepresentative': nameRepresentative,
+      'ciRepresentative': ciRepresentative,
+      'numberRegistration': numberRegistration,
+      'numberEmployee': numberEmployee
+    };
     return this.http.put(`${this.configurationUrl}/${this.companyId}`, body, { headers: header });
   }
 

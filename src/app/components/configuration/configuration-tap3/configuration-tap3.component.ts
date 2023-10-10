@@ -1,5 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { FormStateService } from 'src/app/services/form-state.service';
 
 @Component({
   selector: 'app-configuration-tap3',
@@ -10,13 +12,15 @@ export class ConfigurationTap3Component {
 
   // Variables
   registerDate: string = '';
-  showPopup: boolean = false;
+  modeEdit: boolean = false;
   currencies: any[] = [];
-  currencyName: string = '';
-  currencyCode: string = '';
+  monedasSugeridas: any[] = [];
+  monedasSeleccionadas: any[] = [];
+  moneyName = new FormControl();
+  color: string = '#CFF4E8';
 
   // Constructor
-  constructor(private ConfigurationService: ConfigurationService) { }
+  constructor(private ConfigurationService: ConfigurationService, private formService: FormStateService) { }
 
   // Cargar los datos
   ngOnInit() {
@@ -27,49 +31,51 @@ export class ConfigurationTap3Component {
     });
   }
 
-  // Función para agregar moneda
-  addCurrency() {
-    this.showPopup = true;
-    this.currencyName = '';
-    this.currencyCode = '';
+  buscarSugerencias() {
+    this.formService.searchCurrency(this.moneyName.value).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.monedasSugeridas = response.data;
+        } else {
+          console.error(response.message);
+        }
+      },
+      (error) => {
+        console.error('Error al buscar monedas:', error);
+      }
+    );
   }
 
-  // Controladores de mensajes de error
-  @ViewChild('errorName') errorName: ElementRef;
-  @ViewChild('errorCode') errorCode: ElementRef;
-  @ViewChild('errorEmpty') errorEmpty: ElementRef;
-  
-  // Función para guardar moneda
-  saveCurrency() {
-    const currencyNames = this.currencies.map(currency => currency.moneyName);
-    const currencyCodes = this.currencies.map(currency => currency.abbreviationName);
-    if (currencyNames.includes(this.currencyName)){
-      this.errorName.nativeElement.classList.add('show');
-      setTimeout(() => {
-        this.errorName.nativeElement.classList.remove('show');
-      }, 2000);
-    } else if (currencyCodes.includes(this.currencyCode)){
-        this.errorCode.nativeElement.classList.add('show');
-        setTimeout(() => {
-          this.errorCode.nativeElement.classList.remove('show');
-        }, 2000);
-    } else if (this.currencyCode.length == 0 || this.currencyName.length == 0) {
-      this.errorEmpty.nativeElement.classList.add('show');
-      setTimeout(() => {
-        this.errorEmpty.nativeElement.classList.remove('show');
-      }, 2000);
-    } else {
-      this.ConfigurationService.addCurrency(this.currencyName, this.currencyCode).subscribe((data: any) => {
-        console.log(data);
-        this.currencies = data.data;
-        this.showPopup = false;
-      });
+  seleccionarMoneda(moneda: any) {
+    const currenciesId = this.currencies.map(c => c.exchangeId);
+    if (!this.monedasSeleccionadas.some(m => m.exchangeId === moneda.exchangeId)) {
+      if (!currenciesId.includes(moneda.exchangeId)) {
+        this.monedasSeleccionadas = [...this.monedasSeleccionadas, moneda];
+        this.monedasSeleccionadas.push(moneda.exchangeId);
+      }
     }
+    this.moneyName;
+    this.monedasSugeridas = [];
   }
 
+  removerMoneda(exchangeId: number) {
+    this.monedasSeleccionadas = this.monedasSeleccionadas.filter(m => m.exchangeId !== exchangeId);
+  }
+
+  // Función para guardar moneda
+  save() {
+    console.log(this.monedasSeleccionadas);
+  }
+
+  // Función para editar moneda
+  enable() {
+    this.modeEdit = true;
+  }
 
   // Función para calcelar el agregado de moneda
   cancel() {
-    this.showPopup = false;
+    this.modeEdit = false;
+    this.monedasSeleccionadas = [];
+    this.moneyName.reset();
   }
 }

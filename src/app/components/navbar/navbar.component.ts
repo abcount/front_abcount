@@ -8,9 +8,14 @@ import { Component } from '@angular/core';
 export class NavbarComponent {
 
   urlPfp = "../.././../assets/pfp.svg";
+  isDropdownOpen = false;
 
   logout() {
     console.log('Cerrar sesión');
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
 }

@@ -15,9 +15,13 @@ export class ConfigurationTap1Component {
   controlName: FormControl = new FormControl('', []);
   controlRubro: FormControl = new FormControl('', []);
   controlNit: FormControl = new FormControl('', []);
+  nameRepresentativeControl: FormControl = new FormControl('', []);
+  ciRepresentativeControl: FormControl = new FormControl('', []);
   controlAddress: FormControl = new FormControl('', []);
   controlContactEmail: FormControl = new FormControl('', []);
   controlContactName: FormControl = new FormControl('', []);
+  numberRegistrationControl: FormControl = new FormControl('', []);
+  numberEmployeeControl: FormControl = new FormControl('', []);
   patternAll = '.*';
   patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   patternNumber = '^[0-9]*$';
@@ -41,6 +45,10 @@ export class ConfigurationTap1Component {
         this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
         this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
         this.controlContactName.setValue(this.enterpriseData.contactName);
+        this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
+        this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
+        this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
+        this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
       }
     );
     this.disable();
@@ -65,17 +73,20 @@ export class ConfigurationTap1Component {
 
   // Función para guardar cambios realizados
   save() {
-    if (this.controlName.value == '' || this.controlRubro.value == '' || this.controlNit.value == '' || this.controlAddress.value == '' || this.controlContactEmail.value == '' || this.controlContactName.value == '') {
+    if (this.controlName.value == '' || this.controlRubro.value == '' || this.controlNit.value == '' || this.controlAddress.value == '' || this.controlContactEmail.value == '' || this.controlContactName.value == ''
+      || this.nameRepresentativeControl.value == '' || this.ciRepresentativeControl.value == '' || this.numberRegistrationControl.value == '' || this.numberEmployeeControl.value == '') {
       this.errorMessage.nativeElement.classList.add('show');
       setTimeout(() => {
         this.errorMessage.nativeElement.classList.remove('show');
       }, 3000);
     } else {
-      if (this.controlName.valid && this.controlRubro.valid && this.controlNit.valid && this.controlAddress.valid && this.controlContactEmail.valid && this.controlContactName.valid) {
+      if (this.controlName.valid && this.controlRubro.valid && this.controlNit.valid && this.controlAddress.valid && this.controlContactEmail.valid && this.controlContactName.valid
+        && this.nameRepresentativeControl.valid && this.ciRepresentativeControl.valid && this.numberRegistrationControl.valid && this.numberEmployeeControl.valid) {
         // Eliminar el "data:image/jpeg;base64," del logoUuid
         this.logoUuid = this.logoUuid.slice(23);
         this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid, 
-          this.controlContactEmail.value, this.controlContactName.value).subscribe(
+          this.controlContactEmail.value, this.controlContactName.value, this.nameRepresentativeControl.value, this.ciRepresentativeControl.value,
+          this.numberRegistrationControl.value, this.numberEmployeeControl.value).subscribe(
             (data: any) => {
               console.log(data);
               this.enterpriseData = data.data;
@@ -86,6 +97,10 @@ export class ConfigurationTap1Component {
               this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
               this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
               this.controlContactName.setValue(this.enterpriseData.contactName);
+              this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
+              this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
+              this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
+              this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
             }
           );
         this.disable();
@@ -107,6 +122,10 @@ export class ConfigurationTap1Component {
     this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
     this.controlContactName.setValue(this.enterpriseData.contactName);
     this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
+    this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
+    this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
+    this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
+    this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
     this.disable();
   }
 
@@ -122,6 +141,10 @@ export class ConfigurationTap1Component {
     this.controlAddress.enable();
     this.controlContactEmail.enable();
     this.controlContactName.enable();
+    this.nameRepresentativeControl.enable();
+    this.ciRepresentativeControl.enable();
+    this.numberRegistrationControl.enable();
+    this.numberEmployeeControl.enable();
   }
   // Función para deshabilitar los inputs
   disable() {
@@ -132,5 +155,9 @@ export class ConfigurationTap1Component {
     this.controlAddress.disable();
     this.controlContactEmail.disable();
     this.controlContactName.disable();
+    this.nameRepresentativeControl.disable();
+    this.ciRepresentativeControl.disable();
+    this.numberRegistrationControl.disable();
+    this.numberEmployeeControl.disable();
   }
 }
