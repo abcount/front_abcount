@@ -21,7 +21,7 @@
                     <div class="area" *ngFor="let area of areas">
                         <input class="check-role" type="checkbox" [id]="'area_' + area.areaId" [(ngModel)]="area.selected" (change)="onAreaChange(area.areaId)">
                         <label [for]="'area_' + area.areaId">{{area.areaName}}</label>
-                      </div>
+                    </div>
                 </div>
             </div>
             <div class="card role">

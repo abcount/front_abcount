@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-users-and-permissions',
@@ -10,9 +10,7 @@ import { FormControl } from '@angular/forms';
 })
 export class AddUsersAndPermissionsComponent {
 
-  constructor(private router: Router) { }
-  selectAll = false;
-  
+  constructor(private router: Router, private userService: UserService) { }
 
   // Controladores para los inputs
   NombreUsuario: string = '';
@@ -103,6 +101,19 @@ export class AddUsersAndPermissionsComponent {
     console.log("Usuario agregado",  this.NombreUsuario,"Areas agregado", 
     this.areasSeleccionadas,"Sucursales seleccionadas" ,this.sucursalesSeleccionadas, 
     "Roles seleccionados", this.idsRolesSeleccionados);
+    this.userService.inviteUser(this.NombreUsuario, this.sucursalesSeleccionadas, this.areasSeleccionadas,  this.idsRolesSeleccionados).subscribe(
+      (response: any) => {
+        if (response.success) {
+          console.log(response.message);
+          //this.router.navigate(['/configuration-tap/5']);
+        } else {
+          console.error(response.message);
+        }
+      },
+      (error) => {
+        console.error('Error al agregar moneda:', error);
+      }
+    );
   }
 
   cancel(){

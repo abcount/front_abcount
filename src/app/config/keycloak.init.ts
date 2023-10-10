@@ -4,7 +4,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     return () =>
         keycloak.init({
             config: {
-                url: "https://mihouodie.com",
+                //url: "https://mihouodie.com",
                 realm: 'abcount',
                 clientId: 'frontend'
             },
