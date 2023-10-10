@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { debounce, debounceTime } from 'rxjs';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { FormStateService } from 'src/app/services/form-state.service';
 
@@ -17,31 +18,40 @@ export class ConfigurationTap3Component {
   monedasSugeridas: any[] = [];
   monedasSeleccionadas: any[] = [];
   moneyName = new FormControl();
-  color: string = '#CFF4E8';
 
   // Constructor
-  constructor(private ConfigurationService: ConfigurationService, private formService: FormStateService) { }
+  constructor(private configurationService: ConfigurationService, private formService: FormStateService) { }
 
   // Cargar los datos
   ngOnInit() {
-    this.ConfigurationService.getCurrencies().subscribe((data: any) => {
+    this.configurationService.getCurrencies().subscribe((data: any) => {
       console.log(data);
-      this.currencies = data.data.currencyConfig;
-      this.registerDate = data.data.openingDate;
+      this.currencies = data.data;
+      this.registerDate = data.openingDate;
     });
+    this.buscarSugerencias();
   }
 
   buscarSugerencias() {
-    this.formService.searchCurrency(this.moneyName.value).subscribe(
-      (response: any) => {
-        if (response.success) {
-          this.monedasSugeridas = response.data;
+    this.moneyName.valueChanges.pipe(debounceTime(300)).subscribe(
+      (value) => {
+        const trimmedValue = value.trim();
+        if (trimmedValue.length > 0) {
+          this.formService.searchCurrency(value).subscribe(
+            (response: any) => {
+              if (response.success) {
+                this.monedasSugeridas = response.data;
+              } else {
+                console.error(response.message);
+              }
+            },
+            (error) => {
+              console.error('Error al buscar monedas:', error);
+            }
+          );
         } else {
-          console.error(response.message);
+          this.monedasSugeridas = [];
         }
-      },
-      (error) => {
-        console.error('Error al buscar monedas:', error);
       }
     );
   }
@@ -50,8 +60,7 @@ export class ConfigurationTap3Component {
     const currenciesId = this.currencies.map(c => c.exchangeId);
     if (!this.monedasSeleccionadas.some(m => m.exchangeId === moneda.exchangeId)) {
       if (!currenciesId.includes(moneda.exchangeId)) {
-        this.monedasSeleccionadas = [...this.monedasSeleccionadas, moneda];
-        this.monedasSeleccionadas.push(moneda.exchangeId);
+        this.monedasSeleccionadas.push(moneda);
       }
     }
     this.moneyName;
@@ -65,6 +74,30 @@ export class ConfigurationTap3Component {
   // Función para guardar moneda
   save() {
     console.log(this.monedasSeleccionadas);
+    const currenciesId = this.monedasSeleccionadas.map(c => c.exchangeId);
+    console.log(currenciesId);
+    if (currenciesId.length > 0) {
+      this.configurationService.addCurrency(currenciesId).subscribe(
+        (response: any) => {
+          if (response.success) {
+            console.log(response.message);
+            this.currencies = response.data;
+            this.modeEdit = false;
+            this.monedasSeleccionadas = [];
+            this.moneyName.setValue('');
+          } else {
+            console.error(response.message);
+          }
+        },
+        (error) => {
+          console.error('Error al agregar moneda:', error);
+        }
+      );
+    } else {
+      this.modeEdit = false;
+      this.monedasSeleccionadas = [];
+      this.moneyName.setValue('');
+    }
   }
 
   // Función para editar moneda
@@ -76,6 +109,6 @@ export class ConfigurationTap3Component {
   cancel() {
     this.modeEdit = false;
     this.monedasSeleccionadas = [];
-    this.moneyName.reset();
+    this.moneyName.setValue('');
   }
 }

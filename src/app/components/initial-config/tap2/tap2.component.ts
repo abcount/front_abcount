@@ -139,9 +139,9 @@ export class Tap2Component {
 
   //Limpiar campos
   limpiarCampos() {
-    this.controlSubsidiaryName.reset();
-    this.controlSubsidiaryAddress.reset();
-    this.controlAreaName.reset();
+    this.controlSubsidiaryName.setValue('');
+    this.controlSubsidiaryAddress.setValue('');
+    this.controlAreaName.setValue('');
   }
 
   //Lógica para mostrar y ocultar hijos

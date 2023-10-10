@@ -24,19 +24,31 @@ export class Tap3Component {
     this.guardarJSON();
   }
 
+  ngOnInit() {
+    this.buscarSugerencias();
+  }
+
   buscarSugerencias() {
-    this.formService.searchCurrency(this.moneyName.value).subscribe(
-      (response: any) => {
-        if (response.success) {
-          this.monedasSugeridas = response.data;
+    this.moneyName.valueChanges.pipe(debounceTime(300)).subscribe(
+      (value) => {
+        const trimmedValue = value.trim();
+        if (trimmedValue.length > 0) {
+          this.formService.searchCurrency(value).subscribe(
+            (response: any) => {
+              if (response.success) {
+                this.monedasSugeridas = response.data;
+              } else {
+                console.error(response.message);
+              }
+            },
+            (error) => {
+              console.error('Error al buscar monedas:', error);
+            }
+          );
         } else {
-          console.error(response.message);
+          this.monedasSugeridas = [];
         }
-      },
-      (error) => {
-        console.error('Error al buscar monedas:', error);
-      }
-    );
+      });
   }
 
   seleccionarMoneda(moneda: any) {
@@ -45,17 +57,16 @@ export class Tap3Component {
       this.agregarMonedaId(moneda.exchangeId);
       this.guardarMonedasEnLocalStorage();
     }
-    this.moneyName;
+    this.moneyName.setValue('');
     this.monedasSugeridas = [];
   }
 
-
   removerMoneda(exchangeId: number) {
+    this.moneyName.setValue('');
+    this.monedasSugeridas = [];
     this.monedasSeleccionadas = this.monedasSeleccionadas.filter(m => m.exchangeId !== exchangeId);
-
     const currencyList = this.formGroup.get('currencyConfig.currencyList') as FormArray;
     const indexToRemove = currencyList.value.findIndex((id: number) => id === exchangeId);
-
     if (indexToRemove !== -1) {
       this.removerMonedaId(indexToRemove);
     }

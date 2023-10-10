@@ -44,8 +44,7 @@ export class ConfigurationService {
     nameRepresentative: string, ciRepresentative: string, numberRegistration: string, numberEmployee: string) {
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     };
     const body = {
       'companyName': companyName,
@@ -72,8 +71,7 @@ export class ConfigurationService {
   addSubsidiaryArea(subsidiaries: any[], areas: string[]){
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     }
     const body = {
       'subsidiaries': subsidiaries,
@@ -87,8 +85,7 @@ export class ConfigurationService {
   deleteSubsidiaryArea(subsidiaries: any[], areas: string[]){
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     }
     const body = {
       'subsidiaries': subsidiaries,
@@ -104,15 +101,13 @@ export class ConfigurationService {
   }
 
   // Función para agregar moneda
-  addCurrency(moneyName: string, abbreviationName: string) {
+  addCurrency(currenciesId: number[]) {
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     }
     const body = {
-      'moneyName': moneyName,
-      'abbreviationName': abbreviationName
+      'currencies': currenciesId
     }
     return this.http.post(`${this.configurationUrl}/currency/${this.companyId}`, body, { headers: header });
   }

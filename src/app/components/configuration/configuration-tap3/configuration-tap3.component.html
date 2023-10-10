@@ -21,7 +21,7 @@
                     </button>
                     <div *ngIf="modeEdit" class="input-icon-container">
                         <i class="fa fa-search input-icon"></i>
-                        <input type="text" id="searchMoneda" [formControl]="moneyName" (input)="buscarSugerencias()" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
+                        <input type="text" id="searchMoneda" [formControl]="moneyName" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
                         <div class="sugerencias-container" *ngIf="monedasSugeridas.length > 0">
                         <div *ngFor="let moneda of monedasSugeridas" (click)="seleccionarMoneda(moneda)" class="sugerencia-item">
                             {{ moneda.moneyName }} ({{ moneda.moneyIso }})
@@ -29,15 +29,14 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div style="min-height: 200px;">
+            <div>
                 <div *ngFor="let currency of currencies" class="moneda-item">
                 {{ currency.moneyName }}
                 </div>
             </div>
             <div class="currencies-list">
-                <div *ngFor="let moneda of monedasSeleccionadas" [style.background-color]="color" class="moneda-item">
+                <div *ngFor="let moneda of monedasSeleccionadas" class="moneda-item">
                     {{ moneda.moneyName }} 
                     <button (click)="removerMoneda(moneda.exchangeId)" class="remove-button">
                         <i class="fa-solid fa-x"></i>

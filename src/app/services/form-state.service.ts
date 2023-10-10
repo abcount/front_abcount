@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class FormStateService {
 
    formGroup: FormGroup;
-   private url="http://localhost:8080/api/v1/ms-company/company";
+   private url=`${environment.BACKEND_URL}/api/v1/ms-company/company`;
    private imageFile: File | null = null;
 
 
@@ -95,9 +96,8 @@ export class FormStateService {
   }
 
   searchCurrency(moneyName: string): Observable<any> {
-      console.log(moneyName);
-    return this.http.get(`http://localhost:8080/config/enterprise/currency?name=${moneyName}`);
-
+    console.log(moneyName);
+    return this.http.get(`${environment.BACKEND_URL}/config/enterprise/currency?name=${moneyName}`);
   }
 
 

@@ -21,7 +21,7 @@
       <div class="right">
         <div class="input-icon-container">
           <i class="fa fa-search input-icon"></i>
-          <input type="text" id="searchMoneda" [formControl]="moneyName" (input)="buscarSugerencias()" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
+          <input type="text" id="searchMoneda" [formControl]="moneyName" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
           <div class="sugerencias-container" *ngIf="monedasSugeridas.length > 0">
             <div *ngFor="let moneda of monedasSugeridas" (click)="seleccionarMoneda(moneda)" class="sugerencia-item">
               {{ moneda.moneyName }} ({{ moneda.moneyIso }})
