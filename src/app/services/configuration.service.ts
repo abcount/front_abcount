@@ -49,16 +49,17 @@ export class ConfigurationService {
     };
     const body = {
       'companyName': companyName,
-      'diccCategory': diccCategory,
       'nit': nit,
       'address': address,
       'logoUuid': logoUuid,
-      'contactEmail': contactEmail,
-      'contactName': contactName,
-      'nameRepresentative': nameRepresentative,
+      'emailRepresentative': contactEmail,
+      'numberRepresentative': contactName,
+      'legalRepresentative': nameRepresentative,
       'ciRepresentative': ciRepresentative,
       'numberRegistration': numberRegistration,
-      'numberEmployee': numberEmployee
+      'numberEmployee': numberEmployee,
+      'rubro': diccCategory
+
     };
     return this.http.put(`${this.configurationUrl}/${this.companyId}`, body, { headers: header });
   }
@@ -98,6 +99,8 @@ export class ConfigurationService {
 
   // Función para obtener las monedas
   getCurrencies() {
+    console.log("getCurrencies")
+    console.log(this.companyId)
     return this.http.get(`${this.configurationUrl}/currency/${this.companyId}`);
   }
 

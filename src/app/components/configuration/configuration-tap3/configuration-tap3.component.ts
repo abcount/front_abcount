@@ -26,7 +26,7 @@ export class ConfigurationTap3Component {
   ngOnInit() {
     this.configurationService.getCurrencies().subscribe((data: any) => {
       console.log(data);
-      this.currencies = data.data;
+      this.currencies = data.data.currencyConfig;
       this.registerDate = data.openingDate;
     });
     this.buscarSugerencias();
