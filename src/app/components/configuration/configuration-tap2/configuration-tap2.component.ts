@@ -30,7 +30,7 @@ export class ConfigurationTap2Component {
   messageSucursal: string = 'La sucursal ya existe';
   @ViewChild('errorMessageArea') errorMessageArea: ElementRef;
   messageArea: string = 'El área ya existe';
-  
+
   //Listas de sucursales y areas
   subsidiaries: any[] = [];
   areas: any[] = [];

@@ -74,6 +74,7 @@ export class ConfigurationTap4Component {
   constructor(private ConfigurationService: ConfigurationService) {
     this.ConfigurationService.getAccountsPlan().subscribe(
       (data: any) => {
+        console.log(data)
         this.dataSource.data = data.data;
         this.accountPlan = data.data;
       }
@@ -82,7 +83,9 @@ export class ConfigurationTap4Component {
   }
 
   // Función al inicializar la pantalla
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   //METODO PARA DEFINIR LA CUENTA SELEECIONADA
   setSelectedNode(node: NodeExample | null){

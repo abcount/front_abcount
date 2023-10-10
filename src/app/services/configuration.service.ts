@@ -36,6 +36,7 @@ export class ConfigurationService {
 
   // Función para obtener los datos de la empresa
   getEnterprise() {
+    console.log(this.companyId)
     return this.http.get(`${this.configurationUrl}/${this.companyId}`);
   }
 

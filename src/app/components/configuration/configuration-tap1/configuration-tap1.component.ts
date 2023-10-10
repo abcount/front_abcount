@@ -34,6 +34,7 @@ export class ConfigurationTap1Component {
     this.ConfigurationService.getEnterprise().subscribe(
       (data: any) => {
         this.enterpriseData = data.data;
+        console.log(this.enterpriseData);
         this.controlName.setValue(this.enterpriseData.companyName);
         this.controlRubro.setValue(this.enterpriseData.diccCategory);
         this.controlNit.setValue(this.enterpriseData.nit);
@@ -74,7 +75,7 @@ export class ConfigurationTap1Component {
       if (this.controlName.valid && this.controlRubro.valid && this.controlNit.valid && this.controlAddress.valid && this.controlContactEmail.valid && this.controlContactName.valid) {
         // Eliminar el "data:image/jpeg;base64," del logoUuid
         this.logoUuid = this.logoUuid.slice(23);
-        this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid, 
+        this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid,
           this.controlContactEmail.value, this.controlContactName.value).subscribe(
             (data: any) => {
               console.log(data);
