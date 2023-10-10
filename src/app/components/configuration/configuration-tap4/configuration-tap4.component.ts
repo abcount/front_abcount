@@ -13,14 +13,14 @@ interface NodeExample {
 }
 
 interface Account {
-  codeAccount: number;
+  accountCode: number;
   nameAccount: string;
   moneyRub: boolean;
   report: boolean;
-  editable: boolean;
   classificator: boolean;
   level: number;
   childrenAccounts: Account[];
+  editable: boolean;
 }
 
 @Component({
@@ -35,6 +35,7 @@ export class ConfigurationTap4Component {
   mostrarPopupSon = false;
 
   @ViewChild("accountName") accountName: string = "";
+  @ViewChild("digitsLevel") digitsLevel: number = 0;
   selectedNode: NodeExample | null = null;
   accountId: number = 0;
   accountMoneyRub: boolean = false;
@@ -44,7 +45,7 @@ export class ConfigurationTap4Component {
   private _transformer = (node: Account, level: number) => {
     return {
       expandable: !!node.childrenAccounts && node.childrenAccounts.length > 0,
-      name: node.codeAccount + ' ' + node.nameAccount,
+      name: node.accountCode + ' ' + node.nameAccount,
       level: level,
     };
   };
@@ -105,7 +106,7 @@ export class ConfigurationTap4Component {
     if(node == null){
       this.accountId = TREE_DATA.length + 1;
       let parentAccount = {
-        codeAccount: TREE_DATA.length + 1,
+        accountCode: TREE_DATA.length + 1,
         nameAccount: this.accountName,
         moneyRub: this.accountMoneyRub,
         report: this.accountReport,
@@ -128,17 +129,24 @@ export class ConfigurationTap4Component {
       this.mostrarPopupSon = false;
     }
     this.dataSource.data = TREE_DATA;
+    this.accountName = "";
+    this.digitsLevel = 0;
+    this.accountReport = false;
+    this.accountMoneyRub = false;
+    this.accountClassificator = false;
+    this.mostrarPopup = false;
+    this.mostrarPopupSon = false;
   }
   //Method to add a new account leaf its a DFS algorithm
 
   // @ts-ignore
   positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].codeAccount === selectedAccount){
+      if(listOfAccounts[j].accountCode === selectedAccount){
         this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
         let newAccount: Account = {
           level: level + 1,
-          codeAccount: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
+          accountCode: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
           nameAccount: this.accountName,
           moneyRub: this.accountMoneyRub,
           report: this.accountReport,
@@ -178,7 +186,7 @@ export class ConfigurationTap4Component {
   // @ts-ignore
   deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].codeAccount === selectedAccount){
+      if(listOfAccounts[j].accountCode === selectedAccount){
         listOfAccounts.splice(j, 1);
         if(listOfAccounts.length !== 0){
           this.enumerateAccounts(listOfAccounts);
@@ -192,9 +200,9 @@ export class ConfigurationTap4Component {
   }
 
   enumerateAccounts(listOfAccounts : Account[]){
-    let parentAccount = Math.round(listOfAccounts[0].codeAccount / 10);
+    let parentAccount = Math.round(listOfAccounts[0].accountCode / 10);
     for(let j = 0; j < listOfAccounts.length; j++){
-      listOfAccounts[j].codeAccount = parentAccount * 10 + j + 1;
+      listOfAccounts[j].accountCode = parentAccount * 10 + j + 1;
     }
   }
 
@@ -227,5 +235,10 @@ export class ConfigurationTap4Component {
   cancelPopup(){
     this.mostrarPopup = false;
     this.mostrarPopupSon = false;
+    this.accountName = "";
+    this.digitsLevel = 0;
+    this.accountReport = false;
+    this.accountMoneyRub = false;
+    this.accountClassificator = false;
   }
 }

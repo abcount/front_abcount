@@ -40,13 +40,13 @@ export class ConfigurationTap1Component {
         this.enterpriseData = data.data;
         console.log(this.enterpriseData);
         this.controlName.setValue(this.enterpriseData.companyName);
-        this.controlRubro.setValue(this.enterpriseData.diccCategory);
+        this.controlRubro.setValue(this.enterpriseData.rubro);
         this.controlNit.setValue(this.enterpriseData.nit);
         this.controlAddress.setValue(this.enterpriseData.address);
         this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
-        this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
-        this.controlContactName.setValue(this.enterpriseData.contactName);
-        this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
+        this.controlContactEmail.setValue(this.enterpriseData.emailRepresentative);
+        this.controlContactName.setValue(this.enterpriseData.numberRepresentative);
+        this.nameRepresentativeControl.setValue(this.enterpriseData.legalRepresentative);
         this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
         this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
         this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
@@ -92,13 +92,13 @@ export class ConfigurationTap1Component {
               console.log(data);
               this.enterpriseData = data.data;
               this.controlName.setValue(this.enterpriseData.companyName);
-              this.controlRubro.setValue(this.enterpriseData.diccCategory);
+              this.controlRubro.setValue(this.enterpriseData.rubro);
               this.controlNit.setValue(this.enterpriseData.nit);
               this.controlAddress.setValue(this.enterpriseData.address);
               this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
-              this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
-              this.controlContactName.setValue(this.enterpriseData.contactName);
-              this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
+              this.controlContactEmail.setValue(this.enterpriseData.emailRepresentative);
+              this.controlContactName.setValue(this.enterpriseData.numberRepresentative);
+              this.nameRepresentativeControl.setValue(this.enterpriseData.legalRepresentative);
               this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
               this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
               this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
@@ -117,13 +117,13 @@ export class ConfigurationTap1Component {
   // Función para cancelar los cambios
   cancel() {
     this.controlName.setValue(this.enterpriseData.companyName);
-    this.controlRubro.setValue(this.enterpriseData.diccCategory);
+    this.controlRubro.setValue(this.enterpriseData.rubro);
     this.controlNit.setValue(this.enterpriseData.nit);
     this.controlAddress.setValue(this.enterpriseData.address);
-    this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
-    this.controlContactName.setValue(this.enterpriseData.contactName);
+    this.controlContactEmail.setValue(this.enterpriseData.emailRepresentative);
+    this.controlContactName.setValue(this.enterpriseData.numberRepresentative);
     this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
-    this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
+    this.nameRepresentativeControl.setValue(this.enterpriseData.legalRepresentative);
     this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
     this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
     this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);

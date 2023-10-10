@@ -53,31 +53,42 @@
 /*Modo edición*/
 /*Boton para expandir*/
 .expand-button {
-display: flex;
-align-items: center;
-justify-content: center;
-border: none;
-background-color: #fff;
-margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #fff;
+    margin-left: 8px;
 }
 .expand-button:focus {
-outline: none !important;
+    outline: none !important;
 }
 /*Cuenta*/
 mat-tree-node {
-min-height: 32px;
-font-size: 16px;
-color: #757575;
+    padding: 10px 0;
+    min-height: 24px;
+    font-size: 16px;
+    color: #757575;
+    border-bottom: 1px solid #EDEDED;
 }
 mat-tree-node .right {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
 }
 /*Separador*/
 .separator {
-margin-right: 20px; 
+    margin-right: 20px; 
+}
+/*Linea*/
+hr {
+    margin: 0;
+    border: none; 
+    border-bottom: 1px solid #EDEDED;
+}
+.linea {
+    margin-top: 10px;
 }
 /*---------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
@@ -193,4 +204,12 @@ input[type="radio"] {
     align-items: center;
     margin-top: 5px;
     gap: 10px;
+}
+
+/*Colores de los textos*/
+.text-orange {
+    color: #fb9c7e;
+}
+.text-blue {
+    color: #489CE9;
 }
