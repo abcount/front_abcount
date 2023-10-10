@@ -9,12 +9,6 @@
                 <h3 style="color: #B2B2B2;">{{registerDate}}</h3>
             </div>
             <hr>
-            <h2>CANTIDAD DE NIVELES EN EL PLAN DE CUENTAS</h2>
-            <div class="row-2">
-                <h3>Niveles del plan de cuentas</h3>
-                <h3 style="color: #B2B2B2;">Infinito</h3>
-            </div>
-            <hr>
             <div style="margin-bottom: 0px;" class = "row-2">
                 <h3>MONEDA PRINCIPAL</h3>
                 <h3 style="color: #B2B2B2;">Bolivianos</h3>
@@ -22,44 +16,37 @@
             <div class="row-2">
                 <h3>Otras monedas que quiera manejar</h3>
                 <div class="right">
-                <app-my-button [isGreen]="true" (click)="addCurrency()">AGREGAR</app-my-button>
+                    <button *ngIf="!modeEdit" class="edit-button" (click)="enable()">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <div *ngIf="modeEdit" class="input-icon-container">
+                        <i class="fa fa-search input-icon"></i>
+                        <input type="text" id="searchMoneda" [formControl]="moneyName" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
+                        <div class="sugerencias-container" *ngIf="monedasSugeridas.length > 0">
+                        <div *ngFor="let moneda of monedasSugeridas" (click)="seleccionarMoneda(moneda)" class="sugerencia-item">
+                            {{ moneda.moneyName }} ({{ moneda.moneyIso }})
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div style="min-height: 200px;">
+            <div>
                 <div *ngFor="let currency of currencies" class="moneda-item">
                 {{ currency.moneyName }}
                 </div>
             </div>
+            <div class="currencies-list">
+                <div *ngFor="let moneda of monedasSeleccionadas" class="moneda-item">
+                    {{ moneda.moneyName }} 
+                    <button (click)="removerMoneda(moneda.exchangeId)" class="remove-button">
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="right" *ngIf="modeEdit">
+                <app-my-button [isGreen]="true" (click)="save()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
+                <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
+            </div>
         </div>
-    </div>
-</div>
-<!-- Popup para agregar monedas -->
-<!-- Capa de fondo desenfocada -->
-<div class="overlay" *ngIf="showPopup"></div>
-<!-- Popup para agregar monedas -->
-<div *ngIf="showPopup" class="popup">
-    <div class="popup-title">
-        <span class="icon">
-            <i class="fa-solid fa-coins"></i>
-        </span>
-        <h2 class="h2-title">Registro de Moneda</h2>
-    </div>
-    <div class="row-2-popup">
-        <h3>Nombre de Moneda</h3>
-        <input type="text" id="popupNombreMoneda" [(ngModel)]="currencyName" class="input-group">
-        <div></div>
-        <div #errorName class="error-message">Nombre de moneda existente</div>
-    </div>
-    <br>
-    <div class="row-2-popup">
-        <h3>Código de Moneda (Código ISO)</h3>
-        <input type="text" id="popupCodigoISO" [(ngModel)]="currencyCode" class="input-group">
-        <div></div>
-        <div #errorCode class="error-message">Código de moneda existente</div>
-    </div>
-    <div #errorEmpty class="error-message" style="margin-top: 10px;">Para continuar debes llenar todos los campos</div>
-    <div class="popup-buttons right">
-        <app-my-button [isGreen]="true" (click)="saveCurrency()">ACEPTAR</app-my-button>
-        <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
     </div>
 </div>

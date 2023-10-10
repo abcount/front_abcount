@@ -6,55 +6,67 @@
             <div class="titulo">
                 <div>
                     <i class="fa-solid fa-city icono"></i>
-                    <h2>IDENTIFICACIÓN</h2>
+                    <h2>EMPRESA</h2>
                 </div>
             </div>
-            <div class="identificacion-datos">
-                <div class="identificacion-campos">
-                    <app-my-textfield type="text" iconInput="fa-regular fa-building" label="Nombre" [control]="controlName" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el nombre de tu empresa"></app-my-textfield>
-                    <div style="height: 15px;"></div>
-                    <app-my-textfield type="text" iconInput="fa-regular fa-store" label="Rubro" [control]="controlRubro" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el rubro al que se dedica"></app-my-textfield>
-                    <div style="height: 15px;"></div>
-                    <app-my-textfield type="text" iconInput="fa-regular fa-id-card" label="NIT" [control]="controlNit" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el NIT de la empresa"></app-my-textfield>
-                </div>
-                <div class="identificacion-imagen">
-                    <h4>LOGO</h4>
-                    <div class="logo">
-                        <button *ngIf="modeEdit" (click)="imgLogo.click()">
-                            <i class="fa-solid fa-camera"></i>
-                        </button>
-                        <input type="file" accept="image/*" #imgLogo style="display:none" (change)="onFileSelectedLogo($event)">
-                        <div *ngIf="!modeEdit"></div>
-                        <img src="{{logoUuid}}" alt="Descripción de la imagen">
+            <div class="empresa">
+                <div class="identificacion-datos">
+                    <div class="identificacion-campos">
+                        <app-my-textfield type="text" iconInput="fa-regular fa-building" label="Razón social" [control]="controlName" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese la razón social de tu empresa"></app-my-textfield>
+                        <div style="height: 15px;"></div>
+                        <app-my-textfield type="text" iconInput="fa-regular fa-store" label="Rubro" [control]="controlRubro" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el rubro al que se dedica"></app-my-textfield>
+                        <div style="height: 15px;"></div>
+                        <app-my-textfield type="text" iconInput="fa-regular fa-id-card" label="NIT" [control]="controlNit" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el NIT de la empresa"></app-my-textfield>
+                        <div style="height: 15px;"></div>
                     </div>
+                    <div class="identificacion-imagen">
+                        <h4 style="margin-top: 4px;">LOGO</h4>
+                        <div class="logo">
+                            <button *ngIf="modeEdit" (click)="imgLogo.click()">
+                                <i class="fa-solid fa-camera"></i>
+                            </button>
+                            <input type="file" accept="image/*" #imgLogo style="display:none" (change)="onFileSelectedLogo($event)">
+                            <div *ngIf="!modeEdit"></div>
+                            <img src="{{logoUuid}}" alt="Descripción de la imagen">
+                        </div>
+                    </div>
+                </div>
+                <div class="identificacion-datos">
+                    <app-my-textfield type="text" iconInput="fa-regular fa-user" label="Representante legal" [control]="nameRepresentativeControl" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el nombre del representante legal"></app-my-textfield>
+                    <app-my-textfield type="text" iconInput="fa-regular fa-address-card" label="C.I. del representante legal" [control]="ciRepresentativeControl" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese la C.I. del representante legal"></app-my-textfield>
                 </div>
             </div>
         </div>
         <div style="height: 15px;"></div>
         <div class="row-2">
             <div class="titulo">
-                <i class="fa-solid fa-location-dot icono" style="font-size: 30px;"></i>
-                <h2>UBICACIÓN</h2>
+                <i class="fa-solid fa-phone icono" style="font-size: 30px;"></i>
+                <h2>CONTACTO</h2>
             </div>
             <div class="campos">
                 <app-my-textfield type="text" iconInput="fa-regular fa-map-marker-alt" label="Dirección" [control]="controlAddress" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese la dirección de la empresa"></app-my-textfield>
+                <div style="height: 15px;"></div>
+                <div class="identificacion-datos">
+                    <app-my-textfield type="email" iconInput="fa-regular fa-envelope" label="E-mail de contacto" [control]="controlContactEmail" placeholder="Ingrese un e-mail de contacto" [pattern]='patternEmail' errorMessage="Por favor, ingrese una dirección de correo electrónico válida."></app-my-textfield>
+                    <app-my-textfield type="text" iconInput="fa-regular fa-phone" label="Número de contacto" [control]="controlContactName"  placeholder="Ingrese un número de contacto"  [pattern]="patternNumber" errorMessage="Por favor, ingrese un número de contacto válido."></app-my-textfield>
+                </div>
             </div>
         </div>
         <div style="height: 15px;"></div>
         <div class="row-2">
             <div class="titulo">
                 <div>
-                    <i class="fa-solid fa-phone icono" style="font-size: 30px;"></i>
-                    <h2>CONTACTO</h2> 
+                    <i class="fa-solid fa-file icono" style="font-size: 30px;"></i>
+                    <h2>DOCUMENTACIÓN Y REGISTROS</h2> 
                 </div>
             </div>
             <div class="campos">
                 <div>
-                    <app-my-textfield type="email" iconInput="fa-regular fa-envelope" label="E-mail de contacto" [control]="controlContactEmail" placeholder="Ingrese un e-mail de contacto" [pattern]='patternEmail' errorMessage="Por favor, ingrese una dirección de correo electrónico válida."></app-my-textfield>    
+                    <app-my-textfield type="text" iconInput="fa-regular fa-credit-card" label="Número de registro de comercio" [control]="numberRegistrationControl" [pattern]="patternAll" errorMessage="Ingrese un valor válido" placeholder="Ingrese el número de registro de comercio"></app-my-textfield>
                 </div>
                 <div style="height: 15px;"></div>
                 <div>
-                    <app-my-textfield type="text" iconInput="fa-regular fa-phone" label="Número de contacto" [control]="controlContactName"  placeholder="Ingrese un número de contacto"  [pattern]="patternNumber" errorMessage="Por favor, ingrese un número de contacto válido."></app-my-textfield>
+                    <app-my-textfield type="text" iconInput="fa-regular fa-user" label="Número de registro de empleador" [control]="numberEmployeeControl" [pattern]="patternAll" errorMessage="ngrese un valor válido" placeholder="Ingrese el número de registro de empleador"></app-my-textfield>
                 </div>
             </div>
         </div>

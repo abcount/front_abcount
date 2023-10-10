@@ -6,4 +6,8 @@ export interface EnterpriseDto {
     logoUuid: string;
     contactEmail: string;
     contactName: string;
+    nameRepresentative: string;
+    ciRepresentative: string;
+    numberRegistration: string;
+    numberEmployee: string;
 }

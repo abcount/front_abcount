@@ -41,11 +41,11 @@ export class ConfigurationService {
   }
 
   // Función para guardar los cambios en los datos de la empresa
-  updateEnterprise(companyName: string, diccCategory: string, nit: string, address: string, logoUuid: string, contactEmail: string, contactName: string) {
+  updateEnterprise(companyName: string, diccCategory: string, nit: string, address: string, logoUuid: string, contactEmail: string, contactName: string,
+    nameRepresentative: string, ciRepresentative: string, numberRegistration: string, numberEmployee: string) {
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     };
     const body = {
       'companyName': companyName,
@@ -54,8 +54,12 @@ export class ConfigurationService {
       'address': address,
       'logoUuid': logoUuid,
       'contactEmail': contactEmail,
-      'contactName': contactName
-    }
+      'contactName': contactName,
+      'nameRepresentative': nameRepresentative,
+      'ciRepresentative': ciRepresentative,
+      'numberRegistration': numberRegistration,
+      'numberEmployee': numberEmployee
+    };
     return this.http.put(`${this.configurationUrl}/${this.companyId}`, body, { headers: header });
   }
 
@@ -68,8 +72,7 @@ export class ConfigurationService {
   addSubsidiaryArea(subsidiaries: any[], areas: string[]){
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     }
     const body = {
       'subsidiaries': subsidiaries,
@@ -83,8 +86,7 @@ export class ConfigurationService {
   deleteSubsidiaryArea(subsidiaries: any[], areas: string[]){
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     }
     const body = {
       'subsidiaries': subsidiaries,
@@ -100,15 +102,13 @@ export class ConfigurationService {
   }
 
   // Función para agregar moneda
-  addCurrency(moneyName: string, abbreviationName: string) {
+  addCurrency(currenciesId: number[]) {
     const header = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      //'Authorization': 'Bearer $token',
+      'Accept': 'application/json'
     }
     const body = {
-      'moneyName': moneyName,
-      'abbreviationName': abbreviationName
+      'currencies': currenciesId
     }
     return this.http.post(`${this.configurationUrl}/currency/${this.companyId}`, body, { headers: header });
   }
