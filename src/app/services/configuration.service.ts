@@ -41,27 +41,8 @@ export class ConfigurationService {
   }
 
   // Función para guardar los cambios en los datos de la empresa
-  updateEnterprise(companyName: string, diccCategory: string, nit: string, address: string, logoUuid: string, contactEmail: string, contactName: string,
-    nameRepresentative: string, ciRepresentative: string, numberRegistration: string, numberEmployee: string) {
-    const header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
-    const body = {
-      'companyName': companyName,
-      'nit': nit,
-      'address': address,
-      'logoUuid': logoUuid,
-      'emailRepresentative': contactEmail,
-      'numberRepresentative': contactName,
-      'legalRepresentative': nameRepresentative,
-      'ciRepresentative': ciRepresentative,
-      'numberRegistration': numberRegistration,
-      'numberEmployee': numberEmployee,
-      'rubro': diccCategory
-
-    };
-    return this.http.put(`${this.configurationUrl}/${this.companyId}`, body, { headers: header });
+  updateEnterprise(formData: FormData) {
+    return this.http.put(`${this.configurationUrl}/${this.companyId}`, formData);
   }
 
   // Función para obtener las sucursales y areas
@@ -70,7 +51,7 @@ export class ConfigurationService {
   }
 
   // Funcion para agregar las nuevas areas y sucursales
-  addSubsidiaryArea(subsidiaries: any[], areas: string[]){
+  addSubsidiaryArea(subsidiaries: any[], areas: any[]){
     const header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -80,27 +61,11 @@ export class ConfigurationService {
       'areas': areas
     }
     console.log(body);
-    return this.http.post(`${this.configurationUrl}/subsidiary/${this.companyId}`, body, { headers: header });
-  }
-
-  // Función para eliminar las sucursales y areas
-  deleteSubsidiaryArea(subsidiaries: any[], areas: string[]){
-    const header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-    const body = {
-      'subsidiaries': subsidiaries,
-      'areas': areas
-    }
-    console.log(body);
-    return this.http.put(`${this.configurationUrl}/subsidiary/${this.companyId}`, body, { headers: header });
+    return this.http.post(`${this.configurationUrl}/${this.companyId}/subsidiary`, body, { headers: header });
   }
 
   // Función para obtener las monedas
   getCurrencies() {
-    console.log("getCurrencies")
-    console.log(this.companyId)
     return this.http.get(`${this.configurationUrl}/currency/${this.companyId}`);
   }
 

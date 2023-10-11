@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
-import { FormStateService } from "../../../services/form-state.service";
 
 let TREE_DATA: Account[] = [];
 
@@ -13,7 +12,7 @@ interface NodeExample {
 }
 
 interface Account {
-  accountCode: number;
+  codeAccount: number;
   nameAccount: string;
   moneyRub: boolean;
   report: boolean;
@@ -45,7 +44,7 @@ export class ConfigurationTap4Component {
   private _transformer = (node: Account, level: number) => {
     return {
       expandable: !!node.childrenAccounts && node.childrenAccounts.length > 0,
-      name: node.accountCode + ' ' + node.nameAccount,
+      name: node.codeAccount + ' ' + node.nameAccount,
       level: level,
     };
   };
@@ -106,7 +105,7 @@ export class ConfigurationTap4Component {
     if(node == null){
       this.accountId = TREE_DATA.length + 1;
       let parentAccount = {
-        accountCode: TREE_DATA.length + 1,
+        codeAccount: TREE_DATA.length + 1,
         nameAccount: this.accountName,
         moneyRub: this.accountMoneyRub,
         report: this.accountReport,
@@ -142,11 +141,11 @@ export class ConfigurationTap4Component {
   // @ts-ignore
   positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].accountCode === selectedAccount){
+      if(listOfAccounts[j].codeAccount === selectedAccount){
         this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
         let newAccount: Account = {
           level: level + 1,
-          accountCode: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
+          codeAccount: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
           nameAccount: this.accountName,
           moneyRub: this.accountMoneyRub,
           report: this.accountReport,
@@ -186,7 +185,7 @@ export class ConfigurationTap4Component {
   // @ts-ignore
   deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].accountCode === selectedAccount){
+      if(listOfAccounts[j].codeAccount === selectedAccount){
         listOfAccounts.splice(j, 1);
         if(listOfAccounts.length !== 0){
           this.enumerateAccounts(listOfAccounts);
@@ -200,9 +199,9 @@ export class ConfigurationTap4Component {
   }
 
   enumerateAccounts(listOfAccounts : Account[]){
-    let parentAccount = Math.round(listOfAccounts[0].accountCode / 10);
+    let parentAccount = Math.round(listOfAccounts[0].codeAccount / 10);
     for(let j = 0; j < listOfAccounts.length; j++){
-      listOfAccounts[j].accountCode = parentAccount * 10 + j + 1;
+      listOfAccounts[j].codeAccount = parentAccount * 10 + j + 1;
     }
   }
 
