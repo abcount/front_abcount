@@ -107,13 +107,10 @@ export class ConfigurationTap2Component {
   //Lógica para guardar las nuevas sucursales y areas
   save(){
     if (this.newSubsidiaries.length > 0 || this.newAreas.length > 0){
-      this.configurationService.addSubsidiaryArea(this.newSubsidiaries, this.newAreas).subscribe(
-        (data: any) => {
-          this.subsidiaries = data.data.subsidiaries;
-          this.areas = data.data.areas;
-        }
-      );
+      this.configurationService.addSubsidiaryArea(this.newSubsidiaries, this.newAreas).subscribe();
     }
+    this.subsidiaries = this.subsidiaries.concat(this.newSubsidiaries);
+    this.areas = this.areas.concat(this.newAreas);
     this.modeEdit = false;
     this.newSubsidiaries = [];
     this.newAreas = [];
@@ -128,6 +125,8 @@ export class ConfigurationTap2Component {
       }
     );
     this.modeEdit = false;
+    this.newAreas = [];
+    this.newSubsidiaries = [];
   }
 
   //Editar

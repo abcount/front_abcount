@@ -126,8 +126,8 @@ export class ConfigurationTap1Component {
         formData.append('image', this.selectedLogo);
         this.configurationService.updateEnterprise(formData).subscribe(
           (data: any) => {
-            this.enterpriseData = data.data;
-            this.ngAfterViewInit();
+            console.log("Se actualizo la empresa");
+            console.log(this.enterpriseData);
           }
         );
         this.disable();
