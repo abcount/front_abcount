@@ -62,10 +62,27 @@ export class ConfigurationTap1Component {
     this.ciRepresentative.setValue(this.enterpriseData.ciRepresentative);
     this.numberRegistration.setValue(this.enterpriseData.numberRegistration);
     this.numberEmployee.setValue(this.enterpriseData.numberEmployee);
+    this.transformImage(this.enterpriseData.logoUuid);
   }
 
-  // Campos para las fotos
+  // Imagen de la empresa
   selectedLogo: File;
+
+  transformImage(base64String: string) {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'image/png' });
+    const fileName = 'logo.png';
+    this.selectedLogo = new File([blob], fileName, { type: 'image/png' });
+    console.log(this.selectedLogo);
+  }
+
+
+  // Campos para las fotos
   onFileSelectedLogo(event: any) {
     this.selectedLogo = event.target.files[0];
     const reader = new FileReader();
