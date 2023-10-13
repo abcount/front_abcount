@@ -1,13 +1,13 @@
 export interface EnterpriseDto {
-    companyName: string;
-    diccCategory: string;
-    nit: string;
     address: string;
-    logoUuid: string;
-    contactEmail: string;
-    contactName: string;
-    nameRepresentative: string;
     ciRepresentative: string;
-    numberRegistration: string;
+    companyName: string;
+    emailRepresentative: string;
+    legalRepresentative: string;
+    logoUuid: string;
+    nit: string;
     numberEmployee: string;
+    numberRegistration: string;
+    numberRepresentative: string;
+    rubro: string;
 }

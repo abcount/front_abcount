@@ -20,6 +20,7 @@
     margin-left: 8px; /* Espacio entre el botón y los detalles de la cuenta */
 }
 .line {
-    margin: 2px 0px 5px 0px;
-    border-color: #EDEDED;
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #e0e0e0;
 }

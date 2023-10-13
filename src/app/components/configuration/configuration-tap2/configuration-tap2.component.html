@@ -48,9 +48,6 @@
                                 </button>                                               
                                 <div class="area" style="margin: 0px;">
                                     <span>{{sucursal.subsidiaryName}}</span>
-                                    <button *ngIf="sucursal.editable" class="circulo" style="margin: 0px;" (click)="deleteSubsidiary(sucursal.subsidiaryName)">
-                                        <i class="fa-solid fa-x"></i>
-                                    </button>
                                 </div>
                             </div>
                             <hr class="separator">
@@ -58,7 +55,45 @@
                                 <li *ngFor="let area of areas">
                                     <div class="area">    
                                         <span>{{area.areaName}}</span>
-                                        <button *ngIf="area.editable" class="circulo" (click)="deleteArea(area)">
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul *ngIf="sucursal.mostrarHijos">
+                                <li *ngFor="let newArea of newAreas">
+                                    <div class="area">    
+                                        <span>{{newArea.areaName}}</span>
+                                        <button  class="circulo" (click)="deleteArea(newArea.areaName)">
+                                            <i class="fa-solid fa-x"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li *ngFor="let newSucursal of newSubsidiaries">
+                            <div style="display: flex;">
+                                <button class="toggle" (click)="toggleChildren(newSucursal)">
+                                    <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': newSucursal.mostrarHijos, 'fa-caret-down': !newSucursal.mostrarHijos}"></i>
+                                </button>                                               
+                                <div class="area" style="margin: 0px;">
+                                    <span>{{newSucursal.subsidiaryName}}</span>
+                                    <button class="circulo" style="margin: 0px;" (click)="deleteSubsidiary(newSucursal.subsidiaryName)">
+                                        <i class="fa-solid fa-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <hr class="separator">
+                            <ul *ngIf="newSucursal.mostrarHijos">
+                                <li *ngFor="let area of areas">
+                                    <div class="area">    
+                                        <span>{{area.areaName}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul *ngIf="newSucursal.mostrarHijos">
+                                <li *ngFor="let newArea of newAreas">
+                                    <div class="area">    
+                                        <span>{{newArea.areaName}}</span>
+                                        <button  class="circulo" (click)="deleteArea(newArea.areaName)">
                                             <i class="fa-solid fa-x"></i>
                                         </button>
                                     </div>

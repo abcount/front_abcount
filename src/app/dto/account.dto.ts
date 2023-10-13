@@ -1,6 +1,7 @@
 export interface AccountDto {
     isHidden: any;
-    codeAccount: number;
+    accountId: number;
+    codeAccount: string;
     nameAccount: string;
     clasificator: boolean;
     level: number;

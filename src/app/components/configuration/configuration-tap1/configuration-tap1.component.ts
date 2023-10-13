@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { EnterpriseDto } from 'src/app/dto/enterprise.dto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
@@ -9,19 +8,22 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
   templateUrl: './configuration-tap1.component.html',
   styleUrls: ['./configuration-tap1.component.css']
 })
+
 export class ConfigurationTap1Component {
 
   // Controladores para los inputs
-  controlName: FormControl = new FormControl('', []);
-  controlRubro: FormControl = new FormControl('', []);
-  controlNit: FormControl = new FormControl('', []);
-  nameRepresentativeControl: FormControl = new FormControl('', []);
-  ciRepresentativeControl: FormControl = new FormControl('', []);
-  controlAddress: FormControl = new FormControl('', []);
-  controlContactEmail: FormControl = new FormControl('', []);
-  controlContactName: FormControl = new FormControl('', []);
-  numberRegistrationControl: FormControl = new FormControl('', []);
-  numberEmployeeControl: FormControl = new FormControl('', []);
+  companyName: FormControl = new FormControl('', []); // Razon social
+  rubro: FormControl = new FormControl('', []);
+  nit: FormControl = new FormControl('', []);
+  legalRepresentative: FormControl = new FormControl('', []);
+  ciRepresentative: FormControl = new FormControl('', []);
+  address: FormControl = new FormControl('', []);
+  emailRepresentative: FormControl = new FormControl('', []);
+  numberRepresentative: FormControl = new FormControl('', []); // Numero de contacto
+  numberRegistration: FormControl = new FormControl('', []);
+  numberEmployee: FormControl = new FormControl('', []);
+  
+  // Patrones para los inputs
   patternAll = '.*';
   patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   patternNumber = '^[0-9]*$';
@@ -30,42 +32,66 @@ export class ConfigurationTap1Component {
   enterpriseData: EnterpriseDto;
   logoUuid: string;
 
+  // Variable para controlar el modo de edición
+  modeEdit: boolean = false;
+
   // Constructor
-  constructor(private ConfigurationService: ConfigurationService, private route: ActivatedRoute) { }
+  constructor(private configurationService: ConfigurationService) { }
 
   // Funcion al iniciar la pantalla
   ngOnInit() {
-    this.ConfigurationService.getEnterprise().subscribe(
+    this.configurationService.getEnterprise().subscribe(
       (data: any) => {
         this.enterpriseData = data.data;
-        console.log(this.enterpriseData);
-        this.controlName.setValue(this.enterpriseData.companyName);
-        this.controlRubro.setValue(this.enterpriseData.diccCategory);
-        this.controlNit.setValue(this.enterpriseData.nit);
-        this.controlAddress.setValue(this.enterpriseData.address);
-        this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
-        this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
-        this.controlContactName.setValue(this.enterpriseData.contactName);
-        this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
-        this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
-        this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
-        this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
+        this.ngAfterViewInit();
       }
     );
     this.disable();
   }
 
-  // Campos para las fotos
+  // Asignar valores a los inputs
+  ngAfterViewInit() {
+    this.companyName.setValue(this.enterpriseData.companyName);
+    this.rubro.setValue(this.enterpriseData.rubro);
+    this.nit.setValue(this.enterpriseData.nit);
+    this.address.setValue(this.enterpriseData.address);
+    this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
+    this.emailRepresentative.setValue(this.enterpriseData.emailRepresentative);
+    this.numberRepresentative.setValue(this.enterpriseData.numberRepresentative);
+    this.legalRepresentative.setValue(this.enterpriseData.legalRepresentative);
+    this.ciRepresentative.setValue(this.enterpriseData.ciRepresentative);
+    this.numberRegistration.setValue(this.enterpriseData.numberRegistration);
+    this.numberEmployee.setValue(this.enterpriseData.numberEmployee);
+    this.transformImage(this.enterpriseData.logoUuid);
+  }
+
+  // Imagen de la empresa
   selectedLogo: File;
+
+  transformImage(base64String: string) {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'image/png' });
+    const fileName = 'logo.png';
+    this.selectedLogo = new File([blob], fileName, { type: 'image/png' });
+    console.log(this.selectedLogo);
+  }
+
+
+  // Campos para las fotos
   onFileSelectedLogo(event: any) {
     this.selectedLogo = event.target.files[0];
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.result != null){
         this.logoUuid = reader.result?.toString();
-        console.log(this.logoUuid);
       }
     };
+    console.log(this.selectedLogo);
     reader.readAsDataURL(this.selectedLogo);
   }
 
@@ -74,36 +100,36 @@ export class ConfigurationTap1Component {
 
   // Función para guardar cambios realizados
   save() {
-    if (this.controlName.value == '' || this.controlRubro.value == '' || this.controlNit.value == '' || this.controlAddress.value == '' || this.controlContactEmail.value == '' || this.controlContactName.value == ''
-      || this.nameRepresentativeControl.value == '' || this.ciRepresentativeControl.value == '' || this.numberRegistrationControl.value == '' || this.numberEmployeeControl.value == '') {
+    if (this.companyName.value == '' || this.rubro.value == '' || this.nit.value == '' || this.address.value == '' || this.logoUuid == '' || this.emailRepresentative.value == '' || 
+    this.numberRepresentative.value == '' || this.legalRepresentative.value == '' || this.ciRepresentative.value == '' || this.numberRegistration.value == '' || this.numberEmployee.value == '') {
       this.errorMessage.nativeElement.classList.add('show');
       setTimeout(() => {
         this.errorMessage.nativeElement.classList.remove('show');
       }, 3000);
     } else {
-      if (this.controlName.valid && this.controlRubro.valid && this.controlNit.valid && this.controlAddress.valid && this.controlContactEmail.valid && this.controlContactName.valid
-        && this.nameRepresentativeControl.valid && this.ciRepresentativeControl.valid && this.numberRegistrationControl.valid && this.numberEmployeeControl.valid) {
-        // Eliminar el "data:image/jpeg;base64," del logoUuid
-        this.logoUuid = this.logoUuid.slice(23);
-        this.ConfigurationService.updateEnterprise(this.controlName.value, this.controlRubro.value, this.controlNit.value, this.controlAddress.value, this.logoUuid,
-          this.controlContactEmail.value, this.controlContactName.value, this.nameRepresentativeControl.value, this.ciRepresentativeControl.value,
-          this.numberRegistrationControl.value, this.numberEmployeeControl.value).subscribe(
-            (data: any) => {
-              console.log(data);
-              this.enterpriseData = data.data;
-              this.controlName.setValue(this.enterpriseData.companyName);
-              this.controlRubro.setValue(this.enterpriseData.diccCategory);
-              this.controlNit.setValue(this.enterpriseData.nit);
-              this.controlAddress.setValue(this.enterpriseData.address);
-              this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
-              this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
-              this.controlContactName.setValue(this.enterpriseData.contactName);
-              this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
-              this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
-              this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
-              this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
-            }
-          );
+      if (this.companyName.valid && this.rubro.valid && this.nit.valid && this.address.valid && this.logoUuid != '' && this.emailRepresentative.valid &&
+      this.numberRepresentative.valid && this.legalRepresentative.valid && this.ciRepresentative.valid && this.numberRegistration.valid && this.numberEmployee.valid) {
+        const formData = new FormData();
+        const data = {
+          companyName: this.companyName.value,
+          rubro: this.rubro.value,
+          nit: this.nit.value,
+          address: this.address.value,
+          emailRepresentative: this.emailRepresentative.value,
+          numberRepresentative: this.numberRepresentative.value,
+          legalRepresentative: this.legalRepresentative.value,
+          ciRepresentative: this.ciRepresentative.value,
+          numberRegistration: this.numberRegistration.value,
+          numberEmployee: this.numberEmployee.value
+        };
+        formData.append('datos', JSON.stringify(data));
+        formData.append('image', this.selectedLogo);
+        this.configurationService.updateEnterprise(formData).subscribe(
+          (data: any) => {
+            console.log("Se actualizo la empresa");
+            console.log(this.enterpriseData);
+          }
+        );
         this.disable();
       } else {
         this.errorMessage.nativeElement.classList.add('show');
@@ -116,49 +142,36 @@ export class ConfigurationTap1Component {
 
   // Función para cancelar los cambios
   cancel() {
-    this.controlName.setValue(this.enterpriseData.companyName);
-    this.controlRubro.setValue(this.enterpriseData.diccCategory);
-    this.controlNit.setValue(this.enterpriseData.nit);
-    this.controlAddress.setValue(this.enterpriseData.address);
-    this.controlContactEmail.setValue(this.enterpriseData.contactEmail);
-    this.controlContactName.setValue(this.enterpriseData.contactName);
-    this.logoUuid = "data:image/jpeg;base64,"+this.enterpriseData.logoUuid;
-    this.nameRepresentativeControl.setValue(this.enterpriseData.nameRepresentative);
-    this.ciRepresentativeControl.setValue(this.enterpriseData.ciRepresentative);
-    this.numberRegistrationControl.setValue(this.enterpriseData.numberRegistration);
-    this.numberEmployeeControl.setValue(this.enterpriseData.numberEmployee);
+    this.ngAfterViewInit();
     this.disable();
   }
-
-  // Variable para controlar el modo de edición
-  modeEdit: boolean = false;
 
   // Función para habilitar los inputs
   enable() {
     this.modeEdit = true;
-    this.controlName.enable();
-    this.controlRubro.enable();
-    this.controlNit.enable();
-    this.controlAddress.enable();
-    this.controlContactEmail.enable();
-    this.controlContactName.enable();
-    this.nameRepresentativeControl.enable();
-    this.ciRepresentativeControl.enable();
-    this.numberRegistrationControl.enable();
-    this.numberEmployeeControl.enable();
+    this.companyName.enable();
+    this.rubro.enable();
+    this.nit.enable();
+    this.address.enable();
+    this.emailRepresentative.enable();
+    this.numberRepresentative.enable();
+    this.legalRepresentative.enable();
+    this.ciRepresentative.enable();
+    this.numberRegistration.enable();
+    this.numberEmployee.enable();
   }
   // Función para deshabilitar los inputs
   disable() {
     this.modeEdit = false;
-    this.controlName.disable();
-    this.controlRubro.disable();
-    this.controlNit.disable();
-    this.controlAddress.disable();
-    this.controlContactEmail.disable();
-    this.controlContactName.disable();
-    this.nameRepresentativeControl.disable();
-    this.ciRepresentativeControl.disable();
-    this.numberRegistrationControl.disable();
-    this.numberEmployeeControl.disable();
+    this.companyName.disable();
+    this.rubro.disable();
+    this.nit.disable();
+    this.address.disable();
+    this.emailRepresentative.disable();
+    this.numberRepresentative.disable();
+    this.legalRepresentative.disable();
+    this.ciRepresentative.disable();
+    this.numberRegistration.disable();
+    this.numberEmployee.disable();
   }
 }

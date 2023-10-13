@@ -6,64 +6,98 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /*Background*/
 .reports {
     background-color: #F8F8F8;
-    padding: 5px 5% 4% 5%;
-}
-.header{
-    margin-top: 30px;
+    padding: 2% 5%;
 }
 hr{
-    margin-top: 10px;
+    border: none;
+    border-top: 1px solid #E5E5E5;
 }
 .container-1{
     margin: 4% 4%;
-
     display: grid;
     grid-template-columns: 48% 48%;
     gap: 4%;
 }
-/*reportes*/
-.libro-diario{
-    background-color: #BCE6FA;
+/*Reportes*/
+.card {
     width: 100%;
-    height: 200px;
-    cursor: pointer;
-    border-radius: 3%;
+    height: 100%;
+    border-radius: 10px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    padding: 35px 42px 35px 40px;
 }
-.libro-mayor{
-    background-color: #D7B8FD;
-    width: 100%;
-    height: 200px;
-    cursor: pointer;
-    border-radius: 3%;
+.header-card {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    position: relative;
 }
-.Balance-general{
-    background-color: #F9DE9B;
-    width: 100%;
-    height: 200px;
-    cursor: pointer;
-    border-radius: 3%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.logo {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    margin-bottom: 15px;
 }
-.Estado-resultado{
-    background-color: #FED4DE;
-    width: 100%;
-    height: 200px;
+.logo i {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 50%;
+}
+.form-logo {
     cursor: pointer;
-    border-radius: 3%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #000000;
+}
+.logo-white {
+    position: absolute;
+    width: 31px;
+    height: 31px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    top: 64px;
+    left: 64px;
+    color:#66cdab;
+    font-size: 18px;
+    padding-top: 4px;
+}
+/*Libro diario*/
+.libro-diario {
+    background-color: #FAECEB;
+}
+.libro-diario .header-card .logo {
+    background-color: #FFACAB;
+}
+/*Libro mayor*/
+.libro-mayor {
+    background-color: #FCF4E9;
+}
+.libro-mayor .header-card .logo {
+    background-color: #FFD5A5;
+}
+/*Balance general*/
+.balance-general{
+    background-color: #EBE8F9;
+}
+.balance-general .header-card .logo {
+    background-color: #BDB2FE;
+}
+/*Estado de resultados*/
+.estado-resultado {
+    background-color: #EFFAFC;
+}
+.estado-resultado .header-card .logo {
+    background-color: #99F7FF;
 }
 
 /*Texto*/
@@ -74,16 +108,16 @@ h1 {
     font-family: 'Anek Telugu', sans-serif;
 }
 h2 {
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 25px;
+    font-weight: 550;
     color: black;
     margin: 0px;
     font-family: 'Anek Telugu', sans-serif;
 }
 h4 {
-    font-size: 12px;
-    font-weight: 600;
-    color: black;
+    font-size: 15px;
+    font-weight: 300;
+    color: #a09a9a;
     margin-bottom: 0px;
     font-family: 'Anek Telugu', sans-serif;
     line-height: 16px;

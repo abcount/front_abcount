@@ -14,26 +14,31 @@
   <div class="configuration-tap4" *ngIf="modeEdit">
     <div class="account-plan" style="padding-left: 25px;">
       <app-my-button-squared (clicked)="setSelectedNode(null)"></app-my-button-squared>
+      <hr style="margin-top: 8px;">
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-          <button style="margin-left: 8px;" mat-icon-button disabled></button>
-          <div class="separator"></div>
-          {{node.name}}
-          <div class="separator"></div>
           <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
+          <div class="separator"></div>
+          <div class="text-orange">
+            {{node.name}} 
+          </div>               
+          <div class="separator"></div>
+          <button style="margin-left: 8px;" mat-icon-button disabled></button>
           <div class="right">
             <app-circular-button (clicked)="deleteAccount(node)"></app-circular-button>
           </div>
         </mat-tree-node>
         <hr>
         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
+          <div class="separator"></div>
+          <div class="text-blue">
+            {{node.name}} 
+          </div>
+          <div class="separator"></div>
           <button class="expand-button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
             <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': treeControl.isExpanded(node), 'fa-caret-down': !treeControl.isExpanded(node)}"></i>
           </button>
-          <div class="separator"></div>
-          {{node.name}}
-          <div class="separator"></div>
-          <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
         </mat-tree-node>
       </mat-tree>
     </div>
@@ -54,6 +59,10 @@
       <i class="fa-regular fa-pen-to-square"></i>
     </span>
     <h2 class="h2-title">Registro de Cuenta</h2>
+  </div>
+  <div class="row-2-popup">
+    <h3>Dígitos del nivel</h3>
+    <input [(ngModel)]="digitsLevel" type="text" placeholder="Ingresa el nivel">
   </div>
   <div class="row-2-popup">
     <h3>Nombre de la cuenta </h3>
@@ -85,6 +94,10 @@
       <i class="fa-regular fa-pen-to-square"></i>
     </span>
     <h2 class="h2-title">Registro de Cuenta</h2>
+  </div>
+  <div class="row-2-popup">
+    <h3>Dígitos del nivel</h3>
+    <input [(ngModel)]="digitsLevel" type="text" placeholder="Ingresa el nivel">
   </div>
   <div class="row-2-popup">
     <h3>Nombre de la cuenta </h3>

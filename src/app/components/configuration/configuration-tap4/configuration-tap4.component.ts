@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
-import { FormStateService } from "../../../services/form-state.service";
 
 let TREE_DATA: Account[] = [];
 
@@ -17,10 +16,10 @@ interface Account {
   nameAccount: string;
   moneyRub: boolean;
   report: boolean;
-  editable: boolean;
   classificator: boolean;
   level: number;
   childrenAccounts: Account[];
+  editable: boolean;
 }
 
 @Component({
@@ -35,6 +34,7 @@ export class ConfigurationTap4Component {
   mostrarPopupSon = false;
 
   @ViewChild("accountName") accountName: string = "";
+  @ViewChild("digitsLevel") digitsLevel: number = 0;
   selectedNode: NodeExample | null = null;
   accountId: number = 0;
   accountMoneyRub: boolean = false;
@@ -128,6 +128,13 @@ export class ConfigurationTap4Component {
       this.mostrarPopupSon = false;
     }
     this.dataSource.data = TREE_DATA;
+    this.accountName = "";
+    this.digitsLevel = 0;
+    this.accountReport = false;
+    this.accountMoneyRub = false;
+    this.accountClassificator = false;
+    this.mostrarPopup = false;
+    this.mostrarPopupSon = false;
   }
   //Method to add a new account leaf its a DFS algorithm
 
@@ -227,5 +234,10 @@ export class ConfigurationTap4Component {
   cancelPopup(){
     this.mostrarPopup = false;
     this.mostrarPopupSon = false;
+    this.accountName = "";
+    this.digitsLevel = 0;
+    this.accountReport = false;
+    this.accountMoneyRub = false;
+    this.accountClassificator = false;
   }
 }
