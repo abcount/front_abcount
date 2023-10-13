@@ -21,7 +21,7 @@ export class UsersAndPermissionsComponent {
       subsidiaryId: 1,
       subsidiaryName: "Sucursal 1",
       address: "Av. 6 de Agosto",
-      selected: false
+      selected: true
     },
     {
       subsidiaryId: 2,
@@ -34,12 +34,12 @@ export class UsersAndPermissionsComponent {
     {
       areaId: 1,
       areaName: "Area 1",
-      selected: false
+      selected: true
     },
     {
       areaId: 2,
       areaName: "Area 2",
-      selected: false
+      selected: true
     },
     {
       areaId: 3,
@@ -50,8 +50,8 @@ export class UsersAndPermissionsComponent {
 
   roles = [
     { id: 1, nombre: 'Agregar comprobantes', seleccionado: false },
-    { id: 2, nombre: 'Editar comprobantes', seleccionado: false },
-    { id: 3, nombre: 'Generar reportes', seleccionado: false },
+    { id: 2, nombre: 'Editar comprobantes', seleccionado: true },
+    { id: 3, nombre: 'Generar reportes', seleccionado: true },
     { id: 4, nombre: 'Agregar tasa de cambio', seleccionado: false }
   ];
 
