@@ -4,18 +4,32 @@
   <h2>Registrar Nuevo Comprobante Contable</h2>
   <div class="header">
     <div class="column">
-      Empresa: <input type="text" [(ngModel)]="hoja.empresa">
-      Sucursal: <select [(ngModel)]="hoja.sucursal"> <!-- Opciones de sucursal aquí --> </select>
+      Empresa: <input type="text" [(ngModel)]="hoja.empresa" disabled="true">
+      Sucursal: 
+      <select [(ngModel)]="hoja.sucursal">
+        <option *ngFor="let sucursal of sucursales" [value]="sucursal">{{ sucursal }}</option>
+      </select>
       Fechas: <input type="date" [(ngModel)]="hoja.fecha">
     </div>
     <div class="column">
-      Área: <select [(ngModel)]="hoja.area"> <!-- Opciones de área aquí --> </select>
-      Número de comprobante: <input type="text" [(ngModel)]="hoja.numComprobante">
+      Área:
+      <select [(ngModel)]="hoja.area">
+        <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
+      </select>
+      Número de comprobante: <input type="text" [(ngModel)]="hoja.numComprobante" disabled="true">
     </div>
     <div class="column">
-      Documento: <select [(ngModel)]="hoja.documento"> <!-- Opciones de documento aquí --> </select>
-      Moneda: <select [(ngModel)]="hoja.moneda"> <!-- Opciones de moneda aquí --> </select>
+      Documento:
+      <select [(ngModel)]="hoja.documento">
+        <option *ngFor="let documento of documentos" [value]="documento">{{ documento }}</option>
+      </select>
+      Moneda:
+      <select [(ngModel)]="hoja.moneda">
+        <option *ngFor="let moneda of monedas" [value]="moneda">{{ moneda }}</option>
+      </select>
     </div>
+    
+
   </div>
   <hr style="height:3px;border-width:0;color:#c4c2c2;background-color:#c4c2c2">
   <div class="body">
@@ -27,20 +41,20 @@
         <th>Número de cuenta</th>
         <th>Nombre de la cuenta</th>
         <th>Auxiliar</th>
-        <th>Entidad</th>
+        <!-- <th>Entidad</th> -->
         <th>Debe</th>
         <th>Haber</th>
         <th>Glosa</th>
-        <th>Cheque</th>
+        <th>Nro documento</th>
       </tr>
       </thead>
       <tbody>
       <tbody>
       <tr *ngFor="let entrada of hoja.entradas; let i = index">
-        <td><input name="numeroCuenta" [(ngModel)]="entrada.numeroCuenta"  (keydown)="navegarInputs($event, i, 'numeroCuenta')"></td>
+        <td><input name="numeroCuenta" [(ngModel)]="entrada.numeroCuenta" (input)="filterAccounts(entrada.numeroCuenta, i)" (blur)="hideDropdown()" (keydown)="navegarInputs($event, i, 'numeroCuenta')"></td>
         <td><input name="nombreCuenta" [(ngModel)]="entrada.nombreCuenta"  (keydown)="navegarInputs($event, i, 'nombreCuenta')"></td>
         <td><input name="auxiliar" [(ngModel)]="entrada.auxiliar"  (keydown)="navegarInputs($event, i, 'auxiliar')"></td>
-        <td><input name="entidad" [(ngModel)]="entrada.entidad"  (keydown)="navegarInputs($event, i, 'entidad')"></td>
+        <!-- <td><input name="entidad" [(ngModel)]="entrada.entidad"  (keydown)="navegarInputs($event, i, 'entidad')"></td> -->
         <td><input name="debe" [(ngModel)]="entrada.debe" type="number" (input)="calcularTotales()" (keydown)="navegarInputs($event, i, 'debe')"></td>
         <td><input name="haber" [(ngModel)]="entrada.haber" type="number" (input)="calcularTotales()" (keydown)="navegarInputs($event, i, 'haber')"></td>
         <td><input name="glosa" [(ngModel)]="entrada.glosa"  (keydown)="navegarInputs($event, i, 'glosa')"></td>
@@ -49,6 +63,13 @@
       </tbody>
 
     </table>
+    <div class="dropdown" *ngIf="showDropdown">
+      <div *ngFor="let account of filteredAccounts" (click)="selectAccount(account)">
+          {{ account.accountCode }} - {{ account.nameAccount }}
+      </div>
+  </div>
+
+
 
     <div class="footer-buttons">
       <div>
@@ -67,7 +88,8 @@
       </div>
 
       <div>
-        <button [disabled]="diferencia!==0" class="option1"><i class="fa fa-save"></i>Guardar</button>
+        <button [disabled]="diferencia!==0" class="option1" (click)="guardar()"><i class="fa fa-save"></i>Guardar</button>
+
         <button class="option2" routerLink="/accounting-voucher/view"><i class="fa fa-cancel"></i>Cancelar</button>
       </div>
 
