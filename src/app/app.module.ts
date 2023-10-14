@@ -35,6 +35,9 @@ import { AccountingVoucherViewComponent } from './components/accounting-voucher/
 import { AccountingVoucherAddComponent } from './components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component';
 import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
 import { BalanceSheetComponent } from './components/reports/balance-sheet/balance-sheet-form/balance-sheet.component';
+import {MatTableModule} from "@angular/material/table";
+import { AuxiliaryAccountComponent } from './components/data/auxiliary-account/auxiliary-account.component';
+import { EntityComponent } from './components/data/entity/entity.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,8 @@ import { BalanceSheetComponent } from './components/reports/balance-sheet/balanc
     AccountingVoucherAddComponent,
     DiaryBookFormComponent,
     BalanceSheetComponent,
+    AuxiliaryAccountComponent,
+    EntityComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +62,7 @@ import { BalanceSheetComponent } from './components/reports/balance-sheet/balanc
     FormsModule,
     MatTreeModule,
     MatIconModule,
+    MatTableModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,

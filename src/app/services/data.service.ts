@@ -1,0 +1,48 @@
+import { Injectable } from '@angular/core';
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
+import {AuxiliaryDto} from "../dto/auxiliary.dto";
+import {Observable} from "rxjs";
+import {EntityDto} from "../dto/entity.dto";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  baseUrl = `${environment.BACKEND_URL}/data`;
+
+
+
+  constructor(private http: HttpClient) {}
+
+  // Auxiliares
+  createAuxiliary(auxiliary: AuxiliaryDto){
+    return this.http.post(`${this.baseUrl}/addAuxiliary?auxiliaryCode=${auxiliary.auxiliaryCode}&auxiliaryName=${auxiliary.auxiliaryName}`, auxiliary);
+  }
+
+  getAllAuxiliaries(): Observable<AuxiliaryDto[]> {
+    return this.http.get<AuxiliaryDto[]>(`${this.baseUrl}/getAllAuxiliaries`);
+  }
+  updateAuxiliary(auxiliary: AuxiliaryDto): Observable<AuxiliaryDto> {
+    return this.http.put<AuxiliaryDto>(`${this.baseUrl}/update/${auxiliary.auxiliaryId}`, auxiliary);
+  }
+  deleteAuxiliary(auxiliaryId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/delete/${auxiliaryId}`);
+  }
+  //Entidades
+  createEntity(entity: EntityDto): Observable<EntityDto> {
+    return this.http.post<EntityDto>(
+      `${this.baseUrl}/addEntity?entityName=${entity.entityName}&entityNit=${entity.entityNit}&entitySocialReason=${entity.entitySocialReason}&foreign=${entity.foreign}`, entity);
+  }
+  getAllEntities(): Observable<EntityDto[]> {
+    return this.http.get<EntityDto[]>(`${this.baseUrl}/getAllEntities`);
+  }
+
+  updateEntity(entity: EntityDto): Observable<EntityDto> {
+    return this.http.put<EntityDto>(`${this.baseUrl}/update/${entity.entityId}`, entity);
+  }
+
+  deleteEntity(entityId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/delete/${entityId}`);
+  }
+}

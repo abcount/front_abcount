@@ -17,6 +17,8 @@ import { AccountingVoucherAddComponent } from "./components/accounting-voucher/a
 import { ReportsComponent } from './components/reports/reports/reports.component';
 import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
 import { BalanceSheetComponent } from './components/reports/balance-sheet/balance-sheet-form/balance-sheet.component';
+import {AuxiliaryAccountComponent} from "./components/data/auxiliary-account/auxiliary-account.component";
+import {EntityComponent} from "./components/data/entity/entity.component";
 
 
 
@@ -54,7 +56,9 @@ const routes: Routes = [
   },
   { path: 'reports', component: ReportsComponent},
   { path: 'diary-book', component: DiaryBookFormComponent},
-  { path: 'balance-sheet', component: BalanceSheetComponent}
+  { path: 'balance-sheet', component: BalanceSheetComponent},
+  {path: 'auxiliary', component:AuxiliaryAccountComponent},
+  {path: 'entity', component: EntityComponent}
 ];
 
 @NgModule({
