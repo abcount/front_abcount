@@ -288,6 +288,8 @@ export class ConfigurationTap4Component {
     console.log("Actual plan de ciemtas")
     console.log(TREE_DATA)
 
+    this.ConfigurationService.updateAccountPlan(newAccountsAdded, deletedAccounts).subscribe();
+
   }
 
   // Función para ocultar los popups

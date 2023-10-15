@@ -98,6 +98,7 @@ export class ConfigurationService {
       'new': newAccountsAdded
     }
     console.log(body)
+    console.log(`${this.configurationUrl}/accountable-plan/${this.companyId}`)
     return this.http.post(`${this.configurationUrl}/accountable-plan/${this.companyId}`,body )
   }
 }
