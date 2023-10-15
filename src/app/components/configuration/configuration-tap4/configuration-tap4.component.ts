@@ -2,16 +2,23 @@ import { Component, ViewChild } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
+import {NavigationError} from "@angular/router";
 
 let TREE_DATA: Account[] = [];
 
-interface NodeExample {
+let newAccountsAdded: NewAccount[] = [];
+
+let deletedAccounts: number [] = [];
+
+
+  interface NodeExample {
   expandable: boolean;
   name: string;
   level: number;
 }
 
 interface Account {
+  accountId: number | null;
   codeAccount: number;
   nameAccount: string;
   moneyRub: boolean;
@@ -21,6 +28,17 @@ interface Account {
   childrenAccounts: Account[];
   editable: boolean;
 }
+
+export interface NewAccount {
+  accountCode: string,
+  nameAccount: string,
+  moneyRub: boolean,
+  report: boolean,
+  clasificator: boolean,
+  level: number,
+  dad: number | null
+}
+
 
 @Component({
   selector: 'app-configuration-tap4',
@@ -74,6 +92,7 @@ export class ConfigurationTap4Component {
   constructor(private ConfigurationService: ConfigurationService) {
     this.ConfigurationService.getAccountsPlan().subscribe(
       (data: any) => {
+        console.log("ACCOUNT PLAN")
         console.log(data)
         this.dataSource.data = data.data;
         this.accountPlan = data.data;
@@ -104,7 +123,18 @@ export class ConfigurationTap4Component {
   addNewChildAccount(node : NodeExample | null ) {
     if(node == null){
       this.accountId = TREE_DATA.length + 1;
+      let newAccount : NewAccount = {
+        accountCode: (TREE_DATA.length + 1).toString(),
+        nameAccount: this.accountName,
+        moneyRub: this.accountMoneyRub,
+        report: this.accountReport,
+        clasificator: this.accountClassificator,
+        level: 0,
+        dad: null
+      }
+      newAccountsAdded.push(newAccount)
       let parentAccount = {
+        accountId: null,
         codeAccount: TREE_DATA.length + 1,
         nameAccount: this.accountName,
         moneyRub: this.accountMoneyRub,
@@ -122,11 +152,15 @@ export class ConfigurationTap4Component {
       this.mostrarPopup = false;
     }
     else{
+      console.log("NODOOOO")
+      console.log(this.selectedNode)
       let strAccountName = node.name.split(" ", 1);
       let accountId = strAccountName[0];
       this.positioningLeaf(TREE_DATA, Number(accountId), node.level);
       this.mostrarPopupSon = false;
     }
+    console.log("AHPRA ESTA ASI")
+    console.log(TREE_DATA)
     this.dataSource.data = TREE_DATA;
     this.accountName = "";
     this.digitsLevel = 0;
@@ -141,9 +175,11 @@ export class ConfigurationTap4Component {
   // @ts-ignore
   positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].codeAccount === selectedAccount){
+      console.log(listOfAccounts[j].codeAccount + " " + selectedAccount)
+      if(listOfAccounts[j].codeAccount == selectedAccount){
         this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
-        let newAccount: Account = {
+        let newAccountTree: Account = {
+          accountId: null,
           level: level + 1,
           codeAccount: selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1,
           nameAccount: this.accountName,
@@ -153,12 +189,24 @@ export class ConfigurationTap4Component {
           classificator: this.accountClassificator,
           childrenAccounts: []
         }
+        let newAccount : NewAccount = {
+          accountCode: (selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1).toString(),
+          nameAccount: this.accountName,
+          moneyRub: this.accountMoneyRub,
+          report: this.accountReport,
+          clasificator: this.accountClassificator,
+          level: level + 1,
+          dad: listOfAccounts[j].accountId
+        }
+        console.log("New Account Array")
+        console.log(newAccount)
+        newAccountsAdded.push(newAccount)
         // Asegurarse de que childrenAccounts es un array
         if (!Array.isArray(listOfAccounts[j].childrenAccounts)) {
           listOfAccounts[j].childrenAccounts = [];
         }
 
-        listOfAccounts[j].childrenAccounts.push(newAccount);
+        listOfAccounts[j].childrenAccounts.push(newAccountTree);
         this.accountName = "";
         return listOfAccounts;
       } else {
@@ -177,8 +225,16 @@ export class ConfigurationTap4Component {
     else{
       let strAccountName = node.name.split(" ", 1);
       let accountId = strAccountName[0];
+      newAccountsAdded = newAccountsAdded.filter((account) =>
+          account.accountCode != accountId
+      )
       this.deleteLeaf(TREE_DATA, Number(accountId));
     }
+
+
+
+
+
     this.dataSource.data = TREE_DATA;
   }
 
@@ -186,6 +242,7 @@ export class ConfigurationTap4Component {
   deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     for(let j = 0; j < listOfAccounts.length; j++){
       if(listOfAccounts[j].codeAccount === selectedAccount){
+        deletedAccounts.push(<number>listOfAccounts[j].accountId)
         listOfAccounts.splice(j, 1);
         if(listOfAccounts.length !== 0){
           this.enumerateAccounts(listOfAccounts);
@@ -228,6 +285,9 @@ export class ConfigurationTap4Component {
   save() {
     console.log('Guardando cambios...');
     this.modeEdit = false;
+    console.log("Actual plan de ciemtas")
+    console.log(TREE_DATA)
+
   }
 
   // Función para ocultar los popups

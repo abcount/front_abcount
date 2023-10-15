@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import {NewAccount} from "../components/configuration/configuration-tap4/configuration-tap4.component";
 
 @Injectable({
   providedIn: 'root'
@@ -84,5 +85,19 @@ export class ConfigurationService {
   getAccountsPlan() {
     console.log("getAccountsPlan")
     return this.http.get(`${this.configurationUrl}/accountable-plan/${this.companyId}`);
+  }
+
+  updateAccountPlan(newAccountsAdded: NewAccount[], deletedAccounts: number[]){
+    console.log("UPDATE Account plan")
+    const header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+    const body = {
+      'delete': deletedAccounts,
+      'new': newAccountsAdded
+    }
+    console.log(body)
+    return this.http.post(`${this.configurationUrl}/accountable-plan/${this.companyId}`,body )
   }
 }

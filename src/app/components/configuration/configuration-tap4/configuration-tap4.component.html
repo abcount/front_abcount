@@ -20,8 +20,8 @@
           <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
           <div class="separator"></div>
           <div class="text-orange">
-            {{node.name}} 
-          </div>               
+            {{node.name}}
+          </div>
           <div class="separator"></div>
           <button style="margin-left: 8px;" mat-icon-button disabled></button>
           <div class="right">
@@ -33,7 +33,7 @@
           <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
           <div class="separator"></div>
           <div class="text-blue">
-            {{node.name}} 
+            {{node.name}}
           </div>
           <div class="separator"></div>
           <button class="expand-button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
@@ -75,10 +75,10 @@
   <div class="alinear">
     <h3>Reporte</h3>
     <label class="label-report alinear" for="balanceGeneral">
-      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
+      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value=true> Balance General
     </label>
     <label class="label-report alinear" for="estadoResultados">
-      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
+      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value=false> Estado de Resultados
     </label>
   </div>
   <div class="popup-buttons right">
@@ -109,11 +109,11 @@
   </div>
   <div class="alinear">
     <h3>Reporte</h3>
-    <label class="label-report alinear" for="balanceGeneral">
-      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
+    <label class="label-report alinear" for="balanceGeneralChild">
+      <input type="radio" id="balanceGeneralChild" [(ngModel)]="accountReport" value=true> Balance General
     </label>
-    <label class="label-report alinear" for="estadoResultados">
-      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
+    <label class="label-report alinear" for="estadoResultadosChild">
+      <input type="radio" id="estadoResultadosChild" [(ngModel)]="accountReport" value=false> Estado de Resultados
     </label>
   </div>
   <div class="popup-buttons right">
