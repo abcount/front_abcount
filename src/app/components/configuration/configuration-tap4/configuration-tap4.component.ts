@@ -219,6 +219,7 @@ export class ConfigurationTap4Component {
   //FUNCION PARA ELEMINIAR Y VOLVER A ENUMERAR EL PLAN DE CUENTAS MODIFICADO
 
   deleteAccount(node : NodeExample | null){
+    console.log("DELETE ACCOUNT")
     if(node == null){
       alert("Select an account to delete");
     }
@@ -228,25 +229,28 @@ export class ConfigurationTap4Component {
       newAccountsAdded = newAccountsAdded.filter((account) =>
           account.accountCode != accountId
       )
+      // @ts-ignore
+      TREE_DATA = this.dataSource.data
       this.deleteLeaf(TREE_DATA, Number(accountId));
+      console.log("TREE_DATA")
+      console.log(TREE_DATA)
     }
-
-
-
-
-
     this.dataSource.data = TREE_DATA;
+
   }
 
   // @ts-ignore
   deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].codeAccount === selectedAccount){
+      console.log("ENTRANDO A DELETE ACCOUNTS")
+      if(listOfAccounts[j].codeAccount == selectedAccount){
         deletedAccounts.push(<number>listOfAccounts[j].accountId)
         listOfAccounts.splice(j, 1);
         if(listOfAccounts.length !== 0){
           this.enumerateAccounts(listOfAccounts);
         }
+        console.log("LIST OF ACCOUNTS")
+        console.log(listOfAccounts)
         return listOfAccounts;
       }
       else{
