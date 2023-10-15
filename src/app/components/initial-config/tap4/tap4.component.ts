@@ -351,7 +351,8 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
   }
 
   confirm(){
-    this.router.navigate(['/my-companies']);
+    localStorage.clear();
+    window.location.href = '/my-companies';
   }
 }
 

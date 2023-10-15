@@ -9,10 +9,90 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./accounting-voucher-add.component.css']
 })
 export class AccountingVoucherAddComponent {
-  accountablePlan: any[] = [];  // para guardar las cuentas del JSON
-filteredAccounts: any[] = [];  // para guardar las cuentas filtradas
-showDropdown: boolean = false;  // para mostrar/ocultar el dropdown
-searchSubject = new Subject<string>();
+
+  // Variables
+  companyName: string = '';
+  sucursales: string[] = [];
+  areas: string[] = [];
+  documentos: string[] = [];
+  fecha: string;
+  numComprobante: number = 0;
+  accountablePlan: any[] = [];
+  glosa: string = '';
+
+  // Constructor
+  constructor(private transactionService: TransactionService) {
+    this.fecha = new Date().toISOString().substring(0, 10);
+  }
+
+  // Función inicial
+  ngOnInit(){
+    this.loadVoucherData();
+    this.calcularTotales();
+  }
+
+  // Función para cargar los datos del voucher
+  loadVoucherData() {
+    this.transactionService.getVoucherData(1).subscribe(response => {
+      if (response.success) {
+        const data = response.data;
+        // Llenando la información de la cabecera
+        this.companyName = data.companyName; 
+        this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
+        this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
+        this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
+        this.monedas = data.currencies.map((currency: { exchangeMoneyId: any; moneyName: any; }) => ({id: currency.exchangeMoneyId, name: currency.moneyName}));
+        this.numComprobante= data.transactionNumber;        
+        // Obteniendo las cuentas
+        this.accountablePlan = data.accountablePlan;
+      }
+    });
+  }
+
+  // Selects
+  subsidiarySelect: number;
+  areaSelect: number;
+  documentSelect: number;
+  currencySelect: number;
+
+  subsidiarySelected(subsidiary: any) {
+    this.subsidiarySelect = subsidiary.id;
+    console.log("Sucursal id: "+this.subsidiarySelect);
+  }
+  areaSelected(area: any) {
+    this.areaSelect = area.id;
+    console.log("Area id: "+this.areaSelect);
+  }
+  documentSelected(document: any) {
+    this.documentSelect = document.id;
+    console.log("Documento id: "+this.documentSelect);
+  }
+  currencySelected(currency: any) {
+    this.currencySelect = currency.id;
+    console.log("Moneda id: "+this.currencySelect);
+  }
+
+
+
+  filteredAccounts: any[][] = [];  // para guardar las cuentas filtradas
+
+  // Para filtrar las cuentas
+  filterAccountsFunction(i: number){
+    this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
+      if (value) {
+          this.filteredAccounts[i] = this.accountablePlan.filter(account => account.accountCode.includes(value));
+          this.showDropdown = this.filteredAccounts.length > 0;
+      } else {
+          this.showDropdown = false;
+      }
+    });
+  }
+
+
+
+
+  showDropdown: boolean = false;  // para mostrar/ocultar el dropdown
+  searchSubject = new Subject<string>();
 
   hojas: any[] = [this.nuevaHoja()];
   hojaActual: number = 0;
@@ -23,9 +103,6 @@ searchSubject = new Subject<string>();
   diferencia: number = 0;
 
   transactionNumber: number = 0;
-  sucursales: string[] = [];
-  areas: string[] = [];
-  documentos: string[] = [];
   monedas: string[] = [];
 
   nuevaHoja() {
@@ -47,18 +124,7 @@ searchSubject = new Subject<string>();
     return this.hojas[this.hojaActual];
   }
 
-  constructor(private transactionService: TransactionService
-    ) {
-      this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
-        if (value) {
-            this.filteredAccounts = this.accountablePlan.filter(account => account.accountCode.includes(value));
-            this.showDropdown = this.filteredAccounts.length > 0;
-        } else {
-            this.showDropdown = false;
-        }
-    });
 
-  }
 
   guardar() {
     const payload = {
@@ -144,44 +210,7 @@ searchSubject = new Subject<string>();
     this.totalHaber = this.hoja.entradas.reduce((acc: number, entrada: Entrada) => acc + entrada.haber, 0);
     this.diferencia = this.totalDebe - this.totalHaber;
   }
-  ngOnInit(){
-    this.loadVoucherData();
-    this.calcularTotales();
-  }
 
-
-  loadVoucherData() {
-    this.transactionService.getVoucherData(1).subscribe(response => {
-      if (response.success) {
-        const data = response.data;
-  
-        // Llenando la información de la cabecera
-        this.hoja.empresa = data.companyName;
-  
-        this.hoja.empresa = data.companyName;  
-        this.sucursales = data.subsidiaries.map((subsidiary: { subsidiaryName: any; }) => subsidiary.subsidiaryName);
-        this.areas = data.areas.map((area: { areaName: any; }) => area.areaName);
-        this.documentos = data.transactionType.map((transactionType: { type: any; }) => transactionType.type);
-        this.monedas = data.currencies.map((currency: { moneyName: any; }) => currency.moneyName);
-        this.hoja.numComprobante= data.transactionNumber;        
-        // Estableciendo el primer elemento de cada array como predeterminado en hoja
-        this.accountablePlan = data.accountablePlan;  // guardamos las cuentas en la propiedad
-
-        if (this.sucursales.length > 0) {
-          this.hoja.sucursal = this.sucursales[0];
-        }
-        if (this.areas.length > 0) {
-          this.hoja.area = this.areas[0];
-        }
-        if (this.documentos.length > 0) {
-          this.hoja.documento = this.documentos[0];
-        }
-        if (this.monedas.length > 0) {
-          this.hoja.moneda = this.monedas[0];
-        }
-      }
-    });
-  }
 
   filterAccounts(value: string, rowIndex: number) {
     this.editingRowIndex = rowIndex;
@@ -198,10 +227,10 @@ selectAccount(account: any) {
   }
 }
 
-
-hideDropdown() {
+hideDropdown(rowIndex: number) {
   this.showDropdown = false;
   this.editingRowIndex = null;  // resetear el valor
+  this.filteredAccounts[rowIndex] = []; // Limpiar la lista filtrada específica para la fila
 }
 
   

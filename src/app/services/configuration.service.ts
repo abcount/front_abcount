@@ -32,11 +32,14 @@ export class ConfigurationService {
   // Para la configuración de la empresa
   configurationUrl = `${environment.BACKEND_URL}/config/enterprise`;
 
-  // Id de la compañia
+  // Ids necesarios
+  userId = localStorage.getItem('userId');
   companyId = localStorage.getItem('companyId');
 
   // Función para obtener los datos de la empresa
   getEnterprise() {
+    console.log(this.companyId);
+    console.log(this.userId);
     return this.http.get(`${this.configurationUrl}/${this.companyId}`);
   }
 

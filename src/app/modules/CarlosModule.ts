@@ -1,52 +1,10 @@
 import { NgModule } from "@angular/core";
-import { NavbarComponent } from '../components/navbar/navbar.component';
-import { ConfigurationTap1Component } from '../components/configuration/configuration-tap1/configuration-tap1.component';
-import { ConfigNavbarComponent } from "../components/configuration/config-navbar/config-navbar.component";
-import { CommonModule } from '@angular/common';
-import { AppRoutingModule } from '../app-routing.module';
-import { SebastianModule } from "./SebastianModule";
-import { ConfigurationTap2Component } from "../components/configuration/configuration-tap2/configuration-tap2.component";
-import { ConfigurationTap3Component } from "../components/configuration/configuration-tap3/configuration-tap3.component";
-import { ConfigurationTap4Component } from '../components/configuration/configuration-tap4/configuration-tap4.component';
-import { ConfigurationTap5Component } from "../components/configuration/configuration-tap5/configuration-tap5.component";
-import { AddUsersAndPermissionsComponent } from '../components/configuration/add-users-and-permissions/add-users-and-permissions.component';
-import { UsersAndPermissionsComponent } from '../components/configuration/users-and-permissions/users-and-permissions.component';
-import { ReportsComponent } from '../components/reports/reports/reports.component';
 
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AccountComponent } from "../components/configuration/account/account.component";
-import { MatTreeModule } from "@angular/material/tree";
-import { AppModule } from "../app.module";
-
-const CarlosComponents = [
-  NavbarComponent,
-  ConfigurationTap1Component
-]
+const CarlosComponents = [ ]
 
 @NgModule({
-  declarations: [
-    NavbarComponent,
-    ConfigurationTap1Component,
-    ConfigNavbarComponent,
-    ConfigurationTap2Component,
-    ConfigurationTap3Component,
-    ConfigurationTap4Component,
-    ConfigurationTap5Component,
-    AddUsersAndPermissionsComponent,
-    UsersAndPermissionsComponent,
-    AccountComponent,
-    ReportsComponent
-  ],
-  imports: [
-    CommonModule,
-    AppRoutingModule,
-    SebastianModule,
-    FormsModule,
-    MatTreeModule,
-    AppModule,
-    ReactiveFormsModule
-  ],
-  exports: [CarlosComponents] // Poner [CarlosComponents]
+  declarations: [ ],
+  imports: [ ],
+  exports: [ ] // Poner [CarlosComponents]
 })
 export class CarlosModule {}

@@ -6,9 +6,9 @@
             </a>
         </div>
         <div *ngFor="let company of companies" class="company">
-            <a (click)="saveCompanyId(company.companyId)" >
+            <a (click)="saveData(company.companyId, company.userId)" >
                 <div class="company-logo center">
-                    <img src={{company.companyLogo}} alt="company-{{company.companyId}}-logo">
+                    <img src={{company.urlIconImage}} alt="company-{{company.companyId}}-logo">
                 </div>
                 <div class="center-text">{{company.companyName}}</div>
             </a>
