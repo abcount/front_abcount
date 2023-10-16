@@ -55,6 +55,8 @@ import { BalanceSheetComponent } from './components/reports/balance-sheet/balanc
 // Otras configuraciones
 import { AuxiliaryAccountComponent } from './components/data/auxiliary-account/auxiliary-account.component';
 import { EntityComponent } from './components/data/entity/entity.component';
+import { CurrencyExchangeViewComponent } from './components/data/currency-exchange-view/currency-exchange-view.component';
+import { CurrencyExchangeAddComponent } from './components/data/currency-exchange-add/currency-exchange-add.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { EntityComponent } from './components/data/entity/entity.component';
     AccountingVoucherAddComponent,
     AuxiliaryAccountComponent,
     EntityComponent,
+    CurrencyExchangeViewComponent,
+    CurrencyExchangeAddComponent,
   ],
   imports: [
     BrowserModule,
