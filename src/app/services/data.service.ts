@@ -69,9 +69,10 @@ export class DataService {
     return this.http.put<ExchangeRateDto>(`${this.baseUrl}/updateExchangeRate/${data.id}`, data);
   }
 
-  deleteExchangeRate(date: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/deleteExchangeRate/${date}`);
+  deleteExchangeRate(data: ExchangeRateDto): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/deleteExchangeRate/${data.id}`);
   }
+
 
   getCurrencies(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/getCurrencies`);

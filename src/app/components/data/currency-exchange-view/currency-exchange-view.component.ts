@@ -44,12 +44,15 @@ selectedRecord?: ExchangeRateDto;
 
 
   deleteExchangeRate(record: ExchangeRateDto): void {
-    this.dataService.deleteExchangeRate(record.date).subscribe(() => {
-      this.data.data = this.data.data.filter(item => item.date !== record.date);
+    console.log(record);
+    this.dataService.deleteExchangeRate(record).subscribe(() => {
+      this.data.data = this.data.data.filter(item => item.id !== record.id);
     }, error => {
       console.error('Error deleting exchange rate', error);
     });
   }
+
+
 
   loadExchangeRateForEdit(record: ExchangeRateDto): void {
     console.log(record);
