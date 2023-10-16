@@ -19,6 +19,8 @@ import { DiaryBookFormComponent } from './components/reports/diary-book/diary-bo
 import { BalanceSheetComponent } from './components/reports/balance-sheet/balance-sheet-form/balance-sheet.component';
 import {AuxiliaryAccountComponent} from "./components/data/auxiliary-account/auxiliary-account.component";
 import {EntityComponent} from "./components/data/entity/entity.component";
+import {CurrencyExchangeAddComponent} from "./components/data/currency-exchange-add/currency-exchange-add.component";
+import {CurrencyExchangeViewComponent} from "./components/data/currency-exchange-view/currency-exchange-view.component";
 
 
 
@@ -58,7 +60,9 @@ const routes: Routes = [
   { path: 'diary-book', component: DiaryBookFormComponent},
   { path: 'balance-sheet', component: BalanceSheetComponent},
   {path: 'auxiliary', component:AuxiliaryAccountComponent},
-  {path: 'entity', component: EntityComponent}
+  {path: 'entity', component: EntityComponent},
+  {path: 'exchangeAdd', component: CurrencyExchangeAddComponent},
+  {path: 'exchangeView', component: CurrencyExchangeViewComponent}
 ];
 
 @NgModule({

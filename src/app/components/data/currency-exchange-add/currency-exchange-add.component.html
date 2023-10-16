@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <div class="container">
+    <div><a routerLink="/exchangeView">x</a></div>
+    <h2>{{ selectedRecord ? 'Editar Tipo de Cambio' : 'Agregar Tipo de Cambio' }}</h2>
+    <hr>
+    <h4>Formulario</h4>
+    <form [formGroup]="form">
+      <div class="inputs-container">
+        <div>
+          <app-my-textfield type="date"
+                            [label]="'Fecha'"
+                            [control]="getDateControl()"
+                            [pattern]="patternAll"
+                            [errorMessage]="patternAllMessage"
+                            [placeholder]="'Seleccione una fecha'">
+          </app-my-textfield>
+        </div>
+        <br>
+        <br>
+        <div formGroupName="values">
+          <div class="input-row" *ngFor="let currency of currencies">
+            <app-my-textfield type="text"
+                              [label]="currency"
+                              [control]="getCurrencyControl(currency)"
+                              [pattern]="patternAll"
+                              [errorMessage]="patternAllMessage"
+                              [placeholder]="'Ingrese el valor para ' + currency">
+            </app-my-textfield>
+          </div>
+        </div>
+      </div>
+      <div class="buttons-container">
+        <app-my-button [isGreen]="true" (click)="saveOrUpdate()">
+          {{ selectedRecord ? 'EDITAR' : 'AGREGAR' }}
+        </app-my-button>
+        <app-my-button [isRed]="true" *ngIf="selectedRecord" (click)="cancelEdit()">CANCELAR</app-my-button>
+      </div>
+    </form>
+  </div>
+</div>
