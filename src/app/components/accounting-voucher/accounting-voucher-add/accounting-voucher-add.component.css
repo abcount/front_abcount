@@ -99,6 +99,14 @@ textarea {
   resize: none;
   flex-wrap: 1;
 }
+.glosa-message {
+  display: none;
+  margin-top: 10px;
+  text-align: right;
+}
+.glosa-message.show {
+  display: block;
+}
 
 /*Tabla*/
 table {
@@ -144,118 +152,109 @@ td {
   color: #66cdab;
 }
 .red-text {
-  color: red;
+  color: #f0394d;
 }
-
-
-
-
-
-
-
-
-
-.text-green {
-  color: green;
+.green-text {
+  color: #34c54d;
 }
-
-.text-red {
-  color: red;
-}
-
-
-.column {
-  display: inline-block;
-  vertical-align: top;
-  width: 20%;
-  margin-right: 1%;
-}
-.column:last-child {
-  margin-right: 0;
-}
-
-button{
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.total{
-  width: 10% !important;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.footer-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-}
-
-.footer-buttons > div {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Espacio entre elementos dentro de cada div */
-}
-
-
 /* Para los inputs del Debe y Haber */
-.footer-buttons input {
-  width: 100px; /* Puedes ajustar según el ancho deseado */
-}
 .result{
   background-color: #8AEABA;
   color: white;
-  justify-content: center
 }
-.navegation{
-  background-color: #BCE6FA;
-  color: white;
-}
-.option1{
-  background-color: #85ED96;
-  color: white;
-  width: 100%;
-}
-.option2{
-  background-color: #FF7373;
-  color: white;
-  width: 100%;
-}
-
-.option1, .option2 {
+/*------------------------------------------------------------------------------------------------------------------*/
+/*Botones*/
+.footer-buttons {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  margin: 20px 0 15px 0;
 }
-
-.option1 i, .option2 i {
-  margin-right: 5px;
+.footer-buttons button {
+  padding: 8px 25px;
+  font-size: 16px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+.save {
+  background-color: #8AEABA;
+}
+.cancel {
+  background-color: #FF7373;
+}
+.save:hover {
+  background-color: #66CDAA;
+}
+.cancel:hover {
+  background-color: #ef5350 !important;
+}
+.save i, .cancel i {
+  margin-right: 8px;
   display: inline-block;
   width: auto;
   height: auto;
+  font-weight: 600;
 }
 
-
-
-.add{
-  background-color: #8AEABA;
-  color: white;
-  justify-content: center;
-}
-
-
-
-.search-results {
-  border: 1px solid #ccc;
-  max-height: 150px;
-  overflow-y: auto;
-  position: absolute;
+/*----------------------------------------------------------------------------------------------*/
+/*Mensaje emergente*/
+/* Estilos para la capa de fondo desenfocada */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  z-index: 10;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.322); /* Fondo semi-transparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  z-index: 100; /* Coloca la capa por encima de todo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Estilos para el popup */
+.popup {
+  position: fixed;
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Centra exactamente en el medio */
   background-color: #fff;
+  padding: 25px 50px;
+  z-index: 101; /* Coloca el popup por encima de la capa de fondo */
+  box-shadow: 0 5 15px rgba(0, 0, 0, 0.25); /* Sombra */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popup i {
+  font-size: 50px;
+}
+.gradient-green {
+  font-size: 70px;
+  background-image: linear-gradient(to bottom, #66cdaa, #489ce9);
+  background-clip: text;
+  -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+  color: transparent;
+}
+.gradient-red {
+  font-size: 70px;
+  background-image: linear-gradient(to bottom, #fb9c7e, #f37f90);
+  background-clip: text;
+  -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+  color: transparent;
+}
+.popup h2 {
+  font-size: 24px;
+  color: #757575;
+  margin: 15px 0 5px 0;
+}
+.popup h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #939393;
 }

@@ -1,11 +1,11 @@
 export interface TransactionAccountDto {
-    transactionAccountId: number;
-    accountId: string;
-    entityId: string;
-    auxiliaryId: string;
-    amountDebit: number;
-    amountCredit: number;
-    emitedDate: string;
+    transactionAccountId?: number;
+    accountId: number;
+    entityId: number | null;
+    auxiliaryId: number | null;
+    amountDebit: string;
+    amountCredit: string;
+    emitedDate: string | null;
     glosaDetail: string;
-    documentCode: string;
+    documentCode: string | null;
 }

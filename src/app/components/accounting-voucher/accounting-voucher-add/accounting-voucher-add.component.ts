@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { TransactionAccountDto } from 'src/app/dto/transaction-account.dto';
 import { AuxiliarDto } from 'src/app/dto/auxiliar.dto';
@@ -50,34 +50,23 @@ export class AccountingVoucherAddComponent {
 
   // Constructor
   constructor(private transactionService: TransactionService) {
-    this.fecha = new Date().toISOString().substring(0, 10);
+    const boliviaTimezoneOffset = -4 * 60;
+    const boliviaDate = new Date(new Date().getTime() + boliviaTimezoneOffset * 60000);
+    this.fecha = boliviaDate.toISOString().substring(0, 10);
   }
 
   // Función inicial
   ngOnInit(){
     this.loadVoucherData();
     for (let i = 0; i < 10; i++) {
-      const emptyEntrada: Entrada = {
-        cuentaId: 0,
-        numeroCuenta: '',
-        nombreCuenta: '',
-        cuentaValida: false,
-        auxiliar: '',
-        auxiliarAccountId: 0,
-        entidad: '',
-        entityId: 0,
-        debe: '',
-        haber: '',
-        glosa: '',
-        nroDoc: '',
-        fechaEmision: ''
-      };
+      const emptyEntrada: Entrada = {cuentaId: 0, numeroCuenta: '', nombreCuenta: '', cuentaValida: false, auxiliar: '',
+       auxiliarAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '', fechaEmision: '',
+       falta: false};
       this.listaEntradas.push(emptyEntrada);
       this.filteredAccounts.push([]);
       this.filteredAuxiliares.push([]);
       this.filteredEntities.push([]);
     }
-    //this.calcularTotales();
   }
 
   // Función para cargar los datos del voucher
@@ -88,9 +77,13 @@ export class AccountingVoucherAddComponent {
         // Llenando la información de la cabecera
         this.companyName = data.companyName; 
         this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
+        this.subsidiarySelect = data.subsidiaries[0].subsidiaryId;
         this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
+        this.areaSelect = data.areas[0].areaId;
         this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
+        this.documentSelect = data.transactionType[0].transactionTypeId;
         this.monedas = data.currencies.map((currency: { exchangeMoneyId: any; moneyName: any; }) => ({id: currency.exchangeMoneyId, name: currency.moneyName}));
+        this.currencySelect = data.currencies[0].exchangeMoneyId;
         this.numComprobante= data.transactionNumber;        
         // Obteniendo las cuentas
         this.accountablePlan = data.accountablePlan;
@@ -110,19 +103,19 @@ export class AccountingVoucherAddComponent {
 
   subsidiarySelected(subsidiary: any) {
     this.subsidiarySelect = subsidiary.id;
-    console.log("Sucursal id: "+this.subsidiarySelect);
+    //console.log("Sucursal id: "+this.subsidiarySelect);
   }
   areaSelected(area: any) {
     this.areaSelect = area.id;
-    console.log("Area id: "+this.areaSelect);
+    //console.log("Area id: "+this.areaSelect);
   }
   documentSelected(document: any) {
     this.documentSelect = document.id;
-    console.log("Documento id: "+this.documentSelect);
+    //console.log("Documento id: "+this.documentSelect);
   }
   currencySelected(currency: any) {
     this.currencySelect = currency.id;
-    console.log("Moneda id: "+this.currencySelect);
+    //console.log("Moneda id: "+this.currencySelect);
   }
 
   //-------------------------------------------------------------------------------------------------------
@@ -141,6 +134,7 @@ export class AccountingVoucherAddComponent {
     } else {
       this.resetAccount(rowIndex);
     }
+    this.verifyAllEntries();
   }
 
   // Restablecer la información de la cuenta
@@ -392,6 +386,7 @@ export class AccountingVoucherAddComponent {
     this.totalHaber = valoresHaber.reduce((acc: number, haber: number) => acc + haber, 0);
     this.diferencia = parseFloat((this.totalDebe - this.totalHaber).toFixed(4));
     console.log(this.listaEntradas);
+    this.verifyAllEntries();
   }
 
   //-------------------------------------------------------------------------------------------------------
@@ -489,36 +484,160 @@ export class AccountingVoucherAddComponent {
     return currentInput.parentElement?.nextElementSibling?.querySelector('input') as HTMLInputElement;
   }  
 
-  /*guardar() {
-    const payload = {
-      userId: 1002,
-      subsidiaryId: this.sucursales.indexOf(this.hoja.sucursal) + 1,
-      currencyId: this.monedas.indexOf(this.hoja.moneda) + 1,
-      transactionTypeId: 1, // Este valor parece ser estático en tu ejemplo
-      areaId: this.areas.indexOf(this.hoja.area) + 1,
-      transactionNumber: 1,
-      glosaGeneral: this.hoja.glosa,
-      transactions: this.hoja.entradas.map((entrada: { numeroCuenta: any; debe: any; haber: any; glosa: any; cheque: any; }) => ({
-        accountId: entrada.numeroCuenta,
-        entityId: 200,  // No veo dónde especificas esta información en tu formulario
-        auxiliaryId: 3001,  
-        amountDebit: entrada.debe,
-        amountCredit: entrada.haber,
-        emitedDate: new Date().toISOString().split('T')[0],
-        glosaDetail: entrada.glosa,
-        documentCode: entrada.cheque
-      })),
-      totalDebit: this.totalDebe,
-      totalCredit: this.totalHaber
-    };
-    console.log(payload);
-    this.transactionService.createTransaction(payload).subscribe(response => {
-      console.log(response);
-    }, error => {
-      console.error("Hubo un error al guardar la transacción", error);
-    });
-  }*/
+  //-------------------------------------------------------------------------------------------------------
+  // Lógica para agregar una nueva fila (entrada)
+  // Verificar que todas las entradas estén completas (que tengan cuentaValida, debe o haber y glosa)
+  verifyAllEntries() {
+    var counter: number = 0;
+    for (let i = 0; i < this.listaEntradas.length; i++) {
+      const entrada = this.listaEntradas[i];
+      if (entrada.cuentaValida && entrada.glosa != '') {
+        if (entrada.debe != '' || entrada.haber != '' || (entrada.debe == '' && entrada.haber == '')){
+          counter++;
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
+    }
+    if (counter == this.listaEntradas.length) {
+      this.addRow();
+    } else {
+      console.log("Aun quedan filas disponibles");
+    }
+  }
 
+  addRow() {
+    const emptyEntrada: Entrada = {
+      cuentaId: 0,
+      numeroCuenta: '',
+      nombreCuenta: '',
+      cuentaValida: false,
+      auxiliar: '',
+      auxiliarAccountId: 0,
+      entidad: '',
+      entityId: 0,
+      debe: '',
+      haber: '',
+      glosa: '',
+      nroDoc: '',
+      fechaEmision: '',
+      falta: false
+    };
+    this.listaEntradas.push(emptyEntrada);
+    this.filteredAccounts.push([]);
+    this.filteredAuxiliares.push([]);
+    this.filteredEntities.push([]);
+  }
+  //-------------------------------------------------------------------------------------------------------
+  // Lógica para guardar el comprobante
+  showPopup: boolean = false;
+  popupTitle: string = 'Comprobante guardado';
+  popupMessage: string = 'El comprobante se guardó correctamente';
+  popupIcon: string = 'fa-regular fa-circle-check gradient-green';
+  @ViewChild ('errorGlosa') errorGlosa: ElementRef;
+
+  save() {
+    console.log("Datos de la cabecera");
+    console.log("Sucursal: "+this.subsidiarySelect);
+    console.log("Area: "+this.areaSelect);
+    console.log("Documento: "+this.documentSelect);
+    console.log("Fecha: "+this.fecha);
+    console.log("Numero de comprobante: "+this.numComprobante);
+    console.log("Moneda: "+this.currencySelect);
+    console.log("Glosa: "+this.glosa);
+    if (this.glosa != '') {
+      if (this.fillListTransactionAccount()) {
+        if (this.listTransactionAccount.length > 0) {
+          this.showPopup = true;
+          this.popupTitle = 'Comprobante guardado';
+          this.popupMessage = 'El comprobante se guardó correctamente';
+          this.popupIcon = 'fa-regular fa-circle-check gradient-green';
+          setTimeout(() => {
+            this.showPopup = false;
+          }, 2300);
+        } else {
+          console.log("No hay cuentas");
+          this.showPopup = true;
+          this.popupTitle = 'Comprobante vacío';
+          this.popupMessage = 'Por favor ingrese al menos una cuenta';
+          this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+          setTimeout(() => {
+            this.showPopup = false;
+          }, 2300);
+        }
+      } else {
+        this.showPopup = true;
+        this.popupTitle = 'Ocurrio un error al guardar';
+        this.popupMessage = 'Asegúrese de que los códigos de cuenta, nombres de cuenta, y al menos uno de los campos debe o haber, junto con la descripción (glosa), estén completos en todas las filas correspondientes.';
+        this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+        setTimeout(() => {
+          this.showPopup = false;
+        }, 5000);
+        setTimeout(() => {
+          this.listaEntradas.forEach((entrada: Entrada) => {
+            entrada.falta = false;
+          });
+        }, 10000);
+      }
+    } else {
+      this.errorGlosa.nativeElement.classList.add('show');
+        setTimeout(() => {
+          this.errorGlosa.nativeElement.classList.remove('show');
+        }, 2500);
+    }
+    this.listTransactionAccount = [];
+  }
+
+  fillListTransactionAccount(): boolean {
+    var flag: boolean = true;
+    this.listaEntradas.forEach((entrada: Entrada) => {
+      if (entrada.cuentaValida && entrada.glosa != '') {
+        if (entrada.debe != '' || entrada.haber != '' || (entrada.debe == '' && entrada.haber == '')){
+          this.addEntrada(entrada);
+        } else {
+          entrada.falta = true;
+          flag = false;
+        }
+      } else if (!this.emptyEntrada(entrada)) {
+        entrada.falta = true;
+        flag = false;
+      }
+    });
+    return flag;
+  }
+
+  addEntrada(entrada: Entrada){
+    const entity = entrada.entityId === 0 ? null : entrada.entityId;
+    const auxiliar = entrada.auxiliarAccountId === 0 ? null : entrada.auxiliarAccountId;
+    const debe = entrada.debe === '' ? "0" : entrada.debe;
+    const haber = entrada.haber === '' ? "0" : entrada.haber;
+    const fecha = entrada.fechaEmision === '' ? null : entrada.fechaEmision;
+    const nroDoc = entrada.nroDoc === '' ? null : entrada.nroDoc;
+    const transactionAccount: TransactionAccountDto = {
+      accountId: entrada.cuentaId,
+      entityId: entity,
+      auxiliaryId: auxiliar,
+      amountDebit: debe,
+      amountCredit: haber,
+      emitedDate: fecha,
+      glosaDetail: entrada.glosa,
+      documentCode: nroDoc
+    }
+    this.listTransactionAccount.push(transactionAccount);
+  }
+
+  emptyEntrada(entrada: Entrada): boolean {
+    var flag: boolean = false;
+    if (entrada.cuentaId == 0 && entrada.numeroCuenta == '' && entrada.nombreCuenta == '' && entrada.cuentaValida == false &&
+        entrada.auxiliar == '' && entrada.auxiliarAccountId == 0 && entrada.entidad == '' && entrada.entityId == 0 &&
+        entrada.debe == '' && entrada.haber == '' && entrada.glosa == '' && entrada.nroDoc == '' && entrada.fechaEmision == '' &&
+        entrada.falta == false) {
+      flag = true;
+    } 
+    return flag;
+  }
 }
 
 interface Entrada {
@@ -535,4 +654,5 @@ interface Entrada {
   glosa: string;
   nroDoc: string;
   fechaEmision: string;
+  falta: boolean;
 }
