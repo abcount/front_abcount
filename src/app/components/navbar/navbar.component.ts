@@ -9,6 +9,7 @@ export class NavbarComponent {
 
   urlPfp = "../.././../assets/pfp.svg";
   isDropdownOpen = false;
+  isDropdownOpen2 = false;
 
   logout() {
     console.log('Cerrar sesión');
@@ -16,6 +17,10 @@ export class NavbarComponent {
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleDropdown2() {
+    this.isDropdownOpen2 = !this.isDropdownOpen2;
   }
 
 }
