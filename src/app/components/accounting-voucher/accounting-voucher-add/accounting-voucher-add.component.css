@@ -7,6 +7,12 @@
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
+.accounting-voucher-add {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .center {
   display: flex;
   justify-content: center;
@@ -16,6 +22,9 @@
 .container {
   background-color: #F8F8F8;
   padding: 2% 3%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 /*Título*/
 h2 {
@@ -62,6 +71,11 @@ input {
   border-radius: 5px;
   box-sizing: border-box;
   outline: none;
+  text-align: right;
+}
+
+.body {
+  flex-grow: 1;
 }
 
 /*Glosa*/
@@ -97,6 +111,48 @@ th {
   text-align: left;
   padding: 0 0 3px 3px;
 }
+td {
+  text-align: right;
+}
+
+.number-account-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 5px 0;
+  border: 1px solid #E8E8E8;
+  z-index: 1;
+}
+.number-account-list-option {
+  color: #757575;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.number-account-list-option:hover {
+  color: black;
+  background-color: #f8f8f8;
+}
+.number-account-list-option:active {
+  background-color: #DCF8EF;
+  color: #66cdab;
+}
+.red-text {
+  color: red;
+}
+
+
+
+
+
+
+
 
 
 .text-green {

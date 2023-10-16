@@ -1,97 +1,129 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" integrity="tu-clave-de-api" crossorigin="anonymous">
-<app-navbar></app-navbar>
-<div class="container">
-  <h2>Registrar Nuevo Comprobante Contable</h2>
-  <hr>
-  <div class="header">
-    <div class="column-3">
-      <div class="option">
-        <h3>Empresa</h3>
-        <h3 style="color: #757575;">{{companyName}}</h3>
+<div class="accounting-voucher-add">
+  <app-navbar></app-navbar>
+  <div class="container">
+    <h2>Registrar Nuevo Comprobante Contable</h2>
+    <hr>
+    <div class="header">
+      <div class="column-3">
+        <div class="option">
+          <h3>Empresa</h3>
+          <h3 style="color: #757575;">{{companyName}}</h3>
+        </div>
+      </div>
+      <div class="column-3">  
+        <div class="option">
+          <h3>Sucursal</h3>
+          <app-combo-box [selectedOption]="sucursales[0]" [options]="sucursales" (optionSelected)="subsidiarySelected($event)"></app-combo-box>
+        </div>
+        <div class="option">
+          <h3>Área</h3>
+          <app-combo-box [selectedOption]="areas[0]" [options]="areas" (optionSelected)="areaSelected($event)"></app-combo-box>
+        </div>
+        <div class="option">
+          <h3>Documento</h3>
+          <app-combo-box [selectedOption]="documentos[0]" [options]="documentos" (optionSelected)="documentSelected($event)"></app-combo-box>
+        </div>
+      </div>
+      <div class="column-3">
+        <div class="option">
+          <h3>Fecha</h3>
+          <input type="date" [(ngModel)]="fecha">
+        </div>
+        <div class="option">
+          <h3>Nro de comprobante</h3>
+          <input type="text" style="text-align: right;" [(ngModel)]="numComprobante" disabled="true">
+        </div>
+        <div class="option">
+          <h3>Moneda</h3>
+          <app-combo-box [selectedOption]="monedas[0]" [options]="monedas" (optionSelected)="currencySelected($event)"></app-combo-box>
+        </div>
       </div>
     </div>
-    <div class="column-3">  
-      <div class="option">
-        <h3>Sucursal</h3>
-        <app-combo-box [selectedOption]="sucursales[0]" [options]="sucursales" (optionSelected)="subsidiarySelected($event)"></app-combo-box>
+    <hr>
+    <div class="body">
+      <div class="glosa">
+        <h3 style="padding-top: 5px;">GLOSA</h3>
+        <textarea [(ngModel)]="glosa" maxlength="240"></textarea>
       </div>
-      <div class="option">
-        <h3>Área</h3>
-        <app-combo-box [selectedOption]="areas[0]" [options]="areas" (optionSelected)="areaSelected($event)"></app-combo-box>
-      </div>
-      <div class="option">
-        <h3>Documento</h3>
-        <app-combo-box [selectedOption]="documentos[0]" [options]="documentos" (optionSelected)="documentSelected($event)"></app-combo-box>
-      </div>
-    </div>
-    <div class="column-3">
-      <div class="option">
-        <h3>Fecha</h3>
-        <input type="date" [(ngModel)]="fecha">
-      </div>
-      <div class="option">
-        <h3>Nro de comprobante</h3>
-        <input type="text" style="text-align: right;" [(ngModel)]="numComprobante" disabled="true">
-      </div>
-      <div class="option">
-        <h3>Moneda</h3>
-        <app-combo-box [selectedOption]="monedas[0]" [options]="monedas" (optionSelected)="currencySelected($event)"></app-combo-box>
-      </div>
-    </div>
-  </div>
-  <hr>
-  <div class="body">
-    <div class="glosa">
-      <h3 style="padding-top: 5px;">GLOSA</h3>
-      <textarea [(ngModel)]="glosa" maxlength="250"></textarea>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Código de Cuenta</th>
-          <th>Nombre de la Cuenta</th>
-          <th>Auxiliar</th>
-          <th>Entidad</th>
-          <th>Debe</th>
-          <th>Haber</th>
-          <th>Glosa</th>
-          <th>Nro documento</th>
-          <th>Fecha de emisión</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let entrada of hoja.entradas; let i = index">
-          <td>
-            <input name="numeroCuenta" [(ngModel)]="entrada.numeroCuenta" (input)="filterAccounts(entrada.numeroCuenta, i)" (blur)="hideDropdown(i)" (keydown)="navegarInputs($event, i, 'numeroCuenta')">
-          </td>
-          <td><input name="nombreCuenta" [(ngModel)]="entrada.nombreCuenta"  (keydown)="navegarInputs($event, i, 'nombreCuenta')"></td>
-          <td><input name="auxiliar" [(ngModel)]="entrada.auxiliar"  (keydown)="navegarInputs($event, i, 'auxiliar')"></td>
-          <td><input name="entidad" [(ngModel)]="entrada.entidad"  (keydown)="navegarInputs($event, i, 'entidad')"></td>
-          <td><input name="debe" [(ngModel)]="entrada.debe" type="number" (input)="calcularTotales()" (keydown)="navegarInputs($event, i, 'debe')"></td>
-          <td><input name="haber" [(ngModel)]="entrada.haber" type="number" (input)="calcularTotales()" (keydown)="navegarInputs($event, i, 'haber')"></td>
-          <td><input name="glosa" [(ngModel)]="entrada.glosa"  (keydown)="navegarInputs($event, i, 'glosa')"></td>
-          <td><input name="cheque" [(ngModel)]="entrada.cheque"  (keydown)="navegarInputs($event, i, 'cheque')"></td>
-          <td><input name="fechaEmision" [(ngModel)]="entrada.fechaEmision" type="date"  (keydown)="navegarInputs($event, i, 'fechaEmision')"></td>
-        </tr>
-      </tbody>
-    </table>
-
-
-
-    <div class="footer-buttons">
-      <div></div>
-      <div>
-        <h3>DEBE </h3><input class="result" type="text" [(ngModel)]="totalDebe"  readonly>
-      </div>
-      <div>
-        <h3>HABER </h3><input  class="result" type="text" [(ngModel)]="totalHaber" readonly>
-      </div>
-      <div [ngClass]="{'text-green': diferencia === 0, 'text-red': diferencia !== 0}">
-        Diferencia: {{ diferencia }}
-      </div>
-      <div>
-        <button [disabled]="diferencia!==0" class="option1" (click)="guardar()"><i class="fa fa-save"></i>Guardar</button>
-        <button class="option2" routerLink="/accounting-voucher/view"><i class="fa fa-cancel"></i>Cancelar</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Código de Cuenta</th>
+            <th>Nombre de la Cuenta</th>
+            <th>Auxiliar</th>
+            <th>Entidad</th>
+            <th>Debe</th>
+            <th>Haber</th>
+            <th>Glosa</th>
+            <th>Nro documento</th>
+            <th>Fecha de emisión</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entrada of listaEntradas; let i = index">
+            <td>
+              <div style="position: relative;">
+                <input name="numeroCuenta" [(ngModel)]="entrada.numeroCuenta" (input)="filterAccountsFunction(i)" [ngClass]="{'red-text': isFilteredAccountsEmpty(i)}" (blur)="delayedHideDropdownAccount(i)" (keydown)="navegarInputs($event, i, 'numeroCuenta')">
+                <div class="number-account-list" *ngIf="filteredAccounts[i].length > 0">
+                  <div class="number-account-list-option" *ngFor="let account of filteredAccounts[i]" (click)="selectedAccount(account, i)">
+                    {{ account.accountCode }} - {{ account.nameAccount }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><input name="nombreCuenta" [(ngModel)]="entrada.nombreCuenta" (keydown)="navegarInputs($event, i, 'nombreCuenta')"></td>
+            <td>
+              <div style="position: relative;">
+                <input name="auxiliar" [(ngModel)]="entrada.auxiliar" (input)="filterAuxiliarFunction(i)" [ngClass]="{'red-text': isFilteredAuxiliarEmpty(i)}" (blur)="delayedHideDropdownAuxiliar(i)" (keydown)="navegarInputs($event, i, 'auxiliar')">
+                <div class="number-account-list" *ngIf="filteredAuxiliares[i].length > 0">
+                  <div class="number-account-list-option" *ngFor="let auxiliar of filteredAuxiliares[i]" (click)="selectedAuxiliar(auxiliar, i)">
+                    {{ auxiliar.codeAccount }} - {{ auxiliar.nameDescription }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div style="position: relative;">
+                <input name="entidad" [(ngModel)]="entrada.entidad" (input)="filterEntityFunction(i)" [ngClass]="{'red-text': isFilteredEntitiesEmpty(i)}" (blur)="delayedHideDropdownEntity(i)" (keydown)="navegarInputs($event, i, 'entidad')">
+                <div class="number-account-list" *ngIf="filteredEntities[i].length > 0">
+                  <div class="number-account-list-option" *ngFor="let entity of filteredEntities[i]" (click)="selectedEntity(entity, i)">
+                    {{ entity.entityName }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <input name="debe" [(ngModel)]="entrada.debe" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'debe')">
+            </td>
+            <td>
+              <input name="haber" [(ngModel)]="entrada.haber" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'haber')">
+            </td>
+            <td>
+              <input name="glosa" [(ngModel)]="entrada.glosa" (keydown)="navegarInputs($event, i, 'glosa')" maxlength="450">
+            </td>
+            <td>
+              <input name="nroDoc" [(ngModel)]="entrada.nroDoc" (keydown)="navegarInputs($event, i, 'nroDoc')" maxlength="18">
+            </td>
+            <td><input name="fechaEmision" [(ngModel)]="entrada.fechaEmision" type="date" (keydown)="navegarInputs($event, i, 'fechaEmision')"></td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td><h3>TOTALES&nbsp;&nbsp;&nbsp;</h3></td>
+            <td><input class="result" type="text" [(ngModel)]="totalDebe" readonly></td>
+            <td><input class="result" type="text" [(ngModel)]="totalHaber" readonly></td>
+            <td>
+              <h3 [ngClass]="{'text-green': diferencia === 0, 'text-red': diferencia !== 0}">
+                Diferencia: {{ diferencia }}
+              </h3>
+            </td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer-buttons">
+        <!--<button [disabled]="diferencia!==0" class="option1" (click)="guardar()"><i class="fa fa-save"></i>Guardar</button>
+        <button class="option2" routerLink="/accounting-voucher/view"><i class="fa fa-cancel"></i>Cancelar</button>-->
       </div>
     </div>
   </div>
