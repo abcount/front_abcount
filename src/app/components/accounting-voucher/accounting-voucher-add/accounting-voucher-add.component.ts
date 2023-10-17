@@ -619,8 +619,8 @@ export class AccountingVoucherAddComponent {
       accountId: entrada.cuentaId,
       entityId: entity,
       auxiliaryId: auxiliar,
-      amountDebit: debe,
-      amountCredit: haber,
+      amountDebit: parseFloat(debe),
+      amountCredit: parseFloat(haber),
       emitedDate: fecha,
       glosaDetail: entrada.glosa,
       documentCode: nroDoc

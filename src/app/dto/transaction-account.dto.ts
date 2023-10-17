@@ -3,8 +3,8 @@ export interface TransactionAccountDto {
     accountId: number;
     entityId: number | null;
     auxiliaryId: number | null;
-    amountDebit: string;
-    amountCredit: string;
+    amountDebit: number;
+    amountCredit: number;
     emitedDate: string | null;
     glosaDetail: string;
     documentCode: string | null;
