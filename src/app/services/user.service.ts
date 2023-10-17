@@ -20,7 +20,9 @@ export class UserService {
 
   // Función para obtener usuarios de la empresa
   getUsers() {
-    return this.http.get(`${this.configurationUrl}/invitation/pending/${this.companyId}`);
+    //return this.http.get(`${this.configurationUrl}/invitation/pending/${this.companyId}`);
+    return this.http.get(`${environment.BACKEND_URL}/companies/${this.companyId}/employees`);
+
   }
   // Función para eliminar usuarios de la empresa
   deleteUser(id: any) {
