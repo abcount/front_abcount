@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { GeneralDto } from '../dto/general.dto';
+import { CompanyDto } from '../dto/company.dto';
 
 
 @Injectable({
@@ -55,5 +57,14 @@ export class UserService {
     };
     console.log(body);
     return this.http.put(`${this.configurationUrl}/invitation/pending/user/${id}`, body, { headers: header });
+  }
+
+  // Function to get companies by user
+  getCompaniesByUser(){
+    return this.http.get<GeneralDto<CompanyDto[]>>(`${environment.BACKEND_URL}/companies`);
+  }
+  // Function to get information of user
+  getInfoUser(){
+    return this.http.get(`${environment.BACKEND_URL}/users/info`);
   }
 }
