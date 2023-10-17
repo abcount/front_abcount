@@ -1,5 +1,5 @@
 export interface AuxiliarDto {
-    auxiliarAccountId: number;
+    auxiliaryAccountId: number;
     codeAccount: string;
     nameDescription: string;
 }
