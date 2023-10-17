@@ -37,7 +37,7 @@ selectedRecord?: ExchangeRateDto;
         const allCurrencies = new Set<string>();
         this.data.data.forEach(record => {
           record.values.forEach(currency => {
-            allCurrencies.add(currency.abbrevation);
+            allCurrencies.add(currency.abbreviation);
           });
         });
         this.displayedColumns = Array.from(allCurrencies);
@@ -50,7 +50,7 @@ selectedRecord?: ExchangeRateDto;
   }
 
   getValueForCurrency(record: ExchangeRateDto, currency: string): number | undefined {
-    const found = record.values.find(item => item.abbrevation === currency);
+    const found = record.values.find(item => item.abbreviation === currency);
     return found ? found.value : undefined;
   }
 
