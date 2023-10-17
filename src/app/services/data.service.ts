@@ -10,37 +10,38 @@ import {ExchangeRateDto} from "../dto/exchangeRate.dto";
   providedIn: 'root'
 })
 export class DataService {
-  baseUrl = `${environment.BACKEND_URL}/data`;
-
+  baseUrl = environment.BACKEND_URL;
+  companyId = 1; // sessionStorage.getItem('companyId');
 
 
   constructor(private http: HttpClient) {}
 
   // Auxiliares
   createAuxiliary(auxiliary: AuxiliaryDto){
-    return this.http.post(`${this.baseUrl}/addAuxiliary?auxiliaryCode=${auxiliary.auxiliaryCode}&auxiliaryName=${auxiliary.auxiliaryName}`, auxiliary);
+    return this.http.post(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
   }
 
   getAllAuxiliaries(): Observable<AuxiliaryDto[]> {
-    return this.http.get<AuxiliaryDto[]>(`${this.baseUrl}/getAllAuxiliaries`);
+    return this.http.get<AuxiliaryDto[]>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`);
   }
   updateAuxiliary(auxiliary: AuxiliaryDto): Observable<AuxiliaryDto> {
-    return this.http.put<AuxiliaryDto>(`${this.baseUrl}/update/${auxiliary.auxiliaryId}`, auxiliary);
+    return this.http.put<AuxiliaryDto>(`${this.baseUrl}/auxiliaryAccount/`, auxiliary);
   }
   deleteAuxiliary(auxiliaryId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/delete/${auxiliaryId}`);
+    return this.http.delete<void>(`${this.baseUrl}//auxiliaryAccount/${auxiliaryId}`);
   }
+
   //Entidades
   createEntity(entity: EntityDto): Observable<EntityDto> {
     return this.http.post<EntityDto>(
-      `${this.baseUrl}/addEntity?entityName=${entity.entityName}&entityNit=${entity.entityNit}&entitySocialReason=${entity.entitySocialReason}&foreign=${entity.foreign}`, entity);
+      `${this.baseUrl}/entity/${this.companyId}`, entity);
   }
   getAllEntities(): Observable<EntityDto[]> {
-    return this.http.get<EntityDto[]>(`${this.baseUrl}/getAllEntities`);
+    return this.http.get<EntityDto[]>(`${this.baseUrl}/entity/${this.companyId}`);
   }
 
   updateEntity(entity: EntityDto): Observable<EntityDto> {
-    return this.http.put<EntityDto>(`${this.baseUrl}/update/${entity.entityId}`, entity);
+    return this.http.put<EntityDto>(`${this.baseUrl}/entity/`, entity);
   }
 
   deleteEntity(entityId: number): Observable<void> {
