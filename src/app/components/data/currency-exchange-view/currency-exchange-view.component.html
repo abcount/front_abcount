@@ -15,9 +15,10 @@
       <ng-container *ngFor="let column of displayedColumns">
         <ng-container [matColumnDef]="column">
           <mat-header-cell *matHeaderCellDef> {{ column }} </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.values[column] }} </mat-cell>
+          <mat-cell *matCellDef="let record"> {{ getValueForCurrency(record, column) }} </mat-cell>
         </ng-container>
       </ng-container>
+
 
       <!-- Acciones Column -->
       <ng-container matColumnDef="actions">

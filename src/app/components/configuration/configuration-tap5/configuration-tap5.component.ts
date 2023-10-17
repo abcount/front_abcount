@@ -11,7 +11,7 @@ export class ConfigurationTap5Component {
   constructor(private UserServices: UserService) { }
   //users: any[]=[];
   //Datos quemados en frotend
-  users = [
+  employee = [
     {
       userId: 1,
       firstName: "Sebastian",
@@ -38,6 +38,28 @@ export class ConfigurationTap5Component {
     }
 
   ];
+
+  invitation = [
+    {
+      userId: 6,
+      firstName: "Jose",
+      lastName: "Perez",
+      email: "jose@gmail.com"
+    },
+    {
+      userId: 7,
+      firstName: "Juan",
+      lastName: "Gomez",
+      email: "juan@gmail.com",
+    },
+    {
+      userId: 8,
+      firstName: "Maria",
+      lastName: "Gomez",
+      email: "maria@gomez",
+    }
+  ];
+
   ngOnInit() {
     // Obtener usuarios
     //  this.UserServices.getUsers().subscribe(

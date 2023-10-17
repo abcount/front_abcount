@@ -57,14 +57,37 @@ export class CurrencyExchangeAddComponent {
 
   loadExchangeRateForEdit(record: ExchangeRateDto): void {
     this.selectedRecord = { ...record };
+
+    const valuesObject: { [currency: string]: number } = {};
+    this.selectedRecord.values.forEach(item => {
+      valuesObject[item.abbrevation] = item.value;
+    });
+
     this.form.setValue({
       date: this.selectedRecord.date,
-      values: { ...this.selectedRecord.values }
+      values: valuesObject
     });
   }
 
   saveOrUpdate(): void {
-    const formData = this.form.value as ExchangeRateDto;
+    const dateValue = this.form.get('date')?.value;
+    const valuesObject = this.form.get('values')?.value as { [key: string]: number };
+    const valuesArray: { abbrevation: string, value: number }[] = [];
+    for (const currency in valuesObject) {
+      if (valuesObject.hasOwnProperty(currency)) {
+        valuesArray.push({
+          abbrevation: currency,
+          value: valuesObject[currency]
+        });
+      }
+    }
+    const formData: ExchangeRateDto = {
+      id: this.selectedRecord ? this.selectedRecord.id : undefined,
+      date: dateValue,
+      values: valuesArray
+    };
+    formData.values = valuesArray;
+
     if (this.selectedRecord) {
       this.dataService.updateExchangeRate(formData).subscribe(updatedRecord => {
         this.router.navigate(['/view-component-route']);
@@ -79,6 +102,7 @@ export class CurrencyExchangeAddComponent {
       });
     }
   }
+
 
   cancelEdit(): void {
     this.selectedRecord = undefined;

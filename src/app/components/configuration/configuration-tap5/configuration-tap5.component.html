@@ -11,12 +11,29 @@
             </div>
         </div>
         <div class="datos">
-            <div class="usuario" *ngFor="let user of users">
+            <div class="usuario" *ngFor="let user of employee">
                 <img src="../../../assets/pfp.svg" alt="Foto de perfil">
                 <h2>{{user.firstName}} {{user.lastName}}</h2>
                 <h4>{{user.email}}</h4>
                 <div class="botones">
-                    <a routerLink="/users-and-permissions"><button class="button">Ver más</button></a>
+                    <a href="{{user.userId}}/users-and-permissions"><button class="button">Ver más</button></a>
+                    <button class="button-red" (click)="Eliminar(user.userId)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row-2">
+            <div>
+                <h1>Invitaciones pendientes</h1>
+            </div>
+        </div>
+        <div class="datos">
+            <div class="usuario" *ngFor="let user of invitation">
+                <img src="../../../assets/pfp.svg" alt="Foto de perfil">
+                <h2>{{user.firstName}} {{user.lastName}}</h2>
+                <h4>{{user.email}}</h4>
+                <div class="botones">
+                    <a href="{{user.userId}}/users-and-permissions"><button class="button">Ver más</button></a>
                     <button class="button-red" (click)="Eliminar(user.userId)">Eliminar</button>
                 </div>
             </div>

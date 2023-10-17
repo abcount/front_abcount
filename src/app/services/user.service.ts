@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { GeneralDto } from '../dto/general.dto';
+import { CompanyDto } from '../dto/company.dto';
 
 
 @Injectable({
@@ -18,7 +20,9 @@ export class UserService {
 
   // Función para obtener usuarios de la empresa
   getUsers() {
-    return this.http.get(`${this.configurationUrl}/invitation/pending/${this.companyId}`);
+    //return this.http.get(`${this.configurationUrl}/invitation/pending/${this.companyId}`);
+    return this.http.get(`${environment.BACKEND_URL}/companies/${this.companyId}/employees`);
+
   }
   // Función para eliminar usuarios de la empresa
   deleteUser(id: any) {
@@ -55,5 +59,23 @@ export class UserService {
     };
     console.log(body);
     return this.http.put(`${this.configurationUrl}/invitation/pending/user/${id}`, body, { headers: header });
+  }
+
+  // Function to get companies by user
+  getCompaniesByUser(){
+    return this.http.get<GeneralDto<CompanyDto[]>>(`${environment.BACKEND_URL}/companies`);
+  }
+  // Function to get information of user
+  getInfoUser(){
+    return this.http.get(`${environment.BACKEND_URL}/users/info`);
+  }
+
+  // Función para obtener lista de usuarios (filtro)
+  getUsersList(username: string) {
+    //return this.http.get(`${environment.BACKEND_URL}/invitation/pending/${this.companyId}`);
+    return this.http.get(`${environment.BACKEND_URL}/users?search=${username}&limit=5`);
+
+    //BACKEND_URL: 'http://localhost:8080',
+    //http://localhost:8080/users?search=a&limit=5
   }
 }

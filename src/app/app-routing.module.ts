@@ -48,7 +48,7 @@ const routes: Routes = [
     ],
   },
   { path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent },
-  { path: 'users-and-permissions', component: UsersAndPermissionsComponent },
+  { path: ':user/users-and-permissions', component: UsersAndPermissionsComponent },
   {
     path: 'accounting-voucher',
     children: [

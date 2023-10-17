@@ -72,6 +72,35 @@ input:focus {
 input::placeholder {
   transition: opacity 0.25s;
 }  
+/*Sugerencias de usuario*/
+.buscar-usuario {
+  position: relative;
+}
+
+.resultado-lista {
+  position: absolute;
+  top: 100%;
+  left: 40%;
+  right: 0;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+  width: 50%;
+}
+
+.resultado-lista li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.resultado-lista li:hover {
+  background-color: #f0f0f0;
+}
 /*Estilo dos columnas principales*/
 .wrapper {
   display: grid;
