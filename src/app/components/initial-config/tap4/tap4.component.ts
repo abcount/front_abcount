@@ -336,8 +336,8 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
         }
       },
       error: error => {
-        console.error('Error enviando datos:', error);
         loading.close();
+        console.error('Error enviando datos:', error);
       }
     });
   }
