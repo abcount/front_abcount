@@ -67,4 +67,13 @@ export class UserService {
   getInfoUser(){
     return this.http.get(`${environment.BACKEND_URL}/users/info`);
   }
+
+  // Función para obtener lista de usuarios (filtro)
+  getUsersList(username: string) {
+    //return this.http.get(`${environment.BACKEND_URL}/invitation/pending/${this.companyId}`);
+    return this.http.get(`${environment.BACKEND_URL}/users?search=${username}&limit=5`);
+
+    //BACKEND_URL: 'http://localhost:8080',
+    //http://localhost:8080/users?search=a&limit=5
+  }
 }
