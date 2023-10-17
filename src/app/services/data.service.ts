@@ -33,20 +33,20 @@ export class DataService {
   }
 
   //Entidades
-  createEntity(entity: EntityDto): Observable<EntityDto> {
-    return this.http.post<EntityDto>(
+  createEntity(entity: EntityDto): Observable<GeneralDto<EntityDto[]>> {
+    return this.http.post<GeneralDto<EntityDto[]>>(
       `${this.baseUrl}/entity/${this.companyId}`, entity);
   }
-  getAllEntities(): Observable<EntityDto[]> {
-    return this.http.get<EntityDto[]>(`${this.baseUrl}/entity/${this.companyId}`);
+  getAllEntities(): Observable<GeneralDto<EntityDto[]>> {
+    return this.http.get<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${this.companyId}`);
   }
 
-  updateEntity(entity: EntityDto): Observable<EntityDto> {
-    return this.http.put<EntityDto>(`${this.baseUrl}/entity/`, entity);
+  updateEntity(entity: EntityDto): Observable<GeneralDto<EntityDto[]>> {
+    return this.http.put<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${this.companyId}`, entity);
   }
 
-  deleteEntity(entityId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/entity/${entityId}`);
+  deleteEntity(entityId: number): Observable<GeneralDto<EntityDto[]>>{
+    return this.http.delete<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${entityId}`);
   }
 
   //Cambios de moneda

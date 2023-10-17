@@ -26,31 +26,32 @@ export class EntityComponent {
   constructor(private dataService: DataService) {}
 
   addEntity(entityData: EntityDto): void {
-    this.dataService.createEntity(entityData).subscribe(
-      (entity: EntityDto) => {
-        this.entity.push(entity);
+    this.dataService.createEntity(entityData).subscribe({
+      next: (data) =>{
         this.controlEntityName.reset();
         this.controlEntityNit.reset();
         this.controlEntitySocialReason.reset();
         this.controlEntityForeign.reset();
+        this.entity = data.data!;
       },
-      error => {
-        console.error('Error to create entity', error);
+      error: (error) => {
+        console.log(error)
       }
+    }
     );
   }
 
   editEntity(entity: EntityDto): void {
-    this.dataService.updateEntity(entity).subscribe(
-      (updatedEntity: EntityDto) => {
-        const index = this.entity.findIndex(e => e.entityId === updatedEntity.entityId);
-        if (index !== -1) {
-          this.entity[index] = updatedEntity;
-        }
+    this.dataService.updateEntity(entity).subscribe({
+      next: (data) =>{
+        this.entity = data.data!;
+        this.cancelEdit();
       },
-      error => {
-        console.error('Error updating entity', error);
+      error: (error) => {
+        console.log(error)
       }
+    }
+      
     );
   }
 
@@ -105,13 +106,13 @@ export class EntityComponent {
   }
 
   getEntities(): void {
-    this.dataService.getAllEntities().subscribe(
-      (response: any) => {
-        this.entity = response.data;
+    this.dataService.getAllEntities().subscribe({
+      next: (data) => {
+        this.entity = data.data!;
       },
-      error => {
+      error: (error) => {
         console.error('Error fetching entities', error);
       }
-    );
+    });
   }
 }
