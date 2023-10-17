@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class FormStateService {
 
    formGroup: FormGroup;
-   private url=`${environment.BACKEND_URL}/api/v1/ms-company/company`;
+   private url=`${environment.BACKEND_URL}/companies`;
    private imageFile: File | null = null;
 
 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CompanyDto } from 'src/app/dto/company.dto';
+import {HttpClient} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-my-companies',
@@ -37,10 +39,14 @@ export class MyCompaniesComponent {
     }
   ]
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     localStorage.clear();
+    this.httpClient.get('http://localhost:8080/users/info').subscribe((data: any) => {
+      console.log(data);
+    });
+
   }
 
   saveData(companyId: number, userId: number) {
