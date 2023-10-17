@@ -4,5 +4,4 @@ export interface EntityDto{
   entityNit: string;
   entitySocialReason: string;
   foreign: boolean;
-
 }

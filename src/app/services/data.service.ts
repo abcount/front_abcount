@@ -5,46 +5,48 @@ import {AuxiliaryDto} from "../dto/auxiliary.dto";
 import {BehaviorSubject, Observable} from "rxjs";
 import {EntityDto} from "../dto/entity.dto";
 import {ExchangeRateDto} from "../dto/exchangeRate.dto";
+import { GeneralDto } from '../dto/general.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  baseUrl = `${environment.BACKEND_URL}/data`;
-
+  baseUrl = environment.BACKEND_URL;
+  companyId = localStorage.getItem('companyId') || 1;
 
 
   constructor(private http: HttpClient) {}
 
   // Auxiliares
-  createAuxiliary(auxiliary: AuxiliaryDto){
-    return this.http.post(`${this.baseUrl}/addAuxiliary?auxiliaryCode=${auxiliary.auxiliaryCode}&auxiliaryName=${auxiliary.auxiliaryName}`, auxiliary);
+  createAuxiliary(auxiliary: AuxiliaryDto): Observable<GeneralDto<AuxiliaryDto[]>> {
+    return this.http.post<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
   }
 
-  getAllAuxiliaries(): Observable<AuxiliaryDto[]> {
-    return this.http.get<AuxiliaryDto[]>(`${this.baseUrl}/getAllAuxiliaries`);
+  getAllAuxiliaries(): Observable<GeneralDto<AuxiliaryDto[]>>  {
+    return this.http.get<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`);
   }
-  updateAuxiliary(auxiliary: AuxiliaryDto): Observable<AuxiliaryDto> {
-    return this.http.put<AuxiliaryDto>(`${this.baseUrl}/update/${auxiliary.auxiliaryId}`, auxiliary);
+  updateAuxiliary(auxiliary: AuxiliaryDto): Observable<GeneralDto<AuxiliaryDto[]>>{
+    return this.http.put<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
   }
   deleteAuxiliary(auxiliaryId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/delete/${auxiliaryId}`);
+    return this.http.delete<void>(`${this.baseUrl}/auxiliaryAccount/${auxiliaryId}`);
   }
+
   //Entidades
-  createEntity(entity: EntityDto): Observable<EntityDto> {
-    return this.http.post<EntityDto>(
-      `${this.baseUrl}/addEntity?entityName=${entity.entityName}&entityNit=${entity.entityNit}&entitySocialReason=${entity.entitySocialReason}&foreign=${entity.foreign}`, entity);
+  createEntity(entity: EntityDto): Observable<GeneralDto<EntityDto[]>> {
+    return this.http.post<GeneralDto<EntityDto[]>>(
+      `${this.baseUrl}/entity/${this.companyId}`, entity);
   }
-  getAllEntities(): Observable<EntityDto[]> {
-    return this.http.get<EntityDto[]>(`${this.baseUrl}/getAllEntities`);
-  }
-
-  updateEntity(entity: EntityDto): Observable<EntityDto> {
-    return this.http.put<EntityDto>(`${this.baseUrl}/update/${entity.entityId}`, entity);
+  getAllEntities(): Observable<GeneralDto<EntityDto[]>> {
+    return this.http.get<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${this.companyId}`);
   }
 
-  deleteEntity(entityId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/delete/${entityId}`);
+  updateEntity(entity: EntityDto): Observable<GeneralDto<EntityDto[]>> {
+    return this.http.put<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${this.companyId}`, entity);
+  }
+
+  deleteEntity(entityId: number): Observable<GeneralDto<EntityDto[]>>{
+    return this.http.delete<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${entityId}`);
   }
 
   //Cambios de moneda

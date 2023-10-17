@@ -57,6 +57,9 @@ import { AuxiliaryAccountComponent } from './components/data/auxiliary-account/a
 import { EntityComponent } from './components/data/entity/entity.component';
 import { CurrencyExchangeViewComponent } from './components/data/currency-exchange-view/currency-exchange-view.component';
 import { CurrencyExchangeAddComponent } from './components/data/currency-exchange-add/currency-exchange-add.component';
+import { LoadingComponent } from './components/general-components/loading/loading.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -87,6 +90,7 @@ import { CurrencyExchangeAddComponent } from './components/data/currency-exchang
     EntityComponent,
     CurrencyExchangeViewComponent,
     CurrencyExchangeAddComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +108,9 @@ import { CurrencyExchangeAddComponent } from './components/data/currency-exchang
     CarlosModule,
     MicaModule,
     SebastianModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
    ],
    providers: [
      {
