@@ -60,7 +60,7 @@ export class CurrencyExchangeAddComponent {
 
     const valuesObject: { [currency: string]: number } = {};
     this.selectedRecord.values.forEach(item => {
-      valuesObject[item.abbrevation] = item.value;
+      valuesObject[item.abbreviation] = item.value;
     });
 
     this.form.setValue({
@@ -72,11 +72,11 @@ export class CurrencyExchangeAddComponent {
   saveOrUpdate(): void {
     const dateValue = this.form.get('date')?.value;
     const valuesObject = this.form.get('values')?.value as { [key: string]: number };
-    const valuesArray: { abbrevation: string, value: number }[] = [];
+    const valuesArray: { abbreviation: string, value: number }[] = [];
     for (const currency in valuesObject) {
       if (valuesObject.hasOwnProperty(currency)) {
         valuesArray.push({
-          abbrevation: currency,
+          abbreviation: currency,
           value: valuesObject[currency]
         });
       }
