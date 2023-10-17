@@ -12,25 +12,28 @@ export class MyCompaniesComponent implements OnInit{
   companies: CompanyDto[] 
   constructor(private router: Router, 
     private userService: UserService) { }
-  ngOnInit(): void {
+  async ngOnInit() {
     localStorage.clear();
     // cal first api
     this.userService.getInfoUser().subscribe({
       next: (response) =>{
         console.log(response)
-      }
-    })
-    // call companies
-    this.userService.getCompaniesByUser().subscribe({
-      next: (response) => {
-        console.log(response)
-        if(response.data){
-          this.companies = response.data
-        }
-        
+
+        // call companies
+        this.userService.getCompaniesByUser().subscribe({
+          next: (response) => {
+            console.log(response)
+            if(response.data){
+              this.companies = response.data
+            }
+            
+          },
+          error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
+        })
       },
-      error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
-     })
+      error: (error) => console.log("Error fetching user Info", error)
+    })
+    
   }
   //Obtener las compañias del usuario
   /* 
