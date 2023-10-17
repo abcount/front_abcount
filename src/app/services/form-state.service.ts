@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -19,17 +19,17 @@ export class FormStateService {
       this.formGroup = this.fb.group({
 
         enterprise: this.fb.group({
-          enterpriseName: [''],
-          dicCategory: [''],
-          nit: [''],
-          enterpriseLocation: [''],
-          emailRepresentative: [''],
-          nameRepresentative: [''],
-          ciRepresentative: [''],
-          numberRepresentative: [''],
-          numberRegistration: [''],
-          numberEmployee: [''],
-          rubro: [''],
+          enterpriseName: ['', Validators.maxLength(255)],
+          dicCategory: ['', Validators.maxLength(50)],
+          nit: ['',Validators.maxLength(20)],
+          enterpriseLocation: ['', Validators.maxLength(255)],
+          emailRepresentative: ['',Validators.maxLength(100)],
+          nameRepresentative: ['',Validators.maxLength(100)],
+          ciRepresentative: ['',Validators.maxLength(20)],
+          numberRepresentative: ['',Validators.maxLength(100)],
+          numberRegistration: ['',Validators.maxLength(50)],
+          numberEmployee: ['',Validators.maxLength(50)],
+          rubro: ['',Validators.maxLength(50)],
           subsidiaries: this.fb.array([]),
 
           openingDate: this.obtenerFechaActualEnFormato(),
