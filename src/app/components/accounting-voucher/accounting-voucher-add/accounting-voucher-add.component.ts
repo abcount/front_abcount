@@ -534,9 +534,10 @@ export class AccountingVoucherAddComponent {
             'currencyId': this.currencySelect,
             'transactionTypeId': this.documentSelect,
             'areaId': this.areaSelect,
-            'transactionNumber': this.numComprobante,
             'glosaGeneral': this.glosa,
-            'transactions': this.listTransactionAccount
+            'transactions': this.listTransactionAccount,
+            'totalDebit': this.totalDebe,
+            'totalCredit': this.totalHaber,
           }
           console.log(body);
           this.transactionService.createTransaction(body).subscribe(
