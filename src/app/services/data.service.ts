@@ -5,30 +5,31 @@ import {AuxiliaryDto} from "../dto/auxiliary.dto";
 import {BehaviorSubject, Observable} from "rxjs";
 import {EntityDto} from "../dto/entity.dto";
 import {ExchangeRateDto} from "../dto/exchangeRate.dto";
+import { GeneralDto } from '../dto/general.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   baseUrl = environment.BACKEND_URL;
-  companyId = 1; // sessionStorage.getItem('companyId');
+  companyId = localStorage.getItem('companyId') || 1;
 
 
   constructor(private http: HttpClient) {}
 
   // Auxiliares
-  createAuxiliary(auxiliary: AuxiliaryDto){
-    return this.http.post(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
+  createAuxiliary(auxiliary: AuxiliaryDto): Observable<GeneralDto<AuxiliaryDto[]>> {
+    return this.http.post<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
   }
 
-  getAllAuxiliaries(): Observable<AuxiliaryDto[]> {
-    return this.http.get<AuxiliaryDto[]>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`);
+  getAllAuxiliaries(): Observable<GeneralDto<AuxiliaryDto[]>>  {
+    return this.http.get<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`);
   }
-  updateAuxiliary(auxiliary: AuxiliaryDto): Observable<AuxiliaryDto> {
-    return this.http.put<AuxiliaryDto>(`${this.baseUrl}/auxiliaryAccount/`, auxiliary);
+  updateAuxiliary(auxiliary: AuxiliaryDto): Observable<GeneralDto<AuxiliaryDto[]>>{
+    return this.http.put<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
   }
   deleteAuxiliary(auxiliaryId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}//auxiliaryAccount/${auxiliaryId}`);
+    return this.http.delete<void>(`${this.baseUrl}/auxiliaryAccount/${auxiliaryId}`);
   }
 
   //Entidades
@@ -45,7 +46,7 @@ export class DataService {
   }
 
   deleteEntity(entityId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/delete/${entityId}`);
+    return this.http.delete<void>(`${this.baseUrl}/entity/${entityId}`);
   }
 
   //Cambios de moneda

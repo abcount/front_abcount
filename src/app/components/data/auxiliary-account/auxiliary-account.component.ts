@@ -31,15 +31,19 @@ export class AuxiliaryAccountComponent {
   }
 
   addAuxiliary(auxiliaryData: AuxiliaryDto): void {
-    this.dataService.createAuxiliary(auxiliaryData).subscribe(
-      (auxiliary: any) => {
-        this.auxiliary.push(auxiliary);
+    this.dataService.createAuxiliary(auxiliaryData).subscribe({
+      next: (data) => {
         this.controlAuxiliaryCode.reset();
         this.controlAuxiliaryName.reset();
+        if(data.success){
+          this.auxiliary = data.data!;
+        }
       },
-      (error: any) => {
-        console.error('Error to create auxiliary', error);
+      error: (error) => {
+        //TODO: mostrar mensaje de error
+        console.log(error)
       }
+    }
     );
   }
 
@@ -71,18 +75,20 @@ export class AuxiliaryAccountComponent {
     );
   }
   editAuxiliary(auxiliary: AuxiliaryDto): void {
-    this.dataService.updateAuxiliary(auxiliary).subscribe(
-      (updatedAuxiliary: AuxiliaryDto) => {
-        const index = this.auxiliary.findIndex(a => a.auxiliaryId === updatedAuxiliary.auxiliaryId);
-        if (index !== -1) {
-          this.auxiliary[index] = updatedAuxiliary;
-        }
+    this.dataService.updateAuxiliary(auxiliary).subscribe({
+      next: (data) => {
+        this.auxiliary = data.data!;
       },
-      error => {
-        console.error('Error updating auxiliary', error);
+      error: (error) => {
+        //TODO: mostrar mensaje de error
+        console.log(error)
+      },
+      complete: () => {
+        this.cancelEdit();
       }
+    }
     );
-    this.cancelEdit();
+    
   }
 
   deleteAuxiliary(auxiliary: AuxiliaryDto): void {
