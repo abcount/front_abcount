@@ -3,6 +3,9 @@ import {AuxiliaryDto} from "../../../dto/auxiliary.dto";
 import {FormControl, FormGroup} from "@angular/forms";
 import {DataService} from "../../../services/data.service";
 import {EntityDto} from "../../../dto/entity.dto";
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 
 @Component({
   selector: 'app-entity',
@@ -23,7 +26,7 @@ export class EntityComponent {
 
   selectedEntity?: EntityDto;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private dialog: MatDialog, private route: Router) {}
 
   addEntity(entityData: EntityDto): void {
     this.dataService.createEntity(entityData).subscribe({
@@ -35,7 +38,14 @@ export class EntityComponent {
         this.entity = data.data!;
       },
       error: (error) => {
-        console.log(error)
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo agregar la entidad"}
+        });
+
+        message.afterClosed().subscribe(() => {
+          window.location.reload();
+        })
+
       }
     }
     );
@@ -48,7 +58,13 @@ export class EntityComponent {
         this.cancelEdit();
       },
       error: (error) => {
-        console.log(error)
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo editar la entidad"+entity.entityId}
+        });
+
+        message.afterClosed().subscribe(() => {
+          window.location.reload();
+        })
       }
     }
       
@@ -111,7 +127,13 @@ export class EntityComponent {
         this.entity = data.data!;
       },
       error: (error) => {
-        console.error('Error fetching entities', error);
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo obtener las entidades"}
+        });
+
+        message.afterClosed().subscribe(() => {
+          this.route.navigate(['/configuration-tap/1']);
+        })
       }
     });
   }

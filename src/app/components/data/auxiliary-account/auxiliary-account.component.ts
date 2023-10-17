@@ -3,6 +3,9 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {AuxiliaryDto} from "../../../dto/auxiliary.dto";
 import {DataService} from "../../../services/data.service";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auxiliary-account',
@@ -27,7 +30,7 @@ export class AuxiliaryAccountComponent {
 
   selectedAuxiliary?: AuxiliaryDto;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private dialog: MatDialog, private route: Router) {
   }
 
   addAuxiliary(auxiliaryData: AuxiliaryDto): void {
@@ -40,8 +43,14 @@ export class AuxiliaryAccountComponent {
         }
       },
       error: (error) => {
-        //TODO: mostrar mensaje de error
-        console.log(error)
+        const message = this.dialog.open(MessageDialogComponent, {
+          disableClose: true,
+          data: {title: 'Ocurrio un error!', message: "No se pudo agregar el auxiliar"}
+        });
+
+        message.afterClosed().subscribe(() => {
+          window.location.reload();
+        })
       }
     }
     );
@@ -65,14 +74,21 @@ export class AuxiliaryAccountComponent {
 
 
   getAuxiliaries(): void {
-    this.dataService.getAllAuxiliaries().subscribe(
-      (response: any) => {
-        this.auxiliary = response.data;
+    this.dataService.getAllAuxiliaries().subscribe({
+      next: (data) => {
+        this.auxiliary = data.data!;
       },
-      error => {
-        console.error('Error fetching auxiliaries', error);
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          disableClose: true,
+          data: {title: 'Ocurrio un error!', message: "No se pudo obtener los datos de los auxiliares"}
+        });
+
+        message.afterClosed().subscribe(() => {
+          this.route.navigate(['/configuration-tap/1']);
+        })
       }
-    );
+    });
   }
   editAuxiliary(auxiliary: AuxiliaryDto): void {
     this.dataService.updateAuxiliary(auxiliary).subscribe({
@@ -80,8 +96,13 @@ export class AuxiliaryAccountComponent {
         this.auxiliary = data.data!;
       },
       error: (error) => {
-        //TODO: mostrar mensaje de error
-        console.log(error)
+        const message = this.dialog.open(MessageDialogComponent, {
+          disableClose: true,
+          data: {title: 'Ocurrio un error!', message: "No se pudo actualizar el auxiliar:" + auxiliary.auxiliaryId}
+        });
+        message.afterClosed().subscribe(() => {
+          window.location.reload();
+        })
       },
       complete: () => {
         this.cancelEdit();

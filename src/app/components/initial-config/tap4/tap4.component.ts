@@ -6,6 +6,7 @@ import {FormStateService} from "../../../services/form-state.service";
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { LoadingComponent } from '../../general-components/loading/loading.component';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 
 
 const TREE_DATA: Account[] = [
@@ -322,22 +323,27 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     const loading = this.dialog.open(LoadingComponent, {
       disableClose: true,
       width: '300px',
-      height: '300px'
+      height: '350px',
     });
     
     this.formService.enviarDatos(formData).subscribe({
       next: response => {
-        console.log('Respuesta del servidor:', response);
-        this.formService.clearFormDataFromLocalStorage();
         if(response.success){
           localStorage.clear();
           loading.close();
           this.mostrarPopupConfirm = true;
+        }else{
+          loading.close();
+          const message = this.dialog.open(MessageDialogComponent,{
+            data: {title: 'Ocurrio un error!', message: response.message}
+          })
         }
       },
       error: error => {
         loading.close();
-        console.error('Error enviando datos:', error);
+        const message = this.dialog.open(MessageDialogComponent,{
+          data: {title: 'Ocurrio un error!', message: "No se pudo comunicar con el servidor, intente de nuevo más tarde"}
+        })
       }
     });
   }

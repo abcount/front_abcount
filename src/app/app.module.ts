@@ -18,6 +18,9 @@ import { SebastianModule } from "./modules/SebastianModule";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from "@angular/material/table";
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 // Keycloak
 import { initializeKeycloak } from '../app/config/keycloak.init';
@@ -58,8 +61,8 @@ import { EntityComponent } from './components/data/entity/entity.component';
 import { CurrencyExchangeViewComponent } from './components/data/currency-exchange-view/currency-exchange-view.component';
 import { CurrencyExchangeAddComponent } from './components/data/currency-exchange-add/currency-exchange-add.component';
 import { LoadingComponent } from './components/general-components/loading/loading.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MessageDialogComponent } from './components/general-components/message.dialog/message.dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -91,6 +94,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     CurrencyExchangeViewComponent,
     CurrencyExchangeAddComponent,
     LoadingComponent,
+    MessageDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,7 +114,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     SebastianModule,
     KeycloakAngularModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatGridListModule
    ],
    providers: [
      {
