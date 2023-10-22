@@ -80,6 +80,7 @@ export class AccountingVoucherAddComponent {
         // Obteniendo los auxiliares
         this.listAuxiliares = data.auxiliar;
         // Obteniendo las entidades
+        this.listEntities = data.entities;
         //this.listEntities = data.entities;
       }
     });

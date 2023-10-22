@@ -36,10 +36,14 @@ export class AuxiliaryAccountComponent {
   addAuxiliary(auxiliaryData: AuxiliaryDto): void {
     this.dataService.createAuxiliary(auxiliaryData).subscribe({
       next: (data) => {
-        this.controlAuxiliaryCode.reset();
-        this.controlAuxiliaryName.reset();
         if(data.success){
+          this.controlAuxiliaryCode.reset();
+          this.controlAuxiliaryName.reset();
           this.auxiliary = data.data!;
+        }else{
+          const message = this.dialog.open(MessageDialogComponent, {
+            data: {title: 'Ocurrio un error!', message: data.message}
+          });
         }
       },
       error: (error) => {
@@ -66,7 +70,6 @@ export class AuxiliaryAccountComponent {
     if (this.selectedAuxiliary) {
       auxiliaryData.auxiliaryId = this.selectedAuxiliary.auxiliaryId;
       this.editAuxiliary(auxiliaryData);
-      this.selectedAuxiliary = undefined; // Reset after editing
     } else {
       this.addAuxiliary(auxiliaryData);
     }
@@ -93,7 +96,14 @@ export class AuxiliaryAccountComponent {
   editAuxiliary(auxiliary: AuxiliaryDto): void {
     this.dataService.updateAuxiliary(auxiliary).subscribe({
       next: (data) => {
-        this.auxiliary = data.data!;
+        if(data.success){
+          this.auxiliary = data.data!;
+          this.cancelEdit();
+        }else{
+          const message = this.dialog.open(MessageDialogComponent, {
+            data: {title: 'Ocurrio un error!', message: data.message}
+          });
+        }
       },
       error: (error) => {
         const message = this.dialog.open(MessageDialogComponent, {
@@ -103,10 +113,8 @@ export class AuxiliaryAccountComponent {
         message.afterClosed().subscribe(() => {
           window.location.reload();
         })
-      },
-      complete: () => {
         this.cancelEdit();
-      }
+      },
     }
     );
     
