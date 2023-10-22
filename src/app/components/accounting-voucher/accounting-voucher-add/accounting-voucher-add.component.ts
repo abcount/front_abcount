@@ -44,6 +44,7 @@ export class AccountingVoucherAddComponent {
 
   // Función inicial
   ngOnInit(){
+    console.log("Load voucher data")
     this.loadVoucherData();
     for (let i = 0; i < 10; i++) {
       const emptyEntrada: Entrada = {cuentaId: 0, numeroCuenta: '', nombreCuenta: '', cuentaValida: false, auxiliar: '',
@@ -61,8 +62,10 @@ export class AccountingVoucherAddComponent {
     this.transactionService.getVoucherData().subscribe(response => {
       if (response.success) {
         const data = response.data;
+        console.log("Load voucher data")
+        console.log(data)
         // Llenando la información de la cabecera
-        this.companyName = data.companyName; 
+        this.companyName = data.companyName;
         this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
         this.subsidiarySelect = data.subsidiaries[0].subsidiaryId;
         this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
@@ -71,7 +74,7 @@ export class AccountingVoucherAddComponent {
         this.documentSelect = data.transactionType[0].transactionTypeId;
         this.monedas = data.currencies.map((currency: { exchangeMoneyId: any; moneyName: any; }) => ({id: currency.exchangeMoneyId, name: currency.moneyName}));
         this.currencySelect = data.currencies[0].exchangeMoneyId;
-        this.numComprobante= data.transactionNumber;        
+        this.numComprobante= data.transactionNumber;
         // Obteniendo las cuentas
         this.accountablePlan = data.accountablePlan;
         // Obteniendo los auxiliares
@@ -181,7 +184,7 @@ export class AccountingVoucherAddComponent {
     }
     return null;
   }
-  
+
   //-------------------------------------------------------------------------------------------------------
   // Logica el filtro de las cuentas auxiliares
   filteredAuxiliares: any[] = [];
@@ -359,7 +362,7 @@ export class AccountingVoucherAddComponent {
     }
     this.calcularTotales();
   }
-  
+
   //-------------------------------------------------------------------------------------------------------
   // Lógica para calcular los totales
   totalDebe: number = 0;
@@ -452,7 +455,7 @@ export class AccountingVoucherAddComponent {
       nextInput.focus();
       event.preventDefault();
     }
-  }  
+  }
 
   getRowElement(rowIndex: number): HTMLElement | null {
     const table = document.querySelector('table');
@@ -469,7 +472,7 @@ export class AccountingVoucherAddComponent {
 
   getNextInput(currentInput: HTMLInputElement): HTMLInputElement | null {
     return currentInput.parentElement?.nextElementSibling?.querySelector('input') as HTMLInputElement;
-  }  
+  }
 
   //-------------------------------------------------------------------------------------------------------
   // Lógica para agregar una nueva fila (entrada)
@@ -636,7 +639,7 @@ export class AccountingVoucherAddComponent {
         entrada.debe == '' && entrada.haber == '' && entrada.glosa == '' && entrada.nroDoc == '' && entrada.fechaEmision == '' &&
         entrada.falta == false) {
       flag = true;
-    } 
+    }
     return flag;
   }
 }
