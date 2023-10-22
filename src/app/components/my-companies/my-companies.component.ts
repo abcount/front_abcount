@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CompanyDto } from 'src/app/dto/company.dto';
+import {HttpClient} from "@angular/common/http";
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,8 +10,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./my-companies.component.css']
 })
 export class MyCompaniesComponent implements OnInit{
-  companies: CompanyDto[] 
-  constructor(private router: Router, 
+  companies: CompanyDto[]
+  constructor(private router: Router,
     private userService: UserService) { }
   async ngOnInit() {
     localStorage.clear();
@@ -26,17 +27,17 @@ export class MyCompaniesComponent implements OnInit{
             if(response.data){
               this.companies = response.data
             }
-            
+
           },
           error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
         })
       },
       error: (error) => console.log("Error fetching user Info", error)
     })
-    
+
   }
   //Obtener las compañias del usuario
-  /* 
+  /*
   companies: CompanyDto[] = [
     {
       companyId: 1,
@@ -64,9 +65,20 @@ export class MyCompaniesComponent implements OnInit{
     }
   ]
 
+<<<<<<< HEAD
+  constructor(private router: Router, private httpClient: HttpClient) { }
+
+  ngOnInit(): void {
+    localStorage.clear();
+    this.httpClient.get('http://localhost:8080/users/info').subscribe((data: any) => {
+      console.log(data);
+    });
+
+  }
+=======
   */
 
-  
+
 
   saveData(companyId: number, userId: number) {
     localStorage.setItem('userId', userId.toString());

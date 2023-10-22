@@ -11,13 +11,14 @@ export class TransactionService {
 
 
   constructor(private http: HttpClient) { }
+  companyId = localStorage.getItem('companyId');
 
-  getVoucherData(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+  getVoucherData(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.companyId}`);
   }
 
 
   createTransaction(data: any) {
-    return this.http.post(`${this.baseUrl}/4`, data);
-}
+    return this.http.post(`${this.baseUrl}/${this.companyId}`, data);
+  }
 }

@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="wrapper">
   <div class="container">
     <h2>Entidades</h2>
@@ -12,7 +13,7 @@
       <app-my-textfield type="text" [label]="'Razon Social'" [control]="controlEntitySocialReason" [pattern]="patternAll" [errorMessage]="patternAllMessage" [placeholder]="'Ingrese la razon social de la entidad'"></app-my-textfield>
       <!-- Checkbox de Extranjera -->
       <div class="checkbox-container">
-        <input type="checkbox" [formControl]="controlEntityForeign"> Extranjera
+        <input type="checkbox" [formControl]="controlEntityForeign"> Externa
       </div>
     </div>
     <div class="buttons-container">

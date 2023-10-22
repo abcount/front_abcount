@@ -4,6 +4,9 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
 import {FormGroup} from "@angular/forms";
 import {FormStateService} from "../../../services/form-state.service";
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { LoadingComponent } from '../../general-components/loading/loading.component';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 
 
 const TREE_DATA: Account[] = [
@@ -121,7 +124,7 @@ export class Tap4Component {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(public formService: FormStateService, private router: Router) {
+  constructor(public formService: FormStateService, private router: Router, private dialog: MatDialog) {
     this.dataSource.data = TREE_DATA;
   }
 
@@ -291,7 +294,6 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     this.formGroup.setControl('accountablePlan', accountPlanArray);
     this.printValue();
     this.enviarDatos();
-    this.mostrarPopupConfirm = true;
   }
 
 
@@ -318,24 +320,30 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
 
 
 
-
-    console.log('Datos en el formulario:');
-    console.log(formData);
-    console.log('Datos en el asklfmk;lsdklafnk;lsdnk;lno:');
-    console.log(storedImagen);
-    console.log('Datos en ojioapwjiopfjiaopj:');
-    //mostrar en formato json
-    console.log(JSON.stringify(this.formGroup.value, null, 2));
+    const loading = this.dialog.open(LoadingComponent, {
+      disableClose: true,
+      width: '300px',
+      height: '350px',
+    });
+    
     this.formService.enviarDatos(formData).subscribe({
       next: response => {
-        console.log('Respuesta del servidor:', response);
-        this.formService.clearFormDataFromLocalStorage();
         if(response.success){
           localStorage.clear();
+          loading.close();
+          this.mostrarPopupConfirm = true;
+        }else{
+          loading.close();
+          const message = this.dialog.open(MessageDialogComponent,{
+            data: {title: 'Ocurrio un error!', message: response.message}
+          })
         }
       },
       error: error => {
-        console.error('Error enviando datos:', error);
+        loading.close();
+        const message = this.dialog.open(MessageDialogComponent,{
+          data: {title: 'Ocurrio un error!', message: "No se pudo comunicar con el servidor, intente de nuevo más tarde"}
+        })
       }
     });
   }

@@ -9,6 +9,8 @@ import { debounceTime, map,distinctUntilChanged,switchMap,tap } from "rxjs/opera
 import { error } from '@angular/compiler-cli/src/transformers/util';
 import { MatDialog } from '@angular/material/dialog';
 import { AdviceModalComponent } from '../../general-components/advice-modal/advice-modal.component';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
+import { LoadingComponent } from '../../general-components/loading/loading.component';
 @Component({
   selector: 'app-add-users-and-permissions',
   templateUrl: './add-users-and-permissions.component.html',
@@ -97,20 +99,21 @@ export class AddUsersAndPermissionsComponent  {
   sucursalesSeleccionadas: number[] = [];
   rolesSeleccionados: number[] = [];
   idsRolesSeleccionados: number[] = [];
-
-  
+  resultados: any[] = [];
+ 
   // Logica para el marcado de checkbox
   syncCheckboxes(subsidiary: any, areas: any[]) {
-    if (subsidiary.selected) {
-      areas.forEach((area) => (area.selected = true));
+    if (subsidiary.status) {
+      areas.forEach((area) => (area.status = true));
     } else {
-      areas.forEach((area) => (area.selected = false));
+      areas.forEach((area) => (area.status = false));
     }
   }
 
   private callToSearchUser(){
     console.log("This is from api request")
-    this.userService.searchUser(3, this.NombreUsuario).subscribe({
+    
+    this.userService.searchUser(3, this.nameSearchInput).subscribe({
       next: (response) =>{
         if(response.data){
           
@@ -158,27 +161,29 @@ export class AddUsersAndPermissionsComponent  {
     }
     
   }
+ 
 
-  getAreaSubs(){
-    let areasSubs = [];
+  getAreaSubs() {
+    let areasSubs:number[] = [];
     for(let subs of this.subsidiaries){
       for(let ar of subs.areas){
         if(ar.status){
-          areasSubs.push(ar.areaSubsidiaryId);
+          areasSubs.push(ar.areaSubsidiaryId!);
         }
       }
     }
     return areasSubs
   }
   getRoles(){
-    let as = this.rolesEntity.map( obj => {
+    let as= this.rolesEntity.map( obj => {
       if(obj.status){
-        return obj.roleId;
+        return obj.roleId!;
       }else{
         return null;
       }
-    }).filter(value => value !== null);
+    }).filter((value): value is number => value !== null);
     return as;
+ 
   }
 
   addedUser(){
@@ -199,11 +204,48 @@ export class AddUsersAndPermissionsComponent  {
     }
 
     let toSend = {
-      userId: this.userSelected,
+      userId: this.userSelected.id,
       areaSubsidiaryId  : areaSubs,
       roles: roles
     }
-    console.log(toSend);
+     
+    const loading = this.dialog.open(LoadingComponent, {
+      disableClose: true,
+      width: '300px',
+      height: '350px',
+    });
+   
+     
+    this.userService.inviteUserWithData(this.userSelected.id!, areaSubs, roles).subscribe({
+      next: response => {
+        if(response.success){ 
+          loading.close(); 
+          const message = this.dialog.open(MessageDialogComponent,{
+            data: {title: 'Invitación enviada correctamente', message: ""}
+          });
+          message.afterClosed().subscribe(result => {
+            console.log('Dialog was closed. Result:', result);
+            this.router.navigate(['/configuration-tap/5']);
+          });
+        }else{
+          loading.close();
+          const message = this.dialog.open(MessageDialogComponent,{
+            data: {title: 'Ocurrio un error!', message: response.message}
+          })
+        }
+      },
+      error: error => {
+     
+        if(error.status == 400){
+
+        }
+        console.log(error.status)
+        loading.close();
+        const message = this.dialog.open(MessageDialogComponent,{
+          data: {title: 'Ocurrio un error!', message: error.error.message}
+        })
+      }
+    });
   }
 
   showMessage(indexString:string, canCancel:boolean){

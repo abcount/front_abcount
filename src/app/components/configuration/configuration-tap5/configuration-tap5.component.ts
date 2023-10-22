@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EmployeeDto, InvitedDto } from 'src/app/dto/userinvitation.dto';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,44 +9,26 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ConfigurationTap5Component {
  
+ 
   constructor(private UserServices: UserService) { }
   //users: any[]=[];
   //Datos quemados en frotend
-  users = [
-    {
-      userId: 1,
-      firstName: "Sebastian",
-      lastName: "Belmonte",
-      email: "sebastian.belmonte@ucb.edu.bo"
-    },
-    {
-      userId: 2,
-      firstName: "Carlos",
-      lastName: "Zarate",
-      email: "carlos.zarate@ucb.edu.bo"
-    },
-    {
-      userId: 3,
-      firstName: "Juan",
-      lastName: "Perez",
-      email: "juan.perez@ucb.edu.bo"
-    },
-    {
-      userId: 4,
-      firstName: "Maria",
-      lastName: "Gomez",
-      email: "maria.gomez@ucb.edu.bo"
-    }
+  
+  employee :EmployeeDto[] = []
+  invitation: InvitedDto[] = []
+   
 
-  ];
   ngOnInit() {
-    // Obtener usuarios
-    //  this.UserServices.getUsers().subscribe(
-    //    (data: any) => {
-    //     console.log(data.data)
-    //     this.users = data.data;
-    //    }
-    //  );
+    // get users and invited
+     this.UserServices.getUsersAndInvitedByCompanyId().subscribe(
+       (data) => {
+        if(data.data){
+          this.invitation = data.data.invitation;
+          this.employee = data.data.employee;
+        }
+                
+       }
+     );
   }
   // Lógica para eliminar un usuario
   Eliminar(id: any){
@@ -55,5 +38,15 @@ export class ConfigurationTap5Component {
         console.log(data)
       }
     );
+  }
+  getImageProfile(path: string | null){
+    if(path != null && path.trim.length > 0){
+      return path
+    }
+    return "../../../assets/pfp.svg"
+  }
+
+  EliminarInvitation(invitationId: number){
+
   }
 }

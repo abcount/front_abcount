@@ -5,7 +5,8 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { GeneralDto } from '../dto/general.dto';
 import { CompanyDto } from '../dto/company.dto';
-import { UserSearcherDto } from '../dto/areasubsroles.dto';
+import { AreaSubsAndRoles, UserSearcherDto } from '../dto/areasubsroles.dto';
+import { EmployeeAndInvitationDto, EmployeeDto } from '../dto/userinvitation.dto';
 
 
 @Injectable({
@@ -19,45 +20,44 @@ export class UserService {
 
   companyId = localStorage.getItem('companyId');
 
-  // Función para obtener usuarios de la empresa
-  getUsers() {
-    return this.http.get(`${this.configurationUrl}/invitation/pending/${this.companyId}`);
+  
+
+  //Function to get users and invited by companyId
+  getUsersAndInvitedByCompanyId(){
+ 
+    let compId = 1;
+    return this.http.get<GeneralDto<EmployeeAndInvitationDto>>(`${environment.BACKEND_URL}/companies/${compId}/employees`);
   }
+
   // Función para eliminar usuarios de la empresa
   deleteUser(id: any) {
     return this.http.delete(`${this.configurationUrl}/invitation/pending/user/${id}`);
   }
 
-  // Función para invitar usuarios de la empresa
-  inviteUser(username: string, subsidiaries: number[], areas: number[], roles: number[]) {
-    const header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
+  // function to invite
+  inviteUserWithData(userId: number, areaSubsidiaryId: number[], roles: number[]){
     const body = {
-      'username': username,
-      'subsidiaries': subsidiaries,
-      'areas': areas,
-      'roles': roles
+      userId: userId,
+      areaSubsidiaryId: areaSubsidiaryId, 
+      roles: roles
     };
-    console.log(body);
-    return this.http.post(`${this.configurationUrl}/invitation/pending/${this.companyId}`, body, { headers: header });
+    let compId = 1
+    
+    return this.http.post<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/invitations`, body);
   }
+  
 
-  // Función para actualizar los permisos de un usuario
-  updatePermissions(id: any, subsidiaries: number[], areas: number[], roles: number[]) {
-    const header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
+  // Function to update users similar to create invitations
+  updatePermissions(userId: number, areaSubsidiaryId: number[], roles: number[]) {
     const body = {
-      'id': id,
-      'subsidiaries': subsidiaries,
-      'areas': areas,
-      'roles': roles
+      userId: userId,
+      areaSubsidiaryId: areaSubsidiaryId, 
+      roles: roles
     };
-    console.log(body);
-    return this.http.put(`${this.configurationUrl}/invitation/pending/user/${id}`, body, { headers: header });
+    let compId = 1
+    
+    return this.http.put<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/users/${userId}/roles`, body);
+    
   }
 
   // Function to get companies by user
@@ -69,8 +69,19 @@ export class UserService {
     return this.http.get(`${environment.BACKEND_URL}/users/info`);
   }
 
+  getSummInfoUserByIdAndCompany(userId: number){
+    let compId = 1; 
+    return this.http.get<GeneralDto<EmployeeDto>>(`${environment.BACKEND_URL}/companies/${compId}/employees/${userId}`);
+  }
+
+  getPermissionAndRolesByUserAndCompany(userId: number){
+    let compId = 1;
+    return this.http.get<GeneralDto<AreaSubsAndRoles>>(`${environment.BACKEND_URL}/companies/${compId}/users/${userId}/roles`);
+  }
+ 
   // Function to search user
   searchUser(limit:number, pattern:string){
-    return this.http.get<GeneralDto<UserSearcherDto[]>>("http://localhost:3000/search-users-by-parameters");
+    return this.http.get<GeneralDto<UserSearcherDto[]>>(`${environment.BACKEND_URL}/users?search=${pattern}&limit=${limit}`);
+ 
   }
 }

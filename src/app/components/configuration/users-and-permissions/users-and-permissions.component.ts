@@ -1,129 +1,209 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  RolesDtoResponse,
+  SubsidiaryDtoResponse,
+  UserSearcherDto,
+} from 'src/app/dto/areasubsroles.dto';
+import { EmployeeDto } from 'src/app/dto/userinvitation.dto';
 import { UserService } from 'src/app/services/user.service';
+import { AdviceModalComponent } from '../../general-components/advice-modal/advice-modal.component';
+import { LoadingComponent } from '../../general-components/loading/loading.component';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 
 @Component({
   selector: 'app-users-and-permissions',
   templateUrl: './users-and-permissions.component.html',
-  styleUrls: ['./users-and-permissions.component.css']
+  styleUrls: ['./users-and-permissions.component.css'],
 })
 export class UsersAndPermissionsComponent {
+  
 
-  // Controladores para los inputs
-  areasSeleccionadas: number[] = [];
-  sucursalesSeleccionadas: number[] = [];
-  rolesSeleccionados: number[] = [];
-  idsRolesSeleccionados: number[] = [];
+  user: EmployeeDto = {
+    email: "",
+    employeeId: 0,
+    name: "",
+    urlProfilePicture: ""
+  };
+  subsidiaries: SubsidiaryDtoResponse[];
+  roles: RolesDtoResponse[];
 
-  //Actualizar para el Json
-  subsidiaries = [
-    {
-      subsidiaryId: 1,
-      subsidiaryName: "Sucursal 1",
-      address: "Av. 6 de Agosto",
-      selected: true
-    },
-    {
-      subsidiaryId: 2,
-      subsidiaryName: "Sucursal 2",
-      address: "Av. 6 de Agosto",
-      selected: false
+  constructor(
+    private router: Router,
+    private routeActivated: ActivatedRoute,
+    private userService: UserService,
+    private dialog: MatDialog
+  ) {}
+
+  ngOnInit() {
+    this.routeActivated.params.subscribe((params) => {
+      const userParam: number = params['user'];
+
+      this.userService.getSummInfoUserByIdAndCompany(userParam).subscribe({
+        next: (response) => {
+          if (response.data) {
+            console.log(response.data)
+            this.user = response.data;
+          }
+        },
+        error: (error) => {
+          console.log('Error ', error);
+        },
+      });
+
+      this.userService
+        .getPermissionAndRolesByUserAndCompany(userParam)
+        .subscribe({
+          next: (response) => {
+            if (response.data) {
+              this.subsidiaries = response.data.areasAndSubs;
+              this.roles = response.data.roles;
+            }
+          },
+          error: (error) => {
+            console.log('Error ', error);
+          },
+        });
+    });
+  }
+
+  getAreaSubs() {
+    let areasSubs:number[] = [];
+    for(let subs of this.subsidiaries){
+      for(let ar of subs.areas){
+        if(ar.status){
+          areasSubs.push(ar.areaSubsidiaryId!);
+        }
+      }
     }
-  ];
-  areas =[
-    {
-      areaId: 1,
-      areaName: "Area 1",
-      selected: true
-    },
-    {
-      areaId: 2,
-      areaName: "Area 2",
-      selected: true
-    },
-    {
-      areaId: 3,
-      areaName: "Area 3",
-      selected: false
+    return areasSubs
+  }
+  getRoles(){
+    let as= this.roles.map( obj => {
+      if(obj.status){
+        return obj.roleId!;
+      }else{
+        return null;
+      }
+    }).filter((value): value is number => value !== null);
+    return as;
+ 
+  }
+
+  update(){
+    let areaSubs = this.getAreaSubs();
+    let roles = this.getRoles();
+
+    if(roles.length === 0){
+      this.showMessage("ROLES", false);
+      return;
     }
-  ];
-
-  roles = [
-    { id: 1, nombre: 'Agregar comprobantes', seleccionado: false },
-    { id: 2, nombre: 'Editar comprobantes', seleccionado: true },
-    { id: 3, nombre: 'Generar reportes', seleccionado: true },
-    { id: 4, nombre: 'Agregar tasa de cambio', seleccionado: false }
-  ];
-
-  user = {
-    "userId": 5,
-    "firstName": "Sebastian",
-    "lastName": "Belmonte",
-    "email": "sebastian.belmonte@ucb.edu.bo"
-  }
-
-  constructor(private router: Router, private userService: UserService) { }
-
-  // Logica para el marcado de checkbox
-  syncCheckboxes(subsidiary: any, areas: any[]) {
-    if (subsidiary.selected) {
-      areas.forEach((area) => (area.selected = true));
-    } else {
-      areas.forEach((area) => (area.selected = false));
+    if(areaSubs.length === 0){
+      this.showMessage("AREAS", false);
+      return;
     }
-  }
-  // Guarda listado de id de areas seleccionadas en un array
-  onAreaChange(areaId: number) {
-    if (this.areasSeleccionadas.includes(areaId)) {
-      this.areasSeleccionadas = this.areasSeleccionadas.filter((id) => id !== areaId);
-    } else {
-      this.areasSeleccionadas.push(areaId);
-    }
-  }
-  // Guarda listado de id de sucursales seleccionadas en un array
-  onSubsidiaryChange(subsidiaryId: number) {
-    if (this.sucursalesSeleccionadas.includes(subsidiaryId)) {
-      this.sucursalesSeleccionadas = this.sucursalesSeleccionadas.filter((id) => id !== subsidiaryId);
-    } else {
-      this.sucursalesSeleccionadas.push(subsidiaryId);
-    }
-  }
-  // Guarda listado de id de roles seleccionadas en un array
-  obtenerIdsRolesSeleccionados() {
-    const idsSeleccionados = this.roles
-      .filter((rol) => rol.seleccionado)
-      .map((rol) => rol.id);
-    console.log('IDs de roles seleccionados:', idsSeleccionados);
-  }
-  capturarIdsRolesSeleccionados() {
-    this.idsRolesSeleccionados = this.roles
-      .filter((rol) => rol.seleccionado)
-      .map((rol) => rol.id);
-  }
+     
+    // loading
+    const loading = this.dialog.open(LoadingComponent, {
+      disableClose: true,
+      width: '300px',
+      height: '350px',
+    });
 
-  // Función para agregar un usuario
-  Update(){
-    this.capturarIdsRolesSeleccionados();
 
-    console.log("Usuario agregado",  this.user.userId,"Areas agregado", 
-    this.areasSeleccionadas,"Sucursales seleccionadas" ,this.sucursalesSeleccionadas, 
-    "Roles seleccionados", this.idsRolesSeleccionados);
-    this.userService.updatePermissions(this.user.userId, this.sucursalesSeleccionadas, this.areasSeleccionadas,  this.idsRolesSeleccionados).subscribe(
-      (response: any) => {
-        if (response.success) {
-          console.log(response.message);
-          //this.router.navigate(['/configuration-tap/5']);
-        } else {
-          console.error(response.message);
+    this.userService.updatePermissions(this.user.employeeId, areaSubs, roles).subscribe({
+      next: response => {
+        if(response.success){ 
+          loading.close(); 
+          const message = this.dialog.open(MessageDialogComponent,{
+            data: {title: 'Permisos actualizados correctamente', message: ""}
+          });
+          message.afterClosed().subscribe(result => {
+            console.log('Dialog was closed. Result:', result);
+            this.router.navigate(['/configuration-tap/5']);
+          });
+        }else{
+          loading.close();
+          const message = this.dialog.open(MessageDialogComponent,{
+            data: {title: 'Ocurrio un error!', message: response.message}
+          })
         }
       },
-      (error) => {
-        console.error('Error al agregar moneda:', error);
+      error: error => {
+        loading.close();
+        const message = this.dialog.open(MessageDialogComponent,{
+          data: {title: 'Ocurrio un error!', message: "No se pudo comunicar con el servidor, intente de nuevo más tarde"}
+        })
       }
-    );
+    });
+   
   }
 
-  cancel(){
+  showMessage(indexString:string, canCancel:boolean){
+    let nameAgeMapping = new Map<string, number>();
+    nameAgeMapping.set("USER_NOTFOUND", 0);
+    nameAgeMapping.set("AREAS", 1);
+    nameAgeMapping.set("ROLES", 2);
+
+    let index:number = nameAgeMapping.get(indexString)!
+    const values = {
+      title: ["Seleccionaste un usuario?", "No seleccionaste las áreas", "No seleccionaste los roles"],
+      message: ["", "", ""],
+      specified: ["", "", ""],
+      cancelText: ["Cancelar","Cancelar","Cancelar"],
+      okText: ["OK", "OK", "OK"],
+      iconFaString: ["fa-regular fa-circle-xmark fa-beat", "fa-regular fa-circle-xmark fa-beat", "fa-regular fa-circle-xmark fa-beat"]
+    }
+    const dialogRef = this.dialog.open(AdviceModalComponent, {
+      data:{
+        title: values.title[index],
+        message: values.message[index],
+        specified: values.specified[index],
+        canCancel: canCancel,
+        cancelText: values.cancelText[index],
+        okText: values.okText[index],
+        iconFaString: values.iconFaString[index]
+      },
+      width: '300px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        // User clicked 'Yes'
+        // Perform the action here
+      }
+    })
+  }
+  cancel() {
     this.router.navigate(['/configuration-tap/5']);
+  }
+
+  getImageProfile(path: string | null | undefined) {
+    if(path == undefined){
+      return '../../../assets/pfp.svg';
+    }
+    if (path != null && path.trim.length > 0) {
+      return path;
+    }
+    return '../../../assets/pfp.svg';
+  }
+
+  
+  onAreaChange(currentSub: number, currentArea: number) {
+    this.subsidiaries[currentSub].status = this.allAreaEquals(currentSub);
+  }
+  allAreaEquals(currentSub: number) {
+    for (let area of this.subsidiaries[currentSub].areas) {
+      if (!area.status) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  onSubsidiaryChange(currentSub: number) {
+    for (let area of this.subsidiaries[currentSub].areas) {
+      area.status = this.subsidiaries[currentSub].status;
+    }
   }
 }

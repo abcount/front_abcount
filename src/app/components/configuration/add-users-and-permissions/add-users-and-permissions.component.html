@@ -11,6 +11,7 @@
         </div>
         <div class="buscar-usuario">
             <h2>Buscar usuario</h2>
+ 
             <div>
                 <input type="text" 
                 style="width: 400px;" 
@@ -36,6 +37,7 @@
             
 
             
+ 
         </div>
 
         
@@ -44,6 +46,7 @@
             <div class="card user">
                 <h2>Lista sucursales y areas</h2>
                 <br>
+ 
                 <div class="surcusal" *ngFor="let subsidiary of subsidiaries; let currentSub = index;">
                     <input class="check-role" type="checkbox" [id]="'subsidiary_' + subsidiary.subsidiaryId" [(ngModel)]="subsidiary.status" (change)="onSubsidiaryChange(currentSub)">
                     <label [for]="'subsidiary_' + subsidiary.subsidiaryId">{{subsidiary.subsidiaryName}}</label>
@@ -57,9 +60,11 @@
             <div class="card role">
                 <h2>Permisos</h2>
                 <br>
+ 
                 <div class="alinear" *ngFor="let rol of rolesEntity">
                     <input class="check-role" type="checkbox" [id]="'checkbox' + rol.roleId" [(ngModel)]="rol.status">
                     <label [for]="'checkbox' + rol.roleId">{{rol.roleDescription}}</label>
+ 
                 </div>
             </div>
         </div>

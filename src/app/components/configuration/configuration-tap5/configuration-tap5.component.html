@@ -11,13 +11,30 @@
             </div>
         </div>
         <div class="datos">
-            <div class="usuario" *ngFor="let user of users">
-                <img src="../../../assets/pfp.svg" alt="Foto de perfil">
-                <h2>{{user.firstName}} {{user.lastName}}</h2>
+            <div class="usuario" *ngFor="let user of employee"> 
+                <img  src="{{getImageProfile(user.urlProfilePicture)}}" alt="Foto de perfil">
+                <h2>{{user.name}}</h2>
                 <h4>{{user.email}}</h4>
                 <div class="botones">
-                    <a routerLink="/users-and-permissions"><button class="button">Ver más</button></a>
-                    <button class="button-red" (click)="Eliminar(user.userId)">Eliminar</button>
+                    <a href="{{user.employeeId}}/users-and-permissions"><button class="button">Ver más</button></a>
+                    <button class="button-red" (click)="Eliminar(user.employeeId)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row-2">
+            <div>
+                <h1>Invitaciones pendientes</h1>
+            </div>
+        </div>
+        <div class="datos">
+            <div class="usuario" *ngFor="let user of invitation">
+                <img src="{{getImageProfile(user.urlProfilePicture)}}" alt="Foto de perfil">
+                <h2>{{user.invited}}</h2>
+                <h4>{{user.email}}</h4>
+                <div class="botones">
+                    <a href="{{user.invitedId}}/users-and-permissions"><button class="button">Ver más</button></a>
+                    <button class="button-red" (click)="EliminarInvitation(user.invitationId)">Eliminar</button>
                 </div>
             </div>
         </div>

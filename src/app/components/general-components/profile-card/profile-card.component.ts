@@ -10,9 +10,14 @@ export class ProfileCardComponent {
   @Input() user: UserSearcherDto;
   
   ngOnInit(){
-    if(! this.user.imagePath){
+    if(this.user.imagePath ==null){
       this.user.imagePath = "../../../../assets/usuario.png";
+    }else{
+      if(this.user.imagePath!.trim() === ""){
+        this.user.imagePath = "../../../../assets/usuario.png";
+      }
     }
+    
   }
   
    

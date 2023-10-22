@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from "@angular/forms";
 import { MatTreeModule } from "@angular/material/tree";
 import { MatIconModule } from "@angular/material/icon";
-import { MatDialogModule } from '@angular/material/dialog'; 
 // Modulos
 import { AleModule } from "./modules/AleModule";
 import { AndreModule } from "./modules/AndreModule";
@@ -18,6 +17,9 @@ import { SebastianModule } from "./modules/SebastianModule";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from "@angular/material/table";
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 // Keycloak
 import { initializeKeycloak } from '../app/config/keycloak.init';
@@ -60,6 +62,9 @@ import { AuxiliaryAccountComponent } from './components/data/auxiliary-account/a
 import { EntityComponent } from './components/data/entity/entity.component';
 import { CurrencyExchangeViewComponent } from './components/data/currency-exchange-view/currency-exchange-view.component';
 import { CurrencyExchangeAddComponent } from './components/data/currency-exchange-add/currency-exchange-add.component';
+import { LoadingComponent } from './components/general-components/loading/loading.component';
+import { MessageDialogComponent } from './components/general-components/message.dialog/message.dialog.component';
+
 
 
 @NgModule({
@@ -93,6 +98,8 @@ import { CurrencyExchangeAddComponent } from './components/data/currency-exchang
     CurrencyExchangeAddComponent,
     ProfileCardComponent,
     AdviceModalComponent,
+    LoadingComponent,
+    MessageDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,7 +118,9 @@ import { CurrencyExchangeAddComponent } from './components/data/currency-exchang
     MicaModule,
     SebastianModule,
     KeycloakAngularModule,
-    MatDialogModule
+    MatDialogModule ,
+    MatProgressSpinnerModule,
+    MatGridListModule
    ],
    providers: [
      {

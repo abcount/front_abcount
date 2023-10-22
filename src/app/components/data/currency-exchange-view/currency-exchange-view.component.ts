@@ -33,13 +33,25 @@ selectedRecord?: ExchangeRateDto;
       console.log("Data actualizada:", this.data.data);
       if (this.data.data && this.data.data.length > 0) {
         console.log('Antes:', this.displayedColumns);
-        this.displayedColumns = Object.keys(this.data.data[0].values);
+        // Actualizar las columnas basándose en el nuevo formato
+        const allCurrencies = new Set<string>();
+        this.data.data.forEach(record => {
+          record.values.forEach(currency => {
+            allCurrencies.add(currency.abbreviation);
+          });
+        });
+        this.displayedColumns = Array.from(allCurrencies);
         this.allColumns = ['date', ...this.displayedColumns, 'actions'];
         console.log('Después:', this.displayedColumns);
       }
     }, error => {
       console.error('Error fetching exchange rates', error);
     });
+  }
+
+  getValueForCurrency(record: ExchangeRateDto, currency: string): number | undefined {
+    const found = record.values.find(item => item.abbreviation === currency);
+    return found ? found.value : undefined;
   }
 
 

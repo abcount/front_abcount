@@ -3,6 +3,9 @@ import {AuxiliaryDto} from "../../../dto/auxiliary.dto";
 import {FormControl, FormGroup} from "@angular/forms";
 import {DataService} from "../../../services/data.service";
 import {EntityDto} from "../../../dto/entity.dto";
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 
 @Component({
   selector: 'app-entity',
@@ -23,34 +26,48 @@ export class EntityComponent {
 
   selectedEntity?: EntityDto;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private dialog: MatDialog, private route: Router) {}
 
   addEntity(entityData: EntityDto): void {
-    this.dataService.createEntity(entityData).subscribe(
-      (entity: EntityDto) => {
-        this.entity.push(entity);
+    this.dataService.createEntity(entityData).subscribe({
+      next: (data) =>{
         this.controlEntityName.reset();
         this.controlEntityNit.reset();
         this.controlEntitySocialReason.reset();
         this.controlEntityForeign.reset();
+        this.entity = data.data!;
       },
-      error => {
-        console.error('Error to create entity', error);
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo agregar la entidad"}
+        });
+
+        message.afterClosed().subscribe(() => {
+          window.location.reload();
+        })
+
       }
+    }
     );
   }
 
   editEntity(entity: EntityDto): void {
-    this.dataService.updateEntity(entity).subscribe(
-      (updatedEntity: EntityDto) => {
-        const index = this.entity.findIndex(e => e.entityId === updatedEntity.entityId);
-        if (index !== -1) {
-          this.entity[index] = updatedEntity;
-        }
+    this.dataService.updateEntity(entity).subscribe({
+      next: (data) =>{
+        this.entity = data.data!;
+        this.cancelEdit();
       },
-      error => {
-        console.error('Error updating entity', error);
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo editar la entidad"+entity.entityId}
+        });
+
+        message.afterClosed().subscribe(() => {
+          window.location.reload();
+        })
       }
+    }
+      
     );
   }
 
@@ -105,13 +122,19 @@ export class EntityComponent {
   }
 
   getEntities(): void {
-    this.dataService.getAllEntities().subscribe(
-      (response: any) => {
-        this.entity = response.data;
+    this.dataService.getAllEntities().subscribe({
+      next: (data) => {
+        this.entity = data.data!;
       },
-      error => {
-        console.error('Error fetching entities', error);
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo obtener las entidades"}
+        });
+
+        message.afterClosed().subscribe(() => {
+          this.route.navigate(['/configuration-tap/1']);
+        })
       }
-    );
+    });
   }
 }

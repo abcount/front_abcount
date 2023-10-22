@@ -14,6 +14,9 @@ export class CompanyService {
   constructor(private http: HttpClient) { }
 
   getAllSubsAndRoles(){
-    return this.http.get<GeneralDto<AreaSubsAndRoles>>("http://localhost:3000/roles-subs-and-areas")
+    let comId = 1;
+    `${environment.BACKEND_URL}/users/info`
+    //return this.http.get<GeneralDto<AreaSubsAndRoles>>("http://localhost:3000/roles-subs-and-areas")
+    return this.http.get<GeneralDto<AreaSubsAndRoles>>(`${environment.BACKEND_URL}/companies/${comId}/area-subsidiary`)
   }
 }

@@ -13,31 +13,18 @@ export class AccountingVoucherAddComponent {
 
   // Variables
   companyName: string = '';
-  sucursales: string[] = [];
-  areas: string[] = [];
-  documentos: string[] = [];
+  sucursales: any[] = [{id: '', name: ''}];
+  areas: any[] = [{id: '', name: ''}];
+  documentos: any[] = [{id: '', name: ''}];
   fecha: string;
   numComprobante: number = 0;
-  monedas: string[] = [];
+  monedas: any[] = [{id: '', name: ''}];
   accountablePlan: any[] = [];
   glosa: string = '';
 
   listTransactionAccount: TransactionAccountDto[] = [];
   listaEntradas: Entrada[] = [];
-  listAuxiliares: AuxiliarDto[] = [
-    {auxiliarAccountId: 1, codeAccount: '1001', nameDescription: 'Caja'},
-    {auxiliarAccountId: 2, codeAccount: '1002', nameDescription: 'Banco'},
-    {auxiliarAccountId: 3, codeAccount: '1003', nameDescription: 'Cuentas por cobrar'},
-    {auxiliarAccountId: 4, codeAccount: '1004', nameDescription: 'Mercaderías'},
-    {auxiliarAccountId: 5, codeAccount: '1005', nameDescription: 'Inmuebles, maquinaria y equipo'},
-    {auxiliarAccountId: 6, codeAccount: '1006', nameDescription: 'Terrenos'},
-    {auxiliarAccountId: 7, codeAccount: '1007', nameDescription: 'Acciones y participaciones'},
-    {auxiliarAccountId: 8, codeAccount: '1008', nameDescription: 'Inversiones financieras'},
-    {auxiliarAccountId: 9, codeAccount: '1009', nameDescription: 'Cuentas por cobrar diversas'},
-    {auxiliarAccountId: 10, codeAccount: '1010', nameDescription: 'Documentos por cobrar'},
-    {auxiliarAccountId: 11, codeAccount: '1011', nameDescription: 'Anticipos a proveedores'},
-    {auxiliarAccountId: 12, codeAccount: '1012', nameDescription: 'Anticipos a empleados'},
-  ];
+  listAuxiliares: AuxiliarDto[] = [];
   listEntities: EntityDto[] = [
     {entityId: 1, entityName: 'Empresa 1', entityNit: '123456789', entitySocialReason: 'Empresa 1', foreign: false},
     {entityId: 2, entityName: 'Empresa 2', entityNit: '123456789', entitySocialReason: 'Empresa 2', foreign: false},
@@ -60,7 +47,7 @@ export class AccountingVoucherAddComponent {
     this.loadVoucherData();
     for (let i = 0; i < 10; i++) {
       const emptyEntrada: Entrada = {cuentaId: 0, numeroCuenta: '', nombreCuenta: '', cuentaValida: false, auxiliar: '',
-       auxiliarAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '', fechaEmision: '',
+       auxiliaryAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '', fechaEmision: '',
        falta: false};
       this.listaEntradas.push(emptyEntrada);
       this.filteredAccounts.push([]);
@@ -71,7 +58,7 @@ export class AccountingVoucherAddComponent {
 
   // Función para cargar los datos del voucher
   loadVoucherData() {
-    this.transactionService.getVoucherData(1).subscribe(response => {
+    this.transactionService.getVoucherData().subscribe(response => {
       if (response.success) {
         const data = response.data;
         // Llenando la información de la cabecera
@@ -88,7 +75,7 @@ export class AccountingVoucherAddComponent {
         // Obteniendo las cuentas
         this.accountablePlan = data.accountablePlan;
         // Obteniendo los auxiliares
-        //this.listAuxiliares = data.auxiliar;
+        this.listAuxiliares = data.auxiliar;
         // Obteniendo las entidades
         //this.listEntities = data.entities;
       }
@@ -217,13 +204,13 @@ export class AccountingVoucherAddComponent {
   // Restablecer la información del auxiliar
   resetAuxiliar(rowIndex: number) {
     const entry = this.listaEntradas[rowIndex];
-    entry.auxiliarAccountId = 0;
+    entry.auxiliaryAccountId = 0;
     this.filteredAuxiliares[rowIndex] = [];
   }
 
   // Comprobar si la lista de auxiliares filtrados está vacía
   isFilteredAuxiliarEmpty(rowIndex: number): boolean {
-    return this.filteredAuxiliares[rowIndex] && this.filteredAuxiliares[rowIndex].length == 0 && this.listaEntradas[rowIndex].auxiliarAccountId == 0;
+    return this.filteredAuxiliares[rowIndex] && this.filteredAuxiliares[rowIndex].length == 0 && this.listaEntradas[rowIndex].auxiliaryAccountId == 0;
   }
 
   // Ocultar el listado de auxiliares con un retraso
@@ -239,11 +226,11 @@ export class AccountingVoucherAddComponent {
     const filteredAuxiliares: any[] = this.filteredAuxiliares[rowIndex];
     if (filteredAuxiliares.length == 1) {
       entry.auxiliar = filteredAuxiliares[0].codeAccount;
-      entry.auxiliarAccountId = filteredAuxiliares[0].auxiliarAccountId;
+      entry.auxiliaryAccountId = filteredAuxiliares[0].auxiliaryAccountId;
     } else if (entry.auxiliar == '' && filteredAuxiliares.length == 0) {
-      entry.auxiliarAccountId = 0;
+      entry.auxiliaryAccountId = 0;
     } else if (filteredAuxiliares.length > 1) {
-      entry.auxiliarAccountId = 0;
+      entry.auxiliaryAccountId = 0;
     }
     this.filteredAuxiliares[rowIndex] = [];
     console.log(this.listaEntradas[rowIndex]);
@@ -253,7 +240,7 @@ export class AccountingVoucherAddComponent {
   selectedAuxiliar(auxiliar: any, rowIndex: number) {
     const entry = this.listaEntradas[rowIndex];
     entry.auxiliar = auxiliar.codeAccount;
-    entry.auxiliarAccountId = auxiliar.auxiliarAccountId;
+    entry.auxiliaryAccountId = auxiliar.auxiliaryAccountId;
     this.filteredAuxiliares[rowIndex] = [];
     const entityInput = this.getEntityInputInRow(rowIndex);
     if (entityInput) {
@@ -515,7 +502,7 @@ export class AccountingVoucherAddComponent {
       nombreCuenta: '',
       cuentaValida: false,
       auxiliar: '',
-      auxiliarAccountId: 0,
+      auxiliaryAccountId: 0,
       entidad: '',
       entityId: 0,
       debe: '',
@@ -539,24 +526,38 @@ export class AccountingVoucherAddComponent {
   @ViewChild ('errorGlosa') errorGlosa: ElementRef;
 
   save() {
-    console.log("Datos de la cabecera");
-    console.log("Sucursal: "+this.subsidiarySelect);
-    console.log("Area: "+this.areaSelect);
-    console.log("Documento: "+this.documentSelect);
-    console.log("Fecha: "+this.fecha);
-    console.log("Numero de comprobante: "+this.numComprobante);
-    console.log("Moneda: "+this.currencySelect);
-    console.log("Glosa: "+this.glosa);
     if (this.glosa != '') {
       if (this.fillListTransactionAccount()) {
         if (this.listTransactionAccount.length > 0) {
-          this.showPopup = true;
-          this.popupTitle = 'Comprobante guardado';
-          this.popupMessage = 'El comprobante se guardó correctamente';
-          this.popupIcon = 'fa-regular fa-circle-check gradient-green';
-          setTimeout(() => {
-            this.showPopup = false;
-          }, 2300);
+          const body = {
+            'subsidiaryId': this.subsidiarySelect,
+            'currencyId': this.currencySelect,
+            'transactionTypeId': this.documentSelect,
+            'areaId': this.areaSelect,
+            'glosaGeneral': this.glosa,
+            'transactions': this.listTransactionAccount,
+            'totalDebit': this.totalDebe,
+            'totalCredit': this.totalHaber,
+          }
+          console.log(body);
+          this.transactionService.createTransaction(body).subscribe(
+            (data: any) => {
+              if (data.success) {
+                this.showPopup = true;
+                this.popupTitle = 'Comprobante guardado';
+                this.popupMessage = 'El comprobante se guardó correctamente';
+                this.popupIcon = 'fa-regular fa-circle-check gradient-green';
+                setTimeout(() => {
+                  this.showPopup = false;
+                }, 2300);
+                this.listaEntradas = [];
+                this.addRow();
+                this.calcularTotales();
+              } else {
+                console.log(data);
+              }
+            }
+          );
         } else {
           console.log("No hay cuentas");
           this.showPopup = true;
@@ -610,7 +611,7 @@ export class AccountingVoucherAddComponent {
 
   addEntrada(entrada: Entrada){
     const entity = entrada.entityId === 0 ? null : entrada.entityId;
-    const auxiliar = entrada.auxiliarAccountId === 0 ? null : entrada.auxiliarAccountId;
+    const auxiliar = entrada.auxiliaryAccountId === 0 ? null : entrada.auxiliaryAccountId;
     const debe = entrada.debe === '' ? "0" : entrada.debe;
     const haber = entrada.haber === '' ? "0" : entrada.haber;
     const fecha = entrada.fechaEmision === '' ? null : entrada.fechaEmision;
@@ -619,8 +620,8 @@ export class AccountingVoucherAddComponent {
       accountId: entrada.cuentaId,
       entityId: entity,
       auxiliaryId: auxiliar,
-      amountDebit: debe,
-      amountCredit: haber,
+      amountDebit: parseFloat(debe),
+      amountCredit: parseFloat(haber),
       emitedDate: fecha,
       glosaDetail: entrada.glosa,
       documentCode: nroDoc
@@ -631,7 +632,7 @@ export class AccountingVoucherAddComponent {
   emptyEntrada(entrada: Entrada): boolean {
     var flag: boolean = false;
     if (entrada.cuentaId == 0 && entrada.numeroCuenta == '' && entrada.nombreCuenta == '' && entrada.cuentaValida == false &&
-        entrada.auxiliar == '' && entrada.auxiliarAccountId == 0 && entrada.entidad == '' && entrada.entityId == 0 &&
+        entrada.auxiliar == '' && entrada.auxiliaryAccountId == 0 && entrada.entidad == '' && entrada.entityId == 0 &&
         entrada.debe == '' && entrada.haber == '' && entrada.glosa == '' && entrada.nroDoc == '' && entrada.fechaEmision == '' &&
         entrada.falta == false) {
       flag = true;
@@ -646,7 +647,7 @@ interface Entrada {
   nombreCuenta: string;
   cuentaValida: boolean;
   auxiliar: string;
-  auxiliarAccountId: number;
+  auxiliaryAccountId: number;
   entidad: string;
   entityId: number;
   debe: string;
