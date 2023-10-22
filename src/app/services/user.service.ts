@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { GeneralDto } from '../dto/general.dto';
 import { CompanyDto } from '../dto/company.dto';
+import { UserSearcherDto } from '../dto/areasubsroles.dto';
 
 
 @Injectable({
@@ -66,5 +67,10 @@ export class UserService {
   // Function to get information of user
   getInfoUser(){
     return this.http.get(`${environment.BACKEND_URL}/users/info`);
+  }
+
+  // Function to search user
+  searchUser(limit:number, pattern:string){
+    return this.http.get<GeneralDto<UserSearcherDto[]>>("http://localhost:3000/search-users-by-parameters");
   }
 }

@@ -143,3 +143,12 @@ label {
   align-items: center;
   border-radius: 5px;
 }
+
+
+/* Custom search result box */
+.custom-search-result{
+  position: absolute;
+  width: 400px;
+  border: 1px solid red; 
+  z-index: 500;
+}

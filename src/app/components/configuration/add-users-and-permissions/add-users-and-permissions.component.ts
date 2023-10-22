@@ -1,16 +1,95 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-
+import { RolesDtoResponse, SubsidiaryDtoResponse, UserSearcherDto } from 'src/app/dto/areasubsroles.dto';
+import { CompanyService } from 'src/app/services/company.service';
+import { Observable, debounce, fromEvent, of } from 'rxjs';
+import { debounceTime, map,distinctUntilChanged,switchMap,tap } from "rxjs/operators";
+import { error } from '@angular/compiler-cli/src/transformers/util';
+import { MatDialog } from '@angular/material/dialog';
+import { AdviceModalComponent } from '../../general-components/advice-modal/advice-modal.component';
 @Component({
   selector: 'app-add-users-and-permissions',
   templateUrl: './add-users-and-permissions.component.html',
   styleUrls: ['./add-users-and-permissions.component.css']
 })
-export class AddUsersAndPermissionsComponent {
+export class AddUsersAndPermissionsComponent  {
+  //input
+  shouldShow:boolean = false;
+  nameSearchInput: string = "";
+  usersSearched: UserSearcherDto[];
+  timeout : any = null;
 
-  constructor(private router: Router, private userService: UserService) { }
+  isFocused = false;
+
+  userSelected: UserSearcherDto;
+
+
+  subsidiaries: SubsidiaryDtoResponse[];
+  rolesEntity: RolesDtoResponse[];
+
+
+  constructor(
+    private router: Router, 
+    private userService: UserService,
+    private companyService: CompanyService,
+    private dialog: MatDialog,) { 
+      
+    }
+
+  
+  // Funcion al iniciar la pantalla
+  ngOnInit() {
+    
+    this.companyService.getAllSubsAndRoles().subscribe(
+      (data) => {
+        if(data.data){
+          this.subsidiaries = data.data.areasAndSubs;
+          this.rolesEntity = data.data.roles;
+          
+        }
+      }
+    );
+  }
+
+  focusFunction(){
+    if(!this.nameSearchInput.trim()){
+      this.shouldShow = false;
+    }else{
+      this.shouldShow = true;
+    }
+    
+  }
+  focusOutFunction(){
+    if(!this.isFocused){
+      this.shouldShow = false;
+    }
+    
+  }
+
+  itemClicked(index: number){
+    this.userSelected = this.usersSearched[index]; 
+    this.shouldShow = false;
+    this.nameSearchInput = "";
+  }
+
+  onMouseEnter() {
+    this.isFocused = true; 
+  }
+
+  onMouseLeave() {
+    this.isFocused = false; 
+  }
+  // funcion para verifiar si se deberia checkear todo
+  shouldBeCheckedSubsidiary(currentSub: number){
+    for(let area of this.subsidiaries[currentSub].areas){
+      if(!area.status){
+        return false
+      }
+    }
+    return true
+  }
 
   // Controladores para los inputs
   NombreUsuario: string = '';
@@ -19,45 +98,7 @@ export class AddUsersAndPermissionsComponent {
   rolesSeleccionados: number[] = [];
   idsRolesSeleccionados: number[] = [];
 
-  //Actualizar para el Json
-  subsidiaries = [
-    {
-      subsidiaryId: 1,
-      subsidiaryName: "Sucursal 1",
-      address: "Av. 6 de Agosto",
-      selected: false
-    },
-    {
-      subsidiaryId: 2,
-      subsidiaryName: "Sucursal 2",
-      address: "Av. 6 de Agosto",
-      selected: false
-    }
-  ];
-  areas =[
-    {
-      areaId: 1,
-      areaName: "Area 1",
-      selected: false
-    },
-    {
-      areaId: 2,
-      areaName: "Area 2",
-      selected: false
-    },
-    {
-      areaId: 3,
-      areaName: "Area 3",
-      selected: false
-    }
-  ];
-
-  roles = [
-    { id: 1, nombre: 'Agregar comprobantes', seleccionado: false },
-    { id: 2, nombre: 'Editar comprobantes', seleccionado: false },
-    { id: 3, nombre: 'Generar reportes', seleccionado: false },
-    { id: 4, nombre: 'Agregar tasa de cambio', seleccionado: false }
-  ];
+  
   // Logica para el marcado de checkbox
   syncCheckboxes(subsidiary: any, areas: any[]) {
     if (subsidiary.selected) {
@@ -66,57 +107,141 @@ export class AddUsersAndPermissionsComponent {
       areas.forEach((area) => (area.selected = false));
     }
   }
-  // Guarda listado de id de areas seleccionadas en un array
-  onAreaChange(areaId: number) {
-    if (this.areasSeleccionadas.includes(areaId)) {
-      this.areasSeleccionadas = this.areasSeleccionadas.filter((id) => id !== areaId);
-    } else {
-      this.areasSeleccionadas.push(areaId);
-    }
-  }
-  // Guarda listado de id de sucursales seleccionadas en un array
-  onSubsidiaryChange(subsidiaryId: number) {
-    if (this.sucursalesSeleccionadas.includes(subsidiaryId)) {
-      this.sucursalesSeleccionadas = this.sucursalesSeleccionadas.filter((id) => id !== subsidiaryId);
-    } else {
-      this.sucursalesSeleccionadas.push(subsidiaryId);
-    }
-  }
-  // Guarda listado de id de roles seleccionadas en un array
-  obtenerIdsRolesSeleccionados() {
-    const idsSeleccionados = this.roles
-      .filter((rol) => rol.seleccionado)
-      .map((rol) => rol.id);
-    console.log('IDs de roles seleccionados:', idsSeleccionados);
-  }
-  capturarIdsRolesSeleccionados() {
-    this.idsRolesSeleccionados = this.roles
-      .filter((rol) => rol.seleccionado)
-      .map((rol) => rol.id);
-  }
-  // Función para agregar un usuario
-  addedUser(){
-    this.capturarIdsRolesSeleccionados();
 
-    console.log("Usuario agregado",  this.NombreUsuario,"Areas agregado", 
-    this.areasSeleccionadas,"Sucursales seleccionadas" ,this.sucursalesSeleccionadas, 
-    "Roles seleccionados", this.idsRolesSeleccionados);
-    this.userService.inviteUser(this.NombreUsuario, this.sucursalesSeleccionadas, this.areasSeleccionadas,  this.idsRolesSeleccionados).subscribe(
-      (response: any) => {
-        if (response.success) {
-          console.log(response.message);
-          //this.router.navigate(['/configuration-tap/5']);
-        } else {
-          console.error(response.message);
+  private callToSearchUser(){
+    console.log("This is from api request")
+    this.userService.searchUser(3, this.NombreUsuario).subscribe({
+      next: (response) =>{
+        if(response.data){
+          
+          this.usersSearched = response.data;
         }
       },
-      (error) => {
-        console.error('Error al agregar moneda:', error);
+      error: (error) => {
+        console.log("Error ", error)
       }
-    );
+    })
+  }
+  changingInputUser(){
+    
+    if(this.nameSearchInput.trim() != ""){
+      
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout( ()=> {
+        this.callToSearchUser()
+      }, 500)
+      this.shouldShow = true;
+      
+    }else{
+      this.shouldShow = false;
+      this.usersSearched = []
+    }
+
+  }
+  // Guarda listado de id de areas seleccionadas en un array
+  onAreaChange(currentSub: number, currentArea: number) {
+      this.subsidiaries[currentSub].status = this.allAreaEquals(currentSub)
+    
+  }
+  allAreaEquals(currentSub:number){
+    for(let area of this.subsidiaries[currentSub].areas){
+      if(! area.status){
+        return false
+      }
+    }
+    return true
+  }
+  // Guarda listado de id de sucursales seleccionadas en un array
+  onSubsidiaryChange(currentSub: number) {
+    for(let area of this.subsidiaries[currentSub].areas){
+      area.status = this.subsidiaries[currentSub].status;
+    }
+    
   }
 
+  getAreaSubs(){
+    let areasSubs = [];
+    for(let subs of this.subsidiaries){
+      for(let ar of subs.areas){
+        if(ar.status){
+          areasSubs.push(ar.areaSubsidiaryId);
+        }
+      }
+    }
+    return areasSubs
+  }
+  getRoles(){
+    let as = this.rolesEntity.map( obj => {
+      if(obj.status){
+        return obj.roleId;
+      }else{
+        return null;
+      }
+    }).filter(value => value !== null);
+    return as;
+  }
+
+  addedUser(){
+    let areaSubs = this.getAreaSubs();
+    let roles = this.getRoles();
+
+    if(roles.length === 0){
+      this.showMessage("ROLES", false);
+      return;
+    }
+    if(areaSubs.length === 0){
+      this.showMessage("AREAS", false);
+      return;
+    }
+    if(! this.userSelected){
+      this.showMessage("USER_NOTFOUND", false);
+      return;
+    }
+
+    let toSend = {
+      userId: this.userSelected,
+      areaSubsidiaryId  : areaSubs,
+      roles: roles
+    }
+    console.log(toSend);
+  }
+
+  showMessage(indexString:string, canCancel:boolean){
+    let nameAgeMapping = new Map<string, number>();
+    nameAgeMapping.set("USER_NOTFOUND", 0);
+    nameAgeMapping.set("AREAS", 1);
+    nameAgeMapping.set("ROLES", 2);
+
+    let index:number = nameAgeMapping.get(indexString)!
+    const values = {
+      title: ["Seleccionaste un usuario?", "No seleccionaste las áreas", "No seleccionaste los roles"],
+      message: ["", "", ""],
+      specified: ["", "", ""],
+      cancelText: ["Cancelar","Cancelar","Cancelar"],
+      okText: ["OK", "OK", "OK"],
+      iconFaString: ["fa-regular fa-circle-xmark fa-beat", "fa-regular fa-circle-xmark fa-beat", "fa-regular fa-circle-xmark fa-beat"]
+    }
+    const dialogRef = this.dialog.open(AdviceModalComponent, {
+      data:{
+        title: values.title[index],
+        message: values.message[index],
+        specified: values.specified[index],
+        canCancel: canCancel,
+        cancelText: values.cancelText[index],
+        okText: values.okText[index],
+        iconFaString: values.iconFaString[index]
+      },
+      width: '300px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        // User clicked 'Yes'
+        // Perform the action here
+      }
+    })
+  }
   cancel(){
+    
     this.router.navigate(['/configuration-tap/5']);
   }
 }

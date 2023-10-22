@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from "@angular/forms";
 import { MatTreeModule } from "@angular/material/tree";
 import { MatIconModule } from "@angular/material/icon";
-
+import { MatDialogModule } from '@angular/material/dialog'; 
 // Modulos
 import { AleModule } from "./modules/AleModule";
 import { AndreModule } from "./modules/AndreModule";
@@ -27,6 +27,9 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 // Navbar
 import { NavbarComponent } from './components/navbar/navbar.component';
 
+// General Componentes
+import { ProfileCardComponent } from './components/general-components/profile-card/profile-card.component';
+import { AdviceModalComponent } from './components/general-components/advice-modal/advice-modal.component';
 // Configuración inicial
 import { ProgressComponent } from './components/general-components/progress/progress.component';
 import { Tap1Component } from './components/initial-config/tap1/tap1.component';
@@ -58,6 +61,7 @@ import { EntityComponent } from './components/data/entity/entity.component';
 import { CurrencyExchangeViewComponent } from './components/data/currency-exchange-view/currency-exchange-view.component';
 import { CurrencyExchangeAddComponent } from './components/data/currency-exchange-add/currency-exchange-add.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +91,8 @@ import { CurrencyExchangeAddComponent } from './components/data/currency-exchang
     EntityComponent,
     CurrencyExchangeViewComponent,
     CurrencyExchangeAddComponent,
+    ProfileCardComponent,
+    AdviceModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +110,8 @@ import { CurrencyExchangeAddComponent } from './components/data/currency-exchang
     CarlosModule,
     MicaModule,
     SebastianModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    MatDialogModule
    ],
    providers: [
      {

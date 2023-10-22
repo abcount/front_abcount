@@ -1,0 +1,120 @@
+{
+  "roles-subs-and-areas": {
+    "data": {
+      "areasAndSubs": [
+        {
+          "subsidiaryId": 1,
+          "subsidiaryName": "sub1",
+          "status": false,
+          "areas": [
+            {
+              "areaId": 1,
+              "areaName": "mkt",
+              "areaSubsidiaryId": 1,
+              "status": false
+            },
+            {
+              "areaId": 2,
+              "areaName": "disneo",
+              "areaSubsidiaryId": 2,
+              "status": false
+            }
+          ]
+        },
+        {
+          "subsidiaryId": 2,
+          "subsidiaryName": "sub2",
+          "status": false,
+          "areas": [
+            {
+              "areaId": 1,
+              "areaName": "mkt",
+              "areaSubsidiaryId": 3,
+              "status": false
+            },
+            {
+              "areaId": 2,
+              "areaName": "disneo",
+              "areaSubsidiaryId": 4,
+              "status": false
+            }
+          ]
+        },
+        {
+          "subsidiaryId": 3,
+          "subsidiaryName": "sub3",
+          "status": false,
+          "areas": [
+            {
+              "areaId": 1,
+              "areaName": "mkt",
+              "areaSubsidiaryId": 5,
+              "status": false
+            },
+            {
+              "areaId": 2,
+              "areaName": "disneo",
+              "areaSubsidiaryId": 6,
+              "status": false
+            }
+          ]
+        }
+      ],
+      "roles": [
+        {
+          "roleId": 1,
+          "roleShortName": "CAN_ADD_VOUCHER",
+          "roleDescription": "Agregar comprobantes",
+          "status": false
+        },
+        {
+          "roleId": 2,
+          "roleShortName": "CAN_EDIT_VOUCHER",
+          "roleDescription": "Editar comprobantes",
+          "status": false
+        },
+        {
+          "roleId": 3,
+          "roleShortName": "CAN_GENERATE_REPORT",
+          "roleDescription": "Generar reportes",
+          "status": false
+        },
+        {
+          "roleId": 4,
+          "roleShortName": "CAN_ADD_EXCHANGE",
+          "roleDescription": "Agregar tasa de cambio",
+          "status": false
+        }
+      ]
+    },
+    "message": null,
+    "success": true,
+    "errors": null
+  },
+  "search-users-by-parameters": {
+    "data": [
+      {
+        "id": 1,
+        "fullName": "alan zarate",
+        "userName": "alan123",
+        "email": "alnzarate@gmail.com"
+      },
+      {
+        "id": 2,
+        "fullName": "Alan222 Zarate222",
+        "userName": "alan222",
+        "email": "alan222@gmail.comaaaaaaaaaaaaaaaaaa"
+        
+      },
+      {
+        "id": 3,
+        "fullName": "alan333 zarate333",
+        "userName": "alan333",
+        "email": "alan333@gmail.com" 
+      }
+    ],
+    "message": null,
+    "success": true,
+    "errors": null
+  }
+}
