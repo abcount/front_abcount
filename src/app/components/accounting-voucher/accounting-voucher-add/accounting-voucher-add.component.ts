@@ -13,12 +13,12 @@ export class AccountingVoucherAddComponent {
 
   // Variables
   companyName: string = '';
-  sucursales: string[] = [];
-  areas: string[] = [];
-  documentos: string[] = [];
+  sucursales: any[] = [{id: '', name: ''}];
+  areas: any[] = [{id: '', name: ''}];
+  documentos: any[] = [{id: '', name: ''}];
   fecha: string;
   numComprobante: number = 0;
-  monedas: string[] = [];
+  monedas: any[] = [{id: '', name: ''}];
   accountablePlan: any[] = [];
   glosa: string = '';
 

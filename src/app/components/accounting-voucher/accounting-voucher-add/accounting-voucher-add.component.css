@@ -27,11 +27,20 @@
   flex-grow: 1;
 }
 /*Título*/
+.title {
+  display: flex;
+  margin-bottom: 15px;
+  align-items: center;
+}
+.title i {
+  font-size: 45px;
+  color: #f0c0c6;
+  margin-right: 10px;
+}
 h2 {
   font-size: 30px;
   font-weight: 600;
   color: #000000;
-  margin-bottom: 15px;
 }
 h3 {
   font-size: 16px;
