@@ -1,3 +1,10 @@
+/*Header*/
+.header {
+    position: absolute;
+    top: 50px; /* Posición vertical desde la parte superior */
+    right: 60px; /* Posición horizontal desde la izquierda */
+    cursor: pointer;
+}
 /*Centrear*/
 .center {
     display: flex;
@@ -10,6 +17,7 @@
     height: 100vh;
     width: 100vw;
 }
+
 /*Links*/
 a {
     font-size: 18px;
@@ -55,3 +63,95 @@ a:hover .company-logo {
 .center-text {
     text-align: center;
 }
+/*Estilos del popup*/
+  /* Estilo para el fondo oscuro */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+  }
+  
+  /* Estilo para centrar el cuadro de diálogo */
+  .custom-confirm-dialog {
+    position: fixed;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1% 2%;
+    border-radius: 7px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    height: 750px;
+    width: 680px;
+
+  }
+  
+  /* Estilo para botones */
+  .custom-confirm-dialog button {
+    margin-right: 10px;
+  }
+  .dialog-actions{
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .trash-1{
+    width: 30px;
+  }
+  h5{
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 5px;
+  }
+  p{
+    font-size: 14px;
+    font-weight: 200;
+    color: #757575;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 5px;
+  }
+  /*Estilos botones popup*/
+  .Aceptar{
+    border-radius: 5px;
+    color: white;
+    background-color: #66CDAA;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    width: 25%;
+    height: 25px;
+  }
+  .Cancelar{
+    border-radius: 5px;
+    color: white;
+    background-color: #CDCDCD;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    width: 25%;
+    height: 25px;
+  }
+  a{
+    text-decoration: none;
+  }
+  hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .popup-header{
+    display: grid;
+    grid-template-columns: 93% 7%;
+  }
+  .datos{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    padding: 10px;
+  }

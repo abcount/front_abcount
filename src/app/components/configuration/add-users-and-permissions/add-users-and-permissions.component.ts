@@ -47,6 +47,7 @@ export class AddUsersAndPermissionsComponent  {
     this.companyService.getAllSubsAndRoles().subscribe(
       (data) => {
         if(data.data){
+          console.log(data.data)
           this.subsidiaries = data.data.areasAndSubs;
           this.rolesEntity = data.data.roles;
           
@@ -215,7 +216,7 @@ export class AddUsersAndPermissionsComponent  {
       height: '350px',
     });
    
-     
+    console.log(this.userSelected.id!, areaSubs, roles)
     this.userService.inviteUserWithData(this.userSelected.id!, areaSubs, roles).subscribe({
       next: response => {
         if(response.success){ 

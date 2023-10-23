@@ -106,4 +106,48 @@ export class MyCompaniesComponent implements OnInit{
       },
     });
   }
+
+  //Obtener invitaciones de compañias
+  invitaciones: any[] = [
+    {
+      companyId: 1,
+      companyName: "TechNova Solutions",
+      urlIconImage: "../../../assets/company-1.svg",
+    },
+    {
+      companyId: 2,
+      companyName: "GreenEco Ventures",
+      urlIconImage: "../../../assets/company-2.svg",
+    },
+    {
+      companyId: 3,
+      companyName: "StellarCraft Industries",
+      urlIconImage: "../../../assets/company-3.svg",
+    },
+    {
+      companyId: 4,
+      companyName: "AquaWave Technologies",
+      urlIconImage: "../../../assets/company-4.svg",
+    }
+  ]
+
+  // Logica popup
+  
+  isDialogVisible = false;
+  popup() {
+    console.log("popup")
+    this.isDialogVisible = true;
+  }
+
+
+  confirmDelete() {
+    console.log('Aceptar invitación');
+    this.isDialogVisible = false; // Cierra el cuadro de diálogo
+  }
+
+  cancelDelete() {
+    // Cancela la eliminación aquí
+    console.log('Rechazar invitación');
+    this.isDialogVisible = false; // Cierra el cuadro de diálogo
+  }
 }

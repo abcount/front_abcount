@@ -1,4 +1,7 @@
 <div class="background center">
+    <div class="header">
+        <img src="../../../assets/notificacion.png" alt="notificación" width="60px" (click)="popup()">
+    </div>
     <div class="my-companies">
         <div class="add-company">
             <a routerLink="/initial-config/tap1">
@@ -12,6 +15,30 @@
                 </div>
                 <div class="center-text">{{company.companyName}}</div>
             </a>
+        </div>
+    </div>
+</div>
+
+<!-- Popup -->
+<div class="overlay" *ngIf="isDialogVisible"></div> <!-- Fondo oscuro -->
+<div class="custom-confirm-dialog" *ngIf="isDialogVisible">
+  <div class="dialog-content">
+    <div class="popup-header">
+        <h5>Notificaciones</h5>
+        <img src="../../../assets/cancelar.png" alt="notificación" width="35px" (click)="cancelDelete()">
+    </div>
+    <hr>
+    <div class="datos" *ngFor="let invitacion of invitaciones">
+        <div>
+            <img src={{invitacion.urlIconImage}} alt="notificación" width="90px">
+        </div>
+        <div>
+            <h5>Invitación de {{invitacion.companyName}}</h5>
+            <p>¡Buenas noticias! La empresa {{invitacion.companyName}} te ha invitado a acceder a su contabilidad a través de nuestro sistema. ¿Deseas aceptar la invitación?</p>
+            <div class="dialog-actions">
+                <button (click)="confirmDelete()" class="Aceptar">Confirmar</button>
+                <button (click)="cancelDelete()" class="Cancelar">Rechazar</button>
+            </div>
         </div>
     </div>
 </div>
