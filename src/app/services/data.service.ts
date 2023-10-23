@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {AuxiliaryDto} from "../dto/auxiliary.dto";
 import {BehaviorSubject, Observable} from "rxjs";
 import {EntityDto} from "../dto/entity.dto";
-import {ExchangeRateDto} from "../dto/exchangeRate.dto";
+import {ExchangeMoneyDto, ExchangeRateDto} from "../dto/exchangeRate.dto";
 import { GeneralDto } from '../dto/general.dto';
 
 @Injectable({
@@ -76,7 +76,10 @@ export class DataService {
   }
 
 
-  getCurrencies(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/getCurrencies`);
+  getExchangeMoney(): Observable<GeneralDto<ExchangeMoneyDto[]>> {
+    return this.http.get<GeneralDto<ExchangeMoneyDto[]>>(`${this.baseUrl}/exchangeMoney/${this.companyId}`);
   }
+
+
+  
 }

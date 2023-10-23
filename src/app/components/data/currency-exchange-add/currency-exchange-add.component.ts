@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import {DataService} from "../../../services/data.service";
 import {FormControl, FormGroup} from "@angular/forms";
-import {ExchangeRateDto} from "../../../dto/exchangeRate.dto";
+import {ExchangeMoneyDto, ExchangeRateDto} from "../../../dto/exchangeRate.dto";
 import {ActivatedRoute, Router} from "@angular/router";
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 
 @Component({
   selector: 'app-currency-exchange-add',
@@ -11,7 +13,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class CurrencyExchangeAddComponent {
   form: FormGroup;
-  currencies: string[] = [];
+  currencies: ExchangeMoneyDto[] = [];
 
   patternAll = '.*';
   patternAllMessage = 'Ingrese un valor válido';
@@ -19,18 +21,11 @@ export class CurrencyExchangeAddComponent {
 
   selectedRecord?: ExchangeRateDto;
 
-  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.initForm();
-    this.fetchCurrencies().then(() => {
-      this.activatedRoute.queryParams.subscribe(params => {
-        if (params['data']) {
-          const record: ExchangeRateDto = JSON.parse(params['data']);
-          this.loadExchangeRateForEdit(record);
-        }
-      });
-    });
+    this.fetchCurrencies();
   }
 
   initForm(): void {
@@ -40,18 +35,28 @@ export class CurrencyExchangeAddComponent {
     });
   }
 
-  fetchCurrencies(): Promise<void> {
-    return new Promise((resolve) => {
-      this.dataService.getCurrencies().subscribe((response: any) => {
-        this.currencies = response.currencies;
-        const group: any = {};
-        for (let currency of this.currencies) {
-          group[currency] = new FormControl('');
+  fetchCurrencies(){
+    this.dataService.getExchangeMoney().subscribe({
+      next: (data) => {
+        if(data.success){
+          this.currencies = data.data!;
+          this.currencies.forEach(currency => {
+            (this.form.get('values') as FormGroup).addControl(currency.abbreviationName, new FormControl());
+          });
         }
-        this.form.setControl('values', new FormGroup(group));
-        resolve();
-      });
+      },
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          disableClose: true,
+          data: {title: 'Ocurrio un error!', message: "No se pudo obtener la lista de monedas"}
+        });
+
+        message.afterClosed().subscribe(() => {
+          this.router.navigate(['/']);
+        })
+      }
     });
+    
   }
 
 
@@ -70,6 +75,8 @@ export class CurrencyExchangeAddComponent {
   }
 
   saveOrUpdate(): void {
+    console.log(this.form.value);
+    /*
     const dateValue = this.form.get('date')?.value;
     const valuesObject = this.form.get('values')?.value as { [key: string]: number };
     const valuesArray: { abbreviation: string, value: number }[] = [];
@@ -100,7 +107,7 @@ export class CurrencyExchangeAddComponent {
       }, error => {
         console.error('Error saving record', error);
       });
-    }
+    }*/
   }
 
 
