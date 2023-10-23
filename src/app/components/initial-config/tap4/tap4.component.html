@@ -13,8 +13,8 @@
           <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
           <div class="separator"></div>
           <div class="text-orange">
-            {{node.name}} 
-          </div>               
+            {{node.name}}
+          </div>
           <div class="separator"></div>
           <button style="margin-left: 8px;" mat-icon-button disabled></button>
           <div class="right">
@@ -26,7 +26,7 @@
           <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
           <div class="separator"></div>
           <div class="text-blue">
-            {{node.name}} 
+            {{node.name}}
           </div>
           <div class="separator"></div>
           <button class="expand-button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
@@ -59,7 +59,7 @@
   </div>
   <div class="row-2-popup">
     <h3>Dígitos del nivel</h3>
-    <input [(ngModel)]="digitsLevel" type="text" placeholder="Ingresa el nivel">
+    <input [(ngModel)]="digitsLevel" value="1" type="number" min="1" max="4" step="1" placeholder="1">
   </div>
   <div class="row-2-popup">
     <h3>Nombre de la cuenta </h3>
@@ -94,7 +94,7 @@
   </div>
   <div class="row-2-popup">
     <h3>Dígitos del nivel</h3>
-    <input [(ngModel)]="digitsLevel" type="text" placeholder="Ingresa el nivel">
+    <input [(ngModel)]="digitsLevel" value="1" type="number" min="1" max="4" step="1" placeholder="1" >
   </div>
   <div class="row-2-popup">
     <h3>Nombre de la cuenta </h3>

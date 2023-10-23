@@ -94,7 +94,7 @@ export class Tap4Component {
 
 
   @ViewChild("accountName") accountName: string = "";
-  @ViewChild("digitsLevel") digitsLevel: number = 0;
+  @ViewChild("digitsLevel") digitsLevel: number = 1;
   selectedNode: NodeExample | null = null;
   accountId: number = 0;
   accountMoneyRub: boolean = false;
@@ -155,7 +155,7 @@ export class Tap4Component {
    }
    this.dataSource.data = TREE_DATA;
    this.accountName = "";
-   this.digitsLevel = 0;
+   this.digitsLevel = 1;
    this.accountReport = false;
    this.accountMoneyRub = false;
    this.accountClassificator = false;
@@ -325,7 +325,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
       width: '300px',
       height: '350px',
     });
-    
+
     this.formService.enviarDatos(formData).subscribe({
       next: response => {
         if(response.success){
@@ -352,7 +352,7 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     this.mostrarPopup = false;
     this.mostrarPopupSon = false;
     this.accountName = "";
-    this.digitsLevel = 0;
+    this.digitsLevel = 1;
     this.accountReport = false;
     this.accountMoneyRub = false;
     this.accountClassificator = false;
