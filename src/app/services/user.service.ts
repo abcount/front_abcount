@@ -84,4 +84,17 @@ export class UserService {
     return this.http.get<GeneralDto<UserSearcherDto[]>>(`${environment.BACKEND_URL}/users?search=${pattern}&limit=${limit}`);
  
   }
+
+  // function to remove userByCompanyId
+  removeUser(userId: number){
+    let compId = 1;
+    return this.http.delete<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/users/${userId}`);
+  }
+
+
+  // function to remove userByCompanyId
+  cancelInvitation(userId: number, invitationId: number){
+    let compId = 1;
+    return this.http.delete<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/invitations/${invitationId}/users/${userId}`);
+  }
 }

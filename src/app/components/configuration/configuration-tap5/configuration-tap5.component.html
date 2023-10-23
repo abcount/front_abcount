@@ -34,7 +34,7 @@
                 <h4>{{user.email}}</h4>
                 <div class="botones">
                     <a href="{{user.invitedId}}/users-and-permissions"><button class="button">Ver más</button></a>
-                    <button class="button-red" (click)="EliminarInvitation(user.invitationId)">Eliminar</button>
+                    <button class="button-red" (click)="EliminarInvitation(user.invitationId, user.invitedId)">Eliminar</button>
                 </div>
             </div>
         </div>
