@@ -20,11 +20,11 @@
         <div formGroupName="values">
           <div class="input-row" *ngFor="let currency of currencies">
             <app-my-textfield type="text"
-                              [label]="currency"
-                              [control]="getCurrencyControl(currency)"
+                              [label]="currency.abbreviationName"
+                              [control]="getCurrencyControl(currency.abbreviationName)"
                               [pattern]="patternAll"
                               [errorMessage]="patternAllMessage"
-                              [placeholder]="'Ingrese el valor para ' + currency">
+                              [placeholder]="'Ingrese el valor para ' + currency.abbreviationName">
             </app-my-textfield>
           </div>
         </div>

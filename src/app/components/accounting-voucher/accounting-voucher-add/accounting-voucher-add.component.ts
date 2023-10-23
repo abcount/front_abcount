@@ -3,6 +3,9 @@ import { TransactionService } from 'src/app/services/transaction.service';
 import { TransactionAccountDto } from 'src/app/dto/transaction-account.dto';
 import { AuxiliarDto } from 'src/app/dto/auxiliar.dto';
 import { EntityDto } from 'src/app/dto/entity.dto';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounting-voucher-add',
@@ -36,7 +39,7 @@ export class AccountingVoucherAddComponent {
   ];
 
   // Constructor
-  constructor(private transactionService: TransactionService) {
+  constructor(private transactionService: TransactionService, private dialog: MatDialog, private route: Router) {
     const boliviaTimezoneOffset = -4 * 60;
     const boliviaDate = new Date(new Date().getTime() + boliviaTimezoneOffset * 60000);
     this.fecha = boliviaDate.toISOString().substring(0, 10);
@@ -61,27 +64,60 @@ export class AccountingVoucherAddComponent {
   loadVoucherData() {
     this.transactionService.getVoucherData().subscribe(response => {
       if (response.success) {
-        const data = response.data;
-        console.log("Load voucher data")
-        console.log(data)
-        // Llenando la información de la cabecera
-        this.companyName = data.companyName;
-        this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
-        this.subsidiarySelect = data.subsidiaries[0].subsidiaryId;
-        this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
-        this.areaSelect = data.areas[0].areaId;
-        this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
-        this.documentSelect = data.transactionType[0].transactionTypeId;
-        this.monedas = data.currencies.map((currency: { exchangeMoneyId: any; moneyName: any; }) => ({id: currency.exchangeMoneyId, name: currency.moneyName}));
-        this.currencySelect = data.currencies[0].exchangeMoneyId;
-        this.numComprobante= data.transactionNumber;
-        // Obteniendo las cuentas
-        this.accountablePlan = data.accountablePlan;
-        // Obteniendo los auxiliares
-        this.listAuxiliares = data.auxiliar;
-        // Obteniendo las entidades
-        this.listEntities = data.entities;
-        //this.listEntities = data.entities;
+        if(response.data.currencies.length == 0 ||
+          response.data.subsidiaries.length == 0 || 
+          response.data.areas.length == 0 || 
+          response.data.transactionType.length == 0){
+            //TODO: separar logica y mostrar mensaje en caso de que la lista de monedas llegue vacia.
+          if(response.data.currencies.length == 0){
+            const currencyMessage = this.dialog.open(MessageDialogComponent, {
+              disableClose: true,
+              width: '300px',
+              data: {
+                title: 'Ocurrio un error!', 
+                message: "No tiene registro de monedas del día. Por favor, registre las monedas del día"}
+            });
+            
+            currencyMessage.afterClosed().subscribe(() => {
+              this.route.navigate(['/exchangeAdd']);
+            })
+
+          }else{
+            const message = this.dialog.open(MessageDialogComponent, {
+              disableClose: true,
+              data: {
+                title: 'Ocurrio un error!', 
+                message: "Ocurrio un error con el servidor"}
+            });
+            message.afterClosed().subscribe(() => {
+              this.route.navigate(['/accounting-voucher/view']);
+            })
+          }
+          
+        }else{
+          const data = response.data;
+          console.log("Load voucher data")
+          console.log(data)
+          // Llenando la información de la cabecera
+          this.companyName = data.companyName;
+          this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
+          this.subsidiarySelect = data.subsidiaries[0].subsidiaryId;
+          this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
+          this.areaSelect = data.areas[0].areaId;
+          this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
+          this.documentSelect = data.transactionType[0].transactionTypeId;
+          this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
+          this.currencySelect = data.currencies[0].exchangeMoneyId;
+          this.numComprobante= data.transactionNumber;
+          // Obteniendo las cuentas
+          this.accountablePlan = data.accountablePlan;
+          // Obteniendo los auxiliares
+          this.listAuxiliares = data.auxiliar;
+          // Obteniendo las entidades
+          this.listEntities = data.entities;
+          //this.listEntities = data.entities;
+        }
+        
       }
     });
   }
