@@ -30,12 +30,24 @@ export class ConfigurationTap5Component {
        }
      );
   }
+  updateList(){
+    this.UserServices.getUsersAndInvitedByCompanyId().subscribe(
+      (data) => {
+       if(data.data){
+         this.invitation = data.data.invitation;
+         this.employee = data.data.employee;
+       }
+               
+      }
+    );
+  }
   // Lógica para eliminar un usuario
   Eliminar(id: any){
     console.log("Usuario eliminado",id)
-    this.UserServices.deleteUser(id).subscribe(
+    this.UserServices.removeUser(id).subscribe(
       (data: any) => {
         console.log(data)
+        this.updateList();
       }
     );
   }
@@ -46,7 +58,12 @@ export class ConfigurationTap5Component {
     return "../../../assets/pfp.svg"
   }
 
-  EliminarInvitation(invitationId: number){
-
+  EliminarInvitation(invitationId: number, invitedId: number){ 
+    this.UserServices.cancelInvitation(invitedId, invitationId).subscribe(
+      (data: any) => {
+        console.log(data)
+        this.updateList();
+      }
+    );
   }
 }
