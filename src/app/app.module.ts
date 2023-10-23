@@ -39,6 +39,7 @@ import { Tap2Component } from './components/initial-config/tap2/tap2.component';
 import { Tap3Component } from './components/initial-config/tap3/tap3.component';
 import { Tap4Component } from './components/initial-config/tap4/tap4.component';
 import { CircularButtonComponent } from './components/general-components/circular-button/circular-button.component';
+import { MyCompaniesComponent } from './components/my-companies/my-companies.component';
 // Configuración
 import { ConfigNavbarComponent } from './components/configuration/config-navbar/config-navbar.component';
 import { ConfigurationTap1Component } from './components/configuration/configuration-tap1/configuration-tap1.component';
@@ -64,6 +65,8 @@ import { CurrencyExchangeViewComponent } from './components/data/currency-exchan
 import { CurrencyExchangeAddComponent } from './components/data/currency-exchange-add/currency-exchange-add.component';
 import { LoadingComponent } from './components/general-components/loading/loading.component';
 import { MessageDialogComponent } from './components/general-components/message.dialog/message.dialog.component';
+import { AcceptDialogComponent } from './components/general-components/accept.dialog/accept.dialog.component';
+
 
 
 
@@ -100,6 +103,8 @@ import { MessageDialogComponent } from './components/general-components/message.
     AdviceModalComponent,
     LoadingComponent,
     MessageDialogComponent,
+    AcceptDialogComponent,
+    MyCompaniesComponent,
   ],
   imports: [
     BrowserModule,

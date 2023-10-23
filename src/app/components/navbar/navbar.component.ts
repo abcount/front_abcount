@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,11 @@ export class NavbarComponent {
   isDropdownOpen = false;
   isDropdownOpen2 = false;
 
+  constructor(private keycloak: KeycloakService) { }
+
   logout() {
-    console.log('Cerrar sesión');
+    localStorage.clear();
+    this.keycloak.logout();
   }
 
   toggleDropdown() {

@@ -1,40 +1,47 @@
 <div class="wrapper">
   <div class="container">
-    <div><a routerLink="/exchangeView">x</a></div>
+    <div>
+      <a (click)="close()">x</a>
+    </div>
     <h2>{{ selectedRecord ? 'Editar Tipo de Cambio' : 'Agregar Tipo de Cambio' }}</h2>
-    <hr>
-    <h4>Formulario</h4>
-    <form [formGroup]="form">
-      <div class="inputs-container">
-        <div>
-          <app-my-textfield type="date"
-                            [label]="'Fecha'"
-                            [control]="getDateControl()"
-                            [pattern]="patternAll"
-                            [errorMessage]="patternAllMessage"
-                            [placeholder]="'Seleccione una fecha'">
-          </app-my-textfield>
-        </div>
-        <br>
-        <br>
-        <div formGroupName="values">
-          <div class="input-row" *ngFor="let currency of currencies">
-            <app-my-textfield type="text"
-                              [label]="currency.abbreviationName"
-                              [control]="getCurrencyControl(currency.abbreviationName)"
-                              [pattern]="patternAll"
-                              [errorMessage]="patternAllMessage"
-                              [placeholder]="'Ingrese el valor para ' + currency.abbreviationName">
-            </app-my-textfield>
+    <div>
+      <form [formGroup]="form">
+        <mat-grid-list cols="1" rowHeight="25px">
+          <mat-grid-tile>
+            <h3>
+              {{ date }}
+            </h3>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <h3>
+              MONEDA PRINCIPAL: {{ principalCurrency.moneyName}}
+            </h3>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="errorMessage!=''">
+            <p class="error">{{errorMessage}}</p>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="2" rowHeight="75px" >
+          <div *ngFor="let currency of currencies" >
+            <mat-grid-tile [colspan]="1" *ngIf="!currency.isPrincipal">
+              <app-my-textfield type="text"
+                                [label]="currency.abbreviationName"
+                                [control]="getCurrencyControl(currency.abbreviationName)"
+                                [pattern]="patternAll"
+                                [errorMessage]="patternAllMessage"
+                                [placeholder]="'Ingrese el valor para ' + currency.abbreviationName">
+              </app-my-textfield>
+            </mat-grid-tile>
           </div>
+        </mat-grid-list>
+        
+        <div class="buttons-container">
+          <app-my-button [isGreen]="true" (click)="saveOrUpdate()">
+            {{ selectedRecord ? 'EDITAR' : 'AGREGAR' }}
+          </app-my-button>
+          <app-my-button [isRed]="true" *ngIf="selectedRecord" (click)="cancelEdit()">CANCELAR</app-my-button>
         </div>
-      </div>
-      <div class="buttons-container">
-        <app-my-button [isGreen]="true" (click)="saveOrUpdate()">
-          {{ selectedRecord ? 'EDITAR' : 'AGREGAR' }}
-        </app-my-button>
-        <app-my-button [isRed]="true" *ngIf="selectedRecord" (click)="cancelEdit()">CANCELAR</app-my-button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

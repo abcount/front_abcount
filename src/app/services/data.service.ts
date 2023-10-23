@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {AuxiliaryDto} from "../dto/auxiliary.dto";
 import {BehaviorSubject, Observable} from "rxjs";
 import {EntityDto} from "../dto/entity.dto";
-import {ExchangeMoneyDto, ExchangeRateDto} from "../dto/exchangeRate.dto";
+import {ExchangeMoneyDto, ExchangeRateCreate, ExchangeRateDto} from "../dto/exchangeRate.dto";
 import { GeneralDto } from '../dto/general.dto';
 
 @Injectable({
@@ -63,8 +63,8 @@ export class DataService {
   }
 
 
-  createExchangeRate(data: ExchangeRateDto): Observable<ExchangeRateDto> {
-    return this.http.post<ExchangeRateDto>(`${this.baseUrl}/createExchangeRate`, data);
+  createExchangeRate(data: ExchangeRateCreate[]): Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/exchangeRate/${this.companyId}`, data);
   }
 
   updateExchangeRate(data: ExchangeRateDto): Observable<ExchangeRateDto> {
@@ -75,9 +75,12 @@ export class DataService {
     return this.http.delete<void>(`${this.baseUrl}/deleteExchangeRate/${data.id}`);
   }
 
-
   getExchangeMoney(): Observable<GeneralDto<ExchangeMoneyDto[]>> {
     return this.http.get<GeneralDto<ExchangeMoneyDto[]>>(`${this.baseUrl}/exchangeMoney/${this.companyId}`);
+  }
+
+  getExistExchangeRate(): Observable<GeneralDto<Boolean>> {
+    return this.http.get<GeneralDto<Boolean>>(`${this.baseUrl}/exchangeRate/exist/${this.companyId}`);
   }
 
 

@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { SebastianModule } from "./SebastianModule";
-import { MyCompaniesComponent } from '../components/my-companies/my-companies.component';
 import { AppRoutingModule } from '../app-routing.module';
 
 const MicaComponents = [
@@ -11,7 +10,7 @@ const MicaComponents = [
 
 @NgModule({
     declarations: [
-        MyCompaniesComponent,
+        
     ],
     exports: [] // Poner [MicaComponents]
     ,

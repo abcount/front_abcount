@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { CompanyDto } from 'src/app/dto/company.dto';
 import {HttpClient} from "@angular/common/http";
 import { UserService } from 'src/app/services/user.service';
+import { DataService } from 'src/app/services/data.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '../general-components/message.dialog/message.dialog.component';
 
 @Component({
   selector: 'app-my-companies',
@@ -12,7 +15,12 @@ import { UserService } from 'src/app/services/user.service';
 export class MyCompaniesComponent implements OnInit{
   companies: CompanyDto[]
   constructor(private router: Router,
-    private userService: UserService) { }
+    private userService: UserService,
+    private dataService: DataService,
+    private dialog: MatDialog) {
+
+    }
+
   async ngOnInit() {
     localStorage.clear();
     // cal first api
@@ -83,6 +91,19 @@ export class MyCompaniesComponent implements OnInit{
   saveData(companyId: number, userId: number) {
     localStorage.setItem('userId', userId.toString());
     localStorage.setItem('companyId', companyId.toString());
-    window.location.href = '/configuration-tap/1';
+    this.dataService.getExistExchangeRate().subscribe({
+      next: (data) => {
+        if(data.data){
+          this.router.navigate(['/configuration-tap/1']);
+        }else{
+          this.router.navigate(['/exchangeAdd']);
+        }
+      },
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor"}
+        });
+      },
+    });
   }
 }

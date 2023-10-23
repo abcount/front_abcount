@@ -16,11 +16,6 @@ th, td {
 }
 
 
-:host ::ng-deep app-my-textfield {
-  display: inline-block;
-  width: 100%;
-  margin-right: 20px;
-}
 
 :host ::ng-deep app-my-button {
   display: block;
@@ -64,6 +59,7 @@ hr{
   background-color: #FFADA1;
   color: white;
 }
+
 mat-cell button[mat-icon-button] {
   width: 40px;
   height: 40px;
@@ -74,6 +70,7 @@ mat-cell button[mat-icon-button] {
   align-items: center;
   margin: 4px;
 }
+
 .buttons-container {
   display: flex;
   justify-content: flex-end;
@@ -82,16 +79,8 @@ mat-cell button[mat-icon-button] {
 
 
 
-.inputs-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
 
-.inputs-container > div {
-  flex: 0 0 calc(50% - 10px);
-}
-/* Asegurarse de que el contenedor padre tiene posición relativa */
+
 
 
 /* Estilos para la X */
@@ -116,6 +105,18 @@ div > a:hover {
   background-color: #ccc;
   color: #222;
 }
+
+mat-grid-tile{
+  width: 100%;
+}
+
+.error{
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
 
 
 

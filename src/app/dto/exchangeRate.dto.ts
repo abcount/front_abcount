@@ -11,3 +11,9 @@ export interface ExchangeMoneyDto {
   abbreviationName: string;
   isPrincipal: boolean;
 }
+
+export interface ExchangeRateCreate {
+  moneyName: string;
+  abbreviationName: string;
+  currency: number;
+}

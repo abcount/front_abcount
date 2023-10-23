@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { EnterpriseDto } from 'src/app/dto/enterprise.dto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
@@ -36,17 +37,22 @@ export class ConfigurationTap1Component {
   modeEdit: boolean = false;
 
   // Constructor
-  constructor(private configurationService: ConfigurationService) { }
+  constructor(private configurationService: ConfigurationService, private route: Router) { }
 
   // Funcion al iniciar la pantalla
   ngOnInit() {
-    this.configurationService.getEnterprise().subscribe(
-      (data: any) => {
-        this.enterpriseData = data.data;
-        this.ngAfterViewInit();
-      }
-    );
-    this.disable();
+    const companyId = localStorage.getItem('companyId');
+    if(companyId){
+      this.configurationService.getEnterprise().subscribe(
+        (data: any) => {
+          this.enterpriseData = data.data;
+          this.ngAfterViewInit();
+        }
+      );
+      this.disable();
+    }else{
+      this.route.navigate(['/my-companies']);
+    }
   }
 
   // Asignar valores a los inputs
