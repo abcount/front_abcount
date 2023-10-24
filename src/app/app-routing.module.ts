@@ -17,9 +17,8 @@ import { AccountingVoucherAddComponent } from "./components/accounting-voucher/a
 import { ReportsComponent } from './components/reports/reports/reports.component';
 import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
 import { BalanceSheetComponent } from './components/reports/balance-sheet/balance-sheet-form/balance-sheet.component';
-import {EntityComponent} from "./components/data/entity/entity.component";
-import {CurrencyExchangeAddComponent} from "./components/data/currency-exchange-add/currency-exchange-add.component";
-import {CurrencyExchangeViewComponent} from "./components/data/currency-exchange-view/currency-exchange-view.component";
+import { CurrencyExchangeAddComponent } from "./components/data/currency-exchange-add/currency-exchange-add.component";
+import { CurrencyExchangeViewComponent } from "./components/data/currency-exchange-view/currency-exchange-view.component";
 import { GeneralLedgerFormComponent } from './components/reports/general-ledger/general-ledger-form/general-ledger-form.component';
 
 
@@ -59,7 +58,6 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent},
   { path: 'diary-book', component: DiaryBookFormComponent},
   { path: 'balance-sheet', component: BalanceSheetComponent},
-  { path: 'entity', component: EntityComponent},
   { path: 'exchangeAdd', component: CurrencyExchangeAddComponent},
   { path: 'exchangeView', component: CurrencyExchangeViewComponent},
   { path: 'general-ledger', component: GeneralLedgerFormComponent}

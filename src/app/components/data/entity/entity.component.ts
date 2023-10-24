@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {AuxiliaryDto} from "../../../dto/auxiliary.dto";
 import {FormControl, FormGroup} from "@angular/forms";
 import {DataService} from "../../../services/data.service";
@@ -136,5 +136,13 @@ export class EntityComponent {
         })
       }
     });
+  }
+
+  @Input() flag: boolean = false;
+  @Output() flagChange = new EventEmitter<boolean>();
+
+  closeModal() {
+    this.flag = false;
+    this.flagChange.emit(this.flag);
   }
 }

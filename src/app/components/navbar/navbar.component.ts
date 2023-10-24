@@ -32,4 +32,9 @@ export class NavbarComponent {
     this.auxiliarFlag = !this.auxiliarFlag;
   }
 
+  entityFlag: boolean = false;
+  entityFlagChange() {
+    this.entityFlag = !this.entityFlag;
+  }
+
 }

@@ -13,7 +13,7 @@
             <a class="dropdown-item" routerLink="/accounting-voucher/view">Comprobantes</a>
             <hr>
             <a class="dropdown-item" (click)="auxiliarFlagChange()">Cuentas auxiliares</a>
-            <a class="dropdown-item" routerLink="/entity">Cuentas de entidades</a>
+            <a class="dropdown-item" (click)="entityFlagChange()">Cuentas de entidades</a>
             <hr>
             <a class="dropdown-item" routerLink="/exchangeView">Tasa de cambio</a>
         </div>
@@ -34,3 +34,4 @@
     </a>
 </nav>
 <app-auxiliary-account [flag]="auxiliarFlag" (flagChange)="auxiliarFlagChange()"></app-auxiliary-account>
+<app-entity [flag]="entityFlag" (flagChange)="entityFlagChange()"></app-entity>
