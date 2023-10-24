@@ -67,6 +67,7 @@ import { LoadingComponent } from './components/general-components/loading/loadin
 import { MessageDialogComponent } from './components/general-components/message.dialog/message.dialog.component';
 import { AcceptDialogComponent } from './components/general-components/accept.dialog/accept.dialog.component';
 import { GeneralLedgerFormComponent } from './components/reports/general-ledger/general-ledger-form/general-ledger-form.component';
+import { StatementOfIncomeComponent } from './components/reports/statement-of-income/statement-of-income.component';
 
 
 
@@ -107,6 +108,7 @@ import { GeneralLedgerFormComponent } from './components/reports/general-ledger/
     AcceptDialogComponent,
     MyCompaniesComponent,
     GeneralLedgerFormComponent,
+    StatementOfIncomeComponent,
   ],
   imports: [
     BrowserModule,
