@@ -9,22 +9,26 @@
       </div>
       <div class="row-2">
         <div>
-          <h2>SUCURSAL</h2>
-          <div class="card">
-            <label *ngFor="let subsidiary of subsidiaries">
-              <input type="checkbox" id="{{subsidiary.subsidiaryId}}" value="{{subsidiary.subsidiaryId}}"/>
-              {{subsidiary.subsidiaryName}}
-            </label>
-          </div>
+            <h2>SUCURSAL</h2>
+            <div class="card">
+                <label *ngFor="let subsidiary of subsidiaries">
+                    <div>
+                        <input type="checkbox" id="{{subsidiary.subsidiaryId}}" value="{{subsidiary.subsidiaryId}}"/>
+                        {{subsidiary.subsidiaryName}}
+                    </div>
+                </label>
+            </div>
         </div>
         <div>
-          <h2>AREA</h2>
-          <div class="card">
-            <label *ngFor="let area of areas">
-              <input type="checkbox" id="{{area.areaId}}" value="{{area.areaId}}"/>
-              {{area.areaName}}
-            </label>
-          </div>
+            <h2>ÁREA</h2>
+            <div class="card">
+                <label *ngFor="let area of areas">
+                    <div>
+                        <input type="checkbox" id="{{area.areaId}}" value="{{area.areaId}}"/>
+                        {{area.areaName}}
+                    </div>
+                </label>
+            </div>
         </div>
       </div>
       <hr style="margin: 8px;">
@@ -84,21 +88,21 @@
       <div class="money">
         <h2>MONEDAS PARA EL REPORTE</h2>
         <div>
-          <label>
-            <input type="checkbox" value="0"/>
-            Bolivianos
-          </label>
-          <div class="title select-money">
             <label>
-              <input type="checkbox" value="1"/>
-              Otros
+                <input type="checkbox" value="0"/>
+                Bolivianos
             </label>
-            <select>
-              <option *ngFor="let currency of currencies" value="{{currency.currencyId}}">{{currency.currencyName}}</option>
-            </select>
-          </div>
+            <div class="title select-money">
+                <label>
+                    <input type="checkbox" value="1"/>
+                    Otros
+                </label>
+                <select>
+                    <option *ngFor="let currency of currencies" value="{{currency.currencyId}}">{{currency.moneyName}}</option>
+                </select>
+            </div>
         </div>
-      </div>
+    </div>
       <div class="buttons">
         <i class="fa-solid fa-file-pdf" style="color: #ff3d3d;"></i>
         <div style="width: 15px;"></div>

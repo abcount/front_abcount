@@ -10,20 +10,25 @@ import {ConfigurationService} from "../../../../services/configuration.service";
 })
 
 export class GeneralLedgerFormComponent {
+  subsidiaries: any[] = [];
+  areas: any[] = [];
+  currencies: any[] = [];
 
-  subsidiaries = [
-    {"subsidiaryId": 1,"subsidiaryName": "Sucursal 1","address": "Av. 6 de Agosto"},
-    {"subsidiaryId": 2,"subsidiaryName": "Sucursal 2","address": "Av. 6 de Agosto"},
-    {"subsidiaryId": 3,"subsidiaryName": "Sucursal 3","address": "Av. 6 de Agosto"},
-    {"subsidiaryId": 4,"subsidiaryName": "Sucursal 4","address": "Av. 6 de Agosto"},
-  ];
 
-  areas = [
-    {"areaId": 1,"areaName": "Area 1"},
-    {"areaId": 2,"areaName": "Area 2"},
-    {"areaId": 3,"areaName": "Area 3"},
-    {"areaId": 4,"areaName": "Area 4"},
-  ];
+  ngOnInit() {
+    // Obtener las sucursales y areas
+    this.configurationService.getSubsidiaries().subscribe(
+      (data: any) => {
+        console.log(data);
+        this.subsidiaries = data.data.subsidiaries;
+        this.areas = data.data.areas;
+      }
+    );
+    this.configurationService.getCurrencies().subscribe((data: any) => {
+      console.log(data);
+      this.currencies = data.data.currencyConfig;
+    });
+  }
 
   transactionTypes = [
     {"transactionTypeId": 1,"transactionTypeName": "Ingreso"},
@@ -31,11 +36,7 @@ export class GeneralLedgerFormComponent {
     {"transactionTypeId": 3,"transactionTypeName": "Traspaso"},
   ];
 
-  currencies = [
-    {"currencyId": 1,"currencyName": "UFV"},
-    {"currencyId": 2,"currencyName": "Dolares"},
-    {"currencyId": 3,"currencyName": "Euros"},
-  ];
+
 
 
   hasChild = (_: number, node: NodeExample) => node.expandable;
@@ -67,8 +68,8 @@ export class GeneralLedgerFormComponent {
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-  constructor(private ConfigurationService: ConfigurationService) {
-    this.ConfigurationService.getAccountsPlan().subscribe(
+  constructor(private configurationService: ConfigurationService) {
+    this.configurationService.getAccountsPlan().subscribe(
       (data: any) => {
         console.log("ACCOUNT PLAN")
         console.log(data)
