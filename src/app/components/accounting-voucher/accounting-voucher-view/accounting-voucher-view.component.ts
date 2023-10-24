@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 import { Router } from '@angular/router';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-accounting-voucher-view',
@@ -24,7 +25,7 @@ export class AccountingVoucherViewComponent {
   totalDebe: number = 0;
   totalHaber: number = 0;
 
-  constructor(private transactionService: TransactionService, private dialog: MatDialog, private route: Router) { }
+  constructor(private configurationService: ConfigurationService, private transactionService: TransactionService, private dialog: MatDialog, private route: Router) { }
 
   // Función inicial
   ngOnInit(){
@@ -34,35 +35,22 @@ export class AccountingVoucherViewComponent {
 
   // Función para cargar los datos del voucher
   loadVouncherData(){
+    this.configurationService.getSubsidiaries().subscribe(
+      (data: any) => {
+        if (data.data.subsidiaries.length != 0) {
+          this.sucursales = data.data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any;}) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
+          this.subsidiarySelect = this.sucursales[0].id;
+        }
+        if (data.data.areas.length != 0) {
+          this.areas = data.data.areas.map((area: {areaId: any; areaName: any;}) => ({id: area.areaId, name: area.areaName}));
+          this.areaSelect = this.areas[0].id;
+        }
+      }
+    );
     this.transactionService.getVoucherData().subscribe(response => {
       const data = response.data;
-      /*
-      if(response.data.currencies.length == 0 || 
-        response.data.subsidiaries.length == 0 ||
-        response.data.areas.length == 0 ||
-        response.data.transactionType.length == 0){
-        const message = this.dialog.open(MessageDialogComponent, {
-          disableClose: true,
-          data: {
-            title: 'Ocurrio un error!', 
-            message: "Ocurrio un error con el servidor"}
-        });
-
-        message.afterClosed().subscribe(() => {
-          this.route.navigate(['/configuration-tap/1']);
-        })
-        */
-      //}else{
-        this.companyName = data.companyName;
-        this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any;}) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
-        this.subsidiarySelect = this.sucursales[0].id;
-        this.areas = data.areas.map((area: {areaId: any; areaName: any;}) => ({id: area.areaId, name: area.areaName}));
-        this.areaSelect = this.areas[0].id;
-        this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
-        this.documentSelect = this.documentos[0].id;
-        this.monedas = data.currencies.map((currency: { exchangeMoneyId: any; moneyName: any; }) => ({id: currency.exchangeMoneyId, name: currency.moneyName}));
-        this.currencySelect = this.monedas[0].id;
-      //}
+      this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
+      this.documentSelect = this.documentos[0].id;
     });
   }
 

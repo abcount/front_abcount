@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {AuxiliaryDto} from "../../../dto/auxiliary.dto";
-import {DataService} from "../../../services/data.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { AuxiliaryDto } from "../../../dto/auxiliary.dto";
+import { DataService } from "../../../services/data.service";
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 import { Router } from '@angular/router';
@@ -144,10 +143,16 @@ export class AuxiliaryAccountComponent {
     this.controlAuxiliaryName.reset();
   }
 
-
-
   ngOnInit(): void{
     this.getAuxiliaries();
+  }
+
+  @Input() flag: boolean = false;
+  @Output() flagChange = new EventEmitter<boolean>();
+
+  closeModal() {
+    this.flag = false;
+    this.flagChange.emit(this.flag);
   }
 
 }

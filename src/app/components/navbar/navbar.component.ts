@@ -27,4 +27,9 @@ export class NavbarComponent {
     this.isDropdownOpen2 = !this.isDropdownOpen2;
   }
 
+  auxiliarFlag: boolean = false;
+  auxiliarFlagChange() {
+    this.auxiliarFlag = !this.auxiliarFlag;
+  }
+
 }
