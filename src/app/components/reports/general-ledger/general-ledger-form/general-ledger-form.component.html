@@ -1,0 +1,108 @@
+<div class="container-diary-book">
+    <div class="diary-book">
+      <div class="header">
+        <div class="logo center">
+          <i class="fa-solid fa-grid" style="color: #D7B8FD"></i>
+        </div>
+        <div class="title"><h1>Libro Mayor</h1></div>
+        <div class="close"><i class="fa-solid fa-xmark"></i></div>
+      </div>
+      <div class="row-2">
+        <div>
+          <h2>SUCURSAL</h2>
+          <div class="card">
+            <label *ngFor="let subsidiary of subsidiaries">
+              <input type="checkbox" id="{{subsidiary.subsidiaryId}}" value="{{subsidiary.subsidiaryId}}"/>
+              {{subsidiary.subsidiaryName}}
+            </label>
+          </div>
+        </div>
+        <div>
+          <h2>AREA</h2>
+          <div class="card">
+            <label *ngFor="let area of areas">
+              <input type="checkbox" id="{{area.areaId}}" value="{{area.areaId}}"/>
+              {{area.areaName}}
+            </label>
+          </div>
+        </div>
+      </div>
+      <hr style="margin: 8px;">
+      <h2>PLAN DE CUENTAS</h2>
+      <div class="row-3">
+        <div class="card">
+          <div class="account-plan" style="padding-left: 25px;">
+  
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                <div class="separator"></div>
+                <div class="text-orange">
+                  {{node.name}}
+                  <input type="checkbox">
+                </div>
+                <div class="separator"></div>
+                <button style="margin-left: 8px;" mat-icon-button disabled></button>
+                <div class="right">
+                </div>
+              </mat-tree-node>
+              <hr>
+              <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                <div class="separator"></div>
+                <div class="text-blue">
+                  <input type="checkbox">
+                  {{node.name}}
+                </div>
+                <div class="separator"></div>
+                <button class="expand-button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                  <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': treeControl.isExpanded(node), 'fa-caret-down': !treeControl.isExpanded(node)}"></i>
+                </button>
+              </mat-tree-node>
+            </mat-tree>
+          </div>
+        </div>
+      </div>
+  
+      <div class="period title">
+        <h2>PERIODO</h2>
+        <div class="title">
+          <h2>Desde</h2>
+          <input type="date" />
+        </div>
+        <div class="title">
+          <h2>Hasta</h2>
+          <input type="date" />
+        </div>
+      </div>
+      <div class="period title">
+        <h2>TIPO DE COMPROBANTE</h2>
+        <select>
+          <option value="0">TODOS</option>
+          <option *ngFor="let transaction of transactionTypes" value="{{transaction.transactionTypeId}}">{{transaction.transactionTypeName}}</option>
+        </select>
+      </div>
+      <hr>
+      <div class="money">
+        <h2>MONEDAS PARA EL REPORTE</h2>
+        <div>
+          <label>
+            <input type="checkbox" value="0"/>
+            Bolivianos
+          </label>
+          <div class="title select-money">
+            <label>
+              <input type="checkbox" value="1"/>
+              Otros
+            </label>
+            <select>
+              <option *ngFor="let currency of currencies" value="{{currency.currencyId}}">{{currency.currencyName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <i class="fa-solid fa-file-pdf" style="color: #ff3d3d;"></i>
+        <div style="width: 15px;"></div>
+        <i class="fa-solid fa-file-excel" style="color: #3dff5d;"></i>
+      </div>
+    </div>
+  </div>

@@ -21,6 +21,7 @@ import {AuxiliaryAccountComponent} from "./components/data/auxiliary-account/aux
 import {EntityComponent} from "./components/data/entity/entity.component";
 import {CurrencyExchangeAddComponent} from "./components/data/currency-exchange-add/currency-exchange-add.component";
 import {CurrencyExchangeViewComponent} from "./components/data/currency-exchange-view/currency-exchange-view.component";
+import { GeneralLedgerFormComponent } from './components/reports/general-ledger/general-ledger-form/general-ledger-form.component';
 
 
 
@@ -62,7 +63,8 @@ const routes: Routes = [
   {path: 'auxiliary', component:AuxiliaryAccountComponent},
   {path: 'entity', component: EntityComponent},
   {path: 'exchangeAdd', component: CurrencyExchangeAddComponent},
-  {path: 'exchangeView', component: CurrencyExchangeViewComponent}
+  {path: 'exchangeView', component: CurrencyExchangeViewComponent},
+  {path: 'general-ledger', component: GeneralLedgerFormComponent}
 ];
 
 @NgModule({
