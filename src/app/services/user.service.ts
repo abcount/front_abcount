@@ -25,7 +25,7 @@ export class UserService {
   //Function to get users and invited by companyId
   getUsersAndInvitedByCompanyId(){
  
-    let compId = 1;
+    let compId = localStorage.getItem('companyId');
     return this.http.get<GeneralDto<EmployeeAndInvitationDto>>(`${environment.BACKEND_URL}/companies/${compId}/employees`);
   }
 
@@ -41,7 +41,7 @@ export class UserService {
       areaSubsidiaryId: areaSubsidiaryId, 
       roles: roles
     };
-    let compId = 1
+    let compId = localStorage.getItem('companyId');
     
     return this.http.post<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/invitations`, body);
   }
@@ -54,7 +54,7 @@ export class UserService {
       areaSubsidiaryId: areaSubsidiaryId, 
       roles: roles
     };
-    let compId = 1
+    let compId = localStorage.getItem('companyId');
     
     return this.http.put<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/users/${userId}/roles`, body);
     
@@ -70,12 +70,12 @@ export class UserService {
   }
 
   getSummInfoUserByIdAndCompany(userId: number){
-    let compId = 1; 
+    let compId = localStorage.getItem('companyId'); 
     return this.http.get<GeneralDto<EmployeeDto>>(`${environment.BACKEND_URL}/companies/${compId}/employees/${userId}`);
   }
 
   getPermissionAndRolesByUserAndCompany(userId: number){
-    let compId = 1;
+    let compId = localStorage.getItem('companyId');
     return this.http.get<GeneralDto<AreaSubsAndRoles>>(`${environment.BACKEND_URL}/companies/${compId}/users/${userId}/roles`);
   }
  
@@ -87,14 +87,14 @@ export class UserService {
 
   // function to remove userByCompanyId
   removeUser(userId: number){
-    let compId = 1;
+    let compId = localStorage.getItem('companyId');
     return this.http.delete<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/users/${userId}`);
   }
 
 
   // function to remove userByCompanyId
   cancelInvitation(userId: number, invitationId: number){
-    let compId = 1;
+    let compId = localStorage.getItem('companyId');
     return this.http.delete<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/invitations/${invitationId}/users/${userId}`);
   }
 }
