@@ -12,8 +12,10 @@
                 <h2>SUCURSAL</h2>
                 <div class="card">
                     <label *ngFor="let subsidiary of subsidiaries">
-                        <input type="checkbox" id="{{subsidiary.subsidiaryId}}" value="{{subsidiary.subsidiaryId}}"/>
-                        {{subsidiary.subsidiaryName}}
+                        <div>
+                            <input type="checkbox" id="{{subsidiary.subsidiaryId}}" value="{{subsidiary.subsidiaryId}}"/>
+                            {{subsidiary.subsidiaryName}}
+                        </div>
                     </label>
                 </div>
             </div>
@@ -21,8 +23,10 @@
                 <h2>AREA</h2>
                 <div class="card">
                     <label *ngFor="let area of areas">
-                        <input type="checkbox" id="{{area.areaId}}" value="{{area.areaId}}"/>
-                        {{area.areaName}}
+                        <div>
+                            <input type="checkbox" id="{{area.areaId}}" value="{{area.areaId}}"/>
+                            {{area.areaName}}
+                        </div>
                     </label>
                 </div>
             </div>
@@ -59,7 +63,7 @@
                         Otros
                     </label>
                     <select>
-                        <option *ngFor="let currency of currencies" value="{{currency.currencyId}}">{{currency.currencyName}}</option>
+                        <option *ngFor="let currency of currencies" value="{{currency.currencyId}}">{{currency.moneyName}}</option>
                     </select>
                 </div>
             </div>
