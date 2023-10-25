@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { GeneralDto } from '../dto/general.dto';
 import { CompanyDto } from '../dto/company.dto';
 import { AreaSubsAndRoles, UserSearcherDto } from '../dto/areasubsroles.dto';
-import { EmployeeAndInvitationDto, EmployeeDto } from '../dto/userinvitation.dto';
+import { EmployeeAndInvitationDto, EmployeeDto, UserInvitationDto } from '../dto/userinvitation.dto';
 
 
 @Injectable({
@@ -96,5 +96,16 @@ export class UserService {
   cancelInvitation(userId: number, invitationId: number){
     let compId = localStorage.getItem('companyId');
     return this.http.delete<GeneralDto<any>>(`${environment.BACKEND_URL}/companies/${compId}/invitations/${invitationId}/users/${userId}`);
+  }
+
+  getInvitationsPending(){
+    return this.http.get<GeneralDto<UserInvitationDto>>(`${environment.BACKEND_URL}/users/invitations`)
+  }
+
+  // acept or decline invitation
+
+  willAceptInvitation(status:boolean, idInvi: number){
+   
+    return this.http.get<GeneralDto<any>>(`${environment.BACKEND_URL}/users/invitations/${idInvi}?state=${status}`)
   }
 }

@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { DataService } from 'src/app/services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from '../general-components/message.dialog/message.dialog.component';
+import { InvitationStateDto } from 'src/app/dto/userinvitation.dto';
 
 @Component({
   selector: 'app-my-companies',
@@ -14,6 +15,7 @@ import { MessageDialogComponent } from '../general-components/message.dialog/mes
 })
 export class MyCompaniesComponent implements OnInit{
   companies: CompanyDto[]
+  pendingInvitation : InvitationStateDto[] = []
   constructor(private router: Router,
     private userService: UserService,
     private dataService: DataService,
@@ -34,6 +36,16 @@ export class MyCompaniesComponent implements OnInit{
             console.log(response)
             if(response.data){
               this.companies = response.data
+            }
+
+          },
+          error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
+        });
+        this.userService.getInvitationsPending().subscribe({
+          next: (response) => {
+            console.log(response)
+            if(response.data){
+              this.pendingInvitation = response.data.PENDING
             }
 
           },
@@ -138,16 +150,87 @@ export class MyCompaniesComponent implements OnInit{
     console.log("popup")
     this.isDialogVisible = true;
   }
-
-
-  confirmDelete() {
-    console.log('Aceptar invitación');
-    this.isDialogVisible = false; // Cierra el cuadro de diálogo
+  getImageProfile(path: string | null | undefined) {
+    if(path == undefined){
+      return '../../../assets/pfp.svg';
+    }
+    if (path != null && path.trim.length > 0) {
+      return path;
+    }
+    return '../../../assets/pfp.svg';
   }
 
-  cancelDelete() {
+  confirmInvitation(index:number) {
+    console.log('Aceptar invitación');
+
+    // accept or decline
+    this.userService.willAceptInvitation(true, this.pendingInvitation[index].invitationId).subscribe({
+      next: (response) => {
+        console.log(response)
+        if(response.success){
+          // call companies
+          this.userService.getCompaniesByUser().subscribe({
+            next: (response) => {
+              console.log(response)
+              if(response.data){
+                this.companies = response.data
+              }
+
+            },
+            error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
+          });
+
+          this.userService.getInvitationsPending().subscribe({
+            next: (response) => {
+              console.log(response)
+              if(response.data){
+                this.pendingInvitation = response.data.PENDING
+              }
+  
+            },
+            error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
+          })
+        }
+
+      },
+      error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
+    });
+
+    this.closeWindow()// Cierra el cuadro de diálogo
+    
+  }
+
+  cancelDelete(index:number) {
     // Cancela la eliminación aquí
     console.log('Rechazar invitación');
-    this.isDialogVisible = false; // Cierra el cuadro de diálogo
+
+   
+    this.userService.willAceptInvitation(false, this.pendingInvitation[index].invitationId).subscribe({
+      next: (response) => {
+        console.log(response)
+        if(response.success){
+
+          this.userService.getInvitationsPending().subscribe({
+            next: (response) => {
+              console.log(response)
+              if(response.data){
+                this.pendingInvitation = response.data.PENDING
+              }
+  
+            },
+            error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
+          });
+          
+        }
+
+      },
+      error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
+    });
+
+    this.closeWindow()// Cierra el cuadro de diálogo
+  }
+
+  closeWindow(){
+    this.isDialogVisible = false;
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 
 @Component({
@@ -12,11 +13,12 @@ export class NavbarComponent {
   isDropdownOpen = false;
   isDropdownOpen2 = false;
 
-  constructor(private keycloak: KeycloakService) { }
+  constructor(private keycloak: KeycloakService, private route: Router) { }
 
   logout() {
     localStorage.clear();
-    this.keycloak.logout();
+    //this.route.navigate(["/"])
+    this.keycloak.logout("http://localhost:4200");
   }
 
   toggleDropdown() {
