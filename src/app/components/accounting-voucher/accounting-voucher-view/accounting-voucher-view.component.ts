@@ -25,6 +25,10 @@ export class AccountingVoucherViewComponent {
   totalDebe: number = 0;
   totalHaber: number = 0;
 
+  currentVoucherIndex: number = 0;
+  comprobantes: any[] = [];
+ 
+
   constructor(private configurationService: ConfigurationService, private transactionService: TransactionService, private dialog: MatDialog, private route: Router) { }
 
   // Función inicial
@@ -82,6 +86,15 @@ export class AccountingVoucherViewComponent {
         }
       }
     });
+    this.transactionService.getVoucherData().subscribe(response => {
+      const data = response.data;
+      this.comprobantes = data;
+ 
+      if(this.comprobantes.length > 0) {
+          this.currentVoucherIndex = 0;
+          this.loadVoucherByIndex();
+      }
+    });
   }
 
   // Función para agregar una fila vacía
@@ -131,18 +144,43 @@ export class AccountingVoucherViewComponent {
 
   navegar(direccion: string) {
     if (direccion === 'derecha') {
-      
+      if (this.currentVoucherIndex < this.comprobantes.length - 1) {
+        this.currentVoucherIndex++;
+      }
     } else {
-
+      if (this.currentVoucherIndex > 0) {
+        this.currentVoucherIndex--;
+      }
     }
-    console.log("Navegar: "+direccion);
+    this.loadVoucherByIndex();
   }
-
+  loadVoucherByIndex() {
+    const currentVoucher = this.comprobantes[this.currentVoucherIndex];
+    this.fecha = currentVoucher.date;
+    this.numComprobante = currentVoucher.transactionNumber;
+    this.glosa = currentVoucher.glosaGeneral;
+    this.totalDebe = currentVoucher.totalDebit;
+    this.totalHaber = currentVoucher.totalCredit;
+    this.monedas = [{id: currentVoucher.currency.exchangeRateId, name: currentVoucher.currency.moneyName, abbreviation: currentVoucher.currency.abbreviationName}];
+    this.listTransactionAccount = currentVoucher.transactions.map((tx: any) => {
+      return {
+        numeroCuenta: tx.accountCode,
+        nombreCuenta: tx.codeAccount,
+        auxiliar: tx.auxiliaryId,
+        entidad: tx.entityName,
+        debe: tx.amountDebit,
+        haber: tx.amountCredit,
+        glosa: tx.glosaDetail,
+        nroDoc: tx.documentCode,
+      }
+    });
+  }
 }
 
 interface Row {
   numeroCuenta: string;
   nombreCuenta: string;
+  auxiliarId?: number;
   auxiliar: string;
   entidad: string;
   debe: string;
