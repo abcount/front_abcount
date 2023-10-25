@@ -155,3 +155,12 @@ a:hover .company-logo {
     grid-template-columns: 20% 80%;
     padding: 10px;
   }
+  .loading-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 10px;
+  }
