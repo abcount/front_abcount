@@ -20,6 +20,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // Keycloak
 import { initializeKeycloak } from '../app/config/keycloak.init';
@@ -129,7 +130,8 @@ import { StatementOfIncomeComponent } from './components/reports/statement-of-in
     KeycloakAngularModule,
     MatDialogModule ,
     MatProgressSpinnerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatProgressBarModule,
    ],
    providers: [
      {

@@ -16,6 +16,7 @@ import { InvitationStateDto } from 'src/app/dto/userinvitation.dto';
 export class MyCompaniesComponent implements OnInit{
   companies: CompanyDto[]
   pendingInvitation : InvitationStateDto[] = []
+  loading: boolean = true;
   constructor(private router: Router,
     private userService: UserService,
     private dataService: DataService,
@@ -25,6 +26,7 @@ export class MyCompaniesComponent implements OnInit{
 
   async ngOnInit() {
     localStorage.clear();
+    this.loading = true; // Mostrar la barra de carga
     // cal first api
     this.userService.getInfoUser().subscribe({
       next: (response) =>{
@@ -35,68 +37,41 @@ export class MyCompaniesComponent implements OnInit{
           next: (response) => {
             console.log(response)
             if(response.data){
-              this.companies = response.data
+              this.companies = response.data;
+              
+              // cal invitation api
+              this.userService.getInvitationsPending().subscribe({
+                next: (response) => {
+                  console.log(response)
+                  if(response.data){
+                    this.pendingInvitation = response.data.PENDING;
+                    this.loading = false;
+                  }
+      
+                },
+                error: (error) => {
+                  console.log("Error fetching user Info", error);
+                  this.loading = false;
+                }
+              });
             }
 
           },
-          error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
-        });
-        this.userService.getInvitationsPending().subscribe({
-          next: (response) => {
-            console.log(response)
-            if(response.data){
-              this.pendingInvitation = response.data.PENDING
-            }
-
-          },
-          error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
-        })
+          error: (error) => {
+            console.log("Error fetching user Info", error);
+            this.loading = false;
+          }
+        }); 
+        
       },
-      error: (error) => console.log("Error fetching user Info", error)
+      error: (error) => {
+        console.log("Error fetching user Info", error);
+        this.loading = false;
+      }
     })
 
   }
-  //Obtener las compañias del usuario
-  /*
-  companies: CompanyDto[] = [
-    {
-      companyId: 1,
-      companyName: "TechNova Solutions",
-      urlIconImage: "../../../assets/company-1.svg",
-      userId: 1
-    },
-    {
-      companyId: 2,
-      companyName: "GreenEco Ventures",
-      urlIconImage: "../../../assets/company-2.svg",
-      userId: 1
-    },
-    {
-      companyId: 3,
-      companyName: "StellarCraft Industries",
-      urlIconImage: "../../../assets/company-3.svg",
-      userId: 1
-    },
-    {
-      companyId: 4,
-      companyName: "AquaWave Technologies",
-      urlIconImage: "../../../assets/company-4.svg",
-      userId: 1
-    }
-  ]
-
-<<<<<<< HEAD
-  constructor(private router: Router, private httpClient: HttpClient) { }
-
-  ngOnInit(): void {
-    localStorage.clear();
-    this.httpClient.get('http://localhost:8080/users/info').subscribe((data: any) => {
-      console.log(data);
-    });
-
-  }
-=======
-  */
+ 
 
 
 
@@ -119,29 +94,7 @@ export class MyCompaniesComponent implements OnInit{
     });
   }
 
-  //Obtener invitaciones de compañias
-  invitaciones: any[] = [
-    {
-      companyId: 1,
-      companyName: "TechNova Solutions",
-      urlIconImage: "../../../assets/company-1.svg",
-    },
-    {
-      companyId: 2,
-      companyName: "GreenEco Ventures",
-      urlIconImage: "../../../assets/company-2.svg",
-    },
-    {
-      companyId: 3,
-      companyName: "StellarCraft Industries",
-      urlIconImage: "../../../assets/company-3.svg",
-    },
-    {
-      companyId: 4,
-      companyName: "AquaWave Technologies",
-      urlIconImage: "../../../assets/company-4.svg",
-    }
-  ]
+ 
 
   // Logica popup
   
