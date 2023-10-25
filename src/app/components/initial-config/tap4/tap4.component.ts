@@ -15,45 +15,201 @@ const TREE_DATA: Account[] = [
     nameAccount: 'Activo',
     moneyRub: true,
     report: false,
-    classificator: false,
+    classificator: true,
     level: 0,
-    childrenAccounts: []
+    childrenAccounts: [
+      {
+        accountCode: 11,
+        nameAccount: 'Activo Corriente',
+        moneyRub: true,
+        report: false,
+        classificator: true,
+        level: 1,
+        childrenAccounts: [
+          {
+            accountCode: 111,
+            nameAccount: 'Disponible',
+            moneyRub: true,
+            report: false,
+            classificator: true,
+            level: 2,
+            childrenAccounts: [
+
+            ]
+          },
+          {
+            accountCode: 112,
+            nameAccount: 'Exigible',
+            moneyRub: true,
+            report: false,
+            classificator: true,
+            level: 2,
+            childrenAccounts: [
+
+            ]
+          }
+        ]
+      },
+      {
+        accountCode: 12,
+        nameAccount: 'Activo no Corriente',
+        moneyRub: true,
+        report: false,
+        classificator: true,
+        level: 1,
+        childrenAccounts: [
+          {
+            accountCode: 121,
+            nameAccount: 'Activo Fijo',
+            moneyRub: true,
+            report: false,
+            classificator: true,
+            level: 2,
+            childrenAccounts: [
+
+            ]
+          },
+          {
+            accountCode: 122,
+            nameAccount: 'Cuentas Complemetarias de Activo',
+            moneyRub: true,
+            report: false,
+            classificator: true,
+            level: 2,
+            childrenAccounts: [
+
+            ]
+          }
+        ]
+      }
+
+    ]
   },
   {
     accountCode: 2,
     nameAccount: 'Pasivo',
     moneyRub: true,
     report: false,
-    classificator: false,
+    classificator: true,
     level: 0,
-    childrenAccounts: []
+    childrenAccounts: [
+      {
+        accountCode: 21,
+        nameAccount: 'Pasivo Corriente',
+        moneyRub: true,
+        report: false,
+        classificator: true,
+        level: 1,
+        childrenAccounts: [
+          {
+            accountCode: 211,
+            nameAccount: 'Exigible',
+            moneyRub: true,
+            report: false,
+            classificator: true,
+            level: 2,
+            childrenAccounts: [
+              {
+                accountCode: 2111,
+                nameAccount: 'Cuentas por pagar',
+                moneyRub: true,
+                report: false,
+                classificator: true,
+                level: 3,
+                childrenAccounts: [
+
+                ]
+              }
+            ]
+          },
+          {
+            accountCode: 212,
+            nameAccount: 'Pasivo No Corriente',
+            moneyRub: true,
+            report: false,
+            classificator: true,
+            level: 2,
+            childrenAccounts: [
+            ]
+          }
+        ]
+      },
+    ]
   },
   {
     accountCode: 3,
     nameAccount: 'Patrimoinio',
     moneyRub: true,
     report: false,
-    classificator: false,
+    classificator: true,
     level: 0,
-    childrenAccounts: []
+    childrenAccounts: [
+      {
+        accountCode: 31,
+        nameAccount: 'Capital',
+        moneyRub: true,
+        report: false,
+        classificator: false,
+        level: 1,
+        childrenAccounts: []
+      },
+      {
+        accountCode: 32,
+        nameAccount: 'Ajuste al Patrimonio',
+        moneyRub: true,
+        report: false,
+        classificator: false,
+        level: 1,
+        childrenAccounts: []
+      },
+    ]
   },
   {
     accountCode: 4,
     nameAccount: 'Ingresos',
     moneyRub: true,
     report: false,
-    classificator: false,
+    classificator: true,
     level: 0,
-    childrenAccounts: []
+    childrenAccounts: [
+      {
+        accountCode: 41,
+        nameAccount: 'Ingresos Operacionales',
+        moneyRub: true,
+        report: false,
+        classificator: true,
+        level: 1,
+        childrenAccounts: []
+      },
+      {
+        accountCode: 42,
+        nameAccount: 'Ingresos no Operacionales',
+        moneyRub: true,
+        report: false,
+        classificator: true,
+        level: 1,
+        childrenAccounts: []
+      },
+    ]
   },
   {
     accountCode: 5,
     nameAccount: 'Egresos',
     moneyRub: true,
     report: false,
-    classificator: false,
+    classificator: true,
     level: 0,
-    childrenAccounts: []
+    childrenAccounts: [
+      {
+        accountCode: 51,
+        nameAccount: 'Egresos Operacionales',
+        moneyRub: true,
+        report: false,
+        classificator: true,
+        level: 1,
+        childrenAccounts: []
+      }
+    ]
   }
 ];
 
@@ -184,6 +340,7 @@ export class Tap4Component {
   positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
     for(let j = 0; j < listOfAccounts.length; j++){
         if(listOfAccounts[j].accountCode === selectedAccount){
+            listOfAccounts[j].classificator = true;
             this.accountId = selectedAccount * Math.pow(10,this.digitsLevel) + listOfAccounts[j].childrenAccounts.length + 1;
             let newAccount: Account = {
                 level: level + 1,

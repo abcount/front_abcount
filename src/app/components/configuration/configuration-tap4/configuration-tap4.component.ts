@@ -177,6 +177,8 @@ export class ConfigurationTap4Component {
     for(let j = 0; j < listOfAccounts.length; j++){
       console.log(listOfAccounts[j].codeAccount + " " + selectedAccount)
       if(listOfAccounts[j].codeAccount == selectedAccount){
+        listOfAccounts[j].editable = true;
+        listOfAccounts[j].classificator = true;
         this.accountId = selectedAccount * 10 + listOfAccounts[j].childrenAccounts.length + 1;
         let newAccountTree: Account = {
           accountId: null,
