@@ -14,35 +14,28 @@ import { MessageDialogComponent } from '../components/general-components/message
 })
 export class DataService {
   baseUrl = environment.BACKEND_URL;
-  companyId = localStorage.getItem('companyId') || 1;
+
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
-    if(this.companyId === null){
-      const message = this.dialog.open(MessageDialogComponent,{
-        width: '300px',
-        disableClose: true,
-        data: {
-          title: "Ocurrio un error!",
-          message: "No se pudo obtener la compañia intente de nuevo",
-        }
-      });
-      message.afterClosed().subscribe(() => {
-        window.location.reload();
-      });
-    }
+    
   }
+
+  
   
 
   // Auxiliares
   createAuxiliary(auxiliary: AuxiliaryDto): Observable<GeneralDto<AuxiliaryDto[]>> {
-    return this.http.post<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.post<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${companyId}`, auxiliary);
   }
 
   getAllAuxiliaries(): Observable<GeneralDto<AuxiliaryDto[]>>  {
-    return this.http.get<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.get<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${companyId}`);
   }
   updateAuxiliary(auxiliary: AuxiliaryDto): Observable<GeneralDto<AuxiliaryDto[]>>{
-    return this.http.put<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${this.companyId}`, auxiliary);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.put<GeneralDto<AuxiliaryDto[]>>(`${this.baseUrl}/auxiliaryAccount/${companyId}`, auxiliary);
   }
   deleteAuxiliary(auxiliaryId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/auxiliaryAccount/${auxiliaryId}`);
@@ -50,15 +43,18 @@ export class DataService {
 
   //Entidades
   createEntity(entity: EntityDto): Observable<GeneralDto<EntityDto[]>> {
+    const companyId = localStorage.getItem('companyId');
     return this.http.post<GeneralDto<EntityDto[]>>(
-      `${this.baseUrl}/entity/${this.companyId}`, entity);
+      `${this.baseUrl}/entity/${companyId}`, entity);
   }
   getAllEntities(): Observable<GeneralDto<EntityDto[]>> {
-    return this.http.get<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${this.companyId}`);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.get<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${companyId}`);
   }
 
   updateEntity(entity: EntityDto): Observable<GeneralDto<EntityDto[]>> {
-    return this.http.put<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${this.companyId}`, entity);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.put<GeneralDto<EntityDto[]>>(`${this.baseUrl}/entity/${companyId}`, entity);
   }
 
   deleteEntity(entityId: number): Observable<GeneralDto<EntityDto[]>>{
@@ -80,7 +76,8 @@ export class DataService {
 
 
   createExchangeRate(data: ExchangeRateCreate[]): Observable<any>{
-    return this.http.post<any>(`${this.baseUrl}/exchangeRate/${this.companyId}`, data);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.post<any>(`${this.baseUrl}/exchangeRate/${companyId}`, data);
   }
 
   updateExchangeRate(data: ExchangeRateDto): Observable<ExchangeRateDto> {
@@ -92,11 +89,13 @@ export class DataService {
   }
 
   getExchangeMoney(): Observable<GeneralDto<ExchangeMoneyDto[]>> {
-    return this.http.get<GeneralDto<ExchangeMoneyDto[]>>(`${this.baseUrl}/exchangeMoney/${this.companyId}`);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.get<GeneralDto<ExchangeMoneyDto[]>>(`${this.baseUrl}/exchangeMoney/${companyId}`);
   }
 
   getExistExchangeRate(): Observable<GeneralDto<Boolean>> {
-    return this.http.get<GeneralDto<Boolean>>(`${this.baseUrl}/exchangeRate/exist/${this.companyId}`);
+    const companyId = localStorage.getItem('companyId');
+    return this.http.get<GeneralDto<Boolean>>(`${this.baseUrl}/exchangeRate/exist/${companyId}`);
   }
 
 
