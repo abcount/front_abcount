@@ -64,7 +64,6 @@
             <th>Haber</th>
             <th>Glosa</th>
             <th>Nro documento</th>
-            <th>Fecha de emisión</th>
           </tr>
         </thead>
         <tbody>
@@ -112,11 +111,10 @@
             <td>
               <input name="nroDoc" [(ngModel)]="entrada.nroDoc" (keydown)="navegarInputs($event, i, 'nroDoc')" maxlength="18" [ngClass]="{'red-text': entrada.falta}">
             </td>
-            <td><input name="fechaEmision" [(ngModel)]="entrada.fechaEmision" type="date" (keydown)="navegarInputs($event, i, 'fechaEmision')" [ngClass]="{'red-text': entrada.falta}"></td>
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td><h3>TOTALES&nbsp;&nbsp;&nbsp;</h3></td>
+            <td><h3>SUMAS TOTALES&nbsp;&nbsp;&nbsp;</h3></td>
             <td><input class="result" type="text" [(ngModel)]="totalDebe" readonly></td>
             <td><input class="result" type="text" [(ngModel)]="totalHaber" readonly></td>
             <td>
@@ -138,7 +136,13 @@
 <!--Modal de mensaje-->
 <div class="overlay" *ngIf="showPopup"></div>
 <div *ngIf="showPopup" class="popup">
-  <i class="{{popupIcon}}"></i>
-  <h2>{{popupTitle}}</h2>
-  <h3>{{popupMessage}}</h3>
+  <div style="width: 100%;" *ngIf="loading; else content">
+    <div class="loading-text">Cargando...</div>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <ng-template #content>
+    <i class="{{popupIcon}}"></i>
+    <h2>{{popupTitle}}</h2>
+    <h3>{{popupMessage}}</h3>
+  </ng-template>
 </div>

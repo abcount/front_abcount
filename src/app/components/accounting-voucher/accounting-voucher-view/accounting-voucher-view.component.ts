@@ -35,22 +35,52 @@ export class AccountingVoucherViewComponent {
 
   // Función para cargar los datos del voucher
   loadVouncherData(){
-    this.configurationService.getSubsidiaries().subscribe(
-      (data: any) => {
-        if (data.data.subsidiaries.length != 0) {
-          this.sucursales = data.data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any;}) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
-          this.subsidiarySelect = this.sucursales[0].id;
-        }
-        if (data.data.areas.length != 0) {
-          this.areas = data.data.areas.map((area: {areaId: any; areaName: any;}) => ({id: area.areaId, name: area.areaName}));
-          this.areaSelect = this.areas[0].id;
+    this.transactionService.getVoucherData().subscribe(response => {
+      if (response.success) {
+        if(response.data.currencies.length == 0 ||
+          response.data.subsidiaries.length == 0 || 
+          response.data.areas.length == 0 || 
+          response.data.transactionType.length == 0){
+            //TODO: separar logica y mostrar mensaje en caso de que la lista de monedas llegue vacia.
+          if(response.data.currencies.length == 0){
+            const currencyMessage = this.dialog.open(MessageDialogComponent, {
+              disableClose: true,
+              width: '300px',
+              data: {
+                title: 'Ocurrio un error!', 
+                message: "No tiene registro de monedas del día. Por favor, registre las monedas del día"}
+            });
+            
+            currencyMessage.afterClosed().subscribe(() => {
+              this.route.navigate(['/exchangeAdd']);
+            })
+
+          }else{
+            const message = this.dialog.open(MessageDialogComponent, {
+              disableClose: true,
+              data: {
+                title: 'Ocurrio un error!', 
+                message: "Ocurrio un error con el servidor"}
+            });
+            message.afterClosed().subscribe(() => {
+              this.route.navigate(['/accounting-voucher/view']);
+            })
+          }
+          
+        }else{
+          const data = response.data;
+          console.log("Load voucher data")
+          console.log(data)
+          // Llenando la información de la cabecera
+          this.companyName = data.companyName;
+          this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
+          this.subsidiarySelect = data.subsidiaries[0].subsidiaryId;
+          this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
+          this.areaSelect = data.areas[0].areaId;
+          this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
+          this.documentSelect = data.transactionType[0].transactionTypeId;
         }
       }
-    );
-    this.transactionService.getVoucherData().subscribe(response => {
-      const data = response.data;
-      this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
-      this.documentSelect = this.documentos[0].id;
     });
   }
 
