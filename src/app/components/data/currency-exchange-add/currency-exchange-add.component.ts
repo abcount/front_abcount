@@ -30,6 +30,24 @@ export class CurrencyExchangeAddComponent {
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
+    this.dataService.getExistExchangeRate().subscribe({
+      next: (data) => {
+        if(data.data){
+          const message = this.dialog.open(MessageDialogComponent, {
+            data: {title: 'Ocurrio un error!', message: "Ya existe un tipo de cambio registrado para el día de hoy"}
+          });
+          message.afterClosed().subscribe(() => {
+            this.router.navigate(['/configuration-tap/1']);
+          });
+
+        }
+      },
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor. Intente de nuevo más tarde"}
+        });
+      }
+    });
     this.initForm();
     this.date = this.getLabelDate();
     this.fetchCurrencies();

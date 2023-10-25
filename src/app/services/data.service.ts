@@ -6,6 +6,8 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {EntityDto} from "../dto/entity.dto";
 import {ExchangeMoneyDto, ExchangeRateCreate, ExchangeRateDto} from "../dto/exchangeRate.dto";
 import { GeneralDto } from '../dto/general.dto';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '../components/general-components/message.dialog/message.dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,22 @@ export class DataService {
   baseUrl = environment.BACKEND_URL;
   companyId = localStorage.getItem('companyId') || 1;
 
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog) {
+    if(this.companyId === null){
+      const message = this.dialog.open(MessageDialogComponent,{
+        width: '300px',
+        disableClose: true,
+        data: {
+          title: "Ocurrio un error!",
+          message: "No se pudo obtener la compañia intente de nuevo",
+        }
+      });
+      message.afterClosed().subscribe(() => {
+        window.location.reload();
+      });
+    }
+  }
+  
 
   // Auxiliares
   createAuxiliary(auxiliary: AuxiliaryDto): Observable<GeneralDto<AuxiliaryDto[]>> {
