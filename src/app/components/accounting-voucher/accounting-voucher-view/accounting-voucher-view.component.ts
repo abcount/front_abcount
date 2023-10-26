@@ -83,18 +83,21 @@ export class AccountingVoucherViewComponent {
           this.areaSelect = data.areas[0].areaId;
           this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
           this.documentSelect = data.transactionType[0].transactionTypeId;
+          const subsidiaryId = data.subsidiaries[0].subsidiaryId;
+          const areaId = data.areas[0].areaId;
+          const transactionTypeId = data.transactionType[0].transactionTypeId;
+          this.transactionService.getListTransaction(subsidiaryId,areaId,transactionTypeId).subscribe(response => {
+            const data = response.data;
+            this.comprobantes = data;
+            if(this.comprobantes.length > 0) {
+                this.currentVoucherIndex = 0;
+                this.loadVoucherByIndex();
+            }
+          });
         }
       }
     });
-    this.transactionService.getVoucherData().subscribe(response => {
-      const data = response.data;
-      this.comprobantes = data;
- 
-      if(this.comprobantes.length > 0) {
-          this.currentVoucherIndex = 0;
-          this.loadVoucherByIndex();
-      }
-    });
+    
   }
 
   // Función para agregar una fila vacía
@@ -165,8 +168,8 @@ export class AccountingVoucherViewComponent {
     this.listTransactionAccount = currentVoucher.transactions.map((tx: any) => {
       return {
         numeroCuenta: tx.accountCode,
-        nombreCuenta: tx.codeAccount,
-        auxiliar: tx.auxiliaryId,
+        nombreCuenta: tx.nameAccount,
+        auxiliar: tx.codeAccount,
         entidad: tx.entityName,
         debe: tx.amountDebit,
         haber: tx.amountCredit,

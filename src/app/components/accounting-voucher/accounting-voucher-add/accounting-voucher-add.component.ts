@@ -99,7 +99,8 @@ export class AccountingVoucherAddComponent {
           this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
           this.documentSelect = data.transactionType[0].transactionTypeId;
           this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
-          this.currencySelect = data.currencies[0].exchangeMoneyId;
+          this.currencySelect = data.currencies[0].exchangeRateId;
+          console.log(this.currencySelect);
           this.numComprobante= data.transactionNumber;
           // Obteniendo las cuentas
           this.accountablePlan = data.accountablePlan;

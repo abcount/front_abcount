@@ -11,6 +11,11 @@ export class TransactionService {
 
 
   constructor(private http: HttpClient) { }
+
+  getListTransaction(subsidiaryId: number, areaId: number, transactionTypeId: number): Observable<any> {
+    const companyId = localStorage.getItem('companyId');
+    return this.http.get(`${this.baseUrl}/list/${companyId}?subsidiaryId=${subsidiaryId}&areaId=${areaId}&transactionTypeId=${transactionTypeId}`);
+  }
   
 
   getVoucherData(): Observable<any> {
