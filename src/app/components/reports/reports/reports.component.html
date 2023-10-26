@@ -83,8 +83,8 @@
         </div>
     </div>
 </div>
-<app-diary-book-form [flag]="diaryBookFlag" (flagChange)="diaryBookFlagChange()"></app-diary-book-form>
-<app-general-ledger-form [flag]="generalLedgerFlag" (flagChange)="generalLedgerFlagChange()"></app-general-ledger-form>
-<app-balance-sheet [flag]="balanceSheetFlag" (flagChange)="balanceSheetFlagChange()"></app-balance-sheet>
-<app-statement-of-income [flag]="statementOfIncomeFlag" (flagChange)="statementOfIncomeFlagChange()"></app-statement-of-income>
-<app-balance-check-sums-and-balances [flag]="BalanceCheckSumsAndBalances" (flagChange)="BalanceCheckSumsAndBalancesChange()"></app-balance-check-sums-and-balances>
+<app-diary-book-form [flag]="diaryBookFlag" [subsidiaries]="subsidiaries" [areas]="areas" [currencies]="currencies" (flagChange)="diaryBookFlagChange()"></app-diary-book-form>
+<app-general-ledger-form [flag]="generalLedgerFlag" [subsidiaries]="subsidiaries" [areas]="areas" [currencies]="currencies" [accountPlan]="accountPlan" (flagChange)="generalLedgerFlagChange()"></app-general-ledger-form>
+<app-balance-sheet [flag]="balanceSheetFlag" [subsidiaries]="subsidiaries" [areas]="areas" [currencies]="currencies" [accountPlan]="accountPlan" (flagChange)="balanceSheetFlagChange()"></app-balance-sheet>
+<app-statement-of-income [flag]="statementOfIncomeFlag" [subsidiaries]="subsidiaries" [areas]="areas" [currencies]="currencies" (flagChange)="statementOfIncomeFlagChange()"></app-statement-of-income>
+<app-balance-check-sums-and-balances [flag]="BalanceCheckSumsAndBalances" [subsidiaries]="subsidiaries" [areas]="areas" [currencies]="currencies" [accountPlan]="accountPlan" (flagChange)="BalanceCheckSumsAndBalancesChange()"></app-balance-check-sums-and-balances>

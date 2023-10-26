@@ -47,7 +47,7 @@ h2 {
     display: flex;
     align-items: center;
     display: grid;
-    grid-template-columns: 55px 1fr 1fr;
+    grid-template-columns: 55px 1fr 25px;
     margin-bottom: 20px;
     position: relative;
 }

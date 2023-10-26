@@ -7,45 +7,17 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
   styleUrls: ['./balance-check-sums-and-balances.component.css']
 })
 export class BalanceCheckSumsAndBalancesComponent {
-  //Listas de sucursales y areas
-  subsidiaries: any[] = [];
-  areas: any[] = [];
-  currencies: any[] = [];
-  accountPlan: any[] = [];
 
   //Constructor
   constructor(private router: Router, private configurationService: ConfigurationService) { }
 
-  ngOnInit() {
-    this.configurationService.getSubsidiaries().subscribe(
-      (data: any) => {
-        //console.log(data);
-        this.subsidiaries = data.data.subsidiaries;
-        this.subsidiaries.forEach((element) => {
-          element.isChecked = false;
-        });
-        this.areas = data.data.areas;
-        this.areas.forEach((element) => {
-          element.isChecked = false;
-        });
-      }
-    );
-    this.configurationService.getCurrencies().subscribe((data: any) => {
-      //console.log(data);
-      this.currencies = data.data.currencyConfig;
-      this.currencies.splice(0, 1);
-    });
-    this.configurationService.getAccountsPlan().subscribe(
-      (data: any) => {
-        this.accountPlan = data.data;
-        this.accountPlan.forEach((element) => {
-          element.isChecked = false;
-        });
-      }
-    );
-  }
+  ngOnInit() { }
 
   @Input() flag: boolean = false;
+  @Input() subsidiaries: any[] = [];
+  @Input() areas: any[] = [];
+  @Input() currencies: any[] = [];
+  @Input() accountPlan: any[] = [];
   @Output() flagChange = new EventEmitter<boolean>();
 
   closeModal() {
@@ -57,6 +29,7 @@ export class BalanceCheckSumsAndBalancesComponent {
   dateTo: string = '';
   principalCurrency: boolean = true;
   otherCurrency: boolean = false;
+  accountsChecked: any[] = [];
 
   generatePdf(){
     const sucursalesMarcadas = this.subsidiaries.filter(subsidiary => subsidiary.isChecked);
@@ -67,11 +40,23 @@ export class BalanceCheckSumsAndBalancesComponent {
     console.log(this.dateTo);
     console.log(this.principalCurrency);
     console.log(this.otherCurrency);
-    const accountsPlanMarcadas = this.accountPlan.filter(account => account.isChecked);
-    console.log(accountsPlanMarcadas);
+    this.accountsChecked = [];
+    this.getAccountsPlanChecked(this.accountPlan);
+    console.log(this.accountsChecked);
   }
 
   generateExcel(){
 
+  }
+
+  getAccountsPlanChecked(accounts: any[]) {
+    for(let i = 0; i < accounts.length; i++){
+      if(accounts[i].isChecked){
+        this.accountsChecked.push(accounts[i]);
+      }
+      if(accounts[i].childrenAccounts.length > 0){
+        this.getAccountsPlanChecked(accounts[i].childrenAccounts);
+      }
+    }
   }
 }
