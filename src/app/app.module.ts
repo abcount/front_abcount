@@ -70,6 +70,7 @@ import { AcceptDialogComponent } from './components/general-components/accept.di
 import { GeneralLedgerFormComponent } from './components/reports/general-ledger/general-ledger-form/general-ledger-form.component';
 import { StatementOfIncomeComponent } from './components/reports/statement-of-income/statement-of-income.component';
 import { AccountCheckboxComponent } from './components/reports/reports-components/account-checkbox/account-checkbox.component';
+import { BalanceCheckSumsAndBalancesComponent } from './components/reports/balance-check-sums-and-balances/balance-check-sums-and-balances.component';
 
 
 
@@ -112,6 +113,7 @@ import { AccountCheckboxComponent } from './components/reports/reports-component
     GeneralLedgerFormComponent,
     StatementOfIncomeComponent,
     AccountCheckboxComponent,
+    BalanceCheckSumsAndBalancesComponent,
   ],
   imports: [
     BrowserModule,

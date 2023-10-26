@@ -1,25 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigurationService } from 'src/app/services/configuration.service';
-
 @Component({
-  selector: 'app-diary-book-form',
-  templateUrl: './diary-book-form.component.html',
-  styleUrls: ['./diary-book-form.component.css']
+  selector: 'app-balance-check-sums-and-balances',
+  templateUrl: './balance-check-sums-and-balances.component.html',
+  styleUrls: ['./balance-check-sums-and-balances.component.css']
 })
-export class DiaryBookFormComponent {
-
-  transactionTypes = [
-    {"transactionTypeId": 1,"transactionTypeName": "Ingreso"},
-    {"transactionTypeId": 2,"transactionTypeName": "Egreso"},
-    {"transactionTypeId": 3,"transactionTypeName": "Traspaso"},
-  ];
-
+export class BalanceCheckSumsAndBalancesComponent {
   //Listas de sucursales y areas
   subsidiaries: any[] = [];
   areas: any[] = [];
   currencies: any[] = [];
- 
+  accountPlan: any[] = [];
+
   //Constructor
   constructor(private router: Router, private configurationService: ConfigurationService) { }
 
@@ -42,6 +35,14 @@ export class DiaryBookFormComponent {
       this.currencies = data.data.currencyConfig;
       this.currencies.splice(0, 1);
     });
+    this.configurationService.getAccountsPlan().subscribe(
+      (data: any) => {
+        this.accountPlan = data.data;
+        this.accountPlan.forEach((element) => {
+          element.isChecked = false;
+        });
+      }
+    );
   }
 
   @Input() flag: boolean = false;
@@ -54,29 +55,23 @@ export class DiaryBookFormComponent {
 
   dateFrom: string = '';
   dateTo: string = '';
-  selectedTransactionType: string = '0';
   principalCurrency: boolean = true;
   otherCurrency: boolean = false;
 
   generatePdf(){
     const sucursalesMarcadas = this.subsidiaries.filter(subsidiary => subsidiary.isChecked);
-    const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
-    console.log(sucursalesId);
     console.log(sucursalesMarcadas);
     const areasMarcadas = this.areas.filter(area => area.isChecked);
     console.log(areasMarcadas);
     console.log(this.dateFrom);
     console.log(this.dateTo);
-    console.log(this.selectedTransactionType);
     console.log(this.principalCurrency);
     console.log(this.otherCurrency);
+    const accountsPlanMarcadas = this.accountPlan.filter(account => account.isChecked);
+    console.log(accountsPlanMarcadas);
   }
 
   generateExcel(){
 
-  }
-
-  onTransactionTypeChange(event: any) {
-    this.selectedTransactionType = event.target.value;
   }
 }

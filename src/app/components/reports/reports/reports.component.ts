@@ -27,4 +27,9 @@ export class ReportsComponent {
     this.statementOfIncomeFlag = !this.statementOfIncomeFlag;
   }
 
+  BalanceCheckSumsAndBalances: boolean = false;
+  BalanceCheckSumsAndBalancesChange() {
+    this.BalanceCheckSumsAndBalances = !this.BalanceCheckSumsAndBalances;
+  }
+
 }

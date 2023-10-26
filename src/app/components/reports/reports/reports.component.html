@@ -71,7 +71,7 @@
                 <div class="logo center">
                     <i class="fa-light fa-telescope center"></i>
                 </div>
-                <i class="fa-solid fa-ellipsis form-logo"></i>
+                <i class="fa-solid fa-ellipsis form-logo" (click)="BalanceCheckSumsAndBalancesChange()"></i>
                 <div class="logo-white center">
                     <i class="fa-solid fa-rocket"></i>
                 </div>  
@@ -87,3 +87,4 @@
 <app-general-ledger-form [flag]="generalLedgerFlag" (flagChange)="generalLedgerFlagChange()"></app-general-ledger-form>
 <app-balance-sheet [flag]="balanceSheetFlag" (flagChange)="balanceSheetFlagChange()"></app-balance-sheet>
 <app-statement-of-income [flag]="statementOfIncomeFlag" (flagChange)="statementOfIncomeFlagChange()"></app-statement-of-income>
+<app-balance-check-sums-and-balances [flag]="BalanceCheckSumsAndBalances" (flagChange)="BalanceCheckSumsAndBalancesChange()"></app-balance-check-sums-and-balances>

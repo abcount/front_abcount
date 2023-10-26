@@ -1,0 +1,77 @@
+<div class="container-balance-sheet" *ngIf="flag">
+    <div class="balance-sheet">
+        <div class="header">
+            <div class="logo center">
+                <i class="fa-solid fa-telescope" style="color: #66CDAA"></i>
+            </div>
+            <div class="title"><h1>Balance de comprobación de sumas y saldos</h1></div>
+            <div class="close"><i class="fa-solid fa-xmark" (click)="closeModal()"></i></div>
+        </div>
+        <div class="row-2">
+            <div>
+                <h2>SUCURSAL</h2>
+                <div class="card">
+                    <div class="checkbox-label" *ngFor="let subsidiary of subsidiaries">
+                    <input type="checkbox" id="{{subsidiary.subsidiaryName}}{{subsidiary.subsidiaryId}}" class="custom-checkbox" value="{{subsidiary.subsidiaryId}}" [(ngModel)]="subsidiary.isChecked"/>
+                    <label for="{{subsidiary.subsidiaryName}}{{subsidiary.subsidiaryId}}" class="custom-label">&nbsp;{{subsidiary.subsidiaryName}}</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2>ÁREA</h2>
+                <div class="card">
+                    <div class="checkbox-label" *ngFor="let area of areas">
+                    <input type="checkbox" id="{{area.areaName}}{{area.areaId}}" class="custom-checkbox" value="{{area.areaId}}" [(ngModel)]="area.isChecked"/>
+                    <label for="{{area.areaName}}{{area.areaId}}" class="custom-label">&nbsp;{{area.areaName}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h2>PLAN DE CUENTAS</h2>
+        <div class="account-plan">
+            <app-account-checkbox [accounts]="accountPlan"></app-account-checkbox>
+        </div>
+        <div class="period title">
+            <h2>PERIODO</h2>
+            <div class="title">
+              <h2>Al:</h2>
+              <input type="date" [(ngModel)]="dateTo"/>
+            </div>
+        </div> 
+        <hr>
+        <div class="money">
+            <h2>MONEDAS PARA EL REPORTE</h2>
+            <div>
+                <div>
+                    <input type="checkbox" id="principalCurrency" class="custom-checkbox" value="0" [(ngModel)]="principalCurrency"/>
+                    <label for="principalCurrency" class="custom-label">&nbsp;Bolivianos</label>
+                </div>
+                <div class="title select-money">
+                    <div>
+                    <input type="checkbox" id="otherCurrency" class="custom-checkbox" value="1" [(ngModel)]="otherCurrency"/>
+                    <label for="otherCurrency" class="custom-label">&nbsp;Otros</label>
+                    </div>
+                    <select>
+                    <option *ngFor="let currency of currencies" value="{{currency.currencyId}}">{{currency.abbreviationName}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="responsibles">
+            <h2>RESPONSALES (FIRMAS)</h2>
+            <div class="firmas">
+                <input type="text" class="nombre" placeholder="Nombre 1">
+                <input type="text" class="nombre" placeholder="Nombre 2">
+                <input type="text" class="nombre" placeholder="Nombre 3" >
+                <input type="text" class="nombre" placeholder="Nombre 4">
+            </div>
+        </div>
+        <div class="buttons">
+            <i class="fa-solid fa-file-pdf pdf" (click)="generatePdf()"></i>
+            <div style="width: 10px;"></div>
+            <i class="fa-solid fa-file-excel excel" (click)="generateExcel()"></i>
+        </div>
+    </div>
+</div>
