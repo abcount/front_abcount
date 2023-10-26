@@ -15,11 +15,8 @@ import { UsersAndPermissionsComponent } from './components/configuration/users-a
 import { AccountingVoucherViewComponent } from "./components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component";
 import { AccountingVoucherAddComponent } from "./components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component";
 import { ReportsComponent } from './components/reports/reports/reports.component';
-import { DiaryBookFormComponent } from './components/reports/diary-book/diary-book-form/diary-book-form.component';
-import { BalanceSheetComponent } from './components/reports/balance-sheet/balance-sheet-form/balance-sheet.component';
 import { CurrencyExchangeAddComponent } from "./components/data/currency-exchange-add/currency-exchange-add.component";
 import { CurrencyExchangeViewComponent } from "./components/data/currency-exchange-view/currency-exchange-view.component";
-import { GeneralLedgerFormComponent } from './components/reports/general-ledger/general-ledger-form/general-ledger-form.component';
 import { StatementOfIncomeComponent } from './components/reports/statement-of-income/statement-of-income.component';
 
 
@@ -57,12 +54,9 @@ const routes: Routes = [
     ],
   },
   { path: 'reports', component: ReportsComponent},
-  { path: 'diary-book', component: DiaryBookFormComponent},
-  { path: 'balance-sheet', component: BalanceSheetComponent},
   { path: 'statement-of-income', component: StatementOfIncomeComponent},
   { path: 'exchangeAdd', component: CurrencyExchangeAddComponent},
-  { path: 'exchangeView', component: CurrencyExchangeViewComponent},
-  { path: 'general-ledger', component: GeneralLedgerFormComponent}
+  { path: 'exchangeView', component: CurrencyExchangeViewComponent}
 ];
 
 @NgModule({

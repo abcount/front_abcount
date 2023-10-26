@@ -14,7 +14,7 @@
 /*Background*/
 .reports {
     background-color: #F8F8F8;
-    padding: 2% 5%;
+    padding: 2% 5% 4% 5%;
 }
 hr{
     border: none;
@@ -98,6 +98,13 @@ hr{
 }
 .estado-resultado .header-card .logo {
     background-color: #99F7FF;
+}
+/*Sumas y saldos*/
+.sumas-saldos {
+    background-color: #e3fdee;
+}
+.sumas-saldos .header-card .logo {
+    background-color: #82f0b0;
 }
 
 /*Texto*/

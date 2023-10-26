@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import {FlatTreeControl} from "@angular/cdk/tree";
-import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {ConfigurationService} from "../../../../services/configuration.service";
 
 @Component({
@@ -10,95 +8,71 @@ import {ConfigurationService} from "../../../../services/configuration.service";
 })
 
 export class GeneralLedgerFormComponent {
+
   subsidiaries: any[] = [];
   areas: any[] = [];
   currencies: any[] = [];
+  accountPlan: any[] = [];
 
+  constructor(private configurationService: ConfigurationService) { }
 
   ngOnInit() {
-    // Obtener las sucursales y areas
     this.configurationService.getSubsidiaries().subscribe(
       (data: any) => {
-        console.log(data);
+        //console.log(data);
         this.subsidiaries = data.data.subsidiaries;
+        this.subsidiaries.forEach((element) => {
+          element.isChecked = false;
+        });
         this.areas = data.data.areas;
+        this.areas.forEach((element) => {
+          element.isChecked = false;
+        });
       }
     );
     this.configurationService.getCurrencies().subscribe((data: any) => {
-      console.log(data);
+      //console.log(data);
       this.currencies = data.data.currencyConfig;
+      this.currencies.splice(0, 1);
     });
-  }
-
-  transactionTypes = [
-    {"transactionTypeId": 1,"transactionTypeName": "Ingreso"},
-    {"transactionTypeId": 2,"transactionTypeName": "Egreso"},
-    {"transactionTypeId": 3,"transactionTypeName": "Traspaso"},
-  ];
-
-
-
-
-  hasChild = (_: number, node: NodeExample) => node.expandable;
-
-
-  // Variables
-  accountPlan: any[] = []; // Plan de cuentas
-  TREE_DATA: Account[] = [];
-  private _transformer = (node: Account, level: number) => {
-    return {
-      expandable: !!node.childrenAccounts && node.childrenAccounts.length > 0,
-      name: node.codeAccount + ' ' + node.nameAccount,
-      level: level,
-    };
-  };
-
-
-
-  treeControl = new FlatTreeControl<NodeExample>(
-    node => node.level,
-    node => node.expandable,
-  );
-
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.childrenAccounts,
-  );
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-  constructor(private configurationService: ConfigurationService) {
     this.configurationService.getAccountsPlan().subscribe(
       (data: any) => {
-        console.log("ACCOUNT PLAN")
-        console.log(data)
-        this.dataSource.data = data.data;
         this.accountPlan = data.data;
+        this.accountPlan.forEach((element) => {
+          element.isChecked = false;
+        });
       }
     );
-    TREE_DATA = this.dataSource.data;
+  }
+
+  @Input() flag: boolean = false;
+  @Output() flagChange = new EventEmitter<boolean>();
+
+  closeModal() {
+    this.flag = false;
+    this.flagChange.emit(this.flag);
+  }
+
+  dateFrom: string = '';
+  dateTo: string = '';
+  principalCurrency: boolean = true;
+  otherCurrency: boolean = false;
+
+  generatePdf(){
+    const sucursalesMarcadas = this.subsidiaries.filter(subsidiary => subsidiary.isChecked);
+    console.log(sucursalesMarcadas);
+    const areasMarcadas = this.areas.filter(area => area.isChecked);
+    console.log(areasMarcadas);
+    console.log(this.dateFrom);
+    console.log(this.dateTo);
+    console.log(this.principalCurrency);
+    console.log(this.otherCurrency);
+    const accountsPlanMarcadas = this.accountPlan.filter(account => account.isChecked);
+    console.log(accountsPlanMarcadas);
+  }
+
+  generateExcel(){
+
   }
 
 }
-
-
-interface NodeExample {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
-
-interface Account {
-  accountId: number | null;
-  codeAccount: number;
-  nameAccount: string;
-  moneyRub: boolean;
-  report: boolean;
-  classificator: boolean;
-  level: number;
-  childrenAccounts: Account[];
-  editable: boolean;
-}
-let TREE_DATA: Account[] = [];
