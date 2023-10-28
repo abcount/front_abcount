@@ -1,226 +1,8 @@
-import {Component, signal, ViewChild, ViewRef} from '@angular/core';
-import {FlatTreeControl} from "@angular/cdk/tree";
-import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
-import {FormGroup} from "@angular/forms";
-import {FormStateService} from "../../../services/form-state.service";
+import { Component, SimpleChanges, ViewChild } from '@angular/core';
+import { FormGroup } from "@angular/forms";
+import { FormStateService } from "../../../services/form-state.service";
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { LoadingComponent } from '../../general-components/loading/loading.component';
-import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
-
-
-const TREE_DATA: Account[] = [
-  {
-    accountCode: 1,
-    nameAccount: 'Activo',
-    moneyRub: true,
-    report: false,
-    classificator: true,
-    level: 0,
-    childrenAccounts: [
-      {
-        accountCode: 11,
-        nameAccount: 'Activo Corriente',
-        moneyRub: true,
-        report: false,
-        classificator: true,
-        level: 1,
-        childrenAccounts: [
-          {
-            accountCode: 111,
-            nameAccount: 'Disponible',
-            moneyRub: true,
-            report: false,
-            classificator: true,
-            level: 2,
-            childrenAccounts: [
-
-            ]
-          },
-          {
-            accountCode: 112,
-            nameAccount: 'Exigible',
-            moneyRub: true,
-            report: false,
-            classificator: true,
-            level: 2,
-            childrenAccounts: [
-
-            ]
-          }
-        ]
-      },
-      {
-        accountCode: 12,
-        nameAccount: 'Activo no Corriente',
-        moneyRub: true,
-        report: false,
-        classificator: true,
-        level: 1,
-        childrenAccounts: [
-          {
-            accountCode: 121,
-            nameAccount: 'Activo Fijo',
-            moneyRub: true,
-            report: false,
-            classificator: true,
-            level: 2,
-            childrenAccounts: [
-
-            ]
-          },
-          {
-            accountCode: 122,
-            nameAccount: 'Cuentas Complemetarias de Activo',
-            moneyRub: true,
-            report: false,
-            classificator: true,
-            level: 2,
-            childrenAccounts: [
-
-            ]
-          }
-        ]
-      }
-
-    ]
-  },
-  {
-    accountCode: 2,
-    nameAccount: 'Pasivo',
-    moneyRub: true,
-    report: false,
-    classificator: true,
-    level: 0,
-    childrenAccounts: [
-      {
-        accountCode: 21,
-        nameAccount: 'Pasivo Corriente',
-        moneyRub: true,
-        report: false,
-        classificator: true,
-        level: 1,
-        childrenAccounts: [
-          {
-            accountCode: 211,
-            nameAccount: 'Exigible',
-            moneyRub: true,
-            report: false,
-            classificator: true,
-            level: 2,
-            childrenAccounts: [
-              {
-                accountCode: 2111,
-                nameAccount: 'Cuentas por pagar',
-                moneyRub: true,
-                report: false,
-                classificator: true,
-                level: 3,
-                childrenAccounts: [
-
-                ]
-              }
-            ]
-          },
-          {
-            accountCode: 212,
-            nameAccount: 'Pasivo No Corriente',
-            moneyRub: true,
-            report: false,
-            classificator: true,
-            level: 2,
-            childrenAccounts: [
-            ]
-          }
-        ]
-      },
-    ]
-  },
-  {
-    accountCode: 3,
-    nameAccount: 'Patrimoinio',
-    moneyRub: true,
-    report: false,
-    classificator: true,
-    level: 0,
-    childrenAccounts: [
-      {
-        accountCode: 31,
-        nameAccount: 'Capital',
-        moneyRub: true,
-        report: false,
-        classificator: false,
-        level: 1,
-        childrenAccounts: []
-      },
-      {
-        accountCode: 32,
-        nameAccount: 'Ajuste al Patrimonio',
-        moneyRub: true,
-        report: false,
-        classificator: false,
-        level: 1,
-        childrenAccounts: []
-      },
-    ]
-  },
-  {
-    accountCode: 4,
-    nameAccount: 'Ingresos',
-    moneyRub: true,
-    report: false,
-    classificator: true,
-    level: 0,
-    childrenAccounts: [
-      {
-        accountCode: 41,
-        nameAccount: 'Ingresos Operacionales',
-        moneyRub: true,
-        report: false,
-        classificator: true,
-        level: 1,
-        childrenAccounts: []
-      },
-      {
-        accountCode: 42,
-        nameAccount: 'Ingresos no Operacionales',
-        moneyRub: true,
-        report: false,
-        classificator: true,
-        level: 1,
-        childrenAccounts: []
-      },
-    ]
-  },
-  {
-    accountCode: 5,
-    nameAccount: 'Egresos',
-    moneyRub: true,
-    report: false,
-    classificator: true,
-    level: 0,
-    childrenAccounts: [
-      {
-        accountCode: 51,
-        nameAccount: 'Egresos Operacionales',
-        moneyRub: true,
-        report: false,
-        classificator: true,
-        level: 1,
-        childrenAccounts: []
-      }
-    ]
-  }
-];
-
-const NEW_TREE_DATA: Account[] = [];
-
-interface NodeExample {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
+import { newAccountDto } from 'src/app/dto/newAccount.dto';
 
 interface Account {
   accountCode: number;
@@ -238,209 +20,377 @@ interface Account {
   styleUrls: ['./tap4.component.css']
 })
 
-
-
 export class Tap4Component {
 
-  mostrarPopup = false;
-  mostrarPopupSon = false;
-  mostrarPopupConfirm = false;
+  accountPlan: newAccountDto[] = [
+    {
+      accountCode: 1,
+      nameAccount: 'Activo',
+      moneyRub: true,
+      report: true,
+      classificator: true,
+      level: 0,
+      expanded: true,
+      digitsOfLevel: 1,
+      showAddPopup: false,
+      showEditPopup: false,
+      childrenAccounts: [
+        {
+          accountCode: 110,
+          nameAccount: 'Activo Corriente',
+          moneyRub: true,
+          report: true,
+          classificator: true,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [
+            {
+              accountCode: 11010,
+              nameAccount: 'Disponible',
+              moneyRub: true,
+              report: true,
+              classificator: false,
+              level: 2,
+              expanded: true,
+              digitsOfLevel: 2,
+              showAddPopup: false,
+              showEditPopup: false,
+              childrenAccounts: [],
+            },
+            {
+              accountCode: 11011,
+              nameAccount: 'Exigible',
+              moneyRub: true,
+              report: true,
+              classificator: false,
+              level: 2,
+              expanded: true,
+              digitsOfLevel: 2,
+              showAddPopup: false,
+              showEditPopup: false,
+              childrenAccounts: [],
+            }
+          ],
+        },
+        {
+          accountCode: 111,
+          nameAccount: 'Activo no corriente',
+          moneyRub: true,
+          report: true,
+          classificator: true,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [
+            {
+              accountCode: 11110,
+              nameAccount: 'Activo Fijo',
+              moneyRub: true,
+              report: true,
+              classificator: false,
+              level: 2,
+              expanded: true,
+              digitsOfLevel: 2,
+              showAddPopup: false,
+              showEditPopup: false,
+              childrenAccounts: [],
+            },
+            {
+              accountCode: 11111,
+              nameAccount: 'Cuentas Complemetarias de Activo',
+              moneyRub: true,
+              report: true,
+              classificator: false,
+              level: 2,
+              expanded: true,
+              digitsOfLevel: 2,
+              showAddPopup: false,
+              showEditPopup: false,
+              childrenAccounts: [],
+            }
+          ],
+        }
+      ],
+    },
+    {
+      accountCode: 2,
+      nameAccount: 'Pasivo',
+      moneyRub: true,
+      report: true,
+      classificator: true,
+      level: 0,
+      expanded: true,
+      digitsOfLevel: 1,
+      showAddPopup: false,
+      showEditPopup: false,
+      childrenAccounts: [
+        {
+          accountCode: 210,
+          nameAccount: 'Pasivo Corriente',
+          moneyRub: true,
+          report: true,
+          classificator: true,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [
+            {
+              accountCode: 21010,
+              nameAccount: 'Exigible',
+              moneyRub: true,
+              report: true,
+              classificator: true,
+              level: 2,
+              expanded: true,
+              digitsOfLevel: 2,
+              showAddPopup: false,
+              showEditPopup: false,
+              childrenAccounts: [
+                {
+                  accountCode: 2101010,
+                  nameAccount: 'Cuentas por pagar',
+                  moneyRub: true,
+                  report: true,
+                  classificator: false,
+                  level: 3,
+                  expanded: true,
+                  digitsOfLevel: 2,
+                  showAddPopup: false,
+                  showEditPopup: false,
+                  childrenAccounts: [],
+                }
+              ],
+            }
+          ],
+        },
+        {
+          accountCode: 211,
+          nameAccount: 'Pasivo No Corriente',
+          moneyRub: true,
+          report: true,
+          classificator: false,
+          level: 2,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [],
+        }
+      ],
+    },
+    {
+      accountCode: 3,
+      nameAccount: 'Patrimonio',
+      moneyRub: true,
+      report: true,
+      classificator: true,
+      level: 0,
+      expanded: true,
+      digitsOfLevel: 1,
+      showAddPopup: false,
+      showEditPopup: false,
+      childrenAccounts: [
+        {
+          accountCode: 310,
+          nameAccount: 'Capital',
+          moneyRub: true,
+          report: true,
+          classificator: false,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [],
+        },
+        {
+          accountCode: 311,
+          nameAccount: 'Ajuste al Patrimonio',
+          moneyRub: true,
+          report: true,
+          classificator: false,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [],
+        }
+      ],
+    },
+    {
+      accountCode: 4,
+      nameAccount: 'Ingreso',
+      moneyRub: true,
+      report: false,
+      classificator: true,
+      level: 0,
+      expanded: true,
+      digitsOfLevel: 1,
+      showAddPopup: false,
+      showEditPopup: false,
+      childrenAccounts: [
+        {
+          accountCode: 410,
+          nameAccount: 'Ingresos Operacionales',
+          moneyRub: true,
+          report: false,
+          classificator: false,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [],
+        },
+        {
+          accountCode: 411,
+          nameAccount: 'Ingresos no Operacionales',
+          moneyRub: true,
+          report: false,
+          classificator: false,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [],
+        }
+      ]
+    },
+    {
+      accountCode: 5,
+      nameAccount: 'Egresos',
+      moneyRub: true,
+      report: false,
+      classificator: true,
+      level: 0,
+      expanded: true,
+      digitsOfLevel: 1,
+      showAddPopup: false,
+      showEditPopup: false,
+      childrenAccounts: [
+        {
+          accountCode: 510,
+          nameAccount: 'Egresos Operacionales',
+          moneyRub: true,
+          report: false,
+          classificator: false,
+          level: 1,
+          expanded: true,
+          digitsOfLevel: 2,
+          showAddPopup: false,
+          showEditPopup: false,
+          childrenAccounts: [],
+        }
+      ],
+    }
+  ];
 
-  // imagen sacada del localstorage
+  constructor(public formService: FormStateService, private router: Router) { }
 
+  ngOnInit() {
+    const accountPlan = localStorage.getItem('accountPlan');
+    if (accountPlan != null) {
+      this.accountPlan = JSON.parse(accountPlan);
+      this.createAccountPlan(this.accountPlan);
+    } else {
+      localStorage.setItem('accountPlan', JSON.stringify(this.accountPlan));
+      this.createAccountPlan(this.accountPlan);
+    }
+  }
+
+  createAccountPlan (account: any[]) {
+    for (let i = 0; i < account.length; i++) {
+      if (account[i].childrenAccounts.length > 0) {
+        account[i].childrenAccounts.forEach((element: any) => {
+          element.parent = account[i];
+        });
+        this.createAccountPlan(account[i].childrenAccounts);
+      }
+    }
+  }
 
   @ViewChild("accountName") accountName: string = "";
-  @ViewChild("digitsLevel") digitsLevel: number = 1;
-  selectedNode: NodeExample | null = null;
-  accountId: number = 0;
   accountMoneyRub: boolean = false;
   accountReport: boolean = false;
-  accountClassificator: boolean = false;
 
-  private _transformer = (node: Account, level: number) => {
-    return {
-      expandable: !!node.childrenAccounts && node.childrenAccounts.length > 0,
-      name: node.accountCode + ' ' + node.nameAccount,
-      level: level,
-    };
+  newAccount: newAccountDto = {
+    accountCode: 0,
+    nameAccount: '',
+    moneyRub: false,
+    report: false,
+    classificator: false,
+    level: 0,
+    childrenAccounts: [],
+    expanded: false,
+    digitsOfLevel: 0,
+    showAddPopup: false,
+    showEditPopup: false
   };
 
-
-  treeControl = new FlatTreeControl<NodeExample>(
-    node => node.level,
-    node => node.expandable,
-  );
-
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.childrenAccounts,
-  );
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-  constructor(public formService: FormStateService, private router: Router, private dialog: MatDialog) {
-    this.dataSource.data = TREE_DATA;
+  showAddPopupParent: boolean = false;
+  // Función para mostrar el popup de agregar nuevo padre
+  showAddPopupParentChange() {
+    this.showAddPopupParent = !this.showAddPopupParent;
+  }
+  addParent(){
+    this.newAccount.accountCode = this.accountPlan.length + 1;
+    this.newAccount.nameAccount = this.accountName;
+    this.newAccount.moneyRub = this.accountMoneyRub;
+    this.newAccount.report = this.accountReport;
+    this.newAccount.digitsOfLevel = 1;
+    this.accountPlan.push(this.newAccount);
+    this.reset();
+    this.showAddPopupParentChange();
+  }
+  cancel(){
+    this.reset();
+    this.showAddPopupParentChange();
+  }
+  reset(){
+    this.newAccount = {
+      accountCode: 0,
+      nameAccount: '',
+      moneyRub: false,
+      report: false,
+      classificator: false,
+      level: 0,
+      childrenAccounts: [],
+      expanded: false,
+      digitsOfLevel: 0,
+      showAddPopup: false,
+      showEditPopup: false
+    }
+    this.accountName = "";
+    this.accountMoneyRub = false;
   }
 
-  hasChild = (_: number, node: NodeExample) => node.expandable;
-
-  //Method to add a new account
-
- addNewChildAccount(node : NodeExample | null ) {
-   if(node == null){
-     this.accountId = TREE_DATA.length + 1;
-     let parentAccount = {
-       accountCode: TREE_DATA.length + 1,
-       nameAccount: this.accountName,
-       moneyRub: this.accountMoneyRub,
-       report: this.accountReport,
-       classificator: this.accountClassificator,
-       level: 0,
-       childrenAccounts: []
-     }
-     console.log(parentAccount);
-
-     TREE_DATA.push(parentAccount);
-   }
-   else{
-     let strAccountName = node.name.split(" ", 1);
-     let accountId = strAccountName[0];
-     this.positioningLeaf(TREE_DATA, Number(accountId), node.level);
-   }
-   this.dataSource.data = TREE_DATA;
-   this.accountName = "";
-   this.digitsLevel = 1;
-   this.accountReport = false;
-   this.accountMoneyRub = false;
-   this.accountClassificator = false;
-   this.mostrarPopup = false;
-   this.mostrarPopupSon = false;
-   // Hacer que se expandan los nodos :3
-   let ten = node?.level;
-   if (ten != null && ten >= 0) {
-    const firstDigit = Math.floor(this.accountId / Math.pow(Math.pow(10,this.digitsLevel), ten+1));
-    this.expandNodesByFirstDigit(firstDigit);
-   }
- }
-
-  expandNodesByFirstDigit(firstDigit: number) {
-    const nodesToExpand = this.treeControl.dataNodes.filter(
-      (node) => node.name.startsWith(`${firstDigit}`)
-    );
-    nodesToExpand.forEach((node) => {
-      this.treeControl.expand(node);
-    });
-  }
-
- //Method to add a new account leaf its a DFS algorithm
-
-  // @ts-ignore
-  positioningLeaf(listOfAccounts: Account[], selectedAccount: number, level: number){
-    for(let j = 0; j < listOfAccounts.length; j++){
-        if(listOfAccounts[j].accountCode === selectedAccount){
-            listOfAccounts[j].classificator = true;
-            this.accountId = selectedAccount * Math.pow(10,this.digitsLevel) + listOfAccounts[j].childrenAccounts.length + 1;
-            let newAccount: Account = {
-                level: level + 1,
-                accountCode: selectedAccount * Math.pow(10,this.digitsLevel) + listOfAccounts[j].childrenAccounts.length + 1,
-                nameAccount: this.accountName,
-                moneyRub: this.accountMoneyRub,
-                report: this.accountReport,
-                classificator: this.accountClassificator,
-                childrenAccounts: []
-            }
-            console.log(newAccount);
-            // Asegurarse de que childrenAccounts es un array
-            if (!Array.isArray(listOfAccounts[j].childrenAccounts)) {
-                listOfAccounts[j].childrenAccounts = [];
-            }
-
-            listOfAccounts[j].childrenAccounts.push(newAccount);
-            this.accountName = "";
-            return listOfAccounts;
-        } else {
-            this.positioningLeaf(listOfAccounts[j].childrenAccounts, selectedAccount, level);
-        }
-    }
-}
-
-
-
-
-//Method to delete an account
-
-
- deleteAccount(node : NodeExample | null){
-    if(node == null){
-      alert("Select an account to delete");
-    }
-    else{
-      let strAccountName = node.name.split(" ", 1);
-      let accountId = strAccountName[0];
-      this.deleteLeaf(TREE_DATA, Number(accountId));
-    }
-    this.dataSource.data = TREE_DATA;
- }
-
-  // @ts-ignore
-deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
-    for(let j = 0; j < listOfAccounts.length; j++){
-      if(listOfAccounts[j].accountCode === selectedAccount){
-        listOfAccounts.splice(j, 1);
-        console.log(listOfAccounts);
-        if(listOfAccounts.length !== 0){
-          this.enumerateAccounts(listOfAccounts);
-        }
-        return listOfAccounts;
-      }
-      else{
-        this.deleteLeaf(listOfAccounts[j].childrenAccounts, selectedAccount);
-      }
-    }
- }
-
- enumerateAccounts(listOfAccounts : Account[]){
-   let parentAccount = Math.round(listOfAccounts[0].accountCode / 10);
-   console.log("PADRE: " + parentAccount);
-   console.log(listOfAccounts)
-    for(let j = 0; j < listOfAccounts.length; j++){
-      console.log("HIJO: " + (parentAccount * 10 + j + 1));
-      listOfAccounts[j].accountCode = parentAccount * Math.pow(10,this.digitsLevel) + j + 1;
-    }
-    console.log("LISTA DE CUENTAS");
-    console.log(listOfAccounts);
-
- }
-
-  setSelectedNode(node: NodeExample | null){
-    this.selectedNode = node;
-    if (node==null){
-      this.mostrarPopup = true;
-    } else {
-      this.mostrarPopupSon = true;
-    }
-  }
-
-  printTree(){
-    console.log(TREE_DATA);
-  }
-
-//   FORM GROUP
-
+  // FORM GROUP
   get formGroup(): FormGroup {
     return this.formService.formGroup;
   }
 
+  treeData: Account[] = [];
 
   guardarJSON() {
+    this.mostrarPopupConfirm = true;
     console.log('Datos en JSON:');
-    console.log(JSON.stringify(TREE_DATA, null, 2));
+    this.transformAccountPlan(this.accountPlan);
+    const treeData = this.treeData;
+
+    console.log(JSON.stringify(treeData, null, 2));
     console.log('*********************************************');
 
     const accountPlanArray = this.formService.fb.array(
-      TREE_DATA.map(account =>
+      treeData.map(account =>
         this.formService.fb.group({
           ...account, // spread para agregar todas las propiedades de la cuenta
           childrenAccounts: this.formService.fb.array(account.childrenAccounts) // childrenAccounts como FormArray
@@ -453,71 +403,95 @@ deleteLeaf(listOfAccounts : Account[], selectedAccount: number){
     this.enviarDatos();
   }
 
-
+  transformAccountPlan(account: newAccountDto[], parent: any = null) {
+    for (let i = 0; i < account.length; i++) {
+      const accountItem = {
+        accountCode: account[i].accountCode,
+        nameAccount: account[i].nameAccount,
+        moneyRub: account[i].moneyRub,
+        report: account[i].report,
+        classificator: account[i].classificator,
+        level: account[i].level,
+        childrenAccounts: []
+      };
+  
+      if (parent) {
+        parent.childrenAccounts.push(accountItem);
+      } else {
+        this.treeData.push(accountItem);
+      }
+  
+      if (account[i].childrenAccounts.length > 0) {
+        this.transformAccountPlan(account[i].childrenAccounts, accountItem);
+      }
+    }
+  }  
 
   printValue() {
-   console.log('Datos en el formulario:');
+    console.log('Datos en el formulario:');
     console.log(JSON.stringify(this.formGroup.value, null, 2));
   }
+  
+  loading: boolean = true;
+  titleMessage: string = '¡Enhorabuena!';
+  message: string = 'Los datos de la empresa se han guardado correctamente.';
+  messageIcon: string = 'fa-regular fa-circle-check gradient';
 
   enviarDatos() {
     const storedImagen = localStorage.getItem('imagen');
     const formData = new FormData();
     const image= this.formService.getImage();
     if (image) {
-      // se obtuvo una imagen
-      //imprimir la imagen
       console.log('Imagen en el componente:');
       console.log(image);
       formData.append('image', image);
     }
 
-
     formData.append('datos', JSON.stringify(this.formGroup.value));
-
-
-
-    const loading = this.dialog.open(LoadingComponent, {
-      disableClose: true,
-      width: '300px',
-      height: '350px',
-    });
 
     this.formService.enviarDatos(formData).subscribe({
       next: response => {
         if(response.success){
-          localStorage.clear();
-          loading.close();
-          this.mostrarPopupConfirm = true;
-        }else{
-          loading.close();
-          const message = this.dialog.open(MessageDialogComponent,{
-            data: {title: 'Ocurrio un error!', message: response.message}
-          })
+          this.titleMessage = '¡Enhorabuena!';
+          this.message = 'Los datos de la empresa se han guardado correctamente.';
+          this.messageIcon = 'fa-regular fa-circle-check gradient';
+        } else {
+          this.titleMessage = 'Ocurrio un error!';
+          this.message = response.message;
+          this.messageIcon = 'fa-regular fa-circle-times gradient-red';
         }
+        this.loading = false;
       },
       error: error => {
-        loading.close();
-        const message = this.dialog.open(MessageDialogComponent,{
-          data: {title: 'Ocurrio un error!', message: "No se pudo comunicar con el servidor, intente de nuevo más tarde"}
-        })
+        this.titleMessage = 'Ocurrio un error!';
+        this.message = 'No se pudo comunicar con el servidor, intente de nuevo más tarde.';
+        this.messageIcon = 'fa-regular fa-circle-times gradient-red';
+        this.loading = false;
       }
     });
   }
 
-  cancel(){
-    this.mostrarPopup = false;
-    this.mostrarPopupSon = false;
-    this.accountName = "";
-    this.digitsLevel = 1;
-    this.accountReport = false;
-    this.accountMoneyRub = false;
-    this.accountClassificator = false;
-  }
+  mostrarPopupConfirm = false;
 
   confirm(){
     localStorage.clear();
     window.location.href = '/my-companies';
   }
-}
 
+  // Función para guardar los datos en el local storage
+  accountsLocalStorage: newAccountDto[] = [];
+  back(){
+    this.accountsLocalStorage = this.accountPlan;
+    this.saveLocalStorage(this.accountsLocalStorage);
+    localStorage.setItem('accountPlan', JSON.stringify(this.accountsLocalStorage));
+    this.router.navigate(['/initial-config/tap3']);
+  }
+  saveLocalStorage(account: newAccountDto[]) {
+    for (let i = 0; i < account.length; i++) {
+      account[i].parent = undefined;
+      if (account[i].childrenAccounts.length > 0) {
+        this.saveLocalStorage(account[i].childrenAccounts);
+      }
+    }
+  }
+}

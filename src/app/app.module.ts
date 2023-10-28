@@ -71,6 +71,7 @@ import { GeneralLedgerFormComponent } from './components/reports/general-ledger/
 import { StatementOfIncomeComponent } from './components/reports/statement-of-income/statement-of-income.component';
 import { AccountCheckboxComponent } from './components/reports/reports-components/account-checkbox/account-checkbox.component';
 import { BalanceCheckSumsAndBalancesComponent } from './components/reports/balance-check-sums-and-balances/balance-check-sums-and-balances.component';
+import { AccountTreeComponent } from './components/initial-config/account-tree/account-tree.component';
 
 
 
@@ -114,6 +115,7 @@ import { BalanceCheckSumsAndBalancesComponent } from './components/reports/balan
     StatementOfIncomeComponent,
     AccountCheckboxComponent,
     BalanceCheckSumsAndBalancesComponent,
+    AccountTreeComponent,
   ],
   imports: [
     BrowserModule,

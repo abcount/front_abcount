@@ -70,7 +70,7 @@
           <tr *ngFor="let entrada of listaEntradas; let i = index">
             <td>
               <div style="position: relative;">
-                <input name="numeroCuenta" [(ngModel)]="entrada.numeroCuenta" (input)="filterAccountsFunction(i)" [ngClass]="{'red-text': isFilteredAccountsEmpty(i) || entrada.falta}" (blur)="delayedHideDropdownAccount(i)" (keydown)="navegarInputs($event, i, 'numeroCuenta')">
+                <input autocomplete="off" name="numeroCuenta" [(ngModel)]="entrada.numeroCuenta" (input)="filterAccountsFunction(i)" [ngClass]="{'red-text': isFilteredAccountsEmpty(i) || entrada.falta}" (blur)="delayedHideDropdownAccount(i)" (keydown)="navegarInputs($event, i, 'numeroCuenta')">
                 <div class="number-account-list" *ngIf="filteredAccounts[i].length > 0">
                   <div class="number-account-list-option" *ngFor="let account of filteredAccounts[i]" (click)="selectedAccount(account, i)">
                     {{ account.accountCode }} - {{ account.nameAccount }}
@@ -78,10 +78,10 @@
                 </div>
               </div>
             </td>
-            <td><input name="nombreCuenta" [(ngModel)]="entrada.nombreCuenta" (keydown)="navegarInputs($event, i, 'nombreCuenta')" [ngClass]="{'red-text': entrada.falta}"></td>
+            <td><input autocomplete="off" name="nombreCuenta" [(ngModel)]="entrada.nombreCuenta" (keydown)="navegarInputs($event, i, 'nombreCuenta')" [ngClass]="{'red-text': entrada.falta}"></td>
             <td>
               <div style="position: relative;">
-                <input name="auxiliar" [(ngModel)]="entrada.auxiliar" (input)="filterAuxiliarFunction(i)" [ngClass]="{'red-text': isFilteredAuxiliarEmpty(i) || entrada.falta}" (blur)="delayedHideDropdownAuxiliar(i)" (keydown)="navegarInputs($event, i, 'auxiliar')">
+                <input autocomplete="off" name="auxiliar" [(ngModel)]="entrada.auxiliar" (input)="filterAuxiliarFunction(i)" [ngClass]="{'red-text': isFilteredAuxiliarEmpty(i) || entrada.falta}" (blur)="delayedHideDropdownAuxiliar(i)" (keydown)="navegarInputs($event, i, 'auxiliar')">
                 <div class="number-account-list" *ngIf="filteredAuxiliares[i].length > 0">
                   <div class="number-account-list-option" *ngFor="let auxiliar of filteredAuxiliares[i]" (click)="selectedAuxiliar(auxiliar, i)">
                     {{ auxiliar.codeAccount }} - {{ auxiliar.nameDescription }}
@@ -91,7 +91,7 @@
             </td>
             <td>
               <div style="position: relative;">
-                <input name="entidad" [(ngModel)]="entrada.entidad" (input)="filterEntityFunction(i)" [ngClass]="{'red-text': isFilteredEntitiesEmpty(i) || entrada.falta}" (blur)="delayedHideDropdownEntity(i)" (keydown)="navegarInputs($event, i, 'entidad')">
+                <input autocomplete="off" name="entidad" [(ngModel)]="entrada.entidad" (input)="filterEntityFunction(i)" [ngClass]="{'red-text': isFilteredEntitiesEmpty(i) || entrada.falta}" (blur)="delayedHideDropdownEntity(i)" (keydown)="navegarInputs($event, i, 'entidad')">
                 <div class="number-account-list" *ngIf="filteredEntities[i].length > 0">
                   <div class="number-account-list-option" *ngFor="let entity of filteredEntities[i]" (click)="selectedEntity(entity, i)">
                     {{ entity.entityName }}
@@ -100,16 +100,16 @@
               </div>
             </td>
             <td>
-              <input name="debe" [(ngModel)]="entrada.debe" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'debe')" [ngClass]="{'red-text': entrada.falta}">
+              <input autocomplete="off" name="debe" [(ngModel)]="entrada.debe" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'debe')" [ngClass]="{'red-text': entrada.falta}">
             </td>
             <td>
-              <input name="haber" [(ngModel)]="entrada.haber" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'haber')" [ngClass]="{'red-text': entrada.falta}">
+              <input autocomplete="off" name="haber" [(ngModel)]="entrada.haber" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'haber')" [ngClass]="{'red-text': entrada.falta}">
             </td>
             <td>
-              <input name="glosa" [(ngModel)]="entrada.glosa" (keydown)="navegarInputs($event, i, 'glosa')" maxlength="450" [ngClass]="{'red-text': entrada.falta}" (input)="verifyAllEntries()">
+              <input autocomplete="off" name="glosa" [(ngModel)]="entrada.glosa" (keydown)="navegarInputs($event, i, 'glosa')" maxlength="450" [ngClass]="{'red-text': entrada.falta}" (input)="verifyAllEntries()">
             </td>
             <td>
-              <input name="nroDoc" [(ngModel)]="entrada.nroDoc" (keydown)="navegarInputs($event, i, 'nroDoc')" maxlength="18" [ngClass]="{'red-text': entrada.falta}">
+              <input autocomplete="off" name="nroDoc" [(ngModel)]="entrada.nroDoc" (keydown)="navegarInputs($event, i, 'nroDoc')" maxlength="18" [ngClass]="{'red-text': entrada.falta}">
             </td>
           </tr>
           <tr>

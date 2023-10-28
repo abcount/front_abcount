@@ -257,6 +257,13 @@ input[type="radio"] {
   -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
   color: transparent;
 }
+.gradient-red {
+  font-size: 70px;
+  background-image: linear-gradient(to bottom, #df828f, #fb9c7e);
+  background-clip: text;
+  -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+  color: transparent;
+}
 .confirm h2 {
   font-size: 24px;
   color: #939393;
@@ -266,6 +273,7 @@ input[type="radio"] {
   font-weight: 400;
   color: #939393;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 /*Colores de los textos*/
@@ -274,4 +282,16 @@ input[type="radio"] {
 }
 .text-blue {
   color: #489CE9;
+}
+
+/*Estilos para el cargado*/
+.loading {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.loading h2 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 20px;
 }

@@ -6,38 +6,13 @@
     <hr class="linea">
     <h2>PLAN DE CUENTAS</h2>
     <div class="data">
-      <app-my-button-squared (clicked)="setSelectedNode(null)"></app-my-button-squared>
-      <hr style="margin-top: 8px;">
-      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-          <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
-          <div class="separator"></div>
-          <div class="text-orange">
-            {{node.name}}
-          </div>
-          <div class="separator"></div>
-          <button style="margin-left: 8px;" mat-icon-button disabled></button>
-          <div class="right">
-            <app-circular-button (clicked)="deleteAccount(node)"></app-circular-button>
-          </div>
-        </mat-tree-node>
-        <hr>
-        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-          <app-my-button-squared (clicked)="setSelectedNode(node)" data-toggle="modal" data-target="#modal"></app-my-button-squared>
-          <div class="separator"></div>
-          <div class="text-blue">
-            {{node.name}}
-          </div>
-          <div class="separator"></div>
-          <button class="expand-button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-            <i style="color: #757575;" class="fa-solid" [ngClass]="{'fa-caret-up': treeControl.isExpanded(node), 'fa-caret-down': !treeControl.isExpanded(node)}"></i>
-          </button>
-        </mat-tree-node>
-      </mat-tree>
+      <app-my-button-squared (clicked)="showAddPopupParentChange()"></app-my-button-squared>
+      <hr style="margin: 4px 0 6px 0;">
+      <app-account-tree [accounts]="accountPlan"></app-account-tree>
     </div>
     <div class="navigation">
       <div>
-        <a routerLink="/initial-config/tap3">&lt;&lt; Atras</a>
+        <a (click)="back()">&lt;&lt; Atras</a>
       </div>
       <div>
         <button class="button" (click)="guardarJSON()">GUARDAR</button>
@@ -46,85 +21,56 @@
   </div>
 </div>
 
-<!-- Capa de fondo desenfocada -->
-<div class="overlay" *ngIf="mostrarPopup"></div>
-<div class="overlay" *ngIf="mostrarPopupSon"></div>
-<!--- MODAL PARENT -->
-<div *ngIf="mostrarPopup" class="popup">
-  <div class="popup-title">
-    <span class="icon">
-      <i class="fa-regular fa-pen-to-square"></i>
-    </span>
-    <h2 class="h2-title">Registro de Cuenta</h2>
-  </div>
-  <div class="row-2-popup">
-    <h3>Dígitos del nivel</h3>
-    <input [(ngModel)]="digitsLevel" value="1" type="number" min="1" max="4" step="1">
-  </div>
-  <div class="row-2-popup">
-    <h3>Nombre de la cuenta </h3>
-    <input [(ngModel)]="accountName" type="text" placeholder="Ingresa el nombre de la cuenta">
-  </div>
-  <div class="checkbox">
-    <input type="checkbox" id="checkParent" name="check" value="check">
-    <label for="check">Rubro monetario</label>
-  </div>
-  <div class="alinear">
-    <h3>Reporte</h3>
-    <label class="label-report alinear" for="balanceGeneral">
-      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
-    </label>
-    <label class="label-report alinear" for="estadoResultados">
-      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
-    </label>
-  </div>
-  <div class="popup-buttons">
-    <app-my-button [isGreen]="true" (click)="addNewChildAccount(null)">ACEPTAR</app-my-button>
-    <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
-  </div>
-</div>
-
-<!--- MODAL SON -->
-<div *ngIf="mostrarPopupSon" class="popup">
-  <div class="popup-title">
-    <span class="icon">
-      <i class="fa-regular fa-pen-to-square"></i>
-    </span>
-    <h2 class="h2-title">Registro de Cuenta</h2>
-  </div>
-  <div class="row-2-popup">
-    <h3>Dígitos del nivel</h3>
-    <input [(ngModel)]="digitsLevel" value="1" type="number" min="1" max="4" step="1" >
-  </div>
-  <div class="row-2-popup">
-    <h3>Nombre de la cuenta </h3>
-    <input [(ngModel)]="accountName" type="text" placeholder="Ingresa el nombre de la cuenta">
-  </div>
-  <div class="checkbox">
-    <input type="checkbox" id="check" name="check" value="check" [(ngModel)]="accountMoneyRub">
-    <label for="check">Rubro monetario</label>
-  </div>
-  <div class="alinear">
-    <h3>Reporte</h3>
-    <label class="label-report alinear" for="balanceGeneral">
-      <input type="radio" id="balanceGeneral" [(ngModel)]="accountReport" value="true"> Balance General
-    </label>
-    <label class="label-report alinear" for="estadoResultados">
-      <input type="radio" id="estadoResultados" [(ngModel)]="accountReport" value="false"> Estado de Resultados
-    </label>
-  </div>
-  <div class="popup-buttons">
-    <app-my-button [isGreen]="true" (click)="addNewChildAccount(selectedNode)">ACEPTAR</app-my-button>
-    <app-my-button [isRed]="true" (click)="cancel()" >CANCELAR</app-my-button>
+<!-- Modal para agregar un nuevo padre -->
+<div class="overlay" *ngIf="showAddPopupParent">
+  <div class="popup">
+    <div class="popup-title">
+      <span class="icon">
+        <i class="fa-regular fa-pen-to-square"></i>
+      </span>
+      <h2 class="h2-title">Registro de Cuenta</h2>
+    </div>
+    <div class="row-2-popup">
+      <h3>Dígitos del nivel</h3>
+      <h4>1</h4>
+    </div>
+    <div class="row-2-popup">
+      <h3>Nombre de la cuenta </h3>
+      <input [(ngModel)]="accountName" type="text" placeholder="Ingresa el nombre de la cuenta">
+    </div>
+    <div class="checkbox">
+      <input type="checkbox" id="check" name="check" value="check" [(ngModel)]="accountMoneyRub">
+      <label for="check">Rubro monetario</label>
+    </div>
+    <div class="alinear">
+      <h3>Reporte</h3>
+      <label class="label-report alinear" for="balanceGeneral">
+        <input type="radio" name="report" id="balanceGeneral" [(ngModel)]="accountReport" [value]="true"> Balance General
+      </label>
+      <label class="label-report alinear" for="estadoResultados">
+        <input type="radio" name="report" id="estadoResultados" [(ngModel)]="accountReport" [value]="false"> Estado de Resultados
+      </label>
+    </div>
+    <div class="popup-buttons">
+      <app-my-button [isGreen]="true" (click)="addParent()">ACEPTAR</app-my-button>
+      <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
+    </div>
   </div>
 </div>
 
 <!--Modal de confirmación de creación de empresa-->
-<div class="overlay" *ngIf="mostrarPopupConfirm"></div>
-
-<div *ngIf="mostrarPopupConfirm" class="popup confirm">
-  <i class="fa-regular fa-circle-check gradient"></i>
-  <h2>¡Enhorabuena!</h2>
-  <h3>Los datos de la empresa se han guardado correctamente.</h3>
-  <app-my-button class="accept" [isGreen]="true" (click)="confirm()">ACEPTAR</app-my-button>
+<div class="overlay" *ngIf="mostrarPopupConfirm">
+  <div class="popup confirm">
+    <div class="loading" *ngIf="loading; else content">
+        <h2>Guardando tus datos</h2>
+        <h3>Estamos haciendo todo lo posible para asegurarnos de que tus datos se guarden de manera segura. ¡Gracias por tu paciencia!</h3>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <ng-template #content>
+      <i class="{{messageIcon}}"></i>
+      <h2>{{titleMessage}}</h2>
+      <h3>{{message}}</h3>
+      <app-my-button class="accept" [isGreen]="true" (click)="confirm()">ACEPTAR</app-my-button>
+    </ng-template>
+  </div>
 </div>

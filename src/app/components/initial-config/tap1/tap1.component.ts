@@ -38,7 +38,6 @@ export class Tap1Component  {
   constructor(public formService: FormStateService, private router: Router) {}
   ngOnInit() {
     const storedImagen = localStorage.getItem('imagen');
-
     if (storedImagen) {
       this.imageURL = storedImagen;
     }
@@ -92,6 +91,7 @@ export class Tap1Component  {
     const reader = new FileReader();
     reader.onload = (e) => {
       this.imageURL = reader.result;
+      localStorage.setItem('imagen', this.imageURL as string);
     };
     this.formService.setImage(file);
     reader.readAsDataURL(file);
@@ -99,6 +99,7 @@ export class Tap1Component  {
 
 
   removeImage() {
+    localStorage.removeItem('imagen');
     this.imageURL = null;
     this.fileInput.nativeElement.value = '';
   }
