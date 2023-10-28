@@ -223,3 +223,42 @@ input::placeholder {
     cursor: pointer;
     background-color: #B4F2D6;
 }
+
+/*Radio button*/
+.radio-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    color: #757575;
+}
+input[type='radio']:checked:after, input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+input[type='radio']:after {
+    background-color: #eeeeee;
+}
+input[type='radio']:checked:after {
+    background-color: #66CDAA;
+}
+/*Mensaje de error inferior*/
+.error-message {
+    color: #ff7e7e;
+    font-size: 16px;
+    font-weight: 500;
+    display: none;
+}
+.error-message.show {
+    display: block;
+}

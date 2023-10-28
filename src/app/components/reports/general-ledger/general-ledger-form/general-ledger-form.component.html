@@ -47,21 +47,22 @@
     <div class="money">
       <h2>MONEDAS PARA EL REPORTE</h2>
       <div>
-        <div>
-          <input type="checkbox" id="principalCurrency" class="custom-checkbox" value="0" [(ngModel)]="principalCurrency"/>
-          <label for="principalCurrency" class="custom-label">&nbsp;Bolivianos</label>
+        <div class="radio-button">
+          <input type='radio' name="currency" id="principalCurrency" value="0" [(ngModel)]="currencySelected"/>
+          <label for="principalCurrency">&nbsp;Bolivianos</label>
         </div>
-        <div class="title select-money">
-          <div>
-            <input type="checkbox" id="otherCurrency" class="custom-checkbox" value="1" [(ngModel)]="otherCurrency"/>
-            <label for="otherCurrency" class="custom-label">&nbsp;Otros</label>
+        <div class="title select-money" *ngIf="currencies.length>0">
+          <div class="radio-button">
+            <input type='radio' name="currency" id="otherCurrency" value="1" [(ngModel)]="currencySelected"/>
+            <label for="otherCurrency">&nbsp;Otros</label>
           </div>
-          <select>
-            <option *ngFor="let currency of currencies" value="{{currency.currencyId}}">{{currency.abbreviationName}}</option>
+          <select [(ngModel)]="otherCurrencySelected">
+            <option *ngFor="let currency of currencies" value="{{currency.exchangeMoneyId}}">{{currency.moneyName}}</option>
           </select>
         </div>
       </div>
     </div>
+    <div class="error-message" #errorMessage>{{errorMessageText}}</div>
     <div class="buttons">
       <i class="fa-solid fa-file-pdf pdf" (click)="generatePdf()"></i>
       <div style="width: 10px;"></div>

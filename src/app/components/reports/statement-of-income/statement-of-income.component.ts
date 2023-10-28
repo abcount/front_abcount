@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
@@ -20,31 +19,70 @@ export class StatementOfIncomeComponent {
   @Input() subsidiaries: any[] = [];
   @Input() areas: any[] = [];
   @Input() currencies: any[] = [];
+  @Input() principalCurrency: any = '';
+  @Input() otherCurrencySelected: string = '0';
   @Output() flagChange = new EventEmitter<boolean>();
 
   closeModal() {
+    this.name = [];
     this.flag = false;
     this.flagChange.emit(this.flag);
   }
 
   dateFrom: string = '';
   dateTo: string = '';
-  principalCurrency: boolean = true;
-  otherCurrency: boolean = false;
+  currencySelected: string = '0';
+  @ViewChild('errorMessage') errorMessage: ElementRef;
+  errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';
+  name: string[] = [];
 
   generatePdf(){
-    const sucursalesMarcadas = this.subsidiaries.filter(subsidiary => subsidiary.isChecked);
-    console.log(sucursalesMarcadas);
-    const areasMarcadas = this.areas.filter(area => area.isChecked);
-    console.log(areasMarcadas);
-    console.log(this.dateFrom);
-    console.log(this.dateTo);
-    console.log(this.principalCurrency);
-    console.log(this.otherCurrency);
+    const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
+    if (sucursalesId.length > 0) {
+      const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
+      if (areasId.length > 0) {
+        if (this.dateFrom != '' && this.dateTo != '') {
+          var currencyId = '0';
+          if (this.currencySelected == '0') {
+            currencyId = this.principalCurrency.exchangeMoneyId;
+          } else {
+            currencyId = this.otherCurrencySelected;
+          }
+          const names = this.name.filter((name: string) => {
+            const nameSpace = name.trim();
+            return nameSpace.length > 0;
+          });
+          const data = {
+            subsidiaries: sucursalesId,
+            areas: areasId,
+            from: this.dateFrom,
+            to: this.dateTo,
+            currency: currencyId,
+            responsible: names
+          }
+          console.log(data);
+        } else {
+          this.errorMessageText = 'Por favor, ingrese un rango de fechas.';
+          this.showErrorMessage();
+        }
+      } else {
+        this.errorMessageText = 'Por favor, seleccione al menos un área.';
+        this.showErrorMessage();
+      }
+    } else {
+      this.errorMessageText = 'Por favor, seleccione al menos una sucursal.';
+      this.showErrorMessage();
+    }
   }
 
   generateExcel(){
 
   }
 
+  showErrorMessage() {
+    this.errorMessage.nativeElement.classList.add('show');
+    setTimeout(() => {
+      this.errorMessage.nativeElement.classList.remove('show');
+    }, 2500);
+  }
 }

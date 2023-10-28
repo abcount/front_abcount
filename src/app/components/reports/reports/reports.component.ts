@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-reports',
@@ -10,10 +11,19 @@ export class ReportsComponent {
 
   subsidiaries: any[] = [];
   areas: any[] = [];
+  transactionTypes = [
+    {"transactionTypeId": 1,"transactionTypeName": "Ingreso"},
+    {"transactionTypeId": 2,"transactionTypeName": "Egreso"},
+    {"transactionTypeId": 3,"transactionTypeName": "Traspaso"},
+  ];
   currencies: any[] = [];
+  principalCurrency: any = '';
+  otherCurrencySelected: string = '0';
   accountPlan: any[] = [];
+  
+  accountPlanBalanceSheet: any[] = [];
 
-  constructor(private configurationService: ConfigurationService) { }
+  constructor(private configurationService: ConfigurationService, private dataService: DataService) { }
 
   ngOnInit() {
     this.configurationService.getSubsidiaries().subscribe(
@@ -28,10 +38,14 @@ export class ReportsComponent {
         });
       }
     );
-    this.configurationService.getCurrencies().subscribe((data: any) => {
+    this.dataService.getExchangeMoney().subscribe((data: any) => {
       //console.log(data);
-      this.currencies = data.data.currencyConfig;
+      this.currencies = data.data;
+      this.principalCurrency = this.currencies[0];
       this.currencies.splice(0, 1);
+      if (this.currencies.length > 0) {
+        this.otherCurrencySelected = this.currencies[0].exchangeMoneyId;
+      }
     });
     this.configurationService.getAccountsPlan().subscribe(
       (data: any) => {
@@ -39,12 +53,14 @@ export class ReportsComponent {
         this.accountPlan.forEach((element) => {
           element.isChecked = false;
         });
+        this.accountPlanBalanceSheet = data.data.filter((element: any) => element.report == false);
       }
     );
   }
 
   diaryBookFlag: boolean = false;
   diaryBookFlagChange() {
+    this.resetChecks();
     this.diaryBookFlag = !this.diaryBookFlag;
   }
 

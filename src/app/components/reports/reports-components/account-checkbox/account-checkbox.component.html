@@ -7,9 +7,9 @@
                 </span>
                 <span class="account-details">{{ account.codeAccount }} {{ account.nameAccount }}</span>
                 <div class="checkbox">
-                    <input type="checkbox" id="{{account.codeAccount}}" class="custom-checkbox" value="1" [(ngModel)]="account.isChecked" (change)="updateChildAccounts(account, account.isChecked)"/>
-                    <label for="{{account.codeAccount}}" class="custom-label"></label>
-                </div>                
+                    <input type="checkbox" [id]="account.codeAccount" class="custom-checkbox" [(ngModel)]="account.isChecked" (change)="updateChildAccounts(account, account.isChecked)"/>
+                    <label [for]="account.codeAccount" class="custom-label"></label>
+                </div>
             </div>
             <hr>
             <ul *ngIf="!account.isHidden">
