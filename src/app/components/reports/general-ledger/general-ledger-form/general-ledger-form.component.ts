@@ -78,8 +78,95 @@ export class GeneralLedgerFormComponent {
     }
   }
 
-  generateExcel(){
+  generateExcel() {
+    this.sendDataToBackend();
+  }
 
+  sendDataToBackend() {
+    const requestData = {
+      subsidiaries: this.subsidiaries.filter(s => s.isChecked).map(s => s.subsidiaryId),
+      areas: this.areas.filter(a => a.isChecked).map(a => a.areaId),
+      from: this.dateFrom,
+      to: this.dateTo,
+      accountsId: this.accountsChecked.map(a => a.accountId),
+      currencies: this.currencySelected
+    };
+
+    this.configurationService.sendData(requestData).subscribe((response: any) => {
+      if (response.success) {
+        this.loadData(response.data.subsidiaries);
+      } else {
+        console.error('Error al enviar datos al backend', response.errors);
+      }
+    });
+  }
+
+  loadData(subsidiaryData: any[]) {
+    const formattedData = this.transformDataForExcel(subsidiaryData);
+    this.proceedToGenerateExcel(formattedData);
+  }
+
+  transformDataForExcel(subsidiaries: any[]): any[] {
+    const excelData:any = [];
+    subsidiaries.forEach(subsidiary => {
+      subsidiary.areas.forEach((area:any) => {
+        area.accounts.forEach((account:any) => {
+          account.transactions.forEach((transaction:any) => {
+            const row = {
+              Subsidiary: subsidiary.subsidiary,
+              Area: area.area,
+              AccountCode: account.accountCode,
+              AccountName: account.accountName,
+              VoucherCode: transaction.voucherCode,
+              RegistrationDate: transaction.registrationDate,
+              TransactionType: transaction.transactionType,
+              GlosaDetail: transaction.glosaDetail,
+              DocumentNumber: transaction.documentNumber,
+              DebitAmount: transaction.debitAmount,
+              CreditAmount: transaction.creditAmount,
+              Balances: transaction.balances
+            };
+            excelData.push(row);
+          });
+        });
+      });
+    });
+    return excelData;
+  }
+  proceedToGenerateExcel(data: any[]) {
+    // Convertir datos a formato CSV
+    const csvData = this.convertToCSV(data);
+    const blob = new Blob([csvData], {type: 'text/csv'});
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.setAttribute('style', 'display:none;');
+    anchor.setAttribute('href', url);
+    anchor.setAttribute('download', 'libro_mayor.csv');
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    window.URL.revokeObjectURL(url);
+  }
+
+
+  convertToCSV(data: any[]): string {
+    let csv = '';
+
+    // Encabezados
+    const headers = Object.keys(data[0]);
+    csv += headers.join(',') + '\n';
+
+    // Contenido
+    for (const row of data) {
+      const values = headers.map(header => {
+        const escaped = ('' + row[header]).replace(/"/g, '\\"');
+        return `"${escaped}"`;
+      });
+      csv += values.join(',') + '\n';
+    }
+
+    return csv;
   }
 
   getAccountsPlanChecked(accounts: any[]) {
