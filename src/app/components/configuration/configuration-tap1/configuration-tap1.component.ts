@@ -1,8 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EnterpriseDto } from 'src/app/dto/enterprise.dto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DataService } from 'src/app/services/data.service';
+import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 
 @Component({
   selector: 'app-configuration-tap1',
@@ -37,11 +40,28 @@ export class ConfigurationTap1Component {
   modeEdit: boolean = false;
 
   // Constructor
-  constructor(private configurationService: ConfigurationService, private route: Router) { }
+  constructor(private configurationService: ConfigurationService, private route: Router, private dataService: DataService, private dialog: MatDialog) { }
 
   // Funcion al iniciar la pantalla
   ngOnInit() {
     const companyId = localStorage.getItem('companyId');
+    this.dataService.getExistExchangeRate().subscribe({
+      next: (data) => {
+        if(data.data){
+          this.route.navigate(['/configuration-tap/1']);
+        }else{
+          this.route.navigate(['/exchangeAdd']);
+        }
+      },
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor"}
+        });
+        message.afterClosed().subscribe(() => {
+          window.location.reload();
+        });
+      },
+    });
     if(companyId){
       this.configurationService.getEnterprise().subscribe(
         (data: any) => {

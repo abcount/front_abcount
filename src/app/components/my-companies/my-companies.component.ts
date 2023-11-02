@@ -78,6 +78,7 @@ export class MyCompaniesComponent implements OnInit{
   saveData(companyId: number, userId: number) {
     localStorage.setItem('userId', userId.toString());
     localStorage.setItem('companyId', companyId.toString());
+ 
     this.dataService.getExistExchangeRate().subscribe({
       next: (data) => {
         if(data.data){
@@ -92,6 +93,7 @@ export class MyCompaniesComponent implements OnInit{
         });
       },
     });
+ 
   }
 
  

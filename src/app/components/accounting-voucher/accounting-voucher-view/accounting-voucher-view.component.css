@@ -156,9 +156,11 @@ td {
 /*Botones*/
 .footer-buttons {
   display: flex;
+  justify-content: space-between;  /* Esto distribuye los elementos hijos al máximo */
   margin: 20px 0 0 0;
-  gap: 5%;
+  gap: 5%;  /* Puedes quitar el gap si ya estás usando space-between */
 }
+
 .arrow-buttons {
   display: flex;
   gap: 10px;

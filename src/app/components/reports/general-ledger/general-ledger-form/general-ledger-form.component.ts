@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import {FlatTreeControl} from "@angular/cdk/tree";
-import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import {ConfigurationService} from "../../../../services/configuration.service";
 
 @Component({
@@ -10,95 +8,182 @@ import {ConfigurationService} from "../../../../services/configuration.service";
 })
 
 export class GeneralLedgerFormComponent {
-  subsidiaries: any[] = [];
-  areas: any[] = [];
-  currencies: any[] = [];
 
+  constructor(private configurationService: ConfigurationService) { }
 
-  ngOnInit() {
-    // Obtener las sucursales y areas
-    this.configurationService.getSubsidiaries().subscribe(
-      (data: any) => {
-        console.log(data);
-        this.subsidiaries = data.data.subsidiaries;
-        this.areas = data.data.areas;
+  ngOnInit() { }
+
+  @Input() flag: boolean = false;
+  @Input() subsidiaries: any[] = [];
+  @Input() areas: any[] = [];
+  @Input() currencies: any[] = [];
+  @Input() principalCurrency: any = '';
+  @Input() otherCurrencySelected: string = '0';
+  @Input() accountPlan: any[] = [];
+  @Output() flagChange = new EventEmitter<boolean>();
+
+  closeModal() {
+    this.flag = false;
+    this.flagChange.emit(this.flag);
+  }
+
+  dateFrom: string = '';
+  dateTo: string = '';
+  currencySelected: string = '0';
+  accountsChecked: any[] = [];
+  @ViewChild('errorMessage') errorMessage: ElementRef;
+  errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';
+
+  generatePdf(){
+    const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
+    if (sucursalesId.length > 0) {
+      const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
+      if (areasId.length > 0) {
+        this.accountsChecked = [];
+        this.getAccountsPlanChecked(this.accountPlan);
+        //console.log(this.accountsChecked);
+        const accountsId = this.accountsChecked.map(account => account.accountId);
+        if (this.accountsChecked.length>0) {
+          if (this.dateFrom != '' && this.dateTo != '') {
+            var currencyId = '0';
+            if (this.currencySelected == '0') {
+              currencyId = this.principalCurrency.exchangeMoneyId;
+            } else {
+              currencyId = this.otherCurrencySelected;
+            }
+            const data = {
+              subsidiaries: sucursalesId,
+              areas: areasId,
+              from: this.dateFrom,
+              to: this.dateTo,
+              accountsId: accountsId,
+              currency: currencyId
+            }
+            console.log(data);
+          } else {
+            this.errorMessageText = 'Por favor, ingrese un rango de fechas.';
+            this.showErrorMessage();
+          }
+        } else {
+          this.errorMessageText = 'Por favor, seleccione al menos una cuenta.';
+          this.showErrorMessage();
+        }
+      } else {
+        this.errorMessageText = 'Por favor, seleccione al menos un área.';
+        this.showErrorMessage();
       }
-    );
-    this.configurationService.getCurrencies().subscribe((data: any) => {
-      console.log(data);
-      this.currencies = data.data.currencyConfig;
+    } else {
+      this.errorMessageText = 'Por favor, seleccione al menos una sucursal.';
+      this.showErrorMessage();
+    }
+  }
+
+  generateExcel() {
+    this.sendDataToBackend();
+  }
+
+  sendDataToBackend() {
+    const requestData = {
+      subsidiaries: this.subsidiaries.filter(s => s.isChecked).map(s => s.subsidiaryId),
+      areas: this.areas.filter(a => a.isChecked).map(a => a.areaId),
+      from: this.dateFrom,
+      to: this.dateTo,
+      accountsId: this.accountsChecked.map(a => a.accountId),
+      currencies: this.currencySelected
+    };
+
+    this.configurationService.sendData(requestData).subscribe((response: any) => {
+      if (response.success) {
+        this.loadData(response.data.subsidiaries);
+      } else {
+        console.error('Error al enviar datos al backend', response.errors);
+      }
     });
   }
 
-  transactionTypes = [
-    {"transactionTypeId": 1,"transactionTypeName": "Ingreso"},
-    {"transactionTypeId": 2,"transactionTypeName": "Egreso"},
-    {"transactionTypeId": 3,"transactionTypeName": "Traspaso"},
-  ];
-
-
-
-
-  hasChild = (_: number, node: NodeExample) => node.expandable;
-
-
-  // Variables
-  accountPlan: any[] = []; // Plan de cuentas
-  TREE_DATA: Account[] = [];
-  private _transformer = (node: Account, level: number) => {
-    return {
-      expandable: !!node.childrenAccounts && node.childrenAccounts.length > 0,
-      name: node.codeAccount + ' ' + node.nameAccount,
-      level: level,
-    };
-  };
-
-
-
-  treeControl = new FlatTreeControl<NodeExample>(
-    node => node.level,
-    node => node.expandable,
-  );
-
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.childrenAccounts,
-  );
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-  constructor(private configurationService: ConfigurationService) {
-    this.configurationService.getAccountsPlan().subscribe(
-      (data: any) => {
-        console.log("ACCOUNT PLAN")
-        console.log(data)
-        this.dataSource.data = data.data;
-        this.accountPlan = data.data;
-      }
-    );
-    TREE_DATA = this.dataSource.data;
+  loadData(subsidiaryData: any[]) {
+    const formattedData = this.transformDataForExcel(subsidiaryData);
+    this.proceedToGenerateExcel(formattedData);
   }
 
+  transformDataForExcel(subsidiaries: any[]): any[] {
+    const excelData:any = [];
+    subsidiaries.forEach(subsidiary => {
+      subsidiary.areas.forEach((area:any) => {
+        area.accounts.forEach((account:any) => {
+          account.transactions.forEach((transaction:any) => {
+            const row = {
+              Subsidiary: subsidiary.subsidiary,
+              Area: area.area,
+              AccountCode: account.accountCode,
+              AccountName: account.accountName,
+              VoucherCode: transaction.voucherCode,
+              RegistrationDate: transaction.registrationDate,
+              TransactionType: transaction.transactionType,
+              GlosaDetail: transaction.glosaDetail,
+              DocumentNumber: transaction.documentNumber,
+              DebitAmount: transaction.debitAmount,
+              CreditAmount: transaction.creditAmount,
+              Balances: transaction.balances
+            };
+            excelData.push(row);
+          });
+        });
+      });
+    });
+    return excelData;
+  }
+  proceedToGenerateExcel(data: any[]) {
+    // Convertir datos a formato CSV
+    const csvData = this.convertToCSV(data);
+    const blob = new Blob([csvData], {type: 'text/csv'});
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.setAttribute('style', 'display:none;');
+    anchor.setAttribute('href', url);
+    anchor.setAttribute('download', 'libro_mayor.csv');
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    window.URL.revokeObjectURL(url);
+  }
+
+
+  convertToCSV(data: any[]): string {
+    let csv = '';
+
+    // Encabezados
+    const headers = Object.keys(data[0]);
+    csv += headers.join(',') + '\n';
+
+    // Contenido
+    for (const row of data) {
+      const values = headers.map(header => {
+        const escaped = ('' + row[header]).replace(/"/g, '\\"');
+        return `"${escaped}"`;
+      });
+      csv += values.join(',') + '\n';
+    }
+
+    return csv;
+  }
+
+  getAccountsPlanChecked(accounts: any[]) {
+    for(let i = 0; i < accounts.length; i++){
+      if(accounts[i].isChecked){
+        this.accountsChecked.push(accounts[i]);
+      }
+      if(accounts[i].childrenAccounts.length > 0){
+        this.getAccountsPlanChecked(accounts[i].childrenAccounts);
+      }
+    }
+  }
+
+  showErrorMessage() {
+    this.errorMessage.nativeElement.classList.add('show');
+    setTimeout(() => {
+      this.errorMessage.nativeElement.classList.remove('show');
+    }, 2500);
+  }
 }
-
-
-interface NodeExample {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
-
-interface Account {
-  accountId: number | null;
-  codeAccount: number;
-  nameAccount: string;
-  moneyRub: boolean;
-  report: boolean;
-  classificator: boolean;
-  level: number;
-  childrenAccounts: Account[];
-  editable: boolean;
-}
-let TREE_DATA: Account[] = [];

@@ -1,12 +1,13 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
-  selector: 'app-balance-sheet',
-  templateUrl: './balance-sheet.component.html',
-  styleUrls: ['./balance-sheet.component.css']
+  selector: 'app-balance-check-sums-and-balances',
+  templateUrl: './balance-check-sums-and-balances.component.html',
+  styleUrls: ['./balance-check-sums-and-balances.component.css']
 })
-export class BalanceSheetComponent {
+export class BalanceCheckSumsAndBalancesComponent {
 
   //Constructor
   constructor(private configurationService: ConfigurationService) { }
@@ -27,7 +28,7 @@ export class BalanceSheetComponent {
     this.flag = false;
     this.flagChange.emit(this.flag);
   }
-
+  
   dateTo: string = '';
   currencySelected: string = '0';
   accountsChecked: any[] = [];
@@ -59,8 +60,8 @@ export class BalanceSheetComponent {
             const data = {
               subsidiaries: sucursalesId,
               areas: areasId,
-              to: this.dateTo,
               accountsId: accountsId,
+              to: this.dateTo,
               currency: currencyId,
               responsible: names
             }

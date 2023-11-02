@@ -1,13 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import {NewAccount} from "../components/configuration/configuration-tap4/configuration-tap4.component";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigurationService {
+  private apiUrl = 'http://localhost:8080';
 
   // Para la configuración inicial de la empresa
   private formGroup: FormGroup;
@@ -104,4 +106,9 @@ export class ConfigurationService {
     console.log(`${this.configurationUrl}/accountable-plan/${this.companyId}`)
     return this.http.post(`${this.configurationUrl}/accountable-plan/${this.companyId}`,body )
   }
+  sendData(data: any): Observable<any> {
+    const companyId = localStorage.getItem('companyId');
+    return this.http.post<any>(`${this.configurationUrl}/mayor/book//${companyId}`, data);
+  }
+
 }

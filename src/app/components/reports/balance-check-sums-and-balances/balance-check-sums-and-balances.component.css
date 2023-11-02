@@ -1,5 +1,5 @@
 /*Background*/
-.container-diary-book {
+.container-balance-sheet {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,7 +18,7 @@
     align-items: center;
 }
 /*Contenedor*/
-.diary-book {
+.balance-sheet {
     background-color: white;
     border-radius: 10px;
     padding: 25px 40px 30px 40px;
@@ -26,7 +26,7 @@
     width: 60%;
 }
 @media screen and (max-width: 1125px) {
-    .diary-book {
+    .balance-sheet {
         width: 90%;
     }
 }
@@ -38,7 +38,7 @@ h1 {
 }
 h2 {
     font-size: 16px;
-    color: #383838;
+    color: #757575;
     font-weight: 500;
     margin: 0;
 }
@@ -47,14 +47,14 @@ h2 {
     display: flex;
     align-items: center;
     display: grid;
-    grid-template-columns: 55px 1fr 1fr;
+    grid-template-columns: 55px 1fr 25px;
     margin-bottom: 20px;
     position: relative;
 }
 .logo {
     width: 55px;
     height: 55px;
-    background-color: #FAECEB;
+    background-color: #DEF9EF;
     border-radius: 100%;
     font-size: 30px;
 }
@@ -82,13 +82,22 @@ h2 {
     grid-gap: 10px;
 }
 .card {
-    height: 150px;
+    height: 100px;
     border-radius: 10px;
-    border: 1px solid #ededed;
+    border: 1px solid #E0E0E0;
     padding: 10px 15px;
     box-sizing: border-box;
     overflow-y: auto;
-    margin: 5px 0 20px 0;
+    margin: 5px 0 15px 0;
+}
+.account-plan {
+    height: 150px;
+    border-radius: 10px;
+    border: 1px solid #ededed;
+    padding: 10px 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    margin: 7px 0 15px 0;
 }
 /*Checkbox*/
 .checkbox-label {
@@ -113,14 +122,14 @@ h2 {
     width: 14px;
     height: 14px;
     border: 2px solid;
-    border-color: #FFACAB;
+    border-color: #66CDAA;
     background-color: #fff;
     border-radius: 4px;
     vertical-align: middle;
     margin-right: 8px;
 }
 .custom-checkbox:checked + label:before {
-    background-color: #FFACAB;
+    background-color: #66CDAA;
 }
 .custom-checkbox:checked + label:before {
     content: "\2713"; /* Código de caracter Unicode del icono de check */
@@ -139,7 +148,7 @@ h2 {
 input[type="date"], select {
     color: #757575;
     font-size: 16px;
-    border: 1px solid #ededed;
+    border: 1px solid #E0E0E0;
     border-radius: 5px;
     width: 100%;
     padding: 3px 10px;
@@ -167,6 +176,29 @@ select {
     display: grid;
     grid-template-columns: 1fr 2fr;
 }
+/*Responsables*/
+.responsibles{
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+.firmas{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 8px;
+    background-color: #ededed;
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 5px;
+}
+.nombre{
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+}
+input::placeholder {
+    transition: opacity 0.25s;
+}  
 /*Botones*/
 .buttons {
     display: flex;
@@ -218,7 +250,7 @@ input[type='radio']:after {
     background-color: #eeeeee;
 }
 input[type='radio']:checked:after {
-    background-color: #FFACAB;
+    background-color: #66CDAA;
 }
 /*Mensaje de error inferior*/
 .error-message {

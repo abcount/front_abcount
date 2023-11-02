@@ -28,15 +28,7 @@ export class AccountingVoucherAddComponent {
   listTransactionAccount: TransactionAccountDto[] = [];
   listaEntradas: Entrada[] = [];
   listAuxiliares: AuxiliarDto[] = [];
-  listEntities: EntityDto[] = [
-    {entityId: 1, entityName: 'Empresa 1', entityNit: '123456789', entitySocialReason: 'Empresa 1', foreign: false},
-    {entityId: 2, entityName: 'Empresa 2', entityNit: '123456789', entitySocialReason: 'Empresa 2', foreign: false},
-    {entityId: 3, entityName: 'Empresa 3', entityNit: '123456789', entitySocialReason: 'Empresa 3', foreign: false},
-    {entityId: 4, entityName: 'Empresa 4', entityNit: '123456789', entitySocialReason: 'Empresa 4', foreign: false},
-    {entityId: 5, entityName: 'Compañia 5', entityNit: '123456789', entitySocialReason: 'Compañia 5', foreign: false},
-    {entityId: 6, entityName: 'Compañia 6', entityNit: '123456789', entitySocialReason: 'Compañia 6', foreign: false},
-    {entityId: 7, entityName: 'Compañia 7', entityNit: '123456789', entitySocialReason: 'Empresa 7', foreign: false},
-  ];
+  listEntities: EntityDto[] = [];
 
   // Constructor
   constructor(private transactionService: TransactionService, private dialog: MatDialog, private route: Router) {
@@ -51,7 +43,7 @@ export class AccountingVoucherAddComponent {
     this.loadVoucherData();
     for (let i = 0; i < 10; i++) {
       const emptyEntrada: Entrada = {cuentaId: 0, numeroCuenta: '', nombreCuenta: '', cuentaValida: false, auxiliar: '',
-       auxiliaryAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '', fechaEmision: '',
+       auxiliaryAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '',
        falta: false};
       this.listaEntradas.push(emptyEntrada);
       this.filteredAccounts.push([]);
@@ -107,7 +99,8 @@ export class AccountingVoucherAddComponent {
           this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
           this.documentSelect = data.transactionType[0].transactionTypeId;
           this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
-          this.currencySelect = data.currencies[0].exchangeMoneyId;
+          this.currencySelect = data.currencies[0].exchangeRateId;
+          console.log(this.currencySelect);
           this.numComprobante= data.transactionNumber;
           // Obteniendo las cuentas
           this.accountablePlan = data.accountablePlan;
@@ -549,7 +542,6 @@ export class AccountingVoucherAddComponent {
       haber: '',
       glosa: '',
       nroDoc: '',
-      fechaEmision: '',
       falta: false
     };
     this.listaEntradas.push(emptyEntrada);
@@ -564,9 +556,12 @@ export class AccountingVoucherAddComponent {
   popupMessage: string = 'El comprobante se guardó correctamente';
   popupIcon: string = 'fa-regular fa-circle-check gradient-green';
   @ViewChild ('errorGlosa') errorGlosa: ElementRef;
+  loading: boolean = true;
 
   save() {
     if (this.glosa != '') {
+      this.showPopup = true;
+      this.loading = true;
       if (this.fillListTransactionAccount()) {
         if (this.listTransactionAccount.length > 0) {
           const body = {
@@ -583,7 +578,7 @@ export class AccountingVoucherAddComponent {
           this.transactionService.createTransaction(body).subscribe(
             (data: any) => {
               if (data.success) {
-                this.showPopup = true;
+                this.loading = false;
                 this.popupTitle = 'Comprobante guardado';
                 this.popupMessage = 'El comprobante se guardó correctamente';
                 this.popupIcon = 'fa-regular fa-circle-check gradient-green';
@@ -595,24 +590,31 @@ export class AccountingVoucherAddComponent {
                 this.calcularTotales();
               } else {
                 console.log(data);
+                this.loading = false;
+                this.popupTitle = 'Ocurrio un error al guardar';
+                this.popupMessage = 'No se pudo conectar correctamente con el servidor.';
+                this.popupIcon = 'fa-regular fa-circle-check gradient-green';
+                setTimeout(() => {
+                  this.showPopup = false;
+                }, 2300);
               }
             }
           );
         } else {
           console.log("No hay cuentas");
-          this.showPopup = true;
           this.popupTitle = 'Comprobante vacío';
           this.popupMessage = 'Por favor ingrese al menos una cuenta';
           this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+          this.loading = false;
           setTimeout(() => {
             this.showPopup = false;
           }, 2300);
         }
       } else {
-        this.showPopup = true;
         this.popupTitle = 'Ocurrio un error al guardar';
-        this.popupMessage = 'Asegúrese de que los códigos de cuenta, nombres de cuenta, y al menos uno de los campos debe o haber, junto con la descripción (glosa), estén completos en todas las filas correspondientes.';
+        this.popupMessage = 'Error en el cuerpo del comprobante. Asegúrese que los datos estén completos en todas las filas correspondientes.';
         this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+        this.loading = false;
         setTimeout(() => {
           this.showPopup = false;
         }, 5000);
@@ -654,7 +656,6 @@ export class AccountingVoucherAddComponent {
     const auxiliar = entrada.auxiliaryAccountId === 0 ? null : entrada.auxiliaryAccountId;
     const debe = entrada.debe === '' ? "0" : entrada.debe;
     const haber = entrada.haber === '' ? "0" : entrada.haber;
-    const fecha = entrada.fechaEmision === '' ? null : entrada.fechaEmision;
     const nroDoc = entrada.nroDoc === '' ? null : entrada.nroDoc;
     const transactionAccount: TransactionAccountDto = {
       accountId: entrada.cuentaId,
@@ -662,7 +663,6 @@ export class AccountingVoucherAddComponent {
       auxiliaryId: auxiliar,
       amountDebit: parseFloat(debe),
       amountCredit: parseFloat(haber),
-      emitedDate: fecha,
       glosaDetail: entrada.glosa,
       documentCode: nroDoc
     }
@@ -673,8 +673,7 @@ export class AccountingVoucherAddComponent {
     var flag: boolean = false;
     if (entrada.cuentaId == 0 && entrada.numeroCuenta == '' && entrada.nombreCuenta == '' && entrada.cuentaValida == false &&
         entrada.auxiliar == '' && entrada.auxiliaryAccountId == 0 && entrada.entidad == '' && entrada.entityId == 0 &&
-        entrada.debe == '' && entrada.haber == '' && entrada.glosa == '' && entrada.nroDoc == '' && entrada.fechaEmision == '' &&
-        entrada.falta == false) {
+        entrada.debe == '' && entrada.haber == '' && entrada.glosa == '' && entrada.nroDoc == '' && entrada.falta == false) {
       flag = true;
     }
     return flag;
@@ -694,6 +693,5 @@ interface Entrada {
   haber: string;
   glosa: string;
   nroDoc: string;
-  fechaEmision: string;
   falta: boolean;
 }

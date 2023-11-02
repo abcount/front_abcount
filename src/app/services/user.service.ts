@@ -18,10 +18,6 @@ export class UserService {
 
   configurationUrl = `${environment.BACKEND_URL}/config/enterprise`;
 
-  companyId = localStorage.getItem('companyId');
-
-  
-
   //Function to get users and invited by companyId
   getUsersAndInvitedByCompanyId(){
  

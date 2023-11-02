@@ -12,7 +12,7 @@
     align-items: center;
 }
 /*Background*/
-.reports {
+.help-and-support {
     background-color: #F8F8F8;
     padding: 2% 5% 4% 5%;
 }
@@ -23,10 +23,13 @@ hr{
 .container-1{
     margin: 4% 4%;
     display: grid;
-    grid-template-columns: 48% 48%;
+    grid-template-columns: 32% 32% 32%;
     gap: 4%;
 }
-/*Reportes*/
+.descripcion{
+    margin: 1% 4%;
+}
+/*Ayuda y soporte*/
 .card {
     width: 100%;
     height: 100%;
@@ -42,15 +45,15 @@ hr{
     position: relative;
 }
 .logo {
-    width: 95px;
-    height: 95px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     margin-bottom: 15px;
 }
 .logo i {
-    width: 60px;
-    height: 60px;
-    font-size: 30px;
+    width: 90px;
+    height: 90px;
+    font-size: 50px;
     color: #ffffff;
     background-color: #000000;
     border-radius: 50%;
@@ -71,40 +74,26 @@ hr{
     font-size: 18px;
     padding-top: 4px;
 }
-/*Libro diario*/
-.libro-diario {
-    background-color: #FAECEB;
+/*Guia usuario*/
+.guia-usuario {
+    background-color: #fff3b1;
 }
-.libro-diario .header-card .logo {
-    background-color: #FFACAB;
+.guia-usuario .header-card .logo {
+    background-color: #FFD700;
 }
-/*Libro mayor*/
-.libro-mayor {
-    background-color: #FCF4E9;
+/*Video*/
+.video {
+    background-color: #a0f8a3;
 }
-.libro-mayor .header-card .logo {
-    background-color: #FFD5A5;
+.video .header-card .logo {
+    background-color: #4CAF50;
 }
-/*Balance general*/
-.balance-general{
-    background-color: #EBE8F9;
+/*Soporte*/
+.soporte{
+    background-color: #a0cdff;
 }
-.balance-general .header-card .logo {
-    background-color: #BDB2FE;
-}
-/*Estado de resultados*/
-.estado-resultado {
-    background-color: #EFFAFC;
-}
-.estado-resultado .header-card .logo {
-    background-color: #99F7FF;
-}
-/*Sumas y saldos*/
-.sumas-saldos {
-    background-color: #e3fdee;
-}
-.sumas-saldos .header-card .logo {
-    background-color: #82f0b0;
+.soporte .header-card .logo {
+    background-color: #007BFF;
 }
 
 /*Texto*/
@@ -121,10 +110,17 @@ h2 {
     margin: 0px;
     font-family: 'Anek Telugu', sans-serif;
 }
+h3{
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    margin: 0px;
+    font-family: 'Anek Telugu', sans-serif;
+}
 h4 {
     font-size: 15px;
     font-weight: 300;
-    color: #a09a9a;
+    color: black;
     margin-bottom: 0px;
     font-family: 'Anek Telugu', sans-serif;
     line-height: 16px;

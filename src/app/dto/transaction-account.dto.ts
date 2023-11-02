@@ -5,7 +5,6 @@ export interface TransactionAccountDto {
     auxiliaryId: number | null;
     amountDebit: number;
     amountCredit: number;
-    emitedDate: string | null;
     glosaDetail: string;
     documentCode: string | null;
 }
