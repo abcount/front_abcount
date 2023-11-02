@@ -74,7 +74,7 @@ export class CurrencyExchangeAddComponent {
       data: {
         title: 'ADVERTENCIA: ¿Desea salir?', 
         message: "Es necesario registrar el cambio del día, de lo contrario no podrá realizar ninguna transacción.", 
-        route: "/configuration-tap/1"}
+        route: "/accounting-voucher/view"}
     });
   }
 
@@ -119,7 +119,7 @@ export class CurrencyExchangeAddComponent {
               data: {title: 'Exito!', message: data.message}
             });
             message.afterClosed().subscribe(() => {
-              this.router.navigate(['/configuration-tap/1']);
+              this.router.navigate(['/accounting-voucher/view']);
             })
           }else{
             const message = this.dialog.open(MessageDialogComponent, {
