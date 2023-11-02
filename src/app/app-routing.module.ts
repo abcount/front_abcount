@@ -18,6 +18,7 @@ import { ReportsComponent } from './components/reports/reports/reports.component
 import { CurrencyExchangeAddComponent } from "./components/data/currency-exchange-add/currency-exchange-add.component";
 import { CurrencyExchangeViewComponent } from "./components/data/currency-exchange-view/currency-exchange-view.component";
 import { StatementOfIncomeComponent } from './components/reports/statement-of-income/statement-of-income.component';
+import { HelpAndSupportComponent } from './components/help-and-support/help-and-support.component';
 
 
 
@@ -56,7 +57,8 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent},
   { path: 'statement-of-income', component: StatementOfIncomeComponent},
   { path: 'exchangeAdd', component: CurrencyExchangeAddComponent},
-  { path: 'exchangeView', component: CurrencyExchangeViewComponent}
+  { path: 'exchangeView', component: CurrencyExchangeViewComponent},
+  { path: 'help-and-support',component: HelpAndSupportComponent}
 ];
 
 @NgModule({
