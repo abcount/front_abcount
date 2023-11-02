@@ -41,7 +41,8 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'configuration-tap' ,data: { roles: ['CAN_ACCESS_CONFIGURATION'], useCompany:true }, canActivate: [AuthGuard] ,
+    //path: 'configuration-tap' ,data: { roles: ['CAN_ACCESS_CONFIGURATION'], useCompany:true }, canActivate: [AuthGuard] ,
+    path: 'configuration-tap' ,
     children: [
       { path: '1', component: ConfigurationTap1Component },
       { path: '2', component: ConfigurationTap2Component },
@@ -50,7 +51,8 @@ const routes: Routes = [
       { path: '5', component: ConfigurationTap5Component },
     ],
   },
-  { path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent , data: { roles: ['CAN_INVITE_PEOPLE'], useCompany:true }, canActivate: [AuthGuard] },
+  //{ path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent , data: { roles: ['CAN_INVITE_PEOPLE'], useCompany:true }, canActivate: [AuthGuard] },
+  { path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent  },
   { path: ':user/users-and-permissions', component: UsersAndPermissionsComponent },
   {
     path: 'accounting-voucher',
