@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MyCompaniesComponent } from './components/my-companies/my-companies.component';
+import { HomeComponent } from './components/home/home.component';
 import { Tap1Component } from "./components/initial-config/tap1/tap1.component";
 import { Tap2Component } from './components/initial-config/tap2/tap2.component';
 import { Tap3Component } from "./components/initial-config/tap3/tap3.component";
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/my-companies', pathMatch: 'full'},
   //{ path: 'my-companies', component: MyCompaniesComponent, data: { roles: ['USER'], useCompany:true }, canActivate: [AuthGuard]},
   { path: 'my-companies', component: MyCompaniesComponent },
+  { path: 'home', component: HomeComponent },
   {
     path: 'initial-config',
     children: [

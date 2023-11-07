@@ -73,6 +73,7 @@ import { AccountCheckboxComponent } from './components/reports/reports-component
 import { BalanceCheckSumsAndBalancesComponent } from './components/reports/balance-check-sums-and-balances/balance-check-sums-and-balances.component';
 import { AccountTreeComponent } from './components/initial-config/account-tree/account-tree.component';
 import { HelpAndSupportComponent } from './components/help-and-support/help-and-support.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 
@@ -118,6 +119,7 @@ import { HelpAndSupportComponent } from './components/help-and-support/help-and-
     BalanceCheckSumsAndBalancesComponent,
     AccountTreeComponent,
     HelpAndSupportComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
