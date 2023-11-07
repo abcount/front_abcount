@@ -1,7 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigurationService } from 'src/app/services/configuration.service';
-
+import { ReportService} from 'src/app/services/report.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-statement-of-income',
@@ -11,7 +12,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 export class StatementOfIncomeComponent {
 
   //Constructor
-  constructor(private router: Router, private configurationService: ConfigurationService) { }
+  constructor(private router: Router, private configurationService: ConfigurationService, private reportSerive: ReportService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() { }
 
@@ -57,10 +58,19 @@ export class StatementOfIncomeComponent {
             areas: areasId,
             from: this.dateFrom,
             to: this.dateTo,
-            currency: currencyId,
+            currencies: currencyId,
             responsible: names
           }
           console.log(data);
+          //Logica Para Generar reporte
+          this.reportSerive.statementIncomePDF(data).subscribe((response: any) => {
+            if (response.success) {
+              console.log(response);
+              window.open(response.data, '_blank');
+            } else {
+              console.error('Error al enviar datos al backend', response.errors);
+            }
+          });
         } else {
           this.errorMessageText = 'Por favor, ingrese un rango de fechas.';
           this.showErrorMessage();

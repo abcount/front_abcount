@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration.service';
-
+import { ReportService} from 'src/app/services/report.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-balance-sheet',
   templateUrl: './balance-sheet.component.html',
@@ -9,7 +10,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 export class BalanceSheetComponent {
 
   //Constructor
-  constructor(private configurationService: ConfigurationService) { }
+  constructor(private configurationService: ConfigurationService, private reportSerive: ReportService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() { }
 
@@ -53,10 +54,19 @@ export class BalanceSheetComponent {
             subsidiaries: sucursalesId,
             areas: areasId,
             to: this.dateTo,
-            currency: currencyId,
+            currencies: currencyId,
             responsible: names
           }
           console.log(data);
+          //Logica Para Generar reporte
+          this.reportSerive.balaceSheetPDF(data).subscribe((response: any) => {
+            if (response.success) {
+              console.log(response);
+              window.open(response.data, '_blank');
+            } else {
+              console.error('Error al enviar datos al backend', response.errors);
+            }
+          });
         } else {
           this.errorMessageText = 'Por favor, seleccione una fecha.';
           this.showErrorMessage();
