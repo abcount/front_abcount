@@ -44,7 +44,7 @@ export class ReportsComponent {
       this.principalCurrency = this.currencies[0];
       this.currencies.splice(0, 1);
       if (this.currencies.length > 0) {
-        this.otherCurrencySelected = this.currencies[0].exchangeMoneyId;
+        this.otherCurrencySelected = this.currencies[0].abbreviationName;
       }
     });
     this.configurationService.getAccountsPlan().subscribe(

@@ -57,7 +57,7 @@
             <label for="otherCurrency">&nbsp;Otros</label>
           </div>
           <select [(ngModel)]="otherCurrencySelected">
-            <option *ngFor="let currency of currencies" value="{{currency.exchangeMoneyId}}">{{currency.moneyName}}</option>
+            <option *ngFor="let currency of currencies" value="{{currency.abbreviationName}}">{{currency.moneyName}}</option>
           </select>
         </div>
       </div>

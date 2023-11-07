@@ -41,7 +41,7 @@ export class BalanceSheetComponent {
         if (this.dateTo != '') {
           var currencyId = '0';
           if (this.currencySelected == '0') {
-            currencyId = this.principalCurrency.exchangeMoneyId;
+            currencyId = this.principalCurrency.abbreviationName;
           } else {
             currencyId = this.otherCurrencySelected;
           }
