@@ -128,8 +128,9 @@ export class GeneralLedgerFormComponent {
       from: this.dateFrom,
       to: this.dateTo,
       accountsId: this.accountsChecked.map(account => account.accountId),
-      // currencies: this.currencySelected === '0' ? this.principalCurrency.exchangeMoneyId : this.otherCurrencySelected
-      currencies: 26
+      currencies: this.currencySelected === '0' ? this.principalCurrency.exchangeMoneyId : this.otherCurrencySelected
+      //currencies: 26
+
     };
 
     console.log(requestData);
@@ -160,8 +161,8 @@ export class GeneralLedgerFormComponent {
       subsidiary.areas.forEach((area:any) => {
         area.accounts.forEach((account:any) => {
           if (account.transactions && account.transactions.length > 0) {
-            account.transactions.forEach((transaction:any) => {
-              let date = new Date(transaction.registrationDate);
+            account.transactions.forEach((transactions:any) => {
+              let date = new Date(transactions.registrationDate);
               let formattedDate = date.toISOString().split('T')[0];
               const row = {
                 Sucursal: subsidiary.subsidiaryName,
@@ -169,12 +170,12 @@ export class GeneralLedgerFormComponent {
                 "Codigo de Cuenta": account.accountCode,
                 Cuenta: account.accountName,
                 "Fecha de Registro": formattedDate,
-                Tipo: transaction.transactionType,
-                Glosa: transaction.glosaDetail,
-                "Numero de Documento": transaction.documentNumber,
-                Debe: transaction.debitAmount,
-                Haber: transaction.creditAmount,
-                Saldos: transaction.balances
+                Tipo: transactions.transactionType,
+                Glosa: transactions.glosaDetail,
+                "Numero de Documento": transactions.documentNumber,
+                Debe: transactions.debitAmount,
+                Haber: transactions.creditAmount,
+                Saldos: transactions.balances
               };
 
               excelData.push(row);
