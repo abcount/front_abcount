@@ -139,7 +139,7 @@ export class GeneralLedgerFormComponent {
       from: this.dateFrom,
       to: this.dateTo,
       accountsId: this.accountsChecked.map(account => account.accountId),
-      currencies: this.currencySelected === '0' ? this.principalCurrency.exchangeMoneyId : this.otherCurrencySelected
+      currencies: this.currencySelected === '0' ? this.principalCurrency.abbreviationName : this.otherCurrencySelected
       //currencies: 26
 
     };

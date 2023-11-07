@@ -117,9 +117,8 @@ export class DiaryBookFormComponent {
       areas: this.areas.filter(a => a.isChecked).map(a => a.areaId),
       from: this.dateFrom,
       to: this.dateTo,
-      transactionType: this.selectedTransactionType,
-      currencies: 17
-
+      transactionType: 2,
+      currencies: this.currencySelected === '0' ? this.principalCurrency.abbreviationName : this.otherCurrencySelected
     };
 
     console.log(requestData);
