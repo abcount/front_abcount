@@ -82,7 +82,7 @@ export class MyCompaniesComponent implements OnInit{
     this.dataService.getExistExchangeRate().subscribe({
       next: (data) => {
         if(data.data){
-          this.router.navigate(['/accounting-voucher/view']); // /accounting-voucher/view  /configuration-tap/1
+          this.router.navigate(['/home']);
         }else{
           this.router.navigate(['/exchangeAdd']);
         }

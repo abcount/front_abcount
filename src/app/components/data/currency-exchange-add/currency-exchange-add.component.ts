@@ -37,7 +37,7 @@ export class CurrencyExchangeAddComponent {
             data: {title: 'Ocurrio un error!', message: "Ya existe un tipo de cambio registrado para el día de hoy"}
           });
           message.afterClosed().subscribe(() => {
-            this.router.navigate(['/configuration-tap/1']);
+            this.router.navigate(['/home']);
           });
 
         }
@@ -92,7 +92,7 @@ export class CurrencyExchangeAddComponent {
       data: {
         title: 'ADVERTENCIA: ¿Desea salir?', 
         message: "Es necesario registrar el cambio del día, de lo contrario no podrá realizar ninguna transacción.", 
-        route: "/accounting-voucher/view"}
+        route: "/home"}
     });
   }
 
@@ -137,7 +137,7 @@ export class CurrencyExchangeAddComponent {
               data: {title: 'Exito!', message: data.message}
             });
             message.afterClosed().subscribe(() => {
-              this.router.navigate(['/accounting-voucher/view']);
+              this.router.navigate(['/home']);
             })
           }else{
             const message = this.dialog.open(MessageDialogComponent, {
@@ -162,7 +162,7 @@ export class CurrencyExchangeAddComponent {
   cancelEdit(): void {
     this.selectedRecord = undefined;
     this.form.reset();
-    this.router.navigate(['/exchangeView']);
+    this.router.navigate(['/home']);
   }
   getDateControl(): FormControl {
     return this.form.get('date') as FormControl;

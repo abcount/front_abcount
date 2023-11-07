@@ -23,11 +23,11 @@ hr{
 .container-1{
     margin: 4% 4%;
     display: grid;
-    grid-template-columns: 32% 32% 32%;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 4%;
 }
 .descripcion{
-    margin: 1% 4%;
+    margin: 2% 0 0 0;
 }
 /*Ayuda y soporte*/
 .card {
@@ -100,8 +100,8 @@ hr{
 h1 {
     font-size: 35px;
     color: black;
-    margin: 0px;
-    font-family: 'Anek Telugu', sans-serif;
+    margin: 0 0 15px 0;
+    font-family: 'Roboto', sans-serif;
 }
 h2 {
     font-size: 25px;
@@ -111,9 +111,9 @@ h2 {
     font-family: 'Anek Telugu', sans-serif;
 }
 h3{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
-    color: black;
+    color: #757575;
     margin: 0px;
     font-family: 'Anek Telugu', sans-serif;
 }
