@@ -12,15 +12,14 @@ export class ReportsComponent {
   subsidiaries: any[] = [];
   areas: any[] = [];
   transactionTypes = [
-    {"transactionTypeId": 1,"transactionTypeName": "Ingreso"},
-    {"transactionTypeId": 2,"transactionTypeName": "Egreso"},
-    {"transactionTypeId": 3,"transactionTypeName": "Traspaso"},
+    {"transactionTypeId": 3,"transactionTypeName": "Egreso"},
+    {"transactionTypeId": 4,"transactionTypeName": "Traspaso"},
   ];
   currencies: any[] = [];
   principalCurrency: any = '';
   otherCurrencySelected: string = '0';
   accountPlan: any[] = [];
-  
+
   accountPlanBalanceSheet: any[] = [];
 
   constructor(private configurationService: ConfigurationService, private dataService: DataService) { }

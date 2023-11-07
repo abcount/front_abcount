@@ -32,7 +32,7 @@ export class DiaryBookFormComponent {
 
   dateFrom: string = '';
   dateTo: string = '';
-  selectedTransactionType: string = '0';
+  selectedTransactionType: string = '2';
   currencySelected: string = '0';
   @ViewChild('errorMessage') errorMessage: ElementRef;
   errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';
@@ -117,7 +117,7 @@ export class DiaryBookFormComponent {
       areas: this.areas.filter(a => a.isChecked).map(a => a.areaId),
       from: this.dateFrom,
       to: this.dateTo,
-      transactionType: 2,
+      transactionType: this.transactionTypes,
       currencies: this.currencySelected === '0' ? this.principalCurrency.abbreviationName : this.otherCurrencySelected
     };
 

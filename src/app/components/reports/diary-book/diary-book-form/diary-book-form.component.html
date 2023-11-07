@@ -41,7 +41,7 @@
         <div class="period title">
             <h2>TIPO DE COMPROBANTE</h2>
             <select (change)="onTransactionTypeChange($event)">
-                <option value="0">Todos</option>
+                <option value="2">Ingreso</option>
                 <option *ngFor="let transaction of transactionTypes" value="{{transaction.transactionTypeId}}">{{transaction.transactionTypeName}}</option>
             </select>
         </div>
