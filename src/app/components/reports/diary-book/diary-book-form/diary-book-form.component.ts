@@ -93,7 +93,7 @@ export class DiaryBookFormComponent {
             areas: areasId,
             from: this.dateFrom,
             to: this.dateTo,
-            trnsactionType: this.selectedTransactionType,
+            transactionType: this.selectedTransactionType,
             currency: currencyId
           };
           console.log(data);
@@ -117,7 +117,7 @@ export class DiaryBookFormComponent {
       areas: this.areas.filter(a => a.isChecked).map(a => a.areaId),
       from: this.dateFrom,
       to: this.dateTo,
-      transactionType: this.transactionTypes,
+      transactionType: this.selectedTransactionType,
       currencies: this.currencySelected === '0' ? this.principalCurrency.abbreviationName : this.otherCurrencySelected
     };
 
@@ -159,8 +159,8 @@ export class DiaryBookFormComponent {
           // Añadir detalles de cada cuenta involucrada en la transacción
           transaction.accounts.forEach((account:any) => {
             const row = {
-              Codigo_de_Cuenta: account.codeAccount,
-              Nombre_de_Cuenta: account.nameAccount,
+              "Codigo de Cuenta": account.codeAccount,
+              "Nombre de Cuenta": account.nameAccount,
               Detalle: account.glosaDetail,
               Debe: account.debitAmount,
               Haber: account.creditAmount
@@ -170,7 +170,7 @@ export class DiaryBookFormComponent {
 
           // Añadir fila de totales de la transacción
           excelData.push({
-            Codigo_de_Cuenta: 'Totales',
+            "Codigo de Cuenta": 'Totales',
             Debe: transaction.totalDebitAmount,
             Haber: transaction.totalCreditAmount
           });
