@@ -16,6 +16,8 @@
             <a class="dropdown-item" (click)="entityFlagChange()">Cuentas de entidades</a>
             <hr>
             <a class="dropdown-item" routerLink="/exchangeView">Tasa de cambio</a>
+            <hr>
+            <a class="dropdown-item" (click)="accountPlanFlagChange()">Plan de cuentas</a>
         </div>
     </div>
     <a class="nav-link option" routerLink="/reports">Reportes</a>
@@ -25,8 +27,8 @@
         <div class="dropdown-menu" [style.display]="isDropdownOpen ? 'flex' : 'none'">
             <a class="dropdown-item" routerLink="#">Mi perfil</a>
             <hr>
-            <a class="dropdown-item" href="/help-and-support">Ayuda</a>
-            <a class="dropdown-item" href="/configuration-tap/1">Configuración</a>
+            <a class="dropdown-item" routerLink="/help-and-support">Ayuda</a>
+            <a class="dropdown-item" routerLink="/configuration-tap/1">Configuración</a>
             <hr>
             <a class="dropdown-item" href="/my-companies">Cambiar de empresa</a>
             <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
@@ -35,3 +37,4 @@
 </nav>
 <app-auxiliary-account [flag]="auxiliarFlag" (flagChange)="auxiliarFlagChange()"></app-auxiliary-account>
 <app-entity [flag]="entityFlag" (flagChange)="entityFlagChange()"></app-entity>
+<app-account-plan [flag]="accountPlanFlag" (flagChange)="accountPlanFlagChange()"></app-account-plan>

@@ -74,6 +74,8 @@ import { BalanceCheckSumsAndBalancesComponent } from './components/reports/balan
 import { AccountTreeComponent } from './components/initial-config/account-tree/account-tree.component';
 import { HelpAndSupportComponent } from './components/help-and-support/help-and-support.component';
 import { HomeComponent } from './components/home/home.component';
+import { AccountPlanComponent } from './components/data/account-plan/account-plan.component';
+import { AccountPlanViewComponent } from './components/data/account-plan-view/account-plan-view.component';
 
 
 
@@ -120,6 +122,8 @@ import { HomeComponent } from './components/home/home.component';
     AccountTreeComponent,
     HelpAndSupportComponent,
     HomeComponent,
+    AccountPlanComponent,
+    AccountPlanViewComponent,
   ],
   imports: [
     BrowserModule,

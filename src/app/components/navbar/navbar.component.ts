@@ -39,4 +39,9 @@ export class NavbarComponent {
     this.entityFlag = !this.entityFlag;
   }
 
+  accountPlanFlag: boolean = false;
+  accountPlanFlagChange() {
+    this.accountPlanFlag = !this.accountPlanFlag;
+  }
+
 }
