@@ -126,6 +126,7 @@ export class BalanceSheetComponent {
     console.log(requestData);
     this.configurationService.sendData2(requestData).subscribe((response: any) => {
       if (response.success) {
+        console.log(response)
         const headersInfo = {
           companyName: response.data.companyName,
           dateTo: response.data.dateTo,
@@ -166,7 +167,7 @@ export class BalanceSheetComponent {
       subsidiary.areas.forEach((area:any) => {
         // Agrega un encabezado para cada área
         excelData.push({
-          Codigo: `Área ${area.areaName}`,
+          Codigo: subsidiary.subsidiaryName,
           Cuenta: area.area,
           Monto: ''
         });
