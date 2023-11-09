@@ -27,18 +27,18 @@ export class ReportService {
   balaceSheetPDF(data: any): Observable<any> {
     const companyId = localStorage.getItem('companyId');
     console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/balaceSheet/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/general/balance/pdf/${companyId}`, data);
   }
   //Estado De Resultados
   statementIncomePDF(data: any): Observable<any> {
     const companyId = localStorage.getItem('companyId');
     console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/statementIncome/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/general/estado-resultados/pdf/${companyId}`, data);
   }
   //Balance De Sumas y Saldos
   balanceSumsAndBalancesPDF(data: any): Observable<any> {
     const companyId = localStorage.getItem('companyId');
     console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/balanceSumsAndBalances/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/sumas/saldos/pdf/${companyId}`, data);
   }
 }
