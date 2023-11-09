@@ -4,8 +4,41 @@
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
     <ng-template #content>
-        <div class="header">
-            <img src="../../../assets/notificacion.png" alt="notificación" width="60px" (click)="popup()">
+        <div class="close-session" (click)="logout()">
+            <i class="fa-solid fa-sign-out"></i>Cerrar sesión
+        </div>
+        <div class="notification">
+            <div class="notification-space">
+                <div class="notification-icon">
+                    <i (click)="popup()" class="fa-regular fa-bell"></i>
+                    <div class="notification-number" [ngClass]="{'cero': numberOfNotification === 0, 'more': numberOfNotification !== 0}">
+                        <h6 *ngIf="numberOfNotification>0">{{numberOfNotification}} +</h6>
+                        <h6 *ngIf="numberOfNotification == 0">{{numberOfNotification}}</h6>
+                    </div>  
+                    <div class="custom-confirm-dialog" *ngIf="isDialogVisible">
+                        <div class="popup-header">
+                            <h5>Notificaciones</h5>
+                            <i class="fa-solid fa-xmark close" (click)="closeWindow()"></i>
+                        </div>
+                        <hr>
+                        <div class="data-scroll">
+                            <div class="datos" *ngFor="let invitacion of pendingInvitation; let inInvi = index">
+                                <div>
+                                    <img src={{getImageProfile(invitacion.urlImage)}} alt="notificación" width="90px">
+                                </div>
+                                <div>
+                                    <h5>Invitación de {{invitacion.companyName}}</h5>
+                                    <p>¡Buenas noticias! La empresa {{invitacion.companyName}} te ha invitado a acceder a su contabilidad a través de nuestro sistema. ¿Deseas aceptar la invitación?</p>
+                                    <div class="dialog-actions">
+                                        <button (click)="confirmInvitation(inInvi)" class="aceptar">Confirmar</button>
+                                        <button (click)="cancelDelete(inInvi)" class="cancelar">Rechazar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+                </div>
+            </div>
         </div>
         <div class="my-companies">
             <div class="add-company">
@@ -26,25 +59,4 @@
 </div>
 
 <!-- Popup -->
-<div class="overlay" *ngIf="isDialogVisible"></div> <!-- Fondo oscuro -->
-<div class="custom-confirm-dialog" *ngIf="isDialogVisible">
-  <div class="dialog-content">
-    <div class="popup-header">
-        <h5>Notificaciones</h5>
-        <img src="../../../assets/cancelar.png" alt="notificación" width="35px" (click)="closeWindow()">
-    </div>
-    <hr>
-    <div class="datos" *ngFor="let invitacion of pendingInvitation; let inInvi = index">
-        <div>
-            <img src={{getImageProfile(invitacion.urlImage)}} alt="notificación" width="90px">
-        </div>
-        <div>
-            <h5>Invitación de {{invitacion.companyName}}</h5>
-            <p>¡Buenas noticias! La empresa {{invitacion.companyName}} te ha invitado a acceder a su contabilidad a través de nuestro sistema. ¿Deseas aceptar la invitación?</p>
-            <div class="dialog-actions">
-                <button (click)="confirmInvitation(inInvi)" class="Aceptar">Confirmar</button>
-                <button (click)="cancelDelete(inInvi)" class="Cancelar">Rechazar</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="overlay" *ngIf="isDialogVisible"></div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CompanyDto } from 'src/app/dto/company.dto';
-import {HttpClient} from "@angular/common/http";
+import { KeycloakService } from 'keycloak-angular';
 import { UserService } from 'src/app/services/user.service';
 import { DataService } from 'src/app/services/data.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,16 +13,14 @@ import { InvitationStateDto } from 'src/app/dto/userinvitation.dto';
   templateUrl: './my-companies.component.html',
   styleUrls: ['./my-companies.component.css']
 })
-export class MyCompaniesComponent implements OnInit{
+export class MyCompaniesComponent implements OnInit {
+
   companies: CompanyDto[]
   pendingInvitation : InvitationStateDto[] = []
   loading: boolean = true;
-  constructor(private router: Router,
-    private userService: UserService,
-    private dataService: DataService,
-    private dialog: MatDialog) {
+  numberOfNotification: number = 0;
 
-    }
+  constructor(private keycloak: KeycloakService, private router: Router, private userService: UserService, private dataService: DataService, private dialog: MatDialog) { }
 
   async ngOnInit() {
     localStorage.clear();
@@ -31,23 +29,21 @@ export class MyCompaniesComponent implements OnInit{
     this.userService.getInfoUser().subscribe({
       next: (response) =>{
         console.log(response)
-
         // call companies
         this.userService.getCompaniesByUser().subscribe({
           next: (response) => {
             console.log(response)
             if(response.data){
               this.companies = response.data;
-              
               // cal invitation api
               this.userService.getInvitationsPending().subscribe({
                 next: (response) => {
                   console.log(response)
                   if(response.data){
                     this.pendingInvitation = response.data.PENDING;
+                    this.numberOfNotification = this.pendingInvitation.length;
                     this.loading = false;
                   }
-      
                 },
                 error: (error) => {
                   console.log("Error fetching user Info", error);
@@ -55,30 +51,23 @@ export class MyCompaniesComponent implements OnInit{
                 }
               });
             }
-
           },
           error: (error) => {
             console.log("Error fetching user Info", error);
             this.loading = false;
           }
-        }); 
-        
+        });
       },
       error: (error) => {
         console.log("Error fetching user Info", error);
         this.loading = false;
       }
     })
-
   }
- 
-
-
 
   saveData(companyId: number, userId: number) {
     localStorage.setItem('userId', userId.toString());
     localStorage.setItem('companyId', companyId.toString());
- 
     this.dataService.getExistExchangeRate().subscribe({
       next: (data) => {
         if(data.data){
@@ -93,18 +82,15 @@ export class MyCompaniesComponent implements OnInit{
         });
       },
     });
- 
   }
 
- 
-
   // Logica popup
-  
   isDialogVisible = false;
   popup() {
     console.log("popup")
     this.isDialogVisible = true;
   }
+
   getImageProfile(path: string | null | undefined) {
     if(path == undefined){
       return '../../../assets/pfp.svg';
@@ -117,7 +103,6 @@ export class MyCompaniesComponent implements OnInit{
 
   confirmInvitation(index:number) {
     console.log('Aceptar invitación');
-
     // accept or decline
     this.userService.willAceptInvitation(true, this.pendingInvitation[index].invitationId).subscribe({
       next: (response) => {
@@ -130,63 +115,56 @@ export class MyCompaniesComponent implements OnInit{
               if(response.data){
                 this.companies = response.data
               }
-
             },
             error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
           });
-
           this.userService.getInvitationsPending().subscribe({
             next: (response) => {
               console.log(response)
               if(response.data){
-                this.pendingInvitation = response.data.PENDING
+                this.pendingInvitation = response.data.PENDING;
+                this.numberOfNotification = this.pendingInvitation.length;
               }
-  
             },
             error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
           })
         }
-
       },
       error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
     });
-
     this.closeWindow()// Cierra el cuadro de diálogo
-    
   }
 
   cancelDelete(index:number) {
     // Cancela la eliminación aquí
     console.log('Rechazar invitación');
-
-   
     this.userService.willAceptInvitation(false, this.pendingInvitation[index].invitationId).subscribe({
       next: (response) => {
         console.log(response)
         if(response.success){
-
           this.userService.getInvitationsPending().subscribe({
             next: (response) => {
               console.log(response)
               if(response.data){
-                this.pendingInvitation = response.data.PENDING
+                this.pendingInvitation = response.data.PENDING;
+                this.numberOfNotification = this.pendingInvitation.length;
               }
-  
             },
             error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
           });
-          
         }
-
       },
       error: (error) => console.log("Error >>>>>>>>>>>>>>>>>>>>>>>>", error)
     });
-
     this.closeWindow()// Cierra el cuadro de diálogo
   }
 
   closeWindow(){
     this.isDialogVisible = false;
-    
+  }
+
+  logout() {
+    localStorage.clear();
+    this.keycloak.logout("http://localhost:4200");
   }
 }
