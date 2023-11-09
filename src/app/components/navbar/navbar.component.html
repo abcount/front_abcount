@@ -15,7 +15,7 @@
             <a class="dropdown-item" (click)="auxiliarFlagChange()">Cuentas auxiliares</a>
             <a class="dropdown-item" (click)="entityFlagChange()">Cuentas de entidades</a>
             <hr>
-            <a class="dropdown-item" routerLink="/exchangeView">Tasa de cambio</a>
+            <a class="dropdown-item" (click)="exchangeFlagChange()">Tasa de cambio</a>
             <hr>
             <a class="dropdown-item" (click)="accountPlanFlagChange()">Plan de cuentas</a>
         </div>
@@ -38,3 +38,4 @@
 <app-auxiliary-account [flag]="auxiliarFlag" (flagChange)="auxiliarFlagChange()"></app-auxiliary-account>
 <app-entity [flag]="entityFlag" (flagChange)="entityFlagChange()"></app-entity>
 <app-account-plan [flag]="accountPlanFlag" (flagChange)="accountPlanFlagChange()"></app-account-plan>
+<app-currency-exchange-view [flag]="exchangeFlag" (flagChange)="exchangeFlagChange()"></app-currency-exchange-view>

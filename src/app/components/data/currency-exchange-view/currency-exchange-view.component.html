@@ -1,45 +1,35 @@
-
-
-<div class="wrapper">
+<div class="wrapper" *ngIf="flag">
   <div class="container">
-    <h2>Tipos de cambio</h2>
-    <hr>
-    <mat-table [dataSource]="data">
-      <!-- Columna de fecha -->
-      <ng-container matColumnDef="date">
-        <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
-        <mat-cell *matCellDef="let record"> {{record.date}} </mat-cell>
-      </ng-container>
-
-      <!-- Columnas dinámicas para las monedas -->
-      <ng-container *ngFor="let column of displayedColumns">
-        <ng-container [matColumnDef]="column">
-          <mat-header-cell *matHeaderCellDef> {{ column }} </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ getValueForCurrency(record, column) }} </mat-cell>
-        </ng-container>
-      </ng-container>
-
-
-      <!-- Acciones Column -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> Editar - Eliminar </mat-header-cell>
-        <mat-cell *matCellDef="let record">
-          <button class="edit" (click)="loadExchangeRateForEdit(record)" mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button class="delete" mat-icon-button (click)="deleteExchangeRate(record)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="allColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: allColumns"></mat-row>
-
-    </mat-table>
-    <div class="buttons-container">
-      <app-my-button [isGreen]="true"  (click)="addNewExchangeRate()">Nuevo</app-my-button>
+    <div class="title">
+      <h2>Tipos de Cambio</h2>
+      <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
     </div>
-
+    <hr>
+    <div class="table-container">
+      <mat-table [dataSource]="data">
+        <!-- Columnas dinámicas para las monedas -->
+        <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+          <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
+          <mat-cell *matCellDef="let record">{{record[column]}}</mat-cell>
+        </ng-container>
+        
+        <!-- Editar Column -->
+        <ng-container matColumnDef="Editar">
+          <mat-header-cell class="cell-title-center" *matHeaderCellDef>Editar</mat-header-cell>
+          <mat-cell class="cell-center" *matCellDef="let record">
+            <button class="edit" (click)="loadExchangeRateForEdit(record)" mat-icon-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        
+        <!-- Columnas -->
+        <mat-header-row *matHeaderRowDef="allColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
+      </mat-table>
+    </div>
+    <div class="buttons-container">
+      <button class="new" (click)="addNewExchangeRate()"><i class="fa-solid fa-plus"></i>NUEVO</button>
     </div>
   </div>
+</div>

@@ -21,7 +21,7 @@ export class CurrencyExchangeAddComponent {
   date: String = '';
   errorMessage = '';
 
-  patternAll = '.*';
+  patternAll = '^[0-9.]*$';
   patternAllMessage = 'Ingrese un valor válido';
 
 

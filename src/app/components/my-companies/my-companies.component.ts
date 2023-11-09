@@ -71,7 +71,7 @@ export class MyCompaniesComponent implements OnInit {
     this.dataService.getExistExchangeRate().subscribe({
       next: (data) => {
         if(data.data){
-          this.router.navigate(['/home']);
+          window.location.href = '/home';
         }else{
           this.router.navigate(['/exchangeAdd']);
         }

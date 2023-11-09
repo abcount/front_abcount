@@ -66,12 +66,11 @@ export class DataService {
 
   private editingRecordSource = new BehaviorSubject<ExchangeRateDto | null>(null);
   currentEditingRecord = this.editingRecordSource.asObservable();
-
-
+  companyId = localStorage.getItem('companyId');
 
   getExchangeRates(): Observable<{ data: ExchangeRateDto[] }> {
-    console.log("Llamando a la URL:", `${this.baseUrl}/getAllExchangeRates`);
-    return this.http.get<{ data: ExchangeRateDto[] }>(`${this.baseUrl}/getAllExchangeRates`);
+    //console.log("Llamando a la URL:", `${this.baseUrl}/exchangeRate/${this.companyId}`);
+    return this.http.get<{ data: ExchangeRateDto[] }>(`${this.baseUrl}/exchangeRate/${this.companyId}`);
   }
 
 

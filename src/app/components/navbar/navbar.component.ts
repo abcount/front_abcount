@@ -44,4 +44,9 @@ export class NavbarComponent {
     this.accountPlanFlag = !this.accountPlanFlag;
   }
 
+  exchangeFlag: boolean = false;
+  exchangeFlagChange() {
+    this.exchangeFlag = !this.exchangeFlag;
+  }
+
 }

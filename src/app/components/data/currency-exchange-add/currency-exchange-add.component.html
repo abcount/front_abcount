@@ -1,9 +1,10 @@
 <div class="wrapper">
   <div class="container">
-    <div>
-      <a (click)="close()">x</a>
+    <div class="title">
+      <h2>{{ selectedRecord ? 'Editar Tipo de Cambio' : 'Agregar Tipo de Cambio' }}</h2>
+      <i class="fa-solid fa-xmark" (click)="close()"></i>
     </div>
-    <h2>{{ selectedRecord ? 'Editar Tipo de Cambio' : 'Agregar Tipo de Cambio' }}</h2>
+    <hr>
     <div>
       <form [formGroup]="form">
         <mat-grid-list cols="1" rowHeight="25px">
@@ -14,7 +15,7 @@
           </mat-grid-tile>
           <mat-grid-tile>
             <h3>
-              MONEDA PRINCIPAL: {{ principalCurrency.moneyName}}
+              MONEDA PRINCIPAL: {{principalCurrency.moneyName}}
             </h3>
           </mat-grid-tile>
           <mat-grid-tile *ngIf="errorMessage!=''">
@@ -25,6 +26,7 @@
           <div *ngFor="let currency of currencies" >
             <mat-grid-tile [colspan]="1" *ngIf="!currency.isPrincipal">
               <app-my-textfield type="text"
+                                iconInput="fa-light fa-money-bill"
                                 [label]="currency.abbreviationName"
                                 [control]="getCurrencyControl(currency.abbreviationName)"
                                 [pattern]="patternAll"
