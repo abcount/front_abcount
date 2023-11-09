@@ -126,4 +126,9 @@ export class ConfigurationService {
     console.log(companyId);
     return this.http.post<any>(`http://localhost:8080/general/estado-resultados/${companyId}`, data);
   }
+  sendData4(data: any): Observable<any> {
+    const companyId = localStorage.getItem('companyId');
+    console.log(companyId);
+    return this.http.post<any>(`http://localhost:8080/sumas/saldos/${companyId}`, data);
+  }
 }

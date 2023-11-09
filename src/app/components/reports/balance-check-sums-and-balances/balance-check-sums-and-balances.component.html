@@ -28,16 +28,16 @@
             </div>
         </div>
         <hr>
-        <h2>PLAN DE CUENTAS</h2>
-        <div class="account-plan">
-            <app-account-checkbox [accounts]="accountPlan"></app-account-checkbox>
-        </div>
         <div class="period title">
             <h2>PERIODO</h2>
             <div class="title">
-              <h2>Al:</h2>
-              <input type="date" [(ngModel)]="dateTo"/>
-            </div>
+                <h2>De:</h2>
+                <input type="date" [(ngModel)]="dateFrom"/>
+              </div>
+              <div class="title">
+                <h2>Al:</h2>
+                <input type="date" [(ngModel)]="dateTo"/>
+              </div>
         </div> 
         <hr>
         <div class="money">
