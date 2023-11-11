@@ -46,9 +46,9 @@ hr {
     margin-bottom: 10px;
 }
 /*Alinear boton a la izquierda*/
-.right {
+.other-currencies {
     display: flex; 
-    justify-content: flex-end;
+    margin: 8px 0 5px 0;
 }
 /*Lista de monedas*/
 .moneda-item {

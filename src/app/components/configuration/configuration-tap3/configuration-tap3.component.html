@@ -13,39 +13,13 @@
                 <h3>MONEDA PRINCIPAL</h3>
                 <h3 style="color: #B2B2B2;">Bolivianos</h3>
             </div>
-            <div class="row-2">
+            <div class="other-currencies">
                 <h3>Otras monedas que quiera manejar</h3>
-                <div class="right">
-                    <button *ngIf="!modeEdit" class="edit-button" (click)="enable()">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <div *ngIf="modeEdit" class="input-icon-container">
-                        <i class="fa fa-search input-icon"></i>
-                        <input type="text" id="searchMoneda" [formControl]="moneyName" class="input-group" placeholder="Ingresa el nombre de la moneda a agregar">
-                        <div class="sugerencias-container" *ngIf="monedasSugeridas.length > 0">
-                        <div *ngFor="let moneda of monedasSugeridas" (click)="seleccionarMoneda(moneda)" class="sugerencia-item">
-                            {{ moneda.moneyName }} ({{ moneda.moneyIso }})
-                        </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div>
                 <div *ngFor="let currency of currencies" class="moneda-item">
-                {{ currency.moneyName }}
+                {{ currency.abbreviationName }}
                 </div>
-            </div>
-            <div class="currencies-list">
-                <div *ngFor="let moneda of monedasSeleccionadas" class="moneda-item">
-                    {{ moneda.moneyName }} 
-                    <button (click)="removerMoneda(moneda.exchangeId)" class="remove-button">
-                        <i class="fa-solid fa-x"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="right" *ngIf="modeEdit">
-                <app-my-button [isGreen]="true" (click)="save()" style="margin-right: 10px;">GUARDAR CAMBIOS</app-my-button>
-                <app-my-button [isRed]="true" (click)="cancel()">CANCELAR</app-my-button>
             </div>
         </div>
     </div>

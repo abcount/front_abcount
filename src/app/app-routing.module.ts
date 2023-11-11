@@ -22,6 +22,7 @@ import { StatementOfIncomeComponent } from './components/reports/statement-of-in
 import { AuthGuard } from './guard/auth.guard';
  
 import { HelpAndSupportComponent } from './components/help-and-support/help-and-support.component';
+import { ClosingSheetComponent } from './components/closing-sheet/closing-sheet.component';
  
 
 
@@ -65,7 +66,8 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent},
   { path: 'statement-of-income', component: StatementOfIncomeComponent},
   { path: 'exchangeAdd', component: CurrencyExchangeAddComponent},
-  { path: 'help-and-support',component: HelpAndSupportComponent}
+  { path: 'help-and-support',component: HelpAndSupportComponent},
+  { path: 'closing-sheet', component: ClosingSheetComponent}
 ];
 
 @NgModule({
