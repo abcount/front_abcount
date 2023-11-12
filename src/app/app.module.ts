@@ -77,6 +77,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AccountPlanComponent } from './components/data/account-plan/account-plan.component';
 import { AccountPlanViewComponent } from './components/data/account-plan-view/account-plan-view.component';
 import { ClosingSheetComponent } from './components/closing-sheet/closing-sheet.component';
+import { CurrencyExchangeEditComponent } from './components/data/currency-exchange-edit/currency-exchange-edit.component';
 
 
 
@@ -126,6 +127,7 @@ import { ClosingSheetComponent } from './components/closing-sheet/closing-sheet.
     AccountPlanComponent,
     AccountPlanViewComponent,
     ClosingSheetComponent,
+    CurrencyExchangeEditComponent,
   ],
   imports: [
     BrowserModule,

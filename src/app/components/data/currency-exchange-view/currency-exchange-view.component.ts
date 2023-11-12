@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ExchangeRateDto } from "../../../dto/exchangeRate.dto";
 import { DataService } from "../../../services/data.service";
 import { Router } from "@angular/router";
@@ -10,15 +10,19 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./currency-exchange-view.component.css']
 })
 export class CurrencyExchangeViewComponent {
+
   data: any[] = [];
   displayedColumns: string[] = [];
   allColumns: string[] = [];
-
-  selectedRecord?: ExchangeRateDto;
+  selectedRecord: ExchangeRateDto = { date: '', values: [] };
 
   constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
     this.dataService.getExchangeMoney().subscribe((data: any) => {
       this.displayedColumns = data.data.filter((item: any) => item.isPrincipal === false).map((item: any) => item.abbreviationName);
       this.displayedColumns.unshift('Fecha');
@@ -51,7 +55,6 @@ export class CurrencyExchangeViewComponent {
         });
         const formattedDate = formatDate(new Date(date), 'dd-MM-yyyy', 'en-US');
         const record = { Fecha: `${formattedDate}`, ...currencies };
-        //const record = { date, ...currencies };
         result.push(record);
       }
     }
@@ -63,9 +66,38 @@ export class CurrencyExchangeViewComponent {
     return found ? found.value : undefined;
   }
 
-  loadExchangeRateForEdit(record: ExchangeRateDto): void {
-    console.log(record);
-    this.router.navigate(['/exchangeAdd'], { queryParams: { data: JSON.stringify(record) } });
+  loadExchangeRateForEdit(record: any): void {
+    this.selectedRecord = {
+      date: record.Fecha,
+      values: this.transformarJson(record)
+    };
+    this.flagEditChange();
+  }
+
+  transformarJson(json: { [key: string]: number }): { abbreviation: string, value: number }[] {
+    const resultado: { abbreviation: string, value: number }[] = [];
+    for (const key in json) {
+      if (json.hasOwnProperty(key)) {
+        if (key === 'Fecha') {
+          continue;
+        } else {
+          const nuevoItem = {
+            abbreviation: key,
+            value: json[key]
+          };
+          resultado.push(nuevoItem);
+        }
+      }
+    }
+    return resultado;
+  }
+
+  flagEdit: boolean = false;
+  flagEditChange() {
+    this.flagEdit = !this.flagEdit;
+    if (!this.flagEdit) {
+      this.loadData();
+    }
   }
 
   addNewExchangeRate(): void {
@@ -82,5 +114,3 @@ export class CurrencyExchangeViewComponent {
   }
 
 }
-
-
