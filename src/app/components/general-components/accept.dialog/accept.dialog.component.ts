@@ -12,12 +12,16 @@ export class AcceptDialogComponent {
   public fName!: string;
   public fIndex: any;
 
-  constructor(private modalRef: MatDialogRef<AcceptDialogComponent>
-    ,@Inject(MAT_DIALOG_DATA) public data: {title: string, message: string, route: string }, private router:Router) { }
+  constructor(
+    private modalRef: MatDialogRef<AcceptDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {title: string, message: string, action: Function }
+  ) {}
 
   confirm() {
     this.modalRef.close();
-    this.router.navigate([this.data.route]);
+    if (this.data.action) {
+      this.data.action();
+    }
   }
   cancel() {
     this.modalRef.close();

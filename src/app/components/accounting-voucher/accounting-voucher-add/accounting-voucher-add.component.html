@@ -100,13 +100,13 @@
               </div>
             </td>
             <td>
-              <input autocomplete="off" name="debe" [(ngModel)]="entrada.debe" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'debe')" [ngClass]="{'red-text': entrada.falta}">
+              <input autocomplete="off" name="debe" [(ngModel)]="entrada.debe" (input)="validarInput($event, true, entrada)" (keydown)="navegarInputs($event, i, 'debe')" [ngClass]="{'red-text': entrada.falta}">
             </td>
             <td>
-              <input autocomplete="off" name="haber" [(ngModel)]="entrada.haber" (input)="validarInput($event)" (keydown)="navegarInputs($event, i, 'haber')" [ngClass]="{'red-text': entrada.falta}">
+              <input autocomplete="off" name="haber" [(ngModel)]="entrada.haber" (input)="validarInput($event, false, entrada)" (keydown)="navegarInputs($event, i, 'haber')" [ngClass]="{'red-text': entrada.falta}">
             </td>
-            <td>
-              <input autocomplete="off" name="glosa" [(ngModel)]="entrada.glosa" (keydown)="navegarInputs($event, i, 'glosa')" maxlength="450" [ngClass]="{'red-text': entrada.falta}" (input)="verifyAllEntries()">
+            <td style="width: 30%;">
+              <input style="text-align: left;" autocomplete="off" name="glosa" [(ngModel)]="entrada.glosa" (keydown)="navegarInputs($event, i, 'glosa')" maxlength="450" [ngClass]="{'red-text': entrada.falta}" (input)="verifyAllEntries()">
             </td>
             <td>
               <input autocomplete="off" name="nroDoc" [(ngModel)]="entrada.nroDoc" (keydown)="navegarInputs($event, i, 'nroDoc')" maxlength="18" [ngClass]="{'red-text': entrada.falta}">
@@ -118,7 +118,7 @@
             <td><input class="result" type="text" [(ngModel)]="totalDebe" readonly></td>
             <td><input class="result" type="text" [(ngModel)]="totalHaber" readonly></td>
             <td>
-              <h3 [ngClass]="{'green-text': diferencia === 0, 'red-text': diferencia !== 0}">
+              <h3 style="margin-left: 10px; text-align: left;" [ngClass]="{'green-text': diferencia === 0, 'red-text': diferencia !== 0}">
                 Diferencia: {{ diferencia }}
               </h3>
             </td>
@@ -146,3 +146,4 @@
     <h3>{{popupMessage}}</h3>
   </ng-template>
 </div>
+<app-currency-exchange-add [flag]="flagAdd" (flagChange)="flagAddChange()"></app-currency-exchange-add>

@@ -29,8 +29,9 @@
       </mat-table>
     </div>
     <div class="buttons-container">
-      <button class="new" (click)="addNewExchangeRate()"><i class="fa-solid fa-plus"></i>NUEVO</button>
+      <button class="new" (click)="flagAddChange()"><i class="fa-solid fa-plus"></i>NUEVO</button>
     </div>
   </div>
 </div>
 <app-currency-exchange-edit [flag]="flagEdit" (flagChange)="flagEditChange()" [register]="selectedRecord"></app-currency-exchange-edit>
+<app-currency-exchange-add [flag]="flagAdd" (flagChange)="flagAddChange()"></app-currency-exchange-add>

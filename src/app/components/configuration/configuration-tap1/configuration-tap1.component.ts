@@ -45,23 +45,6 @@ export class ConfigurationTap1Component {
   // Funcion al iniciar la pantalla
   ngOnInit() {
     const companyId = localStorage.getItem('companyId');
-    this.dataService.getExistExchangeRate().subscribe({
-      next: (data) => {
-        if(data.data){
-          this.route.navigate(['/configuration-tap/1']);
-        }else{
-          this.route.navigate(['/exchangeAdd']);
-        }
-      },
-      error: (error) => {
-        const message = this.dialog.open(MessageDialogComponent, {
-          data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor"}
-        });
-        message.afterClosed().subscribe(() => {
-          window.location.reload();
-        });
-      },
-    });
     if(companyId){
       this.configurationService.getEnterprise().subscribe(
         (data: any) => {

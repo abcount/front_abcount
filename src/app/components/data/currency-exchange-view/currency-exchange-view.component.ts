@@ -100,11 +100,14 @@ export class CurrencyExchangeViewComponent {
     }
   }
 
-  addNewExchangeRate(): void {
-    // Navega al componente de adición sin pasar datos
-    this.router.navigate(['/exchangeAdd']);
+  flagAdd: boolean = false;
+  flagAddChange() {
+    this.flagAdd = !this.flagAdd;
+    if (!this.flagAdd) {
+      this.loadData();
+    }
   }
-
+  
   @Input() flag: boolean = false;
   @Output() flagChange = new EventEmitter<boolean>();
 

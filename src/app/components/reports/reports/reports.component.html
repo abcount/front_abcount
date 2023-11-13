@@ -8,78 +8,88 @@
     </div>
     <!-- Contenedor de los reportes (Imagen-descripción) -->
     <div class="container-1">
-        <div class="card libro-diario">
-            <div class="header-card">
-                <div class="logo center">
-                    <i class="fa-light fa-book center"></i>
+        <div class="space-bottom">
+            <div class="card libro-diario">
+                <div class="header-card">
+                    <div class="logo center">
+                        <i class="fa-light fa-book center"></i>
+                    </div>
+                    <i class="fa-solid fa-ellipsis form-logo" (click)="diaryBookFlagChange()"></i> 
+                    <div class="logo-white center">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>  
                 </div>
-                <i class="fa-solid fa-ellipsis form-logo" (click)="diaryBookFlagChange()"></i> 
-                <div class="logo-white center">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>  
+                <h2>Libro Diario</h2>
+                <h4>Registro detallado de todas las transacciones financieras de una empresa en orden cronológico. 
+                Cada entrada incluye la fecha, una descripción de la transacción, las cuentas afectadas, y el importe de débito y crédito.</h4>
             </div>
-            <h2>Libro Diario</h2>
-            <h4>Registro detallado de todas las transacciones financieras de una empresa en orden cronológico. 
-            Cada entrada incluye la fecha, una descripción de la transacción, las cuentas afectadas, y el importe de débito y crédito.</h4>
         </div>
-        <div class="card libro-mayor">
-            <div class="header-card">
-                <div class="logo center">
-                    <i class="fa-light fa-chart-line center"></i>
+        <div class="space-bottom">
+            <div class="card libro-mayor">
+                <div class="header-card">
+                    <div class="logo center">
+                        <i class="fa-light fa-chart-line center"></i>
+                    </div>
+                    <i class="fa-solid fa-ellipsis form-logo" (click)="generalLedgerFlagChange()"></i>
+                    <div class="logo-white center">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>  
                 </div>
-                <i class="fa-solid fa-ellipsis form-logo" (click)="generalLedgerFlagChange()"></i>
-                <div class="logo-white center">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>  
+                <h2>Libro Mayor</h2>
+                <h4>Registro que resume todas las transacciones registradas en el Libro Diario. Cada cuenta tiene 
+                su propio libro mayor, y este informe muestra el saldo de cada cuenta después de cada transacción.</h4>
             </div>
-            <h2>Libro Mayor</h2>
-            <h4>Registro que resume todas las transacciones registradas en el Libro Diario. Cada cuenta tiene 
-            su propio libro mayor, y este informe muestra el saldo de cada cuenta después de cada transacción.</h4>
         </div>
-        <div class="card balance-general">
-            <div class="header-card">
-                <div class="logo center">
-                    <i class="fa-light fa-balance-scale center"></i>
+        <div class="space-bottom">
+            <div class="card balance-general">
+                <div class="header-card">
+                    <div class="logo center">
+                        <i class="fa-light fa-balance-scale center"></i>
+                    </div>
+                    <i class="fa-solid fa-ellipsis form-logo" (click)="balanceSheetFlagChange()"></i>
+                    <div class="logo-white center">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>  
                 </div>
-                <i class="fa-solid fa-ellipsis form-logo" (click)="balanceSheetFlagChange()"></i>
-                <div class="logo-white center">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>  
+                <h2>Balance General</h2>
+                <h4>Informe financiero que proporciona una instantánea de la situación financiera de una empresa en 
+                un momento específico. Muestra la relación entre los activos (lo que la empresa posee), los pasivos 
+                (lo que la empresa debe) y el patrimonio neto (la inversión de los propietarios) en un momento dado.</h4>
             </div>
-            <h2>Balance General</h2>
-            <h4>Informe financiero que proporciona una instantánea de la situación financiera de una empresa en 
-            un momento específico. Muestra la relación entre los activos (lo que la empresa posee), los pasivos 
-            (lo que la empresa debe) y el patrimonio neto (la inversión de los propietarios) en un momento dado.</h4>
         </div>
-        <div class="card estado-resultado">
-            <div class="header-card">
-                <div class="logo center">
-                    <i class="fa-light fa-chart-pie center"></i>
+        <div class="space-bottom">
+            <div class="card estado-resultado">
+                <div class="header-card">
+                    <div class="logo center">
+                        <i class="fa-light fa-chart-pie center"></i>
+                    </div>
+                    <i class="fa-solid fa-ellipsis form-logo" (click)="statementOfIncomeFlagChange()"></i>
+                    <div class="logo-white center">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>  
                 </div>
-                <i class="fa-solid fa-ellipsis form-logo" (click)="statementOfIncomeFlagChange()"></i>
-                <div class="logo-white center">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>  
+                <h2>Estado de Resultados</h2>
+                <h4>También conocido como Estado de Pérdidas y Ganancias, muestra los ingresos, costos y gastos de una 
+                empresa durante un período específico (generalmente un mes, trimestre o año). Muestra si la empresa tuvo 
+                ganancias o pérdidas durante ese período.</h4>
             </div>
-            <h2>Estado de Resultados</h2>
-            <h4>También conocido como Estado de Pérdidas y Ganancias, muestra los ingresos, costos y gastos de una 
-            empresa durante un período específico (generalmente un mes, trimestre o año). Muestra si la empresa tuvo 
-            ganancias o pérdidas durante ese período.</h4>
         </div>
-        <div class="card sumas-saldos">
-            <div class="header-card">
-                <div class="logo center">
-                    <i class="fa-light fa-telescope center"></i>
+        <div class="space-bottom">
+            <div class="card sumas-saldos">
+                <div class="header-card">
+                    <div class="logo center">
+                        <i class="fa-light fa-telescope center"></i>
+                    </div>
+                    <i class="fa-solid fa-ellipsis form-logo" (click)="BalanceCheckSumsAndBalancesChange()"></i>
+                    <div class="logo-white center">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>  
                 </div>
-                <i class="fa-solid fa-ellipsis form-logo" (click)="BalanceCheckSumsAndBalancesChange()"></i>
-                <div class="logo-white center">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>  
+                <h2>Sumas y saldos</h2>
+                <h4>Un reporte de sumas y saldos es un resumen financiero que muestra el saldo inicial, las transacciones 
+                y el saldo actual de cuentas específicas en un período contable, lo que ayuda a las empresas a entender su 
+                situación financiera.</h4>
             </div>
-            <h2>Sumas y saldos</h2>
-            <h4>Un reporte de sumas y saldos es un resumen financiero que muestra el saldo inicial, las transacciones 
-            y el saldo actual de cuentas específicas en un período contable, lo que ayuda a las empresas a entender su 
-            situación financiera.</h4>
         </div>
     </div>
 </div>

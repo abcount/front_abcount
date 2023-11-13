@@ -16,17 +16,11 @@ import { UsersAndPermissionsComponent } from './components/configuration/users-a
 import { AccountingVoucherViewComponent } from "./components/accounting-voucher/accounting-voucher-view/accounting-voucher-view.component";
 import { AccountingVoucherAddComponent } from "./components/accounting-voucher/accounting-voucher-add/accounting-voucher-add.component";
 import { ReportsComponent } from './components/reports/reports/reports.component';
-import { CurrencyExchangeAddComponent } from "./components/data/currency-exchange-add/currency-exchange-add.component";
 import { StatementOfIncomeComponent } from './components/reports/statement-of-income/statement-of-income.component';
- 
-import { AuthGuard } from './guard/auth.guard';
- 
 import { HelpAndSupportComponent } from './components/help-and-support/help-and-support.component';
 import { ClosingSheetComponent } from './components/closing-sheet/closing-sheet.component';
- 
 
-
-
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/my-companies', pathMatch: 'full'},
@@ -65,7 +59,6 @@ const routes: Routes = [
   },
   { path: 'reports', component: ReportsComponent},
   { path: 'statement-of-income', component: StatementOfIncomeComponent},
-  { path: 'exchangeAdd', component: CurrencyExchangeAddComponent},
   { path: 'help-and-support',component: HelpAndSupportComponent},
   { path: 'closing-sheet', component: ClosingSheetComponent}
 ];

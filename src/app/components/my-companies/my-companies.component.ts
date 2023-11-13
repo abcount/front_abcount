@@ -68,20 +68,7 @@ export class MyCompaniesComponent implements OnInit {
   saveData(companyId: number, userId: number) {
     localStorage.setItem('userId', userId.toString());
     localStorage.setItem('companyId', companyId.toString());
-    this.dataService.getExistExchangeRate().subscribe({
-      next: (data) => {
-        if(data.data){
-          window.location.href = '/home';
-        }else{
-          this.router.navigate(['/exchangeAdd']);
-        }
-      },
-      error: (error) => {
-        const message = this.dialog.open(MessageDialogComponent, {
-          data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor"}
-        });
-      },
-    });
+    window.location.href = '/home';
   }
 
   // Logica popup

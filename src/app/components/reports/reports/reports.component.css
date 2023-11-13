@@ -14,17 +14,20 @@
 /*Background*/
 .reports {
     background-color: #F8F8F8;
-    padding: 2% 5% 4% 5%;
+    padding: 2% 5% 2% 5%;
 }
 hr{
     border: none;
     border-top: 1px solid #E5E5E5;
 }
 .container-1{
-    margin: 4% 4%;
+    margin: 4% 4% 0 4%;
     display: grid;
     grid-template-columns: 48% 48%;
-    gap: 4%;
+    grid-column-gap: 4%;
+}
+.space-bottom {
+    margin-bottom: 6%;
 }
 /*Reportes*/
 .card {

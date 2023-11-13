@@ -1,19 +1,18 @@
-/* Estilos para el modal */
-/* Background */
+/*Background*/
 .wrapper {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.322);
-  backdrop-filter: blur(5px);
-  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.322); /* Fondo semi-transparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  z-index: 100; /* Coloca la capa por encima de todo */
   display: flex;
   justify-content: center;
   align-items: center;
 }
-/* Popup */
+/*Popup*/
 .container {
   position: fixed;
   top: 50%;
@@ -39,6 +38,7 @@
   color: black;
   font-weight: 600;
   font-size: 25px;
+  height: 37.5px;
 }
 .title i {
   font-size: 20px;
@@ -53,98 +53,25 @@ hr {
   border-bottom: 1px solid #EDEDED;
   margin: 0 0 10px 0;
 }
-
-.form-group {
-  margin-bottom: 1rem;
+h3 {
+  text-align: center;
+  height: 31.25px;
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th, td {
-  border: 1px solid black;
-  padding: 0.5rem;
-  text-align: left;
-}
-.table-container {
-  max-height: 350px;
-  overflow-y: auto;
-}
-
-
-
-:host ::ng-deep app-my-button {
-  display: block;
-  margin-top: 20px;
-  margin-left: 0;
-}
-.inputs-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.edit{
-  background-color: #D7B8FD;
-  color: white;
-}
-.delete{
-  background-color: #FFADA1;
-  color: white;
-}
-
-mat-cell button[mat-icon-button] {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 4px;
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5%;
+  padding: 0 5%;
 }
 
 .buttons-container {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin: 0 5%;
 }
-
-
-
-
-
-
-
-/* Estilos para la X */
-div > a {
-  display: inline-block;
-  width: 30px; /* Ajusta según lo necesites */
-  height: 30px; /* Ajusta según lo necesites */
-  border-radius: 50%; /* Hace que sea un círculo */
-  background-color: #eee; /* Color de fondo, puedes ajustarlo */
-  text-align: center;
-  line-height: 30px; /* Asegura que la "X" esté centrada verticalmente */
-  position: absolute; /* Posicionamos absolutamente dentro del contenedor */
-  right: 10px; /* Distancia desde la derecha */
-  top: 10px; /* Distancia desde la parte superior */
-  text-decoration: none; /* Remueve el subrayado del enlace */
-  font-weight: bold;
-  color: #333; /* Color de la "X", puedes ajustarlo */
-}
-
-/* Cambia el color de fondo y el color de texto cuando pasas el mouse por encima */
-div > a:hover {
-  background-color: #ccc;
-  color: #222;
-}
-
-mat-grid-tile{
-  width: 100%;
-}
-
 .error{
   color: red;
   font-size: 12px;
-  margin-top: 5px;
+  margin: 5px 0;
 }

@@ -6,6 +6,7 @@ import { EntityDto } from 'src/app/dto/entity.dto';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-accounting-voucher-add',
@@ -31,16 +32,26 @@ export class AccountingVoucherAddComponent {
   listEntities: EntityDto[] = [];
 
   // Constructor
-  constructor(private transactionService: TransactionService, private dialog: MatDialog, private route: Router) {
+  constructor(
+    private transactionService: TransactionService, 
+    private dialog: MatDialog, 
+    private route: Router,
+    private dataService: DataService) {
     const boliviaTimezoneOffset = -4 * 60;
     const boliviaDate = new Date(new Date().getTime() + boliviaTimezoneOffset * 60000);
     this.fecha = boliviaDate.toISOString().substring(0, 10);
   }
 
+  flagAdd: boolean = false;
+  flagAddChange() {
+    this.flagAdd = !this.flagAdd;
+    if(!this.flagAdd) {
+      this.route.navigate(['/accounting-voucher/view']);
+    }
+  }
+
   // Función inicial
   ngOnInit(){
-    console.log("Load voucher data")
-    this.loadVoucherData();
     for (let i = 0; i < 10; i++) {
       const emptyEntrada: Entrada = {cuentaId: 0, numeroCuenta: '', nombreCuenta: '', cuentaValida: false, auxiliar: '',
        auxiliaryAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '',
@@ -50,67 +61,76 @@ export class AccountingVoucherAddComponent {
       this.filteredAuxiliares.push([]);
       this.filteredEntities.push([]);
     }
+    this.dataService.getExistExchangeRate().subscribe({
+      next: (data) => {
+        if(!data.data){
+          const currencyMessage = this.dialog.open(MessageDialogComponent, {
+            disableClose: true,
+            width: '300px',
+            data: { 
+              title: '¡Alerta!', 
+              message: 'Parece que aún no ha registrado las monedas del día. Por favor, complete el registro para seguir adelante.' 
+            }
+          });
+          currencyMessage.afterClosed().subscribe(() => {
+            this.flagAddChange();
+          });
+        } else {
+          console.log("Load voucher data");
+          this.loadVoucherData();
+        }
+      },
+      error: (error) => {
+        const message = this.dialog.open(MessageDialogComponent, {
+          data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor. Intente de nuevo más tarde."}
+        });
+      }
+    });
   }
 
   // Función para cargar los datos del voucher
   loadVoucherData() {
     this.transactionService.getVoucherData().subscribe(response => {
+      console.log(response);
       if (response.success) {
-        if(response.data.currencies.length == 0 ||
-          response.data.subsidiaries.length == 0 || 
-          response.data.areas.length == 0 || 
-          response.data.transactionType.length == 0){
-            //TODO: separar logica y mostrar mensaje en caso de que la lista de monedas llegue vacia.
-          if(response.data.currencies.length == 0){
-            const currencyMessage = this.dialog.open(MessageDialogComponent, {
-              disableClose: true,
-              width: '300px',
-              data: {
-                title: 'Ocurrio un error!', 
-                message: "No tiene registro de monedas del día. Por favor, registre las monedas del día"}
-            });
-            
-            currencyMessage.afterClosed().subscribe(() => {
-              this.route.navigate(['/exchangeAdd']);
-            })
-
-          }else{
-            const message = this.dialog.open(MessageDialogComponent, {
-              disableClose: true,
-              data: {
-                title: 'Ocurrio un error!', 
-                message: "Ocurrio un error con el servidor"}
-            });
-            message.afterClosed().subscribe(() => {
-              this.route.navigate(['/accounting-voucher/view']);
-            })
-          }
-          
-        }else{
-          const data = response.data;
-          console.log("Load voucher data")
-          console.log(data)
-          // Llenando la información de la cabecera
-          this.companyName = data.companyName;
+        const data = response.data;
+        console.log("Load voucher data")
+        console.log(data)
+        // Llenando la información de la cabecera
+        this.companyName = data.companyName;
+        if(data.subsidiaries.length > 0) {
           this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
           this.subsidiarySelect = data.subsidiaries[0].subsidiaryId;
+        }
+        if(data.areas.length > 0) {
           this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
           this.areaSelect = data.areas[0].areaId;
+        }
+        if(data.transactionType.length > 0) {
           this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
-          this.documentSelect = data.transactionType[0].transactionTypeId;
+          this.documentSelect = data.transactionType[0].transactionTypeId;  
+        }
+        if(data.currencies.length > 0) {
           this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
           this.currencySelect = data.currencies[0].exchangeRateId;
-          console.log(this.currencySelect);
-          this.numComprobante= data.transactionNumber;
-          // Obteniendo las cuentas
-          this.accountablePlan = data.accountablePlan;
-          // Obteniendo los auxiliares
-          this.listAuxiliares = data.auxiliar;
-          // Obteniendo las entidades
-          this.listEntities = data.entities;
-          //this.listEntities = data.entities;
         }
-        
+        this.numComprobante= data.transactionNumber;
+        // Obteniendo las cuentas
+        this.accountablePlan = data.accountablePlan;
+        // Obteniendo los auxiliares
+        this.listAuxiliares = data.auxiliar;
+        // Obteniendo las entidades
+        this.listEntities = data.entities;
+      } else {
+        const message = this.dialog.open(MessageDialogComponent, {
+          disableClose: true,
+          data: {
+            title: 'Ocurrio un error!', 
+            message: "Ocurrio un error con el servidor"}
+        });
+        message.afterClosed().subscribe(() => {
+          this.route.navigate(['/accounting-voucher/view']);
+        });
       }
     });
   }
@@ -362,7 +382,7 @@ export class AccountingVoucherAddComponent {
 
   //-------------------------------------------------------------------------------------------------------
   // Lógica para los inputs de debe y haber
-  validarInput(event: any) {
+  validarInput(event: any, aux: boolean, entrada: Entrada) {
     const inputElement = event.target as HTMLInputElement;
     let inputValue = inputElement.value;
     const regex = /^[0-9.]*$/; // Expresión regular para validar que solo se ingresen números y puntos
@@ -390,6 +410,11 @@ export class AccountingVoucherAddComponent {
       inputValue = parts[0] + '.' + parts[1].slice(0, 4);
       inputElement.value = inputValue;
     }
+    if (aux) {
+      entrada.haber = '0';
+    } else {
+      entrada.debe = '0';
+    }
     this.calcularTotales();
   }
 
@@ -404,7 +429,7 @@ export class AccountingVoucherAddComponent {
     this.totalDebe = valoresDebe.reduce((acc: number, debe: number) => acc + debe, 0);
     const valoresHaber: number[] = this.listaEntradas.map((entrada: Entrada) => entrada.haber ? parseFloat(entrada.haber) : 0);
     this.totalHaber = valoresHaber.reduce((acc: number, haber: number) => acc + haber, 0);
-    this.diferencia = parseFloat((this.totalDebe - this.totalHaber).toFixed(4));
+    this.diferencia = Math.abs(parseFloat((this.totalDebe - this.totalHaber).toFixed(4)));
     console.log(this.listaEntradas);
     this.verifyAllEntries();
   }
@@ -436,7 +461,7 @@ export class AccountingVoucherAddComponent {
       case 'ArrowLeft':
         if (currentRow) {
           if (columnName === 'numeroCuenta') {
-            const previousColumnName = 'fechaEmision';
+            const previousColumnName = 'nroDoc';
             const previousRowIndex = rowIndex - 1;
             if (previousRowIndex >= 0) {
               const previousRow = this.getRowElement(previousRowIndex);
@@ -466,7 +491,7 @@ export class AccountingVoucherAddComponent {
           } else if (columnName === 'entidad') {
             const nextColumnName = 'debe';
             nextInput = this.getInputInCell(currentRow, nextColumnName);
-          } else if (columnName === 'fechaEmision') {
+          } else if (columnName === 'nroDoc') {
             const nextRowIndex = rowIndex + 1;
             if (nextRowIndex < this.listaEntradas.length) {
               const nextRow = this.getRowElement(nextRowIndex);

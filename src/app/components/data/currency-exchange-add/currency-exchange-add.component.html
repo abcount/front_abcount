@@ -1,49 +1,34 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="flag">
   <div class="container">
     <div class="title">
-      <h2>{{ selectedRecord ? 'Editar Tipo de Cambio' : 'Agregar Tipo de Cambio' }}</h2>
+      <h2>Agregar Tipo de Cambio</h2>
       <i class="fa-solid fa-xmark" (click)="close()"></i>
     </div>
     <hr>
     <div>
+      <h3>{{ date }}</h3>
+      <h3>MONEDA PRINCIPAL: {{principalCurrency.moneyName}}</h3>
       <form [formGroup]="form">
-        <mat-grid-list cols="1" rowHeight="25px">
-          <mat-grid-tile>
-            <h3>
-              {{ date }}
-            </h3>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <h3>
-              MONEDA PRINCIPAL: {{principalCurrency.moneyName}}
-            </h3>
-          </mat-grid-tile>
-          <mat-grid-tile *ngIf="errorMessage!=''">
-            <p class="error">{{errorMessage}}</p>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <mat-grid-list cols="2" rowHeight="75px" >
-          <div *ngFor="let currency of currencies" >
-            <mat-grid-tile [colspan]="1" *ngIf="!currency.isPrincipal">
-              <app-my-textfield type="text"
-                                iconInput="fa-light fa-money-bill"
-                                [label]="currency.abbreviationName"
-                                [control]="getCurrencyControl(currency.abbreviationName)"
-                                [pattern]="patternAll"
-                                [errorMessage]="patternAllMessage"
-                                [placeholder]="'Ingrese el valor para ' + currency.abbreviationName">
-              </app-my-textfield>
-            </mat-grid-tile>
-          </div>
-        </mat-grid-list>
-        
-        <div class="buttons-container">
-          <app-my-button [isGreen]="true" (click)="saveOrUpdate()">
-            {{ selectedRecord ? 'EDITAR' : 'AGREGAR' }}
-          </app-my-button>
-          <app-my-button [isRed]="true" *ngIf="selectedRecord" (click)="cancelEdit()">CANCELAR</app-my-button>
+        <div class="row-2">
+          <ng-container *ngFor="let currency of currencies">
+            <app-my-textfield style="margin-bottom: 10px;" *ngIf="currency.abbreviationName != 'BOL'"
+              type="text"
+              iconInput="fa-light fa-money-bill"
+              [label]="currency.abbreviationName"
+              [control]="getCurrencyControl(currency.abbreviationName)"
+              [pattern]="patternNumber"
+              [errorMessage]="patternNumberMessage"
+              [placeholder]="'Ingrese el valor para ' + currency.abbreviationName">
+            </app-my-textfield>
+          </ng-container>
         </div>
       </form>
+      <div style="margin: 0 5%;" *ngIf="errorMessage!=''">
+        <p class="error">{{errorMessage}}</p>
+      </div>
+      <div class="buttons-container">
+        <app-my-button [isGreen]="true" (click)="save()">AGREGAR</app-my-button>
+      </div>
     </div>
   </div>
 </div>

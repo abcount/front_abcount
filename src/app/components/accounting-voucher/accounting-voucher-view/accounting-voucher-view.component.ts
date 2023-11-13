@@ -41,63 +41,50 @@ export class AccountingVoucherViewComponent {
   loadVouncherData(){
     this.transactionService.getVoucherData().subscribe(response => {
       if (response.success) {
-        if(response.data.currencies.length == 0 ||
-          response.data.subsidiaries.length == 0 || 
-          response.data.areas.length == 0 || 
-          response.data.transactionType.length == 0){
-            //TODO: separar logica y mostrar mensaje en caso de que la lista de monedas llegue vacia.
-          if(response.data.currencies.length == 0){
-            const currencyMessage = this.dialog.open(MessageDialogComponent, {
-              disableClose: true,
-              width: '300px',
-              data: {
-                title: 'Ocurrio un error!', 
-                message: "No tiene registro de monedas del día. Por favor, registre las monedas del día"}
-            });
-            
-            currencyMessage.afterClosed().subscribe(() => {
-              this.route.navigate(['/exchangeAdd']);
-            })
-
-          }else{
-            const message = this.dialog.open(MessageDialogComponent, {
-              disableClose: true,
-              data: {
-                title: 'Ocurrio un error!', 
-                message: "Ocurrio un error con el servidor"}
-            });
-            message.afterClosed().subscribe(() => {
-              this.route.navigate(['/accounting-voucher/view']);
-            })
-          }
-          
-        }else{
-          const data = response.data;
-          console.log("Load voucher data")
-          console.log(data)
-          // Llenando la información de la cabecera
-          this.companyName = data.companyName;
+        const data = response.data;
+        console.log("Load voucher data")
+        console.log(data)
+        // Llenando la información de la cabecera
+        this.companyName = data.companyName;
+        if(data.subsidiaries.length > 0) {
           this.sucursales = data.subsidiaries.map((subsidiary: {subsidiaryId: any; subsidiaryName: any; }) => ({id: subsidiary.subsidiaryId, name: subsidiary.subsidiaryName}));
           this.subsidiarySelect = data.subsidiaries[0].subsidiaryId;
+        }
+        if(data.areas.length > 0) {
           this.areas = data.areas.map((area: { areaId: any, areaName: any; }) => ({id: area.areaId, name: area.areaName}));
           this.areaSelect = data.areas[0].areaId;
+        }
+        if(data.transactionType.length > 0) {
           this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
           this.documentSelect = data.transactionType[0].transactionTypeId;
-          const subsidiaryId = data.subsidiaries[0].subsidiaryId;
-          const areaId = data.areas[0].areaId;
-          const transactionTypeId = data.transactionType[0].transactionTypeId;
-          this.transactionService.getListTransaction(subsidiaryId,areaId,transactionTypeId).subscribe(response => {
-            const data = response.data;
-            this.comprobantes = data;
-            if(this.comprobantes.length > 0) {
-                this.currentVoucherIndex = 0;
-                this.loadVoucherByIndex();
-            }
-          });
         }
+        if (this.subsidiarySelect!=0 && this.areaSelect!=0 && this.documentSelect!=0){
+          this.searchData();
+        }
+      } else {
+        const message = this.dialog.open(MessageDialogComponent, {
+          disableClose: true,
+          data: {
+            title: 'Ocurrio un error!', 
+            message: "Ocurrio un error con el servidor"}
+        });
+        message.afterClosed().subscribe(() => {
+          this.route.navigate(['/accounting-voucher/view']);
+        });
       }
     });
-    
+  }
+
+  searchData() {
+    this.transactionService.getListTransaction(this.subsidiarySelect, this.areaSelect, this.documentSelect).subscribe(response => {
+      const data = response.data;
+      this.comprobantes = data;
+      console.log(response);
+      if(this.comprobantes.length > 0) {
+          this.currentVoucherIndex = 0;
+          this.loadVoucherByIndex();
+      }
+    });
   }
 
   // Función para agregar una fila vacía
@@ -122,28 +109,27 @@ export class AccountingVoucherViewComponent {
   }
 
   // Selects
-  subsidiarySelect: number;
-  areaSelect: number;
-  documentSelect: number;
-  currencySelect: number;
+  subsidiarySelect: number = 0;
+  areaSelect: number = 0;
+  documentSelect: number = 0;
+  currencySelect: number = 0;
 
   subsidiarySelected(subsidiary: any) {
     this.subsidiarySelect = subsidiary.id;
-    //console.log("Sucursal id: "+this.subsidiarySelect);
+    this.searchData();
   }
   areaSelected(area: any) {
     this.areaSelect = area.id;
-    //console.log("Area id: "+this.areaSelect);
+    this.searchData();
   }
   documentSelected(document: any) {
     this.documentSelect = document.id;
-    //console.log("Documento id: "+this.documentSelect);
+    this.searchData();
   }
   currencySelected(currency: any) {
     this.currencySelect = currency.id;
     //console.log("Moneda id: "+this.currencySelect);
   }
-
 
   navegar(direccion: string) {
     if (direccion === 'derecha') {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import {DataService} from "../../../services/data.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ExchangeMoneyDto, ExchangeRateDto, ExchangeRateCreate} from "../../../dto/exchangeRate.dto";
@@ -14,43 +14,69 @@ import { AcceptDialogComponent } from '../../general-components/accept.dialog/ac
   templateUrl: './currency-exchange-add.component.html',
   styleUrls: ['./currency-exchange-add.component.css']
 })
-export class CurrencyExchangeAddComponent {
+export class CurrencyExchangeAddComponent implements OnChanges {
+
+  @Input() flag: boolean = false;
+  @Output() flagChange = new EventEmitter<boolean>();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['flag']) {
+      this.loadData();
+    }
+  }
+
+  close() {
+    const acceptMessage = this.dialog.open(AcceptDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'ADVERTENCIA: ¿Desea salir?',
+        message: 'Es necesario registrar el cambio del día, de lo contrario no podrá realizar ninguna transacción.',
+        action: () => {
+          this.flag = false;
+          this.flagChange.emit(this.flag);
+        }
+      },
+    });
+  }
+
   form: FormGroup;
   currencies: ExchangeMoneyDto[] = [];
   principalCurrency!: ExchangeMoneyDto;
   date: String = '';
   errorMessage = '';
-
-  patternAll = '^[0-9.]*$';
-  patternAllMessage = 'Ingrese un valor válido';
-
-
-  selectedRecord?: ExchangeRateDto;
+  patternNumber = '^[0-9.]*$';
+  patternNumberMessage = 'Ingrese un valor válido';
 
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.dataService.getExistExchangeRate().subscribe({
-      next: (data) => {
-        if(data.data){
-          const message = this.dialog.open(MessageDialogComponent, {
-            data: {title: 'Ocurrio un error!', message: "Ya existe un tipo de cambio registrado para el día de hoy"}
-          });
-          message.afterClosed().subscribe(() => {
-            this.router.navigate(['/home']);
-          });
+    this.loadData();
+  }
 
+  loadData() {
+    if(this.flag){
+      this.dataService.getExistExchangeRate().subscribe({
+        next: (data) => {
+          if(data.data){
+            const message = this.dialog.open(MessageDialogComponent, {
+              data: { title: '¡Atención!', message: 'Ya se ha registrado un tipo de cambio para el día de hoy.' }
+            });
+            message.afterClosed().subscribe(() => {
+              this.flag = false;
+              this.flagChange.emit(this.flag);
+            });
+          }
+        },
+        error: (error) => {
+          const message = this.dialog.open(MessageDialogComponent, {
+            data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor. Intente de nuevo más tarde."}
+          });
         }
-      },
-      error: (error) => {
-        const message = this.dialog.open(MessageDialogComponent, {
-          data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor. Intente de nuevo más tarde"}
-        });
-      }
-    });
-    this.initForm();
-    this.date = this.getLabelDate();
-    this.fetchCurrencies();
+      });
+      this.initForm();
+      this.date = this.getLabelDate();
+      this.fetchCurrencies();
+    }
   }
 
   initForm(): void {
@@ -77,22 +103,11 @@ export class CurrencyExchangeAddComponent {
           disableClose: true,
           data: {title: 'Ocurrio un error!', message: "No se pudo obtener la lista de monedas"}
         });
-
         message.afterClosed().subscribe(() => {
-          this.router.navigate(['/']);
+          this.flag = false;
+          this.flagChange.emit(this.flag);
         })
       }
-    });
-    
-  }
-
-  close(){
-    const acceptMessage = this.dialog.open(AcceptDialogComponent, {
-      width: '400px',
-      data: {
-        title: 'ADVERTENCIA: ¿Desea salir?', 
-        message: "Es necesario registrar el cambio del día, de lo contrario no podrá realizar ninguna transacción.", 
-        route: "/home"}
     });
   }
 
@@ -102,68 +117,54 @@ export class CurrencyExchangeAddComponent {
     return formattedDate;
   }
 
-
-  loadExchangeRateForEdit(record: ExchangeRateDto): void {
-    this.selectedRecord = { ...record };
-
-    const valuesObject: { [currency: string]: number } = {};
-    this.selectedRecord.values.forEach(item => {
-      valuesObject[item.abbreviation] = item.value;
-    });
-
-    this.form.setValue({
-      date: this.selectedRecord.date,
-      values: valuesObject
-    });
-  }
-
-  saveOrUpdate(): void {
+  save(): void {
     if(this.form.valid){
-      this.errorMessage = '';
-      var currencyList: ExchangeRateCreate[] = [];
+      var flagEmpty = false;
       this.currencies.forEach(currency => {
-        const exchangeRateCreate: ExchangeRateCreate = {
-          moneyName: currency.moneyName,
-          abbreviationName: currency.abbreviationName,
-          currency: parseFloat(this.form.value.values[currency.abbreviationName] ? this.form.value.values[currency.abbreviationName] : 0)
+        if(this.form.value.values[currency.abbreviationName] === ''){
+          flagEmpty = true;
         }
-        currencyList.push(exchangeRateCreate);
       });
-      console.log(currencyList);
-      this.dataService.createExchangeRate(currencyList).subscribe({
-        next: (data) => {
-          if(data.success){
-            const message = this.dialog.open(MessageDialogComponent, {
-              data: {title: 'Exito!', message: data.message}
-            });
-            message.afterClosed().subscribe(() => {
-              this.router.navigate(['/home']);
-            })
-          }else{
-            const message = this.dialog.open(MessageDialogComponent, {
-              data: {title: 'Ocurrio un error!', message: data.message}
-            });
+      if (flagEmpty) {
+        this.errorMessage = 'Debe llenar todos los campos';
+      } else {
+        this.errorMessage = '';
+        var currencyList: ExchangeRateCreate[] = [];
+        this.currencies.forEach(currency => {
+          const exchangeRateCreate: ExchangeRateCreate = {
+            moneyName: currency.moneyName,
+            abbreviationName: currency.abbreviationName,
+            currency: parseFloat(this.form.value.values[currency.abbreviationName] ? this.form.value.values[currency.abbreviationName] : 0)
           }
-        },
-        error: (error) => {
-          const message = this.dialog.open(MessageDialogComponent, {
-            data: {title: 'Ocurrio un error!', message: "No se pudo crear el tipo de cambio"}
-          });
-        },
-      });
-    }else{
-      this.errorMessage = '* Ingrese todos los campos requeridos';
-  
-
+          currencyList.push(exchangeRateCreate);
+        });
+        console.log(currencyList);
+        this.dataService.createExchangeRate(currencyList).subscribe({
+          next: (data) => {
+            if(data.success){
+              const message = this.dialog.open(MessageDialogComponent, {
+                data: {title: 'Exito!', message: data.message}
+              });
+              message.afterClosed().subscribe(() => {
+                this.flag = false;
+                this.flagChange.emit(this.flag);
+              })
+            }else{
+              const message = this.dialog.open(MessageDialogComponent, {
+                data: {title: 'Ocurrio un error!', message: data.message}
+              });
+            }
+          },
+          error: (error) => {
+            const message = this.dialog.open(MessageDialogComponent, {
+              data: {title: 'Ocurrio un error!', message: "No se pudo crear el tipo de cambio"}
+            });
+          },
+        });
+      }
     }
   }
-
-
-  cancelEdit(): void {
-    this.selectedRecord = undefined;
-    this.form.reset();
-    this.router.navigate(['/home']);
-  }
+  
   getDateControl(): FormControl {
     return this.form.get('date') as FormControl;
   }
@@ -171,6 +172,5 @@ export class CurrencyExchangeAddComponent {
   getCurrencyControl(currency: string): FormControl {
     return this.form.get('values')?.get(currency) as FormControl;
   }
-
 
 }
