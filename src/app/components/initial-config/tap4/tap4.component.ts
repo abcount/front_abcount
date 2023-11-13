@@ -222,47 +222,6 @@ export class Tap4Component {
                 }
               ],
             },
-            {
-              accountCode: 10103,
-              nameAccount: 'Bienes De Cambio O Realizable',
-              moneyRub: true,
-              report: true,
-              classificator: true,
-              level: 2,
-              expanded: true,
-              digitsOfLevel: 2,
-              showAddPopup: false,
-              showEditPopup: false,
-              childrenAccounts: [
-                {
-                  accountCode: 1010301,
-                  nameAccount: 'Inventarios',
-                  moneyRub: true,
-                  report: true,
-                  classificator: true,
-                  level: 3,
-                  expanded: true,
-                  digitsOfLevel: 2,
-                  showAddPopup: false,
-                  showEditPopup: false,
-                  childrenAccounts: [
-                    {
-                      accountCode: 1010301001,
-                      nameAccount: 'Inventarios',
-                      moneyRub: true,
-                      report: true,
-                      classificator: false,
-                      level: 4,
-                      expanded: true,
-                      digitsOfLevel: 3,
-                      showAddPopup: false,
-                      showEditPopup: false,
-                      childrenAccounts: [],
-                    }
-                  ],
-                },
-              ],
-            }
           ],
         },
         {
