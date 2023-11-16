@@ -10,7 +10,8 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./currency-exchange-view.component.css']
 })
 export class CurrencyExchangeViewComponent {
-
+  
+  date: string = '';
   data: any[] = [];
   dataUpdate: any[] = [];
   displayedColumns: string[] = [];
@@ -20,7 +21,18 @@ export class CurrencyExchangeViewComponent {
   constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
+    this.date = this.getCurrentDate();
     this.loadData();
+  }
+
+  getCurrentDate(): string {
+    const boliviaTimezone = 'America/La_Paz';
+    const formattedDate = new Date().toLocaleDateString('en-US', { timeZone: boliviaTimezone, year: 'numeric', month: '2-digit', day: '2-digit' });
+    const dateParts = formattedDate.split('/');
+    const year = dateParts[2];
+    const month = dateParts[0].padStart(2, '0');
+    const day = dateParts[1].padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   loadData() {

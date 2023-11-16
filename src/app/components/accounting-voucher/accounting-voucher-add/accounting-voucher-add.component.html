@@ -41,7 +41,7 @@
       <div class="column-3">
         <div class="option">
           <h3>Fecha</h3>
-          <input type="date" [(ngModel)]="fecha">
+          <input type="date" [(ngModel)]="fecha" [min]="fechaCierre" max="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" (blur)="validarRegistroTipoCambio()">
         </div>
         <div class="option">
           <h3>Nro de comprobante</h3>
@@ -51,6 +51,10 @@
           <h3>Moneda</h3>
           <app-combo-box [selectedOption]="monedas[0]" [options]="monedas" (optionSelected)="currencySelected($event)"></app-combo-box>
         </div>
+      </div>
+      <div class="checkbox-area">
+        <input type="checkbox" id="ajuste" class="custom-checkbox" [(ngModel)]="ajusteChecked"/>
+        <label for="ajuste" class="custom-label">&nbsp;Cbte de Ajuste</label>         
       </div>
     </div>
     <hr>
@@ -156,4 +160,4 @@
     <h3>{{popupMessage}}</h3>
   </ng-template>
 </div>
-<app-currency-exchange-add [flag]="flagAdd" (flagChange)="flagAddChange()"></app-currency-exchange-add>
+<app-currency-exchange-add [flag]="flagAdd" [date]="fecha" (flagChange)="flagAddChange()"></app-currency-exchange-add>

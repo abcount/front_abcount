@@ -5,8 +5,6 @@ import {ExchangeMoneyDto, ExchangeRateDto, ExchangeRateCreate} from "../../../dt
 import {ActivatedRoute, Router} from "@angular/router";
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
 import { AcceptDialogComponent } from '../../general-components/accept.dialog/accept.dialog.component';
 
 @Component({
@@ -17,6 +15,7 @@ import { AcceptDialogComponent } from '../../general-components/accept.dialog/ac
 export class CurrencyExchangeAddComponent implements OnChanges {
 
   @Input() flag: boolean = false;
+  @Input() date: string = '';
   @Output() flagChange = new EventEmitter<boolean>();
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -30,7 +29,7 @@ export class CurrencyExchangeAddComponent implements OnChanges {
       width: '400px',
       data: {
         title: 'ADVERTENCIA: ¿Desea salir?',
-        message: 'Es necesario registrar el cambio del día, de lo contrario no podrá realizar ninguna transacción.',
+        message: 'Es necesario registrar el tipo de cambio, de lo contrario no podrá realizar ninguna transacción en la fecha.',
         action: () => {
           this.flag = false;
           this.flagChange.emit(this.flag);
@@ -42,7 +41,6 @@ export class CurrencyExchangeAddComponent implements OnChanges {
   form: FormGroup;
   currencies: ExchangeMoneyDto[] = [];
   principalCurrency: ExchangeMoneyDto = {exchangeMoneyId: 0, companyId: 0, moneyName: '', abbreviationName: '', isPrincipal: false};
-  date: String = '';
   errorMessage = '';
   patternNumber = '^[0-9.]*$';
   patternNumberMessage = 'Ingrese un valor válido';
@@ -55,11 +53,11 @@ export class CurrencyExchangeAddComponent implements OnChanges {
 
   loadData() {
     if(this.flag){
-      this.dataService.getExistExchangeRate().subscribe({
+      this.dataService.getExistExchangeRate(this.date).subscribe({
         next: (data) => {
-          if(data.data){
+          if(data.data) {
             const message = this.dialog.open(MessageDialogComponent, {
-              data: { title: '¡Atención!', message: 'Ya se ha registrado un tipo de cambio para el día de hoy.' }
+              data: { title: '¡Atención!', message: `Ya se ha registrado un tipo de cambio para el ${this.getLabelDate()}.` }
             });
             message.afterClosed().subscribe(() => {
               this.flag = false;
@@ -74,7 +72,6 @@ export class CurrencyExchangeAddComponent implements OnChanges {
         }
       });
       this.initForm();
-      this.date = this.getLabelDate();
       this.fetchCurrencies();
     }
   }
@@ -111,17 +108,12 @@ export class CurrencyExchangeAddComponent implements OnChanges {
     });
   }
 
-  getLabelDate(): String{
-    const fechaActual = new Date();
-    const formattedDate = format(fechaActual, "d 'de' MMMM 'de' yyyy", { locale: es });
-    return formattedDate;
-  }
-
   save(): void {
-    if(this.form.valid){
+    if(this.form.valid) {
       var flagEmpty = false;
       this.currencies.forEach(currency => {
-        if(this.form.value.values[currency.abbreviationName] === ''){
+        const value = this.form.value.values[currency.abbreviationName];
+        if(value == null && currency.abbreviationName != this.principalCurrency.abbreviationName) {
           flagEmpty = true;
         }
       });
@@ -138,8 +130,12 @@ export class CurrencyExchangeAddComponent implements OnChanges {
           }
           currencyList.push(exchangeRateCreate);
         });
-        console.log(currencyList);
-        this.dataService.createExchangeRate(currencyList).subscribe({
+        const body = {
+          date: this.date,
+          exchange: currencyList
+        }
+        console.log(body);
+        this.dataService.createExchangeRate(body).subscribe({
           next: (data) => {
             if(data.success){
               const message = this.dialog.open(MessageDialogComponent, {
@@ -173,4 +169,10 @@ export class CurrencyExchangeAddComponent implements OnChanges {
     return this.form.get('values')?.get(currency) as FormControl;
   }
 
+  getLabelDate(): string {
+    const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio','julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const [year, month, day] = this.date.split('-').map(Number);
+    const formattedDate = day+' de '+months[month-1]+' de '+year;
+    return formattedDate;
+  }
 }

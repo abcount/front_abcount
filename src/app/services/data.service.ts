@@ -74,7 +74,7 @@ export class DataService {
   }
 
 
-  createExchangeRate(data: ExchangeRateCreate[]): Observable<any>{
+  createExchangeRate(data: any): Observable<any>{
     const companyId = localStorage.getItem('companyId');
     return this.http.post<any>(`${this.baseUrl}/exchangeRate/${companyId}`, data);
   }
@@ -92,9 +92,9 @@ export class DataService {
     return this.http.get<GeneralDto<ExchangeMoneyDto[]>>(`${this.baseUrl}/exchangeMoney/${companyId}`);
   }
 
-  getExistExchangeRate(): Observable<GeneralDto<Boolean>> {
+  getExistExchangeRate(date: string): Observable<GeneralDto<Boolean>> {
     const companyId = localStorage.getItem('companyId');
-    return this.http.get<GeneralDto<Boolean>>(`${this.baseUrl}/exchangeRate/exist/${companyId}`);
+    return this.http.get<GeneralDto<Boolean>>(`${this.baseUrl}/exchangeRate/exist/${companyId}?date=${date}`);
   }
 
 

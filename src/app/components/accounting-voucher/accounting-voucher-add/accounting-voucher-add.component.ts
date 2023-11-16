@@ -22,8 +22,10 @@ export class AccountingVoucherAddComponent {
   areas: any[] = [{id: '', name: ''}];
   documentos: any[] = [{id: '', name: ''}];
   fecha: string;
+  fechaCierre: string = '';
   numComprobante: number = 0;
   monedas: any[] = [{id: '', name: ''}];
+  monedasAux: any[] = [];
   accountablePlan: any[] = [];
   glosa: string = '';
 
@@ -38,9 +40,14 @@ export class AccountingVoucherAddComponent {
     private dialog: MatDialog,
     private route: Router,
     private dataService: DataService) {
+    this.fecha = this.getCurrentDate();
+  }
+
+  getCurrentDate(): string {
     const boliviaTimezoneOffset = -4 * 60;
     const boliviaDate = new Date(new Date().getTime() + boliviaTimezoneOffset * 60000);
-    this.fecha = boliviaDate.toISOString().substring(0, 10);
+    const formattedDate = boliviaDate.toISOString().substring(0, 10);
+    return formattedDate;
   }
 
   flagAdd: boolean = false;
@@ -62,7 +69,7 @@ export class AccountingVoucherAddComponent {
       this.filteredAuxiliares.push([]);
       this.filteredEntities.push([]);
     }
-    this.dataService.getExistExchangeRate().subscribe({
+    this.dataService.getExistExchangeRate(this.fecha).subscribe({
       next: (data) => {
         if(!data.data){
           const currencyMessage = this.dialog.open(MessageDialogComponent, {
@@ -70,7 +77,7 @@ export class AccountingVoucherAddComponent {
             width: '300px',
             data: {
               title: '¡Alerta!',
-              message: 'Parece que aún no ha registrado las monedas del día. Por favor, complete el registro para seguir adelante.'
+              message: 'Parece que aún no se ha registrado el tipo de cambio de ese día. Por favor, complete el registro para seguir adelante.'
             }
           });
           currencyMessage.afterClosed().subscribe(() => {
@@ -112,6 +119,7 @@ export class AccountingVoucherAddComponent {
           this.documentSelect = data.transactionType[0].transactionTypeId;
         }
         if(data.currencies.length > 0) {
+          this.monedasAux = data.currencies;
           this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
           this.currencySelect = data.currencies[0].exchangeRateId;
         }
@@ -122,6 +130,8 @@ export class AccountingVoucherAddComponent {
         this.listAuxiliares = data.auxiliar;
         // Obteniendo las entidades
         this.listEntities = data.entities;
+        // Obteniendo la fecha del ultimo cierre
+        this.fechaCierre = data.lastClosing.substring(0, 10);
       } else {
         const message = this.dialog.open(MessageDialogComponent, {
           disableClose: true,
@@ -157,6 +167,41 @@ export class AccountingVoucherAddComponent {
   currencySelected(currency: any) {
     this.currencySelect = currency.id;
     //console.log("Moneda id: "+this.currencySelect);
+  }
+
+  //-------------------------------------------------------------------------------------------------------
+  // Lógica para validar el registro de tipo de cambio
+  validarRegistroTipoCambio() {
+    if(this.validarRangoFecha()) {
+      this.dataService.getExistExchangeRate(this.fecha).subscribe({
+        next: (data) => {
+          if(!data.data){
+            this.flagAddChange();
+          }
+        },
+        error: (error) => {
+          const message = this.dialog.open(MessageDialogComponent, {
+            data: {title: 'Ocurrio un error!', message: "No se pudo conectar con el servidor. Intente de nuevo más tarde."}
+          });
+        }
+      });
+    } else {
+      const message = this.dialog.open(MessageDialogComponent, {
+        data: {title: '¡Alerta!', message: "La fecha seleccionada no se encuentra en el rango de fechas permitido."}
+      });
+      this.fecha = this.getCurrentDate();
+    }
+  }
+
+  validarRangoFecha(): boolean {
+    var flag: boolean = true;
+    const fechaSeleccionada = new Date(this.fecha);
+    const fechaMinima = new Date(this.fechaCierre);
+    const fechaMaxima = new Date(this.getCurrentDate());
+    if (fechaSeleccionada < fechaMinima || fechaSeleccionada > fechaMaxima) {
+      flag = false;
+    }
+    return flag;
   }
 
   //-------------------------------------------------------------------------------------------------------
@@ -590,11 +635,16 @@ export class AccountingVoucherAddComponent {
       this.loading = true;
       if (this.fillListTransactionAccount()) {
         if (this.listTransactionAccount.length > 0) {
+          const userId = localStorage.getItem('userId');
+          const currencyIso = this.monedasAux.find((currency: { exchangeRateId: number; }) => currency.exchangeRateId === this.currencySelect);
           const body = {
+            'userId': userId,
             'subsidiaryId': this.subsidiarySelect,
-            'currencyId': this.currencySelect,
+            'currencyId': currencyIso.abbreviationName,
+            'date': this.fecha,
             'transactionTypeId': this.documentSelect,
             'areaId': this.areaSelect,
+            'ajuste': this.ajusteChecked,
             'glosaGeneral': this.glosa,
             'transactions': this.listTransactionAccount,
             'totalDebit': this.totalDebe,
@@ -778,6 +828,11 @@ export class AccountingVoucherAddComponent {
     // Escribir el libro de trabajo a un archivo y ofrecerlo para descargar
     XLSX.writeFile(workbook, 'PlantillaTransacciones.xlsx');
   }
+
+  // -------------------------------------------------------------------------------------------------------
+  // Lógica para los comprobantes de ajuste
+  ajusteChecked: boolean = false;
+
 }
 
 interface Entrada {
