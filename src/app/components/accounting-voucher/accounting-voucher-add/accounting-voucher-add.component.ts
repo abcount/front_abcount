@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-accounting-voucher-add',
@@ -33,8 +34,8 @@ export class AccountingVoucherAddComponent {
 
   // Constructor
   constructor(
-    private transactionService: TransactionService, 
-    private dialog: MatDialog, 
+    private transactionService: TransactionService,
+    private dialog: MatDialog,
     private route: Router,
     private dataService: DataService) {
     const boliviaTimezoneOffset = -4 * 60;
@@ -67,9 +68,9 @@ export class AccountingVoucherAddComponent {
           const currencyMessage = this.dialog.open(MessageDialogComponent, {
             disableClose: true,
             width: '300px',
-            data: { 
-              title: '¡Alerta!', 
-              message: 'Parece que aún no ha registrado las monedas del día. Por favor, complete el registro para seguir adelante.' 
+            data: {
+              title: '¡Alerta!',
+              message: 'Parece que aún no ha registrado las monedas del día. Por favor, complete el registro para seguir adelante.'
             }
           });
           currencyMessage.afterClosed().subscribe(() => {
@@ -108,7 +109,7 @@ export class AccountingVoucherAddComponent {
         }
         if(data.transactionType.length > 0) {
           this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
-          this.documentSelect = data.transactionType[0].transactionTypeId;  
+          this.documentSelect = data.transactionType[0].transactionTypeId;
         }
         if(data.currencies.length > 0) {
           this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
@@ -125,7 +126,7 @@ export class AccountingVoucherAddComponent {
         const message = this.dialog.open(MessageDialogComponent, {
           disableClose: true,
           data: {
-            title: 'Ocurrio un error!', 
+            title: 'Ocurrio un error!',
             message: "Ocurrio un error con el servidor"}
         });
         message.afterClosed().subscribe(() => {
@@ -702,6 +703,80 @@ export class AccountingVoucherAddComponent {
       flag = true;
     }
     return flag;
+  }
+  importFromExcel(event: any): void {
+    const target: DataTransfer = <DataTransfer>(event.target);
+    if (target.files.length !== 1) throw new Error('No se puede usar múltiples archivos');
+
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const workbook: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+      // Supongamos que tu archivo Excel tiene una hoja llamada 'Transacciones'
+      const worksheetName = 'Transacciones';
+      const worksheet: XLSX.WorkSheet = workbook.Sheets[worksheetName];
+
+      // Convertir los datos de Excel a JSON
+      const transactions = XLSX.utils.sheet_to_json(worksheet);
+
+      // Procesar los datos según sea necesario para tu aplicación
+      this.processTransactions(transactions);
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
+
+  processTransactions(transactions: any[]): void {
+    // Asegúrate de limpiar la lista actual si es necesario
+    this.listaEntradas = [];
+
+    // Procesa cada transacción importada del Excel
+    transactions.forEach(transaction => {
+      // Crea una entrada sin cuentaId, cuentaValida, auxiliaryAccountId, entityId y falta
+      const entrada: Entrada = {
+
+        numeroCuenta: transaction['Codigo de Cuenta'],
+        nombreCuenta: transaction['Nombre de la Cuenta'],
+        auxiliar: transaction['Auxiliar'],
+        entidad: transaction['Entidad'],
+        debe: transaction['Debe'],
+        haber: transaction['Haber'],
+        glosa: transaction['Glosa'],
+        nroDoc: transaction['Nro de Documento'],
+        // Establece los valores predeterminados o los omite si no son necesarios
+        cuentaId: 0, // o el valor que corresponda según tu lógica de negocio
+        cuentaValida: false, // o true si siempre son válidas al importar
+        auxiliaryAccountId: 0, // o el valor que corresponda
+        entityId: 0, // o el valor que corresponda
+        falta: false // o false si no necesitas este campo al importar
+      };
+
+      // Agrega la entrada a la lista de entradas, o realiza cualquier procesamiento adicional necesario
+      this.listaEntradas.push(entrada);
+      this.calcularTotales();
+    });
+
+  }
+  validateEntrada(entrada: Entrada): boolean {
+    // Realiza las validaciones necesarias y asegúrate de que devuelvan true o false
+    const isNumeroCuentaValid = typeof entrada.numeroCuenta === 'string' && entrada.numeroCuenta.trim() !== '';
+    const isDebeValid = typeof entrada.debe === 'string' && !isNaN(parseFloat(entrada.debe));
+    const isHaberValid = typeof entrada.haber === 'string' && !isNaN(parseFloat(entrada.haber));
+    const isGlosaValid = typeof entrada.glosa === 'string' && entrada.glosa.trim() !== '';
+    return isNumeroCuentaValid && isDebeValid && isHaberValid && isGlosaValid;
+  }
+  generateExcelTemplate(): void {
+    // Crear un nuevo libro de trabajo y una hoja
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.aoa_to_sheet([
+      ['Codigo de Cuenta','Nombre de la Cuenta','Auxiliar', 'Entidad', 'Debe', 'Haber', 'Glosa', 'Nro de Documento'] // Estos son los encabezados
+    ]);
+
+    // Añadir la hoja al libro de trabajo
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Transacciones');
+
+    // Escribir el libro de trabajo a un archivo y ofrecerlo para descargar
+    XLSX.writeFile(workbook, 'PlantillaTransacciones.xlsx');
   }
 }
 

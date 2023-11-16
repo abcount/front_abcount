@@ -8,13 +8,23 @@
     </div>
     <hr>
     <div class="header">
+      <div class="add-button">
+        <label for="file-upload" class="custom-file-upload">
+          Importar Transacciones
+          <i class="fa-solid fa-upload"></i>
+        </label>
+        <input  id="file-upload" type="file" (change)="importFromExcel($event)"  />
+        <button class="add center" (click)="generateExcelTemplate()">Descargar Plantilla
+          <i class="fa-solid fa-download"></i>
+        </button>
+      </div>
       <div class="column-3">
         <div class="option">
           <h3>Empresa</h3>
           <h3 style="color: #757575;">{{companyName}}</h3>
         </div>
       </div>
-      <div class="column-3">  
+      <div class="column-3">
         <div class="option">
           <h3>Sucursal</h3>
           <app-combo-box [selectedOption]="sucursales[0]" [options]="sucursales" (optionSelected)="subsidiarySelected($event)"></app-combo-box>
