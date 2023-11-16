@@ -136,3 +136,16 @@ h4 {
 .cancel-button:hover {
     background-color: #dcdcdc;
 }
+
+.gradient-green {
+    background-image: linear-gradient(to right, #66cdab, #489ce9);
+    background-clip: text;
+    -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+    color: transparent !important;
+}
+.gradient-red {
+    background-image: linear-gradient(to right, #ff6b6b, #ffa39e);
+    background-clip: text;
+    -webkit-background-clip: text; /* Para navegadores webkit (Safari, Chrome) */
+    color: transparent !important;
+}

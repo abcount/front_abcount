@@ -10,6 +10,8 @@ import { AreaSubsAndRoles } from '../dto/areasubsroles.dto';
 export class CompanyService {
 
   configurationUrl = `${environment.BACKEND_URL}/config/enterprise`;
+  closingSheetUrl = `${environment.BACKEND_URL}/closing-sheet`;
+  userId = localStorage.getItem('userId');
   companyId = localStorage.getItem('companyId');
   constructor(private http: HttpClient) { }
 
@@ -18,5 +20,13 @@ export class CompanyService {
     `${environment.BACKEND_URL}/users/info`
     //return this.http.get<GeneralDto<AreaSubsAndRoles>>("http://localhost:3000/roles-subs-and-areas")
     return this.http.get<GeneralDto<AreaSubsAndRoles>>(`${environment.BACKEND_URL}/companies/${this.companyId}/area-subsidiary`)
+  }
+
+  postCloseTransactions() {
+    return this.http.post<any>(`${this.closingSheetUrl}/company/${this.companyId}/user/${this.userId}`, {});
+  }
+
+  getLastClosingDate() {
+    return this.http.get<any>(`${this.closingSheetUrl}/closingDate/${this.companyId}`);
   }
 }
