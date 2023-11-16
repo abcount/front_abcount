@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ExchangeRateDto } from "../../../dto/exchangeRate.dto";
+import { ExchangeRateDto, ExchangeRateUpdate } from "../../../dto/exchangeRate.dto";
 import { DataService } from "../../../services/data.service";
 import { Router } from "@angular/router";
 import { formatDate } from '@angular/common';
@@ -12,6 +12,7 @@ import { formatDate } from '@angular/common';
 export class CurrencyExchangeViewComponent {
 
   data: any[] = [];
+  dataUpdate: any[] = [];
   displayedColumns: string[] = [];
   allColumns: string[] = [];
   selectedRecord: ExchangeRateDto = { date: '', values: [] };
@@ -30,7 +31,7 @@ export class CurrencyExchangeViewComponent {
       //console.log(this.allColumns);
       this.dataService.getExchangeRates().subscribe(response => {
         this.data = this.transformData(response.data);
-        //console.log("Data actualizada:", this.data);
+        this.dataUpdate = this.transformUpdate(response.data);
       });
     });
   }
@@ -61,35 +62,47 @@ export class CurrencyExchangeViewComponent {
     return result;
   }
 
+  transformUpdate(data: any[]): any[] {
+    const result: any[] = [];
+    // Agrupar por fecha
+    const groupedByDate: { [date: string]: any[] } = {};
+    data.forEach((item) => {
+      const date = item.date.split('T')[0]; // Obtener solo la parte de la fecha
+      if (!groupedByDate[date]) {
+        groupedByDate[date] = [];
+      }
+      groupedByDate[date].push(item);
+    });
+    // Crear el resultado
+    for (const date in groupedByDate) {
+      if (groupedByDate.hasOwnProperty(date)) {
+        const currencies: ExchangeRateUpdate[] = [];
+        groupedByDate[date].forEach((item: any) => {
+          const currency: ExchangeRateUpdate = {
+            abbreviation: item.abbreviationName,
+            exchangeRateId: item.exchangeRateId,
+            value: item.currency
+          };
+          currencies.push(currency);
+        });
+        result.push(currencies);
+      }
+    }
+    return result;
+  }
+
   getValueForCurrency(record: ExchangeRateDto, currency: string): number | undefined {
     const found = record.values.find(item => item.abbreviation === currency);
     return found ? found.value : undefined;
   }
 
-  loadExchangeRateForEdit(record: any): void {
+  loadExchangeRateForEdit(record: any, index: number): void {
     this.selectedRecord = {
       date: record.Fecha,
-      values: this.transformarJson(record)
+      values: this.dataUpdate[index]
     };
+    console.log("Registro seleccionado:", this.selectedRecord);
     this.flagEditChange();
-  }
-
-  transformarJson(json: { [key: string]: number }): { abbreviation: string, value: number }[] {
-    const resultado: { abbreviation: string, value: number }[] = [];
-    for (const key in json) {
-      if (json.hasOwnProperty(key)) {
-        if (key === 'Fecha') {
-          continue;
-        } else {
-          const nuevoItem = {
-            abbreviation: key,
-            value: json[key]
-          };
-          resultado.push(nuevoItem);
-        }
-      }
-    }
-    return resultado;
   }
 
   flagEdit: boolean = false;

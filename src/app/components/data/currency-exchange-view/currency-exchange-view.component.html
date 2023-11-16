@@ -16,8 +16,8 @@
         <!-- Editar Column -->
         <ng-container matColumnDef="Editar">
           <mat-header-cell class="cell-title-center" *matHeaderCellDef>Editar</mat-header-cell>
-          <mat-cell class="cell-center" *matCellDef="let record">
-            <button class="edit" (click)="loadExchangeRateForEdit(record)" mat-icon-button>
+          <mat-cell class="cell-center" *matCellDef="let record; let i = index;">
+            <button class="edit" (click)="loadExchangeRateForEdit(record, i)" mat-icon-button>
               <mat-icon>edit</mat-icon>
             </button>
           </mat-cell>

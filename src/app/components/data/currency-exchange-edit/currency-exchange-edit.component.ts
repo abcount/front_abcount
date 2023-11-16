@@ -5,8 +5,6 @@ import { Router } from '@angular/router';
 import { ExchangeMoneyDto, ExchangeRateCreate, ExchangeRateDto } from 'src/app/dto/exchangeRate.dto';
 import { DataService } from 'src/app/services/data.service';
 import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
 
 @Component({
   selector: 'app-currency-exchange-edit',
@@ -35,7 +33,6 @@ export class CurrencyExchangeEditComponent implements OnChanges {
   constructor(private dataService: DataService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    console.log(this.register);
     this.date = this.register.date;
     this.dataService.getExchangeMoney().subscribe({
       next: (data) => {
@@ -101,24 +98,18 @@ export class CurrencyExchangeEditComponent implements OnChanges {
         this.errorMessage = 'Debe llenar todos los campos';
       } else {
         this.errorMessage = '';
-        var currencyList: ExchangeRateCreate[] = [];
-        this.currencies.forEach(currency => {
-          const exchangeRateCreate: ExchangeRateCreate = {
-            moneyName: currency.moneyName,
-            abbreviationName: currency.abbreviationName,
-            currency: parseFloat(this.form.value.values[currency.abbreviationName] ? this.form.value.values[currency.abbreviationName] : 0)
-          }
-          currencyList.push(exchangeRateCreate);
-        });
         this.register.values.forEach(value => {
-          const found = currencyList.find(item => item.abbreviationName === value.abbreviation);
-          if(found){
-            value.value = found.currency;
+          value.value = parseFloat(this.form.value.values[value.abbreviation]);
+        });
+        console.log(this.register);
+        const currencyList = this.register.values.map(item => {
+          return {
+            exchangeRateId: item.exchangeRateId,
+            currency: item.value
           }
         });
         console.log(currencyList);
-        console.log(this.register);
-        /*this.dataService.createExchangeRate(currencyList).subscribe({
+        this.dataService.updateExchangeRate(currencyList).subscribe({
           next: (data) => {
             if(data.success){
               const message = this.dialog.open(MessageDialogComponent, {
@@ -135,10 +126,10 @@ export class CurrencyExchangeEditComponent implements OnChanges {
           },
           error: (error) => {
             const message = this.dialog.open(MessageDialogComponent, {
-              data: {title: 'Ocurrio un error!', message: "No se pudo crear el tipo de cambio"}
+              data: {title: 'Ocurrio un error!', message: "No se pudo actualizar el tipo de cambio"}
             });
           },
-        });*/
+        });
       }
     }
   }

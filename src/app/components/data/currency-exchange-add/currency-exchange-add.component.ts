@@ -41,7 +41,7 @@ export class CurrencyExchangeAddComponent implements OnChanges {
 
   form: FormGroup;
   currencies: ExchangeMoneyDto[] = [];
-  principalCurrency!: ExchangeMoneyDto;
+  principalCurrency: ExchangeMoneyDto = {exchangeMoneyId: 0, companyId: 0, moneyName: '', abbreviationName: '', isPrincipal: false};
   date: String = '';
   errorMessage = '';
   patternNumber = '^[0-9.]*$';

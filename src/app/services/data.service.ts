@@ -79,8 +79,8 @@ export class DataService {
     return this.http.post<any>(`${this.baseUrl}/exchangeRate/${companyId}`, data);
   }
 
-  updateExchangeRate(data: ExchangeRateDto): Observable<ExchangeRateDto> {
-    return this.http.put<ExchangeRateDto>(`${this.baseUrl}/updateExchangeRate/${data.id}`, data);
+  updateExchangeRate(data: any[]): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/exchangeRate`, data);
   }
 
   deleteExchangeRate(data: ExchangeRateDto): Observable<void> {
