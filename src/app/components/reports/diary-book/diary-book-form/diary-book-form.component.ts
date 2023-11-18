@@ -25,6 +25,20 @@ export class DiaryBookFormComponent {
   @Input() otherCurrencySelected: string = '0';
   @Output() flagChange = new EventEmitter<boolean>();
 
+
+  loading: boolean = true;
+  titleMessage: string = '¡Enhorabuena!';
+  message: string = 'Los datos de la empresa se han guardado correctamente.';
+  messageIcon: string = 'fa-regular fa-circle-check gradient';
+
+  mostrarPopupConfirm = false;
+
+  confirm(){
+    localStorage.clear();
+    window.location.href = '/my-companies';
+  }
+
+
   closeModal() {
     this.flag = false;
     this.flagChange.emit(this.flag);
@@ -38,6 +52,8 @@ export class DiaryBookFormComponent {
   errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';
 
   generatePdf(){
+    this.mostrarPopupConfirm = true;
+
     const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
     if (sucursalesId.length > 0) {
       const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
@@ -62,6 +78,7 @@ export class DiaryBookFormComponent {
           this.reportSerive.diaryBookPDF(data).subscribe((response: any) => {
             if (response.success) {
               console.log(response);
+              this.mostrarPopupConfirm = false;
               window.open(response.data, '_blank');
             } else {
               console.error('Error al enviar datos al backend', response.errors);
@@ -79,6 +96,7 @@ export class DiaryBookFormComponent {
       this.errorMessageText = 'Por favor, seleccione al menos una sucursal.';
       this.showErrorMessage();
     }
+
   }
 
   generateExcel() {

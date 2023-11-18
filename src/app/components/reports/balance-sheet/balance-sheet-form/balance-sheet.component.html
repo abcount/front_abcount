@@ -33,7 +33,7 @@
               <h2>Al:</h2>
               <input type="date" [(ngModel)]="dateTo"/>
             </div>
-        </div> 
+        </div>
         <hr>
         <div class="money">
             <h2>MONEDAS PARA EL REPORTE</h2>
@@ -70,4 +70,20 @@
             <i class="fa-solid fa-file-excel excel" (click)="generateExcel()"></i>
         </div>
     </div>
+
+  <!--Modal de confirmación de creación de empresa-->
+  <div class="overlay" *ngIf="mostrarPopupConfirm">
+    <div class="popup confirm">
+      <div class="loading" *ngIf="loading; else content">
+        <h2>Generando PDF</h2>
+        <h3>El reporte se encuentra siendo generado, por favor espere</h3>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+      <ng-template #content>
+        <i class="{{messageIcon}}"></i>
+        <h2>{{titleMessage}}</h2>
+        <h3>{{message}}</h3>
+      </ng-template>
+    </div>
+  </div>
 </div>

@@ -189,7 +189,7 @@ select {
 }
 input::placeholder {
     transition: opacity 0.25s;
-}  
+}
 /*Botones*/
 .buttons {
     display: flex;
@@ -253,3 +253,47 @@ input[type='radio']:checked:after {
 .error-message.show {
     display: block;
 }
+
+
+.popup {
+  position: fixed;
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Centra exactamente en el medio */
+  width: 45%; /* Tamaño del popup */
+  background-color: #fff;
+  padding: 25px 35px;
+  z-index: 101; /* Coloca el popup por encima de la capa de fondo */
+  box-shadow: 0 5 15px rgba(0, 0, 0, 0.25); /* Sombra */
+  border-radius: 10px;
+}
+
+
+.confirm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.322); /* Fondo semi-transparente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  z-index: 100; /* Coloca la capa por encima de todo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+

@@ -14,6 +14,12 @@ export class StatementOfIncomeComponent {
 
   //Constructor
   constructor(private router: Router, private configurationService: ConfigurationService, private reportSerive: ReportService, private sanitizer: DomSanitizer) { }
+  loading: boolean = true;
+  titleMessage: string = '¡Enhorabuena!';
+  message: string = 'Los datos de la empresa se han guardado correctamente.';
+  messageIcon: string = 'fa-regular fa-circle-check gradient';
+
+  mostrarPopupConfirm = false;
 
   ngOnInit() { }
 
@@ -39,6 +45,7 @@ export class StatementOfIncomeComponent {
   name: string[] = [];
 
   generatePdf(){
+    this.mostrarPopupConfirm = true;
     const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
     if (sucursalesId.length > 0) {
       const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
@@ -67,6 +74,7 @@ export class StatementOfIncomeComponent {
           this.reportSerive.statementIncomePDF(data).subscribe((response: any) => {
             if (response.success) {
               console.log(response);
+              this.mostrarPopupConfirm = false;
               window.open(response.data, '_blank');
             } else {
               console.error('Error al enviar datos al backend', response.errors);

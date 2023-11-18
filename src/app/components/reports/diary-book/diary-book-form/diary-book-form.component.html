@@ -72,7 +72,21 @@
         </div>
     </div>
 
-
+  <div class="overlay" *ngIf="mostrarPopupConfirm">
+    <div class="popup confirm">
+      <div class="loading" *ngIf="loading; else content">
+        <h2>Generando PDF</h2>
+        <h3>El reporte se encuentra siendo generado, por favor espere</h3>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+      <ng-template #content>
+        <i class="{{messageIcon}}"></i>
+        <h2>{{titleMessage}}</h2>
+        <h3>{{message}}</h3>
+        <app-my-button class="accept" [isGreen]="true" (click)="confirm()">ACEPTAR</app-my-button>
+      </ng-template>
+    </div>
+  </div>
 </div>
 
 
