@@ -69,4 +69,22 @@
       <i class="fa-solid fa-file-excel excel" (click)="generateExcel()"></i>
     </div>
   </div>
-</div> 
+</div>
+
+
+<!--Modal de confirmación de creación de empresa-->
+<div class="overlay" *ngIf="mostrarPopupConfirm">
+  <div class="popup confirm">
+    <div class="loading" *ngIf="loading; else content">
+      <h2>Generando PDF</h2>
+      <h3>Estamos haciendo todo lo posible para asegurarnos de que tus datos se guarden de manera segura. ¡Gracias por tu paciencia!</h3>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <ng-template #content>
+      <i class="{{messageIcon}}"></i>
+      <h2>{{titleMessage}}</h2>
+      <h3>{{message}}</h3>
+      <app-my-button class="accept" [isGreen]="true" (click)="confirm()">ACEPTAR</app-my-button>
+    </ng-template>
+  </div>
+</div>

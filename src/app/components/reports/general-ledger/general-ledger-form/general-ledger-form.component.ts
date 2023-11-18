@@ -25,9 +25,24 @@ export class GeneralLedgerFormComponent {
   @Input() accountPlan: any[] = [];
   @Output() flagChange = new EventEmitter<boolean>();
 
+  loading: boolean = true;
+  titleMessage: string = '¡Enhorabuena!';
+  message: string = 'Los datos de la empresa se han guardado correctamente.';
+  messageIcon: string = 'fa-regular fa-circle-check gradient';
+
+  mostrarPopupConfirm = false;
+
+
+
+
   closeModal() {
     this.flag = false;
     this.flagChange.emit(this.flag);
+  }
+
+  confirm(){
+    localStorage.clear();
+    window.location.href = '/my-companies';
   }
 
   dateFrom: string = '';
@@ -37,7 +52,15 @@ export class GeneralLedgerFormComponent {
   @ViewChild('errorMessage') errorMessage: ElementRef;
   errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';
 
+
+
   generatePdf(){
+    console.log('Generando PDF')
+
+    this.mostrarPopupConfirm = true;
+    console.log("Mostrar popup")
+    console.log(this.mostrarPopupConfirm)
+
     const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
     if (sucursalesId.length > 0) {
       const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
@@ -64,12 +87,24 @@ export class GeneralLedgerFormComponent {
             }
             console.log(data);
             //Logica Para Generar reporte
-            this.reportSerive.generalLederPDF(data).subscribe((response: any) => {
-              if (response.success) {
-                console.log(response);
-                window.open(response.data, '_blank');
-              } else {
-                console.error('Error al enviar datos al backend', response.errors);
+            this.reportSerive.generalLederPDF(data).subscribe({
+              next: response => {
+                if(response.success){
+                  this.titleMessage = '¡Enhorabuena!';
+                  this.message = 'Los datos de la empresa se han guardado correctamente.';
+                  this.messageIcon = 'fa-regular fa-circle-check gradient';
+                } else {
+                  this.titleMessage = 'Ocurrio un error!';
+                  this.message = response.message;
+                  this.messageIcon = 'fa-regular fa-circle-times gradient-red';
+                }
+                this.loading = false;
+              },
+              error: error => {
+                this.titleMessage = 'Ocurrio un error!';
+                this.message = 'No se pudo comunicar con el servidor, intente de nuevo más tarde.';
+                this.messageIcon = 'fa-regular fa-circle-times gradient-red';
+                this.loading = false;
               }
             });
           } else {
@@ -88,6 +123,8 @@ export class GeneralLedgerFormComponent {
       this.errorMessageText = 'Por favor, seleccione al menos una sucursal.';
       this.showErrorMessage();
     }
+    this.mostrarPopupConfirm = false;
+
   }
 
   generateExcel() {
