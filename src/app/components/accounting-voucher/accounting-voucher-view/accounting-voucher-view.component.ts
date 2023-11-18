@@ -33,8 +33,8 @@ export class AccountingVoucherViewComponent {
 
   // Función inicial
   ngOnInit(){
-    this.loadVouncherData();
     this.addEmptyRow();
+    this.loadVouncherData();
   }
 
   // Función para cargar los datos del voucher
@@ -42,8 +42,7 @@ export class AccountingVoucherViewComponent {
     this.transactionService.getVoucherData().subscribe(response => {
       if (response.success) {
         const data = response.data;
-        console.log("Load voucher data")
-        console.log(data)
+        console.log(data);
         // Llenando la información de la cabecera
         this.companyName = data.companyName;
         if(data.subsidiaries.length > 0) {
@@ -79,10 +78,19 @@ export class AccountingVoucherViewComponent {
     this.transactionService.getListTransaction(this.subsidiarySelect, this.areaSelect, this.documentSelect).subscribe(response => {
       const data = response.data;
       this.comprobantes = data;
-      console.log(response);
+      console.log(this.comprobantes);
       if(this.comprobantes.length > 0) {
           this.currentVoucherIndex = 0;
           this.loadVoucherByIndex();
+      } else {
+        this.listTransactionAccount = [];
+        this.addEmptyRow();
+        this.fecha = '';
+        this.numComprobante = 0;
+        this.glosa = '';
+        this.totalDebe = 0;
+        this.totalHaber = 0;
+        this.monedas = [{id: '', name: ''}];
       }
     });
   }
@@ -150,7 +158,9 @@ export class AccountingVoucherViewComponent {
     this.glosa = currentVoucher.glosaGeneral;
     this.totalDebe = currentVoucher.totalDebit;
     this.totalHaber = currentVoucher.totalCredit;
-    this.monedas = [{id: currentVoucher.currency.exchangeRateId, name: currentVoucher.currency.moneyName, abbreviation: currentVoucher.currency.abbreviationName}];
+    if (currentVoucher.currency.length > 0) {
+      this.monedas = currentVoucher.currency.map((currency: { exchangeRateId: any; moneyName: any; abbreviationName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName, abbreviation: currency.abbreviationName}));
+    }
     this.listTransactionAccount = currentVoucher.transactions.map((tx: any) => {
       return {
         numeroCuenta: tx.accountCode,
@@ -163,6 +173,7 @@ export class AccountingVoucherViewComponent {
         nroDoc: tx.documentCode,
       }
     });
+    this.addEmptyRow();
   }
 }
 

@@ -72,35 +72,35 @@
         <tbody>
           <tr *ngFor="let entrada of listTransactionAccount; let i = index">
             <td>
-              <input [(ngModel)]="entrada.numeroCuenta">
+              <input [(ngModel)]="entrada.numeroCuenta" disabled="true">
             </td>
             <td>
-              <input [(ngModel)]="entrada.nombreCuenta">
+              <input [(ngModel)]="entrada.nombreCuenta" disabled="true">
             </td>
             <td>
-              <input [(ngModel)]="entrada.auxiliar">
+              <input [(ngModel)]="entrada.auxiliar" disabled="true">
             </td>
             <td>
-              <input [(ngModel)]="entrada.entidad">
+              <input [(ngModel)]="entrada.entidad" disabled="true">
             </td>
             <td>
-              <input [(ngModel)]="entrada.debe">
+              <input [(ngModel)]="entrada.debe" disabled="true">
             </td>
             <td>
-              <input [(ngModel)]="entrada.haber">
+              <input [(ngModel)]="entrada.haber" disabled="true">
             </td>
             <td>
-              <input [(ngModel)]="entrada.glosa">
+              <input [(ngModel)]="entrada.glosa" disabled="true">
             </td>
             <td>
-              <input [(ngModel)]="entrada.nroDoc">
+              <input [(ngModel)]="entrada.nroDoc" disabled="true">
             </td>
           </tr>
           <tr>
             <td colspan="3"></td>
             <td><h3>SUMAS IGUALES&nbsp;&nbsp;&nbsp;</h3></td>
-            <td><input class="result" type="text" [(ngModel)]="totalDebe" readonly></td>
-            <td><input class="result" type="text" [(ngModel)]="totalHaber" readonly></td>
+            <td><input class="result" type="text" [(ngModel)]="totalDebe" readonly disabled="true"></td>
+            <td><input class="result" type="text" [(ngModel)]="totalHaber" readonly disabled="true"></td>
             <td colspan="3"></td>
             <br><br> 
           </tr>
