@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class HelpAndSupportComponent {
 
+  abrirPDF() {
+    console.log('abrirPDF()');
+    const urlPDF = '../../../../assets/ABCount_ManualUsuario 20.18.04.pdf';
+    window.open(urlPDF, '_blank');
+  }
+
 }
