@@ -4,6 +4,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 import { MessageDialogComponent } from '../../general-components/message.dialog/message.dialog.component';
 import { Router } from '@angular/router';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-accounting-voucher-view',
@@ -17,6 +18,7 @@ export class AccountingVoucherViewComponent {
   sucursales: any[] = [{id: '', name: ''}];
   areas: any[] = [{id: '', name: ''}];
   documentos: any[] = [{id: '', name: ''}];
+  transactionId: number = 0;
   fecha: string = '';
   numComprobante: number = 0;
   monedas: any[] = [{id: '', name: ''}];
@@ -29,7 +31,13 @@ export class AccountingVoucherViewComponent {
   comprobantes: any[] = [];
  
 
-  constructor(private configurationService: ConfigurationService, private transactionService: TransactionService, private dialog: MatDialog, private route: Router) { }
+  constructor(
+    private configurationService: ConfigurationService, 
+    private transactionService: TransactionService, 
+    private dialog: MatDialog, 
+    private route: Router,
+    private reportService: ReportService
+  ) { }
 
   // Función inicial
   ngOnInit(){
@@ -153,6 +161,7 @@ export class AccountingVoucherViewComponent {
   }
   loadVoucherByIndex() {
     const currentVoucher = this.comprobantes[this.currentVoucherIndex];
+    this.transactionId = currentVoucher.transactionId;
     this.fecha = currentVoucher.date;
     this.numComprobante = currentVoucher.transactionNumber;
     this.glosa = currentVoucher.glosaGeneral;
@@ -174,6 +183,24 @@ export class AccountingVoucherViewComponent {
       }
     });
     this.addEmptyRow();
+  }
+
+  /*Modal*/
+  mostrarPopupConfirm = false;
+
+  /*Imprimir el comprobante contable*/
+  printPdf() {
+    this.mostrarPopupConfirm = true;
+    const abbreviationName = this.monedas.find((currency: { id: number; }) => currency.id === this.currencySelect).abbreviation;
+    this.reportService.accountingVoucherPDF(this.transactionId, abbreviationName).subscribe((response: any) => {
+      if (response.success) {
+        this.mostrarPopupConfirm = false;
+        console.log(response);
+        window.open(response.data, '_blank');
+      } else {
+        console.error('Error al enviar datos al backend', response.errors);
+      }
+    });
   }
 }
 

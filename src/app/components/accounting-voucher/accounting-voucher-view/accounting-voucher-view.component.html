@@ -108,16 +108,24 @@
         </tbody>
       </table>
       <div class="footer-buttons">
-      
         <div class="arrow-buttons">
           <button class="navegation down-button" (click)="navegar('izquierda')"><i class="fa-solid fa-caret-left"></i></button>
           <button class="navegation down-button" (click)="navegar('derecha')"><i class="fa-solid fa-caret-right"></i></button>
         </div>
-        
-         <div class="print-button">
-          <button class="print down-button"><i class="fa-solid fa-print"></i></button>
+        <div class="print-button">
+          <button class="print down-button" (click)="printPdf()"><i class="fa-solid fa-print"></i></button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<!-- Modal de confirmación -->
+<div class="overlay" *ngIf="mostrarPopupConfirm">
+  <div class="popup confirm">
+    <div class="loading">
+      <h2>Generando PDF</h2>
+      <h3>El comprobante se encuentra siendo generado, por favor espere</h3>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
   </div>
 </div>

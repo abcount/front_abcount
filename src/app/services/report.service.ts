@@ -10,35 +10,32 @@ export class ReportService {
 
   constructor(private http: HttpClient) { }
 
+  companyId = localStorage.getItem('companyId');
+
   //Libro Diario
   diaryBookPDF(data: any): Observable<any> {
-    const companyId = localStorage.getItem('companyId');
-    console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/diary/book/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/diary/book/pdf/${this.companyId}`, data);
   }
 
   //Libro Mayor
   generalLederPDF(data: any): Observable<any> {
-    const companyId = localStorage.getItem('companyId');
-    console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/mayor/book/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/mayor/book/pdf/${this.companyId}`, data);
   }
   //Balance General
   balaceSheetPDF(data: any): Observable<any> {
-    const companyId = localStorage.getItem('companyId');
-    console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/general/balance/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/general/balance/pdf/${this.companyId}`, data);
   }
   //Estado De Resultados
   statementIncomePDF(data: any): Observable<any> {
-    const companyId = localStorage.getItem('companyId');
-    console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/general/estado-resultados/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/general/estado-resultados/pdf/${this.companyId}`, data);
   }
   //Balance De Sumas y Saldos
   balanceSumsAndBalancesPDF(data: any): Observable<any> {
-    const companyId = localStorage.getItem('companyId');
-    console.log(companyId);
-    return this.http.post<any>(`${environment.BACKEND_URL}/sumas/saldos/pdf/${companyId}`, data);
+    return this.http.post<any>(`${environment.BACKEND_URL}/sumas/saldos/pdf/${this.companyId}`, data);
+  }
+
+  //Comprobante contable
+  accountingVoucherPDF(transactionId: number, currency: string): Observable<any> {
+    return this.http.get<any>(`${environment.BACKEND_URL}/transactional/voucher/pdf/${this.companyId}?transactionId=${transactionId}&currency=${currency}`);
   }
 }
