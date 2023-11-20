@@ -45,7 +45,6 @@ export class StatementOfIncomeComponent {
   name: string[] = [];
 
   generatePdf(){
-    this.mostrarPopupConfirm = true;
     const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
     if (sucursalesId.length > 0) {
       const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
@@ -70,6 +69,7 @@ export class StatementOfIncomeComponent {
             responsible: names
           }
           console.log(data);
+          this.mostrarPopupConfirm = true;
           //Logica Para Generar reporte
           this.reportSerive.statementIncomePDF(data).subscribe((response: any) => {
             if (response.success) {

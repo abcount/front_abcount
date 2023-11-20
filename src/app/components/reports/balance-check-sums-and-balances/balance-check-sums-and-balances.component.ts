@@ -47,13 +47,10 @@ export class BalanceCheckSumsAndBalancesComponent {
   errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';
 
   generatePdf(){
-    this.mostrarPopupConfirm = true;
     const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
     if (sucursalesId.length > 0) {
       const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
       if (areasId.length > 0) {
-
-
           if (this.dateTo != '' || this.dateFrom !='') {
             var currencyId = '0';
             if (this.currencySelected == '0') {
@@ -74,6 +71,7 @@ export class BalanceCheckSumsAndBalancesComponent {
               responsible: names
             }
             console.log(data);
+            this.mostrarPopupConfirm = true;
             //Logica Para Generar reporte
             this.reportSerive.balanceSumsAndBalancesPDF(data).subscribe((response: any) => {
               if (response.success) {

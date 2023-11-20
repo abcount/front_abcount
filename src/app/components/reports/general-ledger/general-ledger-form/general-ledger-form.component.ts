@@ -55,7 +55,6 @@ export class GeneralLedgerFormComponent {
 
 
   generatePdf(){
-    this.mostrarPopupConfirm = true;
     const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);
     if (sucursalesId.length > 0) {
       const areasId = this.areas.filter(area => area.isChecked).map(area => area.areaId);
@@ -81,6 +80,7 @@ export class GeneralLedgerFormComponent {
               currencies: currencyId
             }
             console.log(data);
+            this.mostrarPopupConfirm = true;
             //Logica Para Generar reporte
             this.reportSerive.generalLederPDF(data).subscribe((response: any) => {
               if (response.success) {
