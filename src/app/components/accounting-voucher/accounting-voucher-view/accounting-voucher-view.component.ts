@@ -72,7 +72,7 @@ export class AccountingVoucherViewComponent {
         if(data.currencies.length > 0) {
           this.monedasAux = data.currencies;
           this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
-          this.currencySelect = data.currencies[0];
+          this.currencySelect = this.monedas[0];
         }
         if (this.subsidiarySelect!=0 && this.areaSelect!=0 && this.documentSelect!=0){
           this.searchData();
@@ -207,7 +207,8 @@ export class AccountingVoucherViewComponent {
     this.glosa = currentVoucher.glosaGeneral;
     this.totalDebe = currentVoucher.totalDebit;
     this.totalHaber = currentVoucher.totalCredit;
-    this.currencySelect = this.monedas.find((currency: { id: number; }) => currency.id === currentVoucher.currency.exchangeRateId);
+    const moneyName = currentVoucher.currency.moneyName;
+    this.currencySelect = this.monedas.find(m => m.name === moneyName);
     this.listTransactionAccount = currentVoucher.transactions.map((tx: any) => {
       var auxiliar = '';
       if (tx.auxiliaryId != null) {
