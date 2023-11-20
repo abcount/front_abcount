@@ -697,6 +697,7 @@ export class AccountingVoucherAddComponent {
         setTimeout(() => {
           this.listaEntradas.forEach((entrada: Entrada) => {
             entrada.falta = false;
+            this.route.navigate(['/accounting-voucher/view']);
           });
         }, 10000);
       }

@@ -26,6 +26,9 @@ export class AccountingVoucherViewComponent {
   listTransactionAccount: Row[] = [];
   totalDebe: number = 0;
   totalHaber: number = 0;
+  monedasAux: any[] = [];
+  auxiliares: any[] = [];
+  entidades: any[] = [];
 
   currentVoucherIndex: number = 0;
   comprobantes: any[] = [];
@@ -65,9 +68,16 @@ export class AccountingVoucherViewComponent {
           this.documentos = data.transactionType.map((transactionType: { transactionTypeId: any, type: any; }) => ({id: transactionType.transactionTypeId, name: transactionType.type}));
           this.documentSelect = data.transactionType[0].transactionTypeId;
         }
+        if(data.currencies.length > 0) {
+          this.monedasAux = data.currencies;
+          this.monedas = data.currencies.map((currency: { exchangeRateId: any; moneyName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName}));
+          this.currencySelect = data.currencies[0];
+        }
         if (this.subsidiarySelect!=0 && this.areaSelect!=0 && this.documentSelect!=0){
           this.searchData();
         }
+        this.auxiliares = data.auxiliar;
+        this.entidades = data.entities;
       } else {
         const message = this.dialog.open(MessageDialogComponent, {
           disableClose: true,
@@ -88,8 +98,8 @@ export class AccountingVoucherViewComponent {
       this.comprobantes = data;
       console.log(this.comprobantes);
       if(this.comprobantes.length > 0) {
-          this.currentVoucherIndex = 0;
-          this.loadVoucherByIndex();
+        this.currentVoucherIndex = 0;
+        this.loadVoucherByIndex();
       } else {
         this.listTransactionAccount = [];
         this.addEmptyRow();
@@ -128,7 +138,7 @@ export class AccountingVoucherViewComponent {
   subsidiarySelect: number = 0;
   areaSelect: number = 0;
   documentSelect: number = 0;
-  currencySelect: number = 0;
+  currencySelect: any = 0;
 
   subsidiarySelected(subsidiary: any) {
     this.subsidiarySelect = subsidiary.id;
@@ -143,7 +153,7 @@ export class AccountingVoucherViewComponent {
     this.searchData();
   }
   currencySelected(currency: any) {
-    this.currencySelect = currency.id;
+    this.currencySelect = currency;
     //console.log("Moneda id: "+this.currencySelect);
   }
 
@@ -167,14 +177,16 @@ export class AccountingVoucherViewComponent {
     this.glosa = currentVoucher.glosaGeneral;
     this.totalDebe = currentVoucher.totalDebit;
     this.totalHaber = currentVoucher.totalCredit;
-    if (currentVoucher.currency.length > 0) {
-      this.monedas = currentVoucher.currency.map((currency: { exchangeRateId: any; moneyName: any; abbreviationName: any; }) => ({id: currency.exchangeRateId, name: currency.moneyName, abbreviation: currency.abbreviationName}));
-    }
+    this.currencySelect = this.monedas.find((currency: { id: number; }) => currency.id === currentVoucher.currency.exchangeRateId);
     this.listTransactionAccount = currentVoucher.transactions.map((tx: any) => {
+      var auxiliar = '';
+      if (tx.auxiliaryId != null) {
+        auxiliar = this.auxiliares.find((aux: { auxiliaryAccountId: number; }) => aux.auxiliaryAccountId === tx.auxiliaryId).codeAccount;
+      }
       return {
         numeroCuenta: tx.accountCode,
         nombreCuenta: tx.nameAccount,
-        auxiliar: tx.codeAccount,
+        auxiliar: auxiliar,
         entidad: tx.entityName,
         debe: tx.amountDebit,
         haber: tx.amountCredit,
@@ -191,7 +203,7 @@ export class AccountingVoucherViewComponent {
   /*Imprimir el comprobante contable*/
   printPdf() {
     this.mostrarPopupConfirm = true;
-    const abbreviationName = this.monedas.find((currency: { id: number; }) => currency.id === this.currencySelect).abbreviation;
+    const abbreviationName = this.monedasAux.find((currency: { exchangeRateId: number; }) => currency.exchangeRateId === this.currencySelect.id).abbreviationName;
     this.reportService.accountingVoucherPDF(this.transactionId, abbreviationName).subscribe((response: any) => {
       if (response.success) {
         this.mostrarPopupConfirm = false;

@@ -46,7 +46,7 @@
         </div>
         <div class="option">
           <h3>Moneda</h3>
-          <app-combo-box [selectedOption]="monedas[0]" [options]="monedas" (optionSelected)="currencySelected($event)"></app-combo-box>
+          <app-combo-box [selectedOption]="currencySelect" [options]="monedas" (optionSelected)="currencySelected($event)"></app-combo-box>
         </div>
       </div>
     </div>
@@ -71,34 +71,33 @@
         </thead>
         <tbody>
           <tr *ngFor="let entrada of listTransactionAccount; let i = index">
-            <td>
-              <input [(ngModel)]="entrada.numeroCuenta" disabled="true">
+            <td class="backgruond-color">
+              <p>{{entrada.numeroCuenta}}</p>
             </td>
-            <td>
-              <input [(ngModel)]="entrada.nombreCuenta" disabled="true">
+            <td class="backgruond-color">
+              <p>{{entrada.nombreCuenta}}</p>
             </td>
-            <td>
-              <input [(ngModel)]="entrada.auxiliar" disabled="true">
+            <td class="backgruond-color">
+              <p>{{entrada.auxiliar}}</p>
             </td>
-            <td>
-              <input [(ngModel)]="entrada.entidad" disabled="true">
+            <td class="backgruond-color">
+              <p>{{entrada.entidad}}</p>
             </td>
-            <td>
-              <input [(ngModel)]="entrada.debe" disabled="true">
+            <td class="backgruond-color">
+              <p style="text-align: right;">{{entrada.debe}}</p>
             </td>
-            <td>
-              <input [(ngModel)]="entrada.haber" disabled="true">
+            <td class="backgruond-color">
+              <p style="text-align: right;">{{entrada.haber}}</p>
             </td>
-            <td>
-              <input [(ngModel)]="entrada.glosa" disabled="true">
+            <td class="backgruond-color">
+              <p>{{entrada.glosa}}</p>
             </td>
-            <td>
-              <input [(ngModel)]="entrada.nroDoc" disabled="true">
+            <td class="backgruond-color">
+              <p>{{entrada.nroDoc}}</p>
             </td>
           </tr>
           <tr>
-            <td colspan="3"></td>
-            <td><h3>SUMAS IGUALES&nbsp;&nbsp;&nbsp;</h3></td>
+            <td colspan="4" style="text-align: right;"><h3>SUMAS IGUALES&nbsp;&nbsp;&nbsp;</h3></td>
             <td><input class="result" type="text" [(ngModel)]="totalDebe" readonly disabled="true"></td>
             <td><input class="result" type="text" [(ngModel)]="totalHaber" readonly disabled="true"></td>
             <td colspan="3"></td>
