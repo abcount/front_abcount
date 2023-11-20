@@ -35,7 +35,7 @@
           <app-combo-box [selectedOption]="documentos[0]" [options]="documentos" (optionSelected)="documentSelected($event)"></app-combo-box>
         </div>
       </div>
-      <div class="column-3">
+      <div class="column-3" [style.margin-bottom]="cbteAjuste ? '5px' : '15px'">
         <div class="option">
           <h3>Fecha</h3>
           <input type="date" [(ngModel)]="fecha">
@@ -46,8 +46,12 @@
         </div>
         <div class="option">
           <h3>Moneda</h3>
-          <app-combo-box [selectedOption]="currencySelect" [options]="monedas" (optionSelected)="currencySelected($event)"></app-combo-box>
+          <app-combo-box *ngIf="!cbteAjuste" [selectedOption]="currencySelect" [options]="monedas" (optionSelected)="currencySelected($event)"></app-combo-box>
+          <p class="backgruond-color" *ngIf="cbteAjuste">{{currencySelect.name}}</p>
         </div>
+      </div>
+      <div *ngIf="cbteAjuste" style="text-align: end; margin-bottom: 5px;">
+        <h3>Cbte de ajuste</h3>
       </div>
     </div>
     <hr>

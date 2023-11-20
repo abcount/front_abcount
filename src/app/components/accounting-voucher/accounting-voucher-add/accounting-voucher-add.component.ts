@@ -660,10 +660,8 @@ export class AccountingVoucherAddComponent {
                 this.popupIcon = 'fa-regular fa-circle-check gradient-green';
                 setTimeout(() => {
                   this.showPopup = false;
+                  this.route.navigate(['/accounting-voucher/view']);
                 }, 2300);
-                this.listaEntradas = [];
-                this.addRow();
-                this.calcularTotales();
               } else {
                 console.log(data);
                 this.loading = false;
@@ -697,7 +695,6 @@ export class AccountingVoucherAddComponent {
         setTimeout(() => {
           this.listaEntradas.forEach((entrada: Entrada) => {
             entrada.falta = false;
-            this.route.navigate(['/accounting-voucher/view']);
           });
         }, 10000);
       }

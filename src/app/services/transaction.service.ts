@@ -7,25 +7,25 @@ import { environment } from 'src/environments/environment';
 })
 export class TransactionService {
   baseUrl = `${environment.BACKEND_URL}/transactional/voucher`;
-
-
+  companyId = localStorage.getItem('companyId');
 
   constructor(private http: HttpClient) { }
 
   getListTransaction(subsidiaryId: number, areaId: number, transactionTypeId: number): Observable<any> {
-    const companyId = localStorage.getItem('companyId');
-    return this.http.get(`${this.baseUrl}/list/${companyId}?subsidiaryId=${subsidiaryId}&areaId=${areaId}&transactionTypeId=${transactionTypeId}`);
+    return this.http.get(`${this.baseUrl}/list/${this.companyId}?subsidiaryId=${subsidiaryId}&areaId=${areaId}&transactionTypeId=${transactionTypeId}`);
   }
   
 
   getVoucherData(): Observable<any> {
-    const companyId = localStorage.getItem('companyId');
-    return this.http.get(`${this.baseUrl}/${companyId}`);
+    return this.http.get(`${this.baseUrl}/${this.companyId}`);
   }
 
 
   createTransaction(data: any) {
-    const companyId = localStorage.getItem('companyId');
-    return this.http.post(`${this.baseUrl}/${companyId}`, data);
+    return this.http.post(`${this.baseUrl}/${this.companyId}`, data);
+  }
+
+  getTransaction(transactionId: number, currency: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/currency/${this.companyId}?transactionId=${transactionId}&currency=${currency}`);
   }
 }

@@ -32,7 +32,8 @@ export class AccountingVoucherViewComponent {
 
   currentVoucherIndex: number = 0;
   comprobantes: any[] = [];
- 
+
+  cbteAjuste: boolean = false;
 
   constructor(
     private configurationService: ConfigurationService, 
@@ -93,6 +94,9 @@ export class AccountingVoucherViewComponent {
   }
 
   searchData() {
+    this.comprobantes = [];
+    this.cbteAjuste = false;
+    this.transactionId = 0;
     this.transactionService.getListTransaction(this.subsidiarySelect, this.areaSelect, this.documentSelect).subscribe(response => {
       const data = response.data;
       this.comprobantes = data;
@@ -108,7 +112,6 @@ export class AccountingVoucherViewComponent {
         this.glosa = '';
         this.totalDebe = 0;
         this.totalHaber = 0;
-        this.monedas = [{id: '', name: ''}];
       }
     });
   }
@@ -155,6 +158,32 @@ export class AccountingVoucherViewComponent {
   currencySelected(currency: any) {
     this.currencySelect = currency;
     //console.log("Moneda id: "+this.currencySelect);
+    if (this.transactionId != 0) {
+      const abbreviationName = this.monedasAux.find((currency: { exchangeRateId: number; }) => currency.exchangeRateId === this.currencySelect.id);
+      this.transactionService.getTransaction(this.transactionId, abbreviationName.abbreviationName).subscribe(response => {
+        if (response.success) {
+          const data = response.data;
+          console.log(data);
+          const currentVoucher = this.comprobantes[this.currentVoucherIndex]; 
+          console.log(currentVoucher); 
+          currentVoucher.totalDebit = data.totalDebit;
+          currentVoucher.totalCredit = data.totalCredit;
+          currentVoucher.currency = abbreviationName;
+          currentVoucher.transactions = data.transactions;
+          this.loadVoucherByIndex();
+        } else {
+          const message = this.dialog.open(MessageDialogComponent, {
+            disableClose: true,
+            data: {
+              title: 'Ocurrio un error!', 
+              message: "Ocurrio un error con el servidor"}
+          });
+          message.afterClosed().subscribe(() => {
+            this.route.navigate(['/accounting-voucher/view']);
+          });
+        }
+      });
+    }
   }
 
   navegar(direccion: string) {
@@ -172,6 +201,7 @@ export class AccountingVoucherViewComponent {
   loadVoucherByIndex() {
     const currentVoucher = this.comprobantes[this.currentVoucherIndex];
     this.transactionId = currentVoucher.transactionId;
+    this.cbteAjuste = currentVoucher.ajuste;
     this.fecha = currentVoucher.date;
     this.numComprobante = currentVoucher.transactionNumber;
     this.glosa = currentVoucher.glosaGeneral;
