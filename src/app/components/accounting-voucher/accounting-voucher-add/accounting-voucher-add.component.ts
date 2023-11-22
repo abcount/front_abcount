@@ -659,8 +659,25 @@ export class AccountingVoucherAddComponent {
                 this.popupMessage = 'El comprobante se guardó correctamente';
                 this.popupIcon = 'fa-regular fa-circle-check gradient-green';
                 setTimeout(() => {
+                  this.fecha = this.getCurrentDate();
+                  this.numComprobante = this.numComprobante + 1;
+                  this.currencySelect = this.monedas[0];
+                  this.ajusteChecked = false;
+                  this.glosa = '';
+                  this.listaEntradas = [];
+                  this.filteredAccounts = [];
+                  this.filteredAuxiliares = [];
+                  this.filteredEntities = [];
+                  for (let i = 0; i < 10; i++) {
+                    const emptyEntrada: Entrada = {cuentaId: 0, numeroCuenta: '', nombreCuenta: '', cuentaValida: false, auxiliar: '',
+                     auxiliaryAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '',
+                     falta: false};
+                    this.listaEntradas.push(emptyEntrada);
+                    this.filteredAccounts.push([]);
+                    this.filteredAuxiliares.push([]);
+                    this.filteredEntities.push([]);
+                  }
                   this.showPopup = false;
-                  this.route.navigate(['/accounting-voucher/view']);
                 }, 2300);
               } else {
                 console.log(data);
@@ -772,39 +789,124 @@ export class AccountingVoucherAddComponent {
       this.processTransactions(transactions);
     };
     reader.readAsBinaryString(target.files[0]);
+    this.resetFileInput();
   }
+  resetFileInput(): void {
+    const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }  
 
   processTransactions(transactions: any[]): void {
+    this.showPopup = true;
+    this.loading = true;
     // Asegúrate de limpiar la lista actual si es necesario
     this.listaEntradas = [];
-
+    console.log(transactions);
     // Procesa cada transacción importada del Excel
-    transactions.forEach(transaction => {
-      // Crea una entrada sin cuentaId, cuentaValida, auxiliaryAccountId, entityId y falta
-      const entrada: Entrada = {
-
-        numeroCuenta: transaction['Codigo de Cuenta'],
-        nombreCuenta: transaction['Nombre de la Cuenta'],
-        auxiliar: transaction['Auxiliar'],
-        entidad: transaction['Entidad'],
-        debe: transaction['Debe'],
-        haber: transaction['Haber'],
-        glosa: transaction['Glosa'],
-        nroDoc: transaction['Nro de Documento'],
-        // Establece los valores predeterminados o los omite si no son necesarios
-        cuentaId: 0, // o el valor que corresponda según tu lógica de negocio
-        cuentaValida: false, // o true si siempre son válidas al importar
-        auxiliaryAccountId: 0, // o el valor que corresponda
-        entityId: 0, // o el valor que corresponda
-        falta: false // o false si no necesitas este campo al importar
-      };
-
-      // Agrega la entrada a la lista de entradas, o realiza cualquier procesamiento adicional necesario
-      this.listaEntradas.push(entrada);
-      this.calcularTotales();
-    });
-
+    for (let i = 0; i < transactions.length; i++) {
+      const transaction = transactions[i];
+      var accountAux: any = '';
+      if(transaction['Codigo de Cuenta'] != '' && transaction['Nombre de la Cuenta'] != '' && transaction['Codigo de Cuenta'] != undefined && transaction['Nombre de la Cuenta'] != undefined) {
+        for(let j = 0; j < this.accountablePlan.length; j++) {
+          const account = this.accountablePlan[j];
+          if(account.accountCode === transaction['Codigo de Cuenta'].toString() && account.nameAccount === transaction['Nombre de la Cuenta'].toString()) {
+            accountAux = account;
+            break;
+          }
+        }
+      }
+      if(accountAux != '') {
+        var auxiliar: any = 'No hay';
+        if(!(transaction['Auxiliar'] == '' || transaction['Auxiliar'] == undefined)) {
+          auxiliar = this.listAuxiliares.find((auxiliar: { codeAccount: string; }) => auxiliar.codeAccount === transaction['Auxiliar']);
+        }
+        if(auxiliar == 'No hay' || auxiliar != undefined) {
+          if(auxiliar == 'No hay') {
+            auxiliar = '';
+          }
+          var entidad: any = 'No hay';
+          if(!(transaction['Entidad'] == '' || transaction['Entidad'] == undefined)) {
+            entidad = this.listEntities.find((entity: { entityName: string; }) => entity.entityName === transaction['Entidad']);
+          }
+          if(entidad == 'No hay' || entidad != undefined) {
+            if(transaction['Haber'] == '0' || transaction['Debe'] == '0') {
+              const entrada: Entrada = {
+                cuentaId: accountAux.accountId,
+                numeroCuenta: accountAux.accountCode,
+                nombreCuenta: accountAux.nameAccount,
+                cuentaValida: true,
+                auxiliar: auxiliar.codeAccount,
+                auxiliaryAccountId: auxiliar.auxiliaryAccountId,
+                entidad: entidad.entityName,
+                entityId: entidad.entityId ? entidad.entityId : 0,
+                debe: transaction['Debe'],
+                haber: transaction['Haber'],
+                glosa: transaction['Glosa'],
+                nroDoc: transaction['Nro de Documento'],
+                falta: true
+              };
+              if(transaction['Glosa'] != '') {
+                entrada.falta = false;
+              } 
+              this.listaEntradas.push(entrada);
+              console.log(this.listaEntradas);
+              this.filteredAccounts.push([]);
+              this.filteredAuxiliares.push([]);
+              this.filteredEntities.push([]);
+            } else {
+              this.loading = false;
+              this.popupTitle = '¡Ups, ocurrió un problemita al cargar el archivo!';
+              this.popupMessage = 'Parece que hay un error en el cuerpo del comprobante. Por favor, verifica que todas las entradas tengan debe o haber.';
+              this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+              break;
+            }
+          } else {
+            this.loading = false;
+            this.popupTitle = '¡Ups, ocurrió un problemita al cargar el archivo!';
+            this.popupMessage = 'Parece que hay un error en el cuerpo del comprobante. Por favor, verifica que todas las entidades sean válidas.';
+            this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+            break;
+          }
+        } else {
+          this.loading = false;
+          this.popupTitle = '¡Ups, ocurrió un problemita al cargar el archivo!';
+          this.popupMessage = 'Parece que hay un error en el cuerpo del comprobante. Por favor, verifica que todas las cuentas auxiliares sean válidas.';
+          this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+          break;
+        }
+      } else {
+        this.loading = false;
+        this.popupTitle = '¡Ups, ocurrió un problemita al cargar el archivo!';
+        this.popupMessage = 'Parece que hay un error en el cuerpo del comprobante. Por favor, verifica que todas las cuentas sean válidas.';
+        this.popupIcon = 'fa-regular fa-circle-xmark gradient-red';
+        break;
+      }
+    }
+    setTimeout(() => {
+      this.showPopup = false;
+    }, 6000);
+    console.log(this.listaEntradas);
+    this.calcularTotales();
+    this.addEmptyRow();
   }
+  // Función para agregar una fila vacía
+  addEmptyRow(){
+    const counter = this.listaEntradas.length;
+    if (counter < 10) {
+      for(let i = 0; i < 10-counter; i++){
+        const emptyEntrada: Entrada = {cuentaId: 0, numeroCuenta: '', nombreCuenta: '', cuentaValida: false, auxiliar: '',
+          auxiliaryAccountId: 0, entidad: '', entityId: 0, debe: '', haber: '', glosa: '', nroDoc: '',
+          falta: false};
+        this.listaEntradas.push(emptyEntrada);
+        this.filteredAccounts.push([]);
+        this.filteredAuxiliares.push([]);
+        this.filteredEntities.push([]);
+      }
+    }
+  }
+
   validateEntrada(entrada: Entrada): boolean {
     // Realiza las validaciones necesarias y asegúrate de que devuelvan true o false
     const isNumeroCuentaValid = typeof entrada.numeroCuenta === 'string' && entrada.numeroCuenta.trim() !== '';

@@ -63,8 +63,8 @@
       <table>
         <thead>
           <tr>
-            <th>Código de Cuenta</th>
-            <th>Nombre de la Cuenta</th>
+            <th>Código</th>
+            <th>Cuenta</th>
             <th>Auxiliar</th>
             <th>Entidad</th>
             <th>Debe</th>
@@ -75,28 +75,28 @@
         </thead>
         <tbody>
           <tr *ngFor="let entrada of listTransactionAccount; let i = index">
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 10%;">
               <p>{{entrada.numeroCuenta}}</p>
             </td>
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 10%;">
               <p>{{entrada.nombreCuenta}}</p>
             </td>
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 10%;">
               <p>{{entrada.auxiliar}}</p>
             </td>
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 10%;">
               <p>{{entrada.entidad}}</p>
             </td>
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 10%;">
               <p style="text-align: right;">{{entrada.debe}}</p>
             </td>
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 10%;">
               <p style="text-align: right;">{{entrada.haber}}</p>
             </td>
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 30%;">
               <p>{{entrada.glosa}}</p>
             </td>
-            <td class="backgruond-color">
+            <td class="backgruond-color" style="width: 10%;">
               <p>{{entrada.nroDoc}}</p>
             </td>
           </tr>

@@ -65,9 +65,10 @@ export class MyCompaniesComponent implements OnInit {
     })
   }
 
-  saveData(companyId: number, userId: number) {
+  saveData(userId: number, companyId: number, companyName: string) {
     localStorage.setItem('userId', userId.toString());
     localStorage.setItem('companyId', companyId.toString());
+    localStorage.setItem('companyName', companyName);
     window.location.href = '/home';
   }
 

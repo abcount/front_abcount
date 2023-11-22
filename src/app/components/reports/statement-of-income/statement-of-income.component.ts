@@ -29,6 +29,8 @@ export class StatementOfIncomeComponent {
   @Input() currencies: any[] = [];
   @Input() principalCurrency: any = '';
   @Input() otherCurrencySelected: string = '0';
+  @Input() dateTo: string = '';
+  @Input() dateFrom: string = '';
   @Output() flagChange = new EventEmitter<boolean>();
 
   closeModal() {
@@ -37,8 +39,6 @@ export class StatementOfIncomeComponent {
     this.flagChange.emit(this.flag);
   }
 
-  dateFrom: string = '';
-  dateTo: string = '';
   currencySelected: string = '0';
   @ViewChild('errorMessage') errorMessage: ElementRef;
   errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';

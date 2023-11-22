@@ -23,6 +23,8 @@ export class DiaryBookFormComponent {
   @Input() currencies: any[] = [];
   @Input() principalCurrency: any = '';
   @Input() otherCurrencySelected: string = '0';
+  @Input() dateTo: string = '';
+  @Input() dateFrom: string = '';
   @Output() flagChange = new EventEmitter<boolean>();
 
 
@@ -44,8 +46,6 @@ export class DiaryBookFormComponent {
     this.flagChange.emit(this.flag);
   }
 
-  dateFrom: string = '';
-  dateTo: string = '';
   selectedTransactionType: string = '2';
   currencySelected: string = '0';
   @ViewChild('errorMessage') errorMessage: ElementRef;

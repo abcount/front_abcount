@@ -28,6 +28,7 @@ export class BalanceSheetComponent {
   @Input() currencies: any[] = [];
   @Input() principalCurrency: any = '';
   @Input() otherCurrencySelected: string = '0';
+  @Input() dateTo: string = '';
   @Output() flagChange = new EventEmitter<boolean>();
 
   closeModal() {
@@ -35,8 +36,7 @@ export class BalanceSheetComponent {
     this.flag = false;
     this.flagChange.emit(this.flag);
   }
-
-  dateTo: string = '';
+  
   currencySelected: string = '0';
   name: string[] = [];
   @ViewChild('errorMessage') errorMessage: ElementRef;

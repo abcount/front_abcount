@@ -23,6 +23,8 @@ export class GeneralLedgerFormComponent {
   @Input() principalCurrency: any = '';
   @Input() otherCurrencySelected: string = '0';
   @Input() accountPlan: any[] = [];
+  @Input() dateTo: string = '';
+  @Input() dateFrom: string = '';
   @Output() flagChange = new EventEmitter<boolean>();
 
   loading: boolean = true;
@@ -31,9 +33,6 @@ export class GeneralLedgerFormComponent {
   messageIcon: string = 'fa-regular fa-circle-check gradient';
 
   mostrarPopupConfirm = false;
-
-
-
 
   closeModal() {
     this.flag = false;
@@ -45,14 +44,10 @@ export class GeneralLedgerFormComponent {
     window.location.href = '/my-companies';
   }
 
-  dateFrom: string = '';
-  dateTo: string = '';
   currencySelected: string = '0';
   accountsChecked: any[] = [];
   @ViewChild('errorMessage') errorMessage: ElementRef;
   errorMessageText: string = 'Por favor, seleccione al menos una sucursal.';
-
-
 
   generatePdf(){
     const sucursalesId = this.subsidiaries.filter (subsidiary => subsidiary.isChecked).map(subsidiary => subsidiary.subsidiaryId);

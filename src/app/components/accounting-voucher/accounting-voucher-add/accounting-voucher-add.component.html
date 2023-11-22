@@ -15,7 +15,7 @@
           Importar Transacciones
           <i class="fa-solid fa-upload"></i>
         </label>
-        <input  id="file-upload" type="file" (change)="importFromExcel($event)"  />
+        <input  id="file-upload" type="file" accept=".xlsx, .xls" (change)="importFromExcel($event)"  />
         <button class="add center" (click)="generateExcelTemplate()">Descargar Plantilla
           <i class="fa-solid fa-download"></i>
         </button>

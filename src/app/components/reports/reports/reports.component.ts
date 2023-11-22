@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CompanyService } from 'src/app/services/company.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -19,21 +20,33 @@ export class ReportsComponent {
   principalCurrency: any = '';
   otherCurrencySelected: string = '0';
   accountPlan: any[] = [];
+  dateTo: string = '';
+  dateFrom: string = '';
 
   accountPlanBalanceSheet: any[] = [];
 
-  constructor(private configurationService: ConfigurationService, private dataService: DataService) { }
+  constructor(
+    private configurationService: ConfigurationService, 
+    private dataService: DataService,
+    private companyService: CompanyService
+  ) { }
 
   ngOnInit() {
+    this.dateTo = this.getCurrentDate();
+    this.companyService.getLastClosingDate().subscribe(
+      (data: any) => {
+        this.dateFrom = data.data.substring(0, 10);
+      }
+    );
     this.configurationService.getSubsidiaries().subscribe(
       (data: any) => {
         this.subsidiaries = data.data.subsidiaries;
         this.subsidiaries.forEach((element) => {
-          element.isChecked = false;
+          element.isChecked = true;
         });
         this.areas = data.data.areas;
         this.areas.forEach((element) => {
-          element.isChecked = false;
+          element.isChecked = true;
         });
       }
     );
@@ -50,7 +63,7 @@ export class ReportsComponent {
       (data: any) => {
         this.accountPlan = data.data;
         this.accountPlan.forEach((element) => {
-          element.isChecked = false;
+          element.isChecked = true;
         });
         this.accountPlanBalanceSheet = data.data.filter((element: any) => element.report == false);
       }
@@ -89,20 +102,29 @@ export class ReportsComponent {
 
   resetChecks(){
     this.subsidiaries.forEach((element) => {
-      element.isChecked = false;
+      element.isChecked = true;
     });
     this.areas.forEach((element) => {
-      element.isChecked = false;
+      element.isChecked = true;
     });
     this.resetAccountPlan(this.accountPlan);
   }
 
   resetAccountPlan(accounts: any[]) {
     accounts.forEach((element) => {
-      element.isChecked = false;
+      element.isChecked = true;
       if (element.childrenAccounts.length > 0) {
         this.resetAccountPlan(element.childrenAccounts);
       }
     });
+  }
+
+  getCurrentDate(): string {
+    const boliviaTimezoneOffset = -4 * 60;
+    const boliviaDate = new Date(new Date().getTime() + boliviaTimezoneOffset * 60000);
+    const formattedDate = boliviaDate.toISOString().substring(0, 10);
+    const date = formattedDate.split('-');
+    const nextDate = date[0]+'-'+date[1]+'-'+(parseInt(date[2])+1);
+    return nextDate;
   }
 }

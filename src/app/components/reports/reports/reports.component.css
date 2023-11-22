@@ -37,6 +37,7 @@ hr{
     display: flex;
     flex-direction: column;
     padding: 35px 42px 35px 40px;
+    cursor: pointer;
 }
 .header-card {
     display: flex;
@@ -59,7 +60,6 @@ hr{
     border-radius: 50%;
 }
 .form-logo {
-    cursor: pointer;
     color: #000000;
 }
 .logo-white {
