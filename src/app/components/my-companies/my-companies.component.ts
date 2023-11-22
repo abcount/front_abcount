@@ -80,12 +80,17 @@ export class MyCompaniesComponent implements OnInit {
   }
 
   getImageProfile(path: string | null | undefined) {
-    if(path == undefined){
+    console.log(path)
+    if(path === undefined){
+ 
       return '../../../assets/pfp.svg';
     }
-    if (path != null && path.trim.length > 0) {
+  
+    if (path != null && path.trim().length > 0) {
+  
       return path;
     }
+ 
     return '../../../assets/pfp.svg';
   }
 

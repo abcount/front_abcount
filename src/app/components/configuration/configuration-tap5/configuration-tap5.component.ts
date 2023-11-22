@@ -52,7 +52,7 @@ export class ConfigurationTap5Component {
     );
   }
   getImageProfile(path: string | null){
-    if(path != null && path.trim.length > 0){
+    if(path != null && path.trim().length > 0){
       return path
     }
     return "../../../assets/pfp.svg"

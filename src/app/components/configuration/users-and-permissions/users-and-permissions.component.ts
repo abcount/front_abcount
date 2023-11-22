@@ -182,7 +182,7 @@ export class UsersAndPermissionsComponent {
     if(path == undefined){
       return '../../../assets/pfp.svg';
     }
-    if (path != null && path.trim.length > 0) {
+    if (path != null && path.trim().length > 0) {
       return path;
     }
     return '../../../assets/pfp.svg';
