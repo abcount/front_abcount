@@ -19,6 +19,7 @@ import { ReportsComponent } from './components/reports/reports/reports.component
 import { StatementOfIncomeComponent } from './components/reports/statement-of-income/statement-of-income.component';
 import { HelpAndSupportComponent } from './components/help-and-support/help-and-support.component';
 import { ClosingSheetComponent } from './components/closing-sheet/closing-sheet.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 import { AuthGuard } from './guard/auth.guard';
 
@@ -60,7 +61,8 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent, data: { roles: ['CAN_GENERATE_ANY_REPORTS'], useCompany:true }, canActivate: [AuthGuard]},
   { path: 'statement-of-income', component: StatementOfIncomeComponent},
   { path: 'help-and-support',component: HelpAndSupportComponent},
-  { path: 'closing-sheet', component: ClosingSheetComponent}
+  { path: 'closing-sheet', component: ClosingSheetComponent},
+  { path: 'unauthorized', component: UnauthorizedComponent},
 ];
 
 @NgModule({
