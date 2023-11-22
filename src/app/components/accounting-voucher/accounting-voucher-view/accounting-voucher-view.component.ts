@@ -36,7 +36,6 @@ export class AccountingVoucherViewComponent {
   cbteAjuste: boolean = false;
 
   constructor(
-    private configurationService: ConfigurationService, 
     private transactionService: TransactionService, 
     private dialog: MatDialog, 
     private route: Router,
@@ -205,8 +204,8 @@ export class AccountingVoucherViewComponent {
     this.fecha = currentVoucher.date;
     this.numComprobante = currentVoucher.transactionNumber;
     this.glosa = currentVoucher.glosaGeneral;
-    this.totalDebe = currentVoucher.totalDebit;
-    this.totalHaber = currentVoucher.totalCredit;
+    this.totalDebe = currentVoucher.totalDebit.toFixed(2);
+    this.totalHaber = currentVoucher.totalCredit.toFixed(2);
     const moneyName = currentVoucher.currency.moneyName;
     this.currencySelect = this.monedas.find(m => m.name === moneyName);
     this.listTransactionAccount = currentVoucher.transactions.map((tx: any) => {
@@ -219,8 +218,8 @@ export class AccountingVoucherViewComponent {
         nombreCuenta: tx.nameAccount,
         auxiliar: auxiliar,
         entidad: tx.entityName,
-        debe: tx.amountDebit,
-        haber: tx.amountCredit,
+        debe: tx.amountDebit !== 0 ? tx.amountDebit.toFixed(2) : '-',
+        haber: tx.amountCredit === 0 ? '-' : tx.amountCredit.toFixed(2),
         glosa: tx.glosaDetail,
         nroDoc: tx.documentCode,
       }
