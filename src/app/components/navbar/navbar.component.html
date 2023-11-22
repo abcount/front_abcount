@@ -35,6 +35,8 @@
         <div style="margin: 6px 20px 0 0;">{{companyName}}</div>
         <i class="fa-solid" [ngClass]="{'fa-caret-up': isDropdownOpen, 'fa-caret-down': !isDropdownOpen}" ></i>
         <div class="dropdown-menu" [style.display]="isDropdownOpen ? 'flex' : 'none'">
+            <a class="dropdown-item" routerLink="/my-profile">Mi perfil</a>
+            <hr>
             <a class="dropdown-item" routerLink="/help-and-support">Ayuda</a>
             <a class="dropdown-item" routerLink="/configuration-tap/1">Configuración</a>
             <a class="dropdown-item" routerLink="/closing-sheet">Procesar Cierre Contable</a>

@@ -79,6 +79,7 @@ import { AccountPlanViewComponent } from './components/data/account-plan-view/ac
 import { ClosingSheetComponent } from './components/closing-sheet/closing-sheet.component';
 import { CurrencyExchangeEditComponent } from './components/data/currency-exchange-edit/currency-exchange-edit.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 
 
@@ -130,6 +131,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     ClosingSheetComponent,
     CurrencyExchangeEditComponent,
     UnauthorizedComponent,
+    MyProfileComponent,
   ],
   imports: [
     BrowserModule,
