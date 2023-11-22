@@ -213,7 +213,7 @@ export class AccountingVoucherAddComponent {
     const value = this.listaEntradas[rowIndex].numeroCuenta;
     this.filteredAccounts[rowIndex] = [];
     if (value && value.length > 0) {
-      this.filteredAccounts[rowIndex] = this.accountablePlan.filter((account: { accountCode: string }) => account.accountCode.includes(value));
+      this.filteredAccounts[rowIndex] = this.accountablePlan.filter((account: { accountCode: string }) => account.accountCode.startsWith(value));
       if (this.filteredAccounts[rowIndex].length == 0) {
         this.resetAccount(rowIndex);
       }
