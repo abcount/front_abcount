@@ -62,7 +62,7 @@ const routes: Routes = [
   { path: 'statement-of-income', component: StatementOfIncomeComponent},
   { path: 'help-and-support',component: HelpAndSupportComponent},
   { path: 'closing-sheet', component: ClosingSheetComponent},
-  { path: 'unauthorized', component: UnauthorizedComponent},
+  { path: 'error', component: UnauthorizedComponent},
 ];
 
 @NgModule({
