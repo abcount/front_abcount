@@ -21,7 +21,7 @@ export class MyProfileComponent {
   phoneCode: string = "";
   phoneNumber: string = "";
   country: string = "";
-  extNoFono: string = "";
+  noIdentity: string = "";
   extNoIdentity: string = "";
 
   constructor(private profileService: ProfileService) { }
@@ -35,8 +35,8 @@ export class MyProfileComponent {
       (response: any) => {
         console.log(response);
         const profile = response.data;
-        if(profile.url_image != null && profile.url_image != "") {
-          this.imageURL = profile.url_image;
+        if(profile.urlImage != null && profile.urlImage != "") {
+          this.imageURL = profile.urlImage;
         } else {
           this.imageURL = "../../../assets/pfp.svg";
         }
@@ -47,10 +47,10 @@ export class MyProfileComponent {
         this.lastname = profile.lastName;
         this.gender = profile.genderPerson;
         this.address = profile.address;
-        this.phoneCode = profile.noIdentity;
+        this.phoneCode = profile.extNoFono;
         this.phoneNumber = profile.noFono;
         this.country = profile.countryIdentity;
-        this.extNoFono = profile.extNoFono;
+        this.noIdentity = profile.noIdentity;
         this.extNoIdentity = profile.extNoIdentity;
       },
       (error) => {
@@ -130,15 +130,17 @@ export class MyProfileComponent {
     formData.append('phoneNumber', this.phoneNumber);
     formData.append('domainNumber', this.phoneCode);
     formData.append('country', this.country);
-    formData.append('dni', this.extNoFono);
+    formData.append('dni', this.noIdentity);
     formData.append('dniExtension', this.extNoIdentity);
     console.log(formData);
     this.profileService.updateProfile(formData).subscribe({
       next: (response) => {
-        console.log(response)
+        console.log(response);
+        this.modeEdit = false;
+        this.loadData();
       },
       error: (error) => {
-        console.log(error)
+        console.log(error);
       }
     })
   }
