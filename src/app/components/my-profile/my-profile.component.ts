@@ -120,7 +120,7 @@ export class MyProfileComponent {
   // --------------------------------------------------------------------------------------------//
   // Lógica para el formulario de perfil
   save() {
-    const formData = new FormData();
+    var formData = new FormData();
     formData.append('imageProfile', this.imageFile!);
     formData.append('birthday', this.birthdate);
     formData.append('names', this.name);
@@ -133,14 +133,14 @@ export class MyProfileComponent {
     formData.append('dni', this.extNoFono);
     formData.append('dniExtension', this.extNoIdentity);
     console.log(formData);
-    this.profileService.updateProfile(formData).subscribe(
-      (response: any) => {
-        console.log(response);
+    this.profileService.updateProfile(formData).subscribe({
+      next: (response) => {
+        console.log(response)
       },
-      (error) => {
-        console.log(error);
+      error: (error) => {
+        console.log(error)
       }
-    );
+    })
   }
 
 }

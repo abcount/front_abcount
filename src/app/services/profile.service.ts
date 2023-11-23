@@ -14,7 +14,8 @@ export class ProfileService {
     return this.http.get(`${environment.BACKEND_URL}/users/info`);
   }
 
-  updateProfile(data: any): Observable<any>  {
-    return this.http.put(`${environment.BACKEND_URL}/users`, data);
+  updateProfile(data: FormData)  {
+    console.log("user wants to add data")
+    return this.http.post(`${environment.BACKEND_URL}/users`, data);
   }
 }
