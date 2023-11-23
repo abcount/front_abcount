@@ -49,20 +49,20 @@ const routes: Routes = [
       { path: '5', component: ConfigurationTap5Component },
     ],
   },
-  { path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent , data: { roles: ['CAN_ADD_PEOPLE', 'CAN_DELETE_PEOPLE'], useCompany:true }, canActivate: [AuthGuard] },
+  { path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent , data: { roles: ['CAN_MANAGE_USERS'], useCompany:true }, canActivate: [AuthGuard] },
   //{ path: 'add-users-and-permissions', component: AddUsersAndPermissionsComponent  },
-  { path: ':user/users-and-permissions', component: UsersAndPermissionsComponent , data: { roles: ['CAN_EDIT_PERMISSIONS'], useCompany:true }, canActivate: [AuthGuard]},
+  { path: ':user/users-and-permissions', component: UsersAndPermissionsComponent , data: { roles: ['CAN_MANAGE_USERS'], useCompany:true }, canActivate: [AuthGuard]},
   {
     path: 'accounting-voucher',
     children: [
-      { path: 'view', component: AccountingVoucherViewComponent , data: { roles: ['CAN_VIEW_VOUCHER'], useCompany:true }, canActivate: [AuthGuard]},
-      { path: 'add', component: AccountingVoucherAddComponent , data: { roles: ['CAN_ADD_VOUCHER'], useCompany:true }, canActivate: [AuthGuard]},
+      { path: 'view', component: AccountingVoucherViewComponent },
+      { path: 'add', component: AccountingVoucherAddComponent  },
     ],
   },
-  { path: 'reports', component: ReportsComponent, data: { roles: ['CAN_GENERATE_ANY_REPORTS'], useCompany:true }, canActivate: [AuthGuard]},
+  { path: 'reports', component: ReportsComponent, data: { roles: ['CAN_DO_ANYTHING_WITH_REPORTS'], useCompany:true }, canActivate: [AuthGuard]},
   { path: 'statement-of-income', component: StatementOfIncomeComponent},
   { path: 'help-and-support',component: HelpAndSupportComponent},
-  { path: 'closing-sheet', component: ClosingSheetComponent},
+  { path: 'closing-sheet', component: ClosingSheetComponent,  data: { roles: ['CAN_CLOSE_ANY'], useCompany:true }, canActivate: [AuthGuard]},
   { path: 'error', component: UnauthorizedComponent},
   { path: 'my-profile', component: MyProfileComponent}
 ];
