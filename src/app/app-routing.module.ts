@@ -55,8 +55,8 @@ const routes: Routes = [
   {
     path: 'accounting-voucher',
     children: [
-      { path: 'view', component: AccountingVoucherViewComponent },
-      { path: 'add', component: AccountingVoucherAddComponent  },
+      { path: 'view', component: AccountingVoucherViewComponent, data: { roles: ['CAN_VIEW_EXCHANGE'], useCompany:true }, canActivate: [AuthGuard] },
+      { path: 'add', component: AccountingVoucherAddComponent , data: { roles: ['CAN_ADD_EXCHANGE'], useCompany:true }, canActivate: [AuthGuard] },
     ],
   },
   { path: 'reports', component: ReportsComponent, data: { roles: ['CAN_DO_ANYTHING_WITH_REPORTS'], useCompany:true }, canActivate: [AuthGuard]},
